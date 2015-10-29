@@ -1,0 +1,8 @@
+grid.width = 100
+grid.height = 100
+
+bacteria.count = 1000
+tcell.count = 2000
+dendritic.count = 2000
+
+stop.at = 20

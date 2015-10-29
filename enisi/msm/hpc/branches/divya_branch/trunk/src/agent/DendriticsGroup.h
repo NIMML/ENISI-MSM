@@ -1,0 +1,33 @@
+#ifndef ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
+#define ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
+
+#include "ENISIAgent.h"
+#include "BacteriaGroup.h"
+
+class DendriticsGroup: public ENISIAgent
+{
+public:
+  enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, LAST_STATE_DO_NOT_MOVE};
+
+  struct StateCount { unsigned int state[LAST_STATE_DO_NOT_MOVE]; };
+  typedef std::map<repast::Point<int>, StateCount> CoordMap;
+
+  DendriticsGroup(const unsigned int &, repast::SharedContext<ENISIAgent> *);
+
+  virtual void act();
+
+  virtual Color getColor() { return black; }
+  virtual std::string classname() { return "DendriticsGroup"; }
+
+protected:
+  static std::vector<double> randomMove(const double &, const repast::Point<int> &);
+private:
+  void act(State, const repast::Point<int> &);
+
+  const std::vector<BacteriaGroup::StateCount> 
+    getBacteriaNeighbors(const repast::Point<int> &);
+
+  CoordMap coordMap;
+};
+
+#endif

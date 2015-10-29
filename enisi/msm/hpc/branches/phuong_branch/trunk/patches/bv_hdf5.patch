@@ -1,0 +1,11 @@
+--- /home/ec2-user/bv_hdf5.sh	2015-07-17 20:23:40.554558028 +0000
++++ bv_support/bv_hdf5.sh	2015-07-17 20:24:27.591189567 +0000
+@@ -54,7 +54,7 @@
+ export HDF5_COMPATIBILITY_VERSION=${HDF5_COMPATIBILITY_VERSION:-"1.8"}
+ export HDF5_BUILD_DIR=${HDF5_BUILD_DIR:-"hdf5-${HDF5_VERSION}"}
+ # Note: Versions of HDF5 1.6.5 and earlier DO NOT have last path component
+-export HDF5_URL=${HDF5_URL:-"http://www.hdfgroup.org/ftp/HDF5/prev-releases/hdf5-${HDF5_VERSION}/src"}
++export HDF5_URL=${HDF5_URL:-"http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VERSION}/src"}
+ export HDF5_MD5_CHECKSUM="37711d4bcb72997e93d495f97c76c33a"
+ export HDF5_SHA256_CHECKSUM=""
+ }
