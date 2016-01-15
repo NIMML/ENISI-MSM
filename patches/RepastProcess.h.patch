@@ -1,0 +1,10 @@
+--- RepastProcess.h.original	2015-11-27 13:07:03.000000000 -0500
++++ RepastProcess.h	2015-11-27 16:11:20.000000000 -0500
+@@ -314,6 +314,7 @@
+ 	 * @return this RepastProcess instance.
+ 	 */
+ 	static RepastProcess* instance();
++	static void clearInstance() { _instance = 0; }
+ 
+   static boost::mpi::communicator* communicator();
+ 

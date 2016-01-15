@@ -1,0 +1,33 @@
+--- Context.h.original	2015-12-06 19:36:48.000000000 -0500
++++ Context.h	2015-12-06 19:21:49.000000000 -0500
+@@ -134,6 +134,8 @@
+ 	 */
+ 	virtual void addProjection(Projection<T>* projection);
+ 
++	void removeProjection(Projection<T>* projection);
++
+ 	/**
+ 	 * Get the named Projection.
+ 	 *
+@@ -847,6 +849,21 @@
+ }
+ 
+ template<typename T>
++void Context<T>::removeProjection(Projection<T>* projection) {
++  std::string name = projection->name();
++  for (ProjPtrIter iter = projections.begin(); iter != projections.end(); ++iter) 
++  {
++    Projection<T>* proj = *iter;
++    if (proj->name() == name)
++    {
++      projections.erase(iter);
++      return;
++    }
++  }
++}
++
++
++template<typename T>
+ Projection<T>* Context<T>::getProjection(const std::string& name) {
+ 	for (ProjPtrIter iter = projections.begin(); iter != projections.end(); ++iter) {
+ 		Projection<T>* proj = *iter;

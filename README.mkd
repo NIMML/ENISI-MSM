@@ -1,0 +1,25 @@
+Refer to INSTALL.mkd before attempting to build
+
+# BUILDING ENISI MSM
+
+```
+  mkdir build
+  cd build
+  cmake ../
+  make
+  make test
+  ../run.sh
+```
+
+# TESTS
+
+  make test
+
+# BENCHMARKING
+
+  make benchmark
+
+# FILES AND FOLDERS
+deps/ - 3rd-party libraries go here
+src/  - location of ENISI MSM source code
+bin/  - compiled executables go here
