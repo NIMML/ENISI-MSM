@@ -1,0 +1,7 @@
+* Move SpatialProjectionTest::act() into CellLayer::act()
+* Eliminate context()/space()/grid() calls in SpatialProjectionTest
+* Eliminate context()/space()/grid() calls in models
+* Make compartments fully work
+* H.P agent should pass completely through epithelium (not linger inside it)
+* Create monocyte agents
+* Epithelial damage indicator (?)
