@@ -1,14 +1,12 @@
 #ifndef ENISI_MSM_DIFFUSER_H_
 #define ENISI_MSM_DIFFUSER_H_
 
-#include "agent/MobileAgent.h" 
-#include "compartment/DiffuserLayer.h"
+#include "agent/ENISIAgent.h" 
 
 class DiffuserLayer;
 class DiffuserImpl;
-struct DiffuserPackage; class DiffuserPackageProvider; class DiffuserPackageReceiver;
 
-class Diffuser : public MobileAgent<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>
+class Diffuser : public ENISIAgent
 {
 public:
   Diffuser(DiffuserLayer * p_cl, 
@@ -46,8 +44,12 @@ public:
   double ** getGrid();
   void setGrid(double **);
 
+protected:  
+  DiffuserLayer * layer() { return _p_layer; }
+
 private:  
   DiffuserImpl * p_impl;
+  DiffuserLayer * _p_layer;
 };
  
 #endif

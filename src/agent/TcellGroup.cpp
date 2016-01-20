@@ -1,7 +1,7 @@
 #include "TcellGroup.h"
 
 TcellGroup::TcellGroup(
-    const boost::uintmax_t tcellCount, ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer)
+    const boost::uintmax_t tcellCount, CellLayer * p_layer)
   : AgentGroup(p_layer)
 {
   init(tcellCount);

@@ -1,8 +1,7 @@
 #include "DendriticsGroup.h"
 
 DendriticsGroup::DendriticsGroup(
-    const boost::uintmax_t dendriticsCount, 
-    ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer)
+    const boost::uintmax_t dendriticsCount, CellLayer * p_layer)
   : AgentGroup(p_layer)
 {
   for (boost::uintmax_t i = 0; i < dendriticsCount; i++) 

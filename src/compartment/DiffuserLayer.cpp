@@ -1,9 +1,9 @@
 #include "compartment/DiffuserLayer.h"
-#include "diffuser/DiffuserPackage.h"
+#include "diffuser/ParallelDiffuser.h" 
 
 /* DiffuserLayer class */
 DiffuserLayer::DiffuserLayer(const repast::GridDimensions & dims)
-  : ICompartmentLayer(dims)
+  : ICompartmentLayer<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>(dims)
   { }
 
 void DiffuserLayer::diffuse() 

@@ -3,13 +3,13 @@
 
 #include "MobileAgent.h"
 
-class AgentGroup : public MobileAgent<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver>
+class AgentGroup : public ENISIAgent
 {
 public:
   typedef repast::SharedContext<ENISIAgent> Context;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
-  AgentGroup(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer);
+  AgentGroup(CellLayer * p_layer);
 
   const Transfers & getTransfers() { return markedForTransfer; }
   void clearTransfers() { markedForTransfer = Transfers(); }
@@ -32,7 +32,7 @@ private:
 class TransferGroup : public AgentGroup
 {
 public:
-  TransferGroup(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer) 
+  TransferGroup(CellLayer * p_layer) 
     : AgentGroup(p_layer) { }
   virtual void act() { }
   virtual std::string classname() { return "TransferGroup"; }

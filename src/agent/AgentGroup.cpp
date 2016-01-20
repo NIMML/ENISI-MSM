@@ -1,7 +1,7 @@
 #include "AgentGroup.h"
 
-AgentGroup::AgentGroup(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer)
- : MobileAgent(p_layer), _dimensions(p_layer->dimensions()) { }
+AgentGroup::AgentGroup(CellLayer * p_layer)
+ : _dimensions(p_layer->dimensions()) { }
 
 void AgentGroup::transferStateTo(
     int state, const repast::Point<int> & loc, unsigned int count)

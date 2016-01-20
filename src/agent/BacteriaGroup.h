@@ -12,7 +12,7 @@ public:
   struct StateCount { unsigned int state[LAST_STATE_DO_NOT_MOVE]; };
   typedef std::map<repast::Point<int>, StateCount> CoordMap;
 
-  BacteriaGroup(const boost::uintmax_t, ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer);
+  BacteriaGroup(const boost::uintmax_t, CellLayer * p_layer);
 
   virtual void act();
 

@@ -1,12 +1,11 @@
 #ifndef ENISI_MSM_COMPARTMENT_DIFFUSIONLAYER_H
 #define ENISI_MSM_COMPARTMENT_DIFFUSIONLAYER_H
 
-#include "diffuser/Diffuser.h"
+#include "diffuser/DiffuserPackage.h"
 #include "ICompartmentLayer.h"
 
 class ParallelDiffuser;
 class Diffuser; 
-struct DiffuserPackage; class DiffuserPackageProvider; class DiffuserPackageReceiver;
 class DiffuserLayerImpl;
 
 class DiffuserLayer : public ICompartmentLayer<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>

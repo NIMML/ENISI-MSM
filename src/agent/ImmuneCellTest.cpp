@@ -5,7 +5,7 @@
 class MockImmuneCell: public ImmuneCell
 {		  
   public:
-  MockImmuneCell(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer) 
+  MockImmuneCell(CellLayer * p_layer) 
     : ImmuneCell(p_layer) { }
 
   virtual Color getColor() { return black; }

@@ -5,15 +5,15 @@
 #include <map>
 #include "ImmuneCell.h"
 #include "TcellODE.h"
-#include "../compartment/Compartment.h"
+#include "compartment/CellLayer.h"
 
 class Tcell: public ImmuneCell 
 {
 public:
-  Tcell(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer) 
+  Tcell(CellLayer * p_layer) 
     : ImmuneCell(p_layer) { setState(AgentState::NAIVE); }
 
-  Tcell(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer, AgentState::State st) 
+  Tcell(CellLayer * p_layer, AgentState::State st) 
     : ImmuneCell(p_layer) { setState(st); }
 
   virtual Color getColor();
