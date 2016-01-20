@@ -3,7 +3,6 @@
 
 #include <Properties.h>
 #include "../ValueLayer.h"
-#include "diffuser/ParallelDiffuser.h" 
 #include "agent/AgentGroupPackage.h"
 #include "agent/Cytokines.h"
 #include <boost/cstdint.hpp>

@@ -5,8 +5,6 @@
 #include "ICompartmentLayer.h"
 
 class ParallelDiffuser;
-class Diffuser; 
-class DiffuserLayerImpl;
 
 class DiffuserLayer : public ICompartmentLayer<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>
 {
