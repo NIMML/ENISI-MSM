@@ -1,4 +1,6 @@
 #include "HPyloriModel.h"
+#include "agent/AgentFactory.h"
+#include "compartment/CellLayer.h"
 
 HPModel::~HPModel()
 {

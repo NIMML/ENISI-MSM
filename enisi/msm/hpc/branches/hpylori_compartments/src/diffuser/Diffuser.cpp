@@ -1,3 +1,4 @@
+#include "compartment/DiffuserLayer.h"
 #include "DiffuserImpl.h"
 #include "Diffuser.h"
 
@@ -6,9 +7,8 @@ Diffuser::~Diffuser()
   delete p_impl; 
 }
 
-Diffuser::Diffuser(
-    DiffuserLayer * p_cl, double e, double d, bool t)
-  : MobileAgent(p_cl), p_impl(new DiffuserImpl(p_cl->dimensions(), e, d, t)) 
+Diffuser::Diffuser(DiffuserLayer * p_cl, double e, double d, bool t)
+  : p_impl(new DiffuserImpl(p_cl->dimensions(), e, d, t)), _p_layer(p_cl)
   { }
 
 void Diffuser::act() { p_impl->diffuse(); }

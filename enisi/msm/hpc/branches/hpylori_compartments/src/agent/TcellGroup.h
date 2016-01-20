@@ -18,7 +18,7 @@ public:
   typedef std::map<repast::Point<int>, StateCount> CoordMap;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
-  TcellGroup(const boost::uintmax_t, ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer);
+  TcellGroup(const boost::uintmax_t, CellLayer * p_layer);
 
   virtual void act();
   int count();

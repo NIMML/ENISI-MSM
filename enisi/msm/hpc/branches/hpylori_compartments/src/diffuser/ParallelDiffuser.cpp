@@ -1,4 +1,5 @@
 #include "ParallelDiffuser.h"
+#include "compartment/DiffuserLayer.h"
 
 ParallelDiffuser::~ParallelDiffuser()
 {

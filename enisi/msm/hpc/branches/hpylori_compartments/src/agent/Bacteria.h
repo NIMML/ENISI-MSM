@@ -4,22 +4,21 @@
 #include <stdexcept>
 #include <vector>
 #include <math.h>
-#include "MobileAgent.h"
+#include "ENISIAgent.h"
 #include "Tcell.h"
 #include "SharedContinuousSpace.h"
 #include "GridComponents.h" // repast::StickyBorders repast::SimpleAdder
 #include "Random.h" // repast::Random
 
-class Bacteria: public MobileAgent<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> 
+class Bacteria: public ENISIAgent
 {
 public:
-  Bacteria(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer) : MobileAgent(p_layer)
+  Bacteria(CellLayer * p_layer) : _p_layer(p_layer)
   {
     setState(AgentState::INFECTIOUS); 
   }
 
-  Bacteria(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer, AgentState::State st)
-    : MobileAgent(p_layer)
+  Bacteria(CellLayer * p_layer, AgentState::State st) : _p_layer(p_layer)
   {
     setState(st);
   }
@@ -28,6 +27,13 @@ public:
   virtual std::string classname() { return "Bacteria"; }
   virtual void act();
 
+  void move(double x, double y);
+  double randomMove(double = 1);
+  std::vector<double> getLocation();
+  std::vector<ENISIAgent *> getNeighbors(const std::string);
+
+private:
+  CellLayer * _p_layer;
 };
 
 #endif

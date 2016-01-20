@@ -34,14 +34,14 @@ void ICompartmentLayer<A, P, PP, PR>::requestAgents()
   }
 
   repast::RepastProcess::instance()->requestAgents
-    <A, P, PP, PR>(_context, req, *_p_provider, *_p_receiver, *_p_receiver);
+    <A, P, PP, PR>(_context, req, _provider, _receiver, _receiver);
 }
 
 template <class A, class P, class PP, class PR>
 void ICompartmentLayer<A, P, PP, PR>::synchronizeAgentStates() 
 { 
   repast::RepastProcess::instance()->synchronizeAgentStates
-    <P, PP, PR>(* _p_provider, * _p_receiver);
+    <P, PP, PR>(_provider, _receiver);
 }
 
 template class ICompartmentLayer<

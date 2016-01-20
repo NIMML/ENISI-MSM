@@ -47,8 +47,8 @@ protected:
   Space * _p_space;
   Grid  * _p_grid;
 
-  PP * _p_provider;
-  PR * _p_receiver;
+  PP _provider;
+  PR _receiver;
 };
 
 template <class A, class P, class PP, class PR>
@@ -57,8 +57,6 @@ const int ICompartmentLayer<A, P, PP, PR>::x[2] = {1, 1};
 template <class A, class P, class PP, class PR>
 ICompartmentLayer<A, P, PP, PR>::~ICompartmentLayer()
 {
-  delete _p_receiver;
-  delete _p_provider;
   /* repast::Context deletes these pointers. Don't do it yourself unless you
    * want a segfault */
   //delete _p_grid;
@@ -73,8 +71,8 @@ ICompartmentLayer<A, P, PP, PR>::ICompartmentLayer(
   _processDims(x, x + sizeof x / sizeof x[0]), _buffer(1),
   _p_space(new Space("space", dimensions, _processDims, _buffer, _p_comm)),
   _p_grid(new Grid("grid", dimensions, _processDims, _buffer, _p_comm)),
-  _p_provider(new PP(&_context)),
-  _p_receiver(new PR(&_context))
+  _provider(&_context),
+  _receiver(&_context)
 
 {
   _context.addProjection(_p_space);

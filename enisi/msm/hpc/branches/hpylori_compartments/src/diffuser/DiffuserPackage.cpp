@@ -1,4 +1,6 @@
 #include "DiffuserPackage.h"
+#include "diffuser/Diffuser.h" 
+#include "compartment/DiffuserLayer.h"
 
 /* Serializable Agent Package Data */
 

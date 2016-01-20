@@ -1,4 +1,6 @@
 #include "Compartment.h"
+#include "compartment/CellLayer.h"
+#include "compartment/DiffuserLayer.h"
 
 namespace ENISI {
 

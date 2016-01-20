@@ -3,23 +3,33 @@
 
 #include <string>
 #include <map>
-#include "MobileAgent.h"
+#include "compartment/CellLayer.h"
 #include "../ValueLayer.h" // repast::ValueLayer
 
-class ImmuneCell: public MobileAgent<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver>
+class CellLayer;
+
+class ImmuneCell : public ENISIAgent
 {
-  public:
+public:
   typedef repast::DiscreteValueLayer<double, repast::StickyBorders> GridValueLayer;
   typedef std::map<std::string, GridValueLayer*> CytoMap;
 
-  ImmuneCell(ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer) : MobileAgent(p_layer) { }
+  ImmuneCell(CellLayer *);
 
   void addCytoLayer(std::string, GridValueLayer*);
 
   virtual Color getColor() =0;
 
-  protected:
+  void move(double x, double y);
+  double randomMove(double = 1);
+
+  std::vector<double> getLocation();
+  std::vector<ENISIAgent *> getNeighbors(const std::string);
+
+protected:
   CytoMap cytoMap;
+private:
+  CellLayer * _p_layer;
 };
 
 #endif

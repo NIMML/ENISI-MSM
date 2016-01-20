@@ -4,8 +4,8 @@
 #include "SharedContinuousSpace.h" // repast::SharedContinuousSpace
 #include "SharedDiscreteSpace.h" // repast::SharedDiscreteSpace
 #include "Moore2DGridQuery.h"
-#include "compartment/CellLayer.h"
-#include "compartment/DiffuserLayer.h"
+
+class CellLayer; class DiffuserLayer;
 
 namespace ENISI {
 

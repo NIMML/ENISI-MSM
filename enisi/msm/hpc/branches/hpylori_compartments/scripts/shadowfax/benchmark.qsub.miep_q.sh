@@ -8,14 +8,29 @@
 # to suit the requirements of your job.
  
 # Set the walltime, which is the maximum time your job can run in HH:MM:SS
-#PBS -lwalltime=36:00:00
+#PBS -lwalltime=168:00:00
 
 # Set the number of nodes, and the number of processors per node (up to 12)
-#PBS -lnodes=9:ppn=12
+#PBS -lnodes=20:ppn=12
 
 # Access group and queue
 #PBS -W group_list=miep
 #PBS -q miep_q
+
+##Add the following two parameters if you want e-mail regarding your qsub job:
+
+## The option below defines the set of conditions under which the queue
+## will send a mail message about the job:
+###     a -  mail is sent when the job is aborted by the batch system.
+###     b -  mail is sent when the job begins execution.
+###     e -  mail is sent when the job terminates.
+
+#PBS -m abe
+
+## The option below declares the list of users to whom mail is sent
+### Substitute your e-mail address for <your-email> below:
+
+#PBS -M nml5566@vbi.vt.edu
 
 # If benchmark was run directly, re-run it as an argument to qsub for
 # submission to shadowfax's job system
@@ -41,6 +56,7 @@ PROJ_DIR="$( cd "$( dirname "${BASH_SOURCE[1]}" )"/../../ && pwd )"
 
 cd "$PROJ_DIR"
 
+TEN_TO_11="100000000000"
 TEN_TO_10="10000000000"
 TEN_TO_09="1000000000"
 TEN_TO_08="100000000"
@@ -48,7 +64,7 @@ FIVE_THOUSAND="5000"
 
 AGENTS="$TEN_TO_10"
 AREAS="100"
-NODES="100"
+NODES="200"
 TICKS="3"
 
 for tick in $TICKS;

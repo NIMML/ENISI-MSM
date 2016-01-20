@@ -1,8 +1,7 @@
 #include "BacteriaGroup.h"
 
 BacteriaGroup::BacteriaGroup(
-    const boost::uintmax_t bacteriaCount, 
-    ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> * p_layer)
+    const boost::uintmax_t bacteriaCount, CellLayer * p_layer)
   : AgentGroup(p_layer)
 {
   init(bacteriaCount);

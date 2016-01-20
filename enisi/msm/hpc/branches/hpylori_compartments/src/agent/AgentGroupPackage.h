@@ -1,7 +1,8 @@
 #ifndef ENISI_MSM_AGENT_AGENTGROUPPACKAGE_H
 #define ENISI_MSM_AGENT_AGENTGROUPPACKAGE_H
 
-#include "AgentFactory.h" // repast::SharedContext
+#include "ENISIAgent.h"
+#include "SharedContext.h"
 
 /* Serializable Agent Package */
 struct AgentGroupPackage {
@@ -12,7 +13,6 @@ public:
     int    type;
     int    currentRank;
     std::string classname;
-    AgentState::State state;
 
     std::map<int, std::vector<std::pair<int, int> > > transfers;
 	
@@ -20,8 +20,8 @@ public:
     AgentGroupPackage(); // For serialization
     AgentGroupPackage(
     	int _id, int _rank, int _type, int _currentRank, 
-    	std::string _classname, AgentState::State _state,
-    	AgentGroup::Transfers _transfers
+    	std::string _classname, 
+    	std::map<int, std::vector<std::pair<int, int> > > _transfers
     );
 	
     /* For archive packaging */
@@ -33,7 +33,6 @@ public:
         ar & type;
         ar & currentRank;
         ar & classname;
-        ar & state;
         ar & transfers;
     }
 	
@@ -43,11 +42,11 @@ public:
 class AgentGroupPackageProvider {
 	
 private:
-  AgentGroup::Context * agents;
+  repast::SharedContext<ENISIAgent> * agents;
 	
 public:
 	
-    AgentGroupPackageProvider(AgentGroup::Context * agentPtr);
+    AgentGroupPackageProvider(repast::SharedContext<ENISIAgent> * agentPtr);
 	
     void providePackage(ENISIAgent * agent, std::vector<AgentGroupPackage>& out);
 	
@@ -59,11 +58,11 @@ public:
 class AgentGroupPackageReceiver {
 	
 private:
-    AgentGroup::Context* agents;
+    repast::SharedContext<ENISIAgent>* agents;
 	
 public:
 	
-    AgentGroupPackageReceiver(AgentGroup::Context* agentPtr);
+    AgentGroupPackageReceiver(repast::SharedContext<ENISIAgent>* agentPtr);
 	
     ENISIAgent * createAgent(AgentGroupPackage package);
 	

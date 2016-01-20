@@ -1,6 +1,7 @@
 #ifndef ENISI_MSM_H_PYLORI_MODEL_H
 #define ENISI_MSM_H_PYLORI_MODEL_H
 
+#include <Properties.h>
 #include "../ValueLayer.h"
 #include "diffuser/ParallelDiffuser.h" 
 #include "agent/AgentGroupPackage.h"

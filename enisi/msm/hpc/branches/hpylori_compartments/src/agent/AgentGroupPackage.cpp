@@ -1,4 +1,5 @@
 #include "AgentGroupPackage.h"
+#include "agent/AgentGroup.h"
 
 /* Serializable Agent Package Data */
 
@@ -6,13 +7,13 @@ AgentGroupPackage::AgentGroupPackage(){ }
 
 AgentGroupPackage::AgentGroupPackage(
     int _id, int _rank, int _type, int _currentRank, 
-    std::string _classname, AgentState::State _state,
-    AgentGroup::Transfers _transfers
+    std::string _classname, 
+    std::map<int, std::vector<std::pair<int, int> > > _transfers
     ):
 id(_id), rank(_rank), type(_type), currentRank(_currentRank), 
-  classname(_classname), state(_state), transfers(_transfers)
+  classname(_classname), transfers(_transfers)
 { }
-AgentGroupPackageProvider::AgentGroupPackageProvider(AgentGroup::Context* agentPtr): agents(agentPtr){ }
+AgentGroupPackageProvider::AgentGroupPackageProvider(repast::SharedContext<ENISIAgent>* agentPtr): agents(agentPtr){ }
 
 void AgentGroupPackageProvider::providePackage(
     ENISIAgent * agent, std::vector<AgentGroupPackage>& out)
@@ -25,7 +26,6 @@ void AgentGroupPackageProvider::providePackage(
     id.agentType(), 
     id.currentRank(), 
     agent->classname(),
-    agent->getState(),
     ((AgentGroup*)agent)->getTransfers()
   );
 
@@ -49,7 +49,7 @@ void AgentGroupPackageProvider::provideContent(
 
 
 AgentGroupPackageReceiver::AgentGroupPackageReceiver(
-    AgentGroup::Context* agentPtr): agents(agentPtr){}
+    repast::SharedContext<ENISIAgent>* agentPtr): agents(agentPtr){}
 
 ENISIAgent * 
 AgentGroupPackageReceiver::createAgent(AgentGroupPackage package)

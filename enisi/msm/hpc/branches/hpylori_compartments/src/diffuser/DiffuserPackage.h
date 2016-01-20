@@ -1,8 +1,9 @@
 #ifndef ENISI_MSM_DIFFUSER_DIFFUSERPACKAGE_H
 #define ENISI_MSM_DIFFUSER_DIFFUSERPACKAGE_H
 
-#include "diffuser/ParallelDiffuser.h" 
-
+#include <vector>
+#include "SharedContext.h" 
+#include "diffuser/Diffuser.h" 
 
 /* Serializable Agent Package */
 struct DiffuserPackage {

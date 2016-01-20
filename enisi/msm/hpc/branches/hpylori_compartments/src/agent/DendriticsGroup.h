@@ -12,7 +12,7 @@ public:
   struct StateCount { unsigned int state[LAST_STATE_DO_NOT_MOVE]; };
   typedef std::map<repast::Point<int>, StateCount> CoordMap;
 
-  DendriticsGroup(const boost::uintmax_t, ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver> *);
+  DendriticsGroup(const boost::uintmax_t, CellLayer *);
 
   virtual void act();
 
