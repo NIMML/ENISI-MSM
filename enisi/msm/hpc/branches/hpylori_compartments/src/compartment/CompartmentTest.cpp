@@ -3,11 +3,11 @@
 
 using namespace testing;
 
-class MockAgentGroup: public AgentGroup
+class MockAgentGroup: public CellGroup
 {		  
   public:
   MockAgentGroup(ENISI::Compartment * p_cmp) 
-    : AgentGroup(p_cmp->cellLayer()) { }
+    : CellGroup(p_cmp->cellLayer()) { }
   virtual Color getColor() { return black; }
   virtual void act() { }
   virtual std::string classname() { return "MockAgentGroup"; }
@@ -41,7 +41,7 @@ private:
 
 TEST_F(AnENISICompartment, CanFindItsAgent)
 {
-  AgentGroup * p_agent = 
+  CellGroup * p_agent = 
     AgentGroupFactory::create("TcellGroup", _p_compartment, 0);
 
   std::vector<double> loc;

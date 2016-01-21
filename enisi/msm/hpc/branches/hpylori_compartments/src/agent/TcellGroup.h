@@ -2,10 +2,10 @@
 #define ENISI_MSM_AGENT_TCELL_COMPONENT_H
 
 #include "TcellODE.h"
-#include "AgentGroup.h"
+#include "CellGroup.h"
 #include "Cytokines.h"
 
-class TcellGroup: public AgentGroup 
+class TcellGroup: public CellGroup 
 {
 public:
   enum State { NAIVE, TH1, TH17, TREG, DEAD, LAST_STATE_DO_NOT_MOVE};

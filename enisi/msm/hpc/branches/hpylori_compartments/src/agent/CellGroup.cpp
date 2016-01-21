@@ -1,9 +1,9 @@
-#include "AgentGroup.h"
+#include "CellGroup.h"
 
-AgentGroup::AgentGroup(CellLayer * p_layer)
+CellGroup::CellGroup(CellLayer * p_layer)
  : _dimensions(p_layer->dimensions()) { }
 
-void AgentGroup::transferStateTo(
+void CellGroup::transferStateTo(
     int state, const repast::Point<int> & loc, unsigned int count)
 {
   for (unsigned int i = 0; i < count; ++i)
@@ -13,7 +13,7 @@ void AgentGroup::transferStateTo(
   }
 }
 
-bool AgentGroup::isPointInBounds(const repast::Point<int> & pt)
+bool CellGroup::isPointInBounds(const repast::Point<int> & pt)
 {
   bool ret = false;
 
@@ -33,7 +33,7 @@ bool AgentGroup::isPointInBounds(const repast::Point<int> & pt)
   return ret;
 }
 
-const repast::GridDimensions & AgentGroup::getDimensions() const
+const repast::GridDimensions & CellGroup::getDimensions() const
 { 
   return _dimensions;
 }

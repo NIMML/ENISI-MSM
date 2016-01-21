@@ -217,13 +217,13 @@ void MucosalCD4ModelMultiCoreWithGroups::act()
 
   std::vector<ENISIAgent*> remoteAgents;
   _p_context->selectAgents(
-    AgentGroup::Context::NON_LOCAL, 
+    CellGroup::Context::NON_LOCAL, 
     remoteAgents
   );
 
   std::vector<ENISIAgent*> localAgents;
   _p_context->selectAgents(
-    AgentGroup::Context::LOCAL, 
+    CellGroup::Context::LOCAL, 
     localAgents
   );
 

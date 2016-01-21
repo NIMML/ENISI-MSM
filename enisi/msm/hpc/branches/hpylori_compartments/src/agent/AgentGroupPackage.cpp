@@ -1,5 +1,5 @@
 #include "AgentGroupPackage.h"
-#include "agent/AgentGroup.h"
+#include "agent/CellGroup.h"
 
 /* Serializable Agent Package Data */
 
@@ -26,7 +26,7 @@ void AgentGroupPackageProvider::providePackage(
     id.agentType(), 
     id.currentRank(), 
     agent->classname(),
-    ((AgentGroup*)agent)->getTransfers()
+    ((CellGroup*)agent)->getTransfers()
   );
 
   out.push_back(package);
@@ -73,6 +73,6 @@ void AgentGroupPackageReceiver::updateAgent(AgentGroupPackage package)
   repast::AgentId id(package.id, package.rank, package.type);
   ENISIAgent * agent = agents->getAgent(id);
   agent->setId(id);
-  ((AgentGroup*)agent)->setTransfers(package.transfers);
+  ((CellGroup*)agent)->setTransfers(package.transfers);
 }
 

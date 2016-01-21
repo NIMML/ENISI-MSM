@@ -49,7 +49,7 @@ private:
 
   ENISI::Compartment * _p_compartment;
 
-  AgentGroup::Context * _p_context;
+  CellGroup::Context * _p_context;
 
   AgentGroupPackageProvider * _p_provider;
   AgentGroupPackageReceiver * _p_receiver;
@@ -58,9 +58,9 @@ private:
 
   std::map<std::string, int> _cytokineMultipliers; 
 
-  AgentGroup * _p_bacteria;
-  AgentGroup * _p_tcells;
-  AgentGroup * _p_dendritics;
+  CellGroup * _p_bacteria;
+  CellGroup * _p_tcells;
+  CellGroup * _p_dendritics;
 };
 
 #endif

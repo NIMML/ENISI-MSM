@@ -126,13 +126,13 @@ void HPModel::act()
 
   std::vector<ENISIAgent*> remoteAgents;
   _p_lumenCellContext->selectAgents(
-    AgentGroup::Context::NON_LOCAL, 
+    CellGroup::Context::NON_LOCAL, 
     remoteAgents
   );
 
   std::vector<ENISIAgent*> localAgents;
   _p_lumenCellContext->selectAgents(
-    AgentGroup::Context::LOCAL, 
+    CellGroup::Context::LOCAL, 
     localAgents
   );
 

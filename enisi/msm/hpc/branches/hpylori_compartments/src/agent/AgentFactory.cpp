@@ -25,14 +25,14 @@ ENISIAgent * AgentFactory::create(
   return p_agent;
 }
 
-AgentGroup * AgentGroupFactory::create(
+CellGroup * AgentGroupFactory::create(
     const std::string agentType, 
     ENISI::Compartment * p_compartment, 
     const boost::uintmax_t agentCount)
 { 
   /* Context deals with this pointer automatically in its destructor */
   /* Don't delete them unless you want a segmentation fault */
-  AgentGroup * p_agent;
+  CellGroup * p_agent;
 
   if ( agentType == "BacteriaGroup" ) 
   { 

@@ -2,7 +2,7 @@
 
 TcellGroup::TcellGroup(
     const boost::uintmax_t tcellCount, CellLayer * p_layer)
-  : AgentGroup(p_layer)
+  : CellGroup(p_layer)
 {
   init(tcellCount);
 }
@@ -161,7 +161,7 @@ void TcellGroup::addStateAt(State state, const repast::Point<int> & loc)
 void TcellGroup::transferStateTo(
     State state, const repast::Point<int> & loc, unsigned int count)
 {
-  AgentGroup::transferStateTo(state, loc, count);
+  CellGroup::transferStateTo(state, loc, count);
 }
 
 std::vector<double> TcellGroup::randomMove(

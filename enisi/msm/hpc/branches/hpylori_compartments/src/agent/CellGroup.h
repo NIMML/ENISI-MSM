@@ -1,15 +1,15 @@
-#ifndef ENISI_MSM_AGENT_AGENT_GROUP_H
-#define ENISI_MSM_AGENT_AGENT_GROUP_H
+#ifndef ENISI_MSM_AGENT_CELLGROUP_H
+#define ENISI_MSM_AGENT_CELLGROUP_H
 
 #include "MobileAgent.h"
 
-class AgentGroup : public ENISIAgent
+class CellGroup : public ENISIAgent
 {
 public:
   typedef repast::SharedContext<ENISIAgent> Context;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
-  AgentGroup(CellLayer * p_layer);
+  CellGroup(CellLayer * p_layer);
 
   const Transfers & getTransfers() { return markedForTransfer; }
   void clearTransfers() { markedForTransfer = Transfers(); }
@@ -29,11 +29,11 @@ private:
   const repast::GridDimensions _dimensions;
 };
 
-class TransferGroup : public AgentGroup
+class TransferGroup : public CellGroup
 {
 public:
   TransferGroup(CellLayer * p_layer) 
-    : AgentGroup(p_layer) { }
+    : CellGroup(p_layer) { }
   virtual void act() { }
   virtual std::string classname() { return "TransferGroup"; }
 private:

@@ -1,10 +1,10 @@
 #ifndef ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
 #define ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
 
-#include "AgentGroup.h"
+#include "CellGroup.h"
 #include "BacteriaGroup.h"
 
-class DendriticsGroup: public AgentGroup
+class DendriticsGroup: public CellGroup
 {
 public:
   enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, LAST_STATE_DO_NOT_MOVE};
