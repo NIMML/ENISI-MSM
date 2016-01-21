@@ -1,6 +1,8 @@
+* Fix SpatialProjection to actually pass in transfers
 * Confirm transferStateTo() is properly defined in AgentGroup, then eliminate call
   in TcellGroup & cast in SpatialProjectionTest
 * Move SpatialProjectionTest::act() into CellLayer::act()
+* Change AgentGroupPackage agent from ENISIAgent to AgentGroup
 * Eliminate context()/space()/grid() calls in SpatialProjectionTest
 * Eliminate context()/space()/grid() calls in models
 * Make compartments fully work

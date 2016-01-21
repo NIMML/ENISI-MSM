@@ -5,7 +5,7 @@
 #include "TcellGroup.h"
 #include "Properties.h"
 
-class BacteriaGroup: public AgentGroup {
+class BacteriaGroup: public CellGroup {
 public:
   enum State { DEAD, INFECTIOUS, TOLEGENIC, LAST_STATE_DO_NOT_MOVE};
 

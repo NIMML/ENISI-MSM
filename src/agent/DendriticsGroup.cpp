@@ -2,7 +2,7 @@
 
 DendriticsGroup::DendriticsGroup(
     const boost::uintmax_t dendriticsCount, CellLayer * p_layer)
-  : AgentGroup(p_layer)
+  : CellGroup(p_layer)
 {
   for (boost::uintmax_t i = 0; i < dendriticsCount; i++) 
   {

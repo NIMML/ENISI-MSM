@@ -10,29 +10,26 @@ public:
   repast::SharedContext<ENISIAgent> * _p_cellContext;
 
   ASpatialProjectionTest() : 
-    _requestCalled(false), _actCalled(false), _assertRemoteLocalAgentSyncOccuredCalled(false)
+    _requestCalled(false), _actCalled(false), _assertRemoteLocalAgentSyncOccuredCalled(false),
+    _lumen(_dimensions)
     { }
 
   void SetUp() {
     InitSharedContext::SetUp(); 
 
-    _p_compartment = new ENISI::Compartment(_dimensions);
 
     ENISI::Compartment epithelium(_dimensions);
     ENISI::Compartment gastricLymphNode(_dimensions);
     ENISI::Compartment laminaPropria(_dimensions);
 
     const int tcellCount = 0;
-    tcells = AgentGroupFactory::create("TcellGroup", _p_compartment, tcellCount);
+    tcells = AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount);
 
-    _p_cellContext = _p_compartment->cellLayer()->context();
+    _p_cellContext = _lumen.cellLayer()->context();
 
   }
 
-  void TearDown() 
-  { 
-    delete _p_compartment;
-  }
+  void TearDown() { }
 
   void requestAgents();
   void act();
@@ -40,15 +37,15 @@ public:
   void assertTransfersCleared();
 
 private:
-  ENISI::Compartment * _p_compartment;
+  ENISI::Compartment _lumen;
 
-  AgentGroup * tcells;
+  CellGroup * tcells;
 };
 
 void ASpatialProjectionTest::requestAgents()
 {
   _requestCalled = true;
-  _p_compartment->cellLayer()->requestAgents();
+  _lumen.cellLayer()->requestAgents();
 }
 
 void ASpatialProjectionTest::act()
@@ -56,14 +53,14 @@ void ASpatialProjectionTest::act()
   _actCalled = true;
   std::vector<ENISIAgent*> localAgents;
   _p_cellContext->selectAgents(
-    AgentGroup::Context::LOCAL, 
+    CellGroup::Context::LOCAL, 
     localAgents
   );
   ASSERT_THAT(localAgents.size(), Eq(1));
 
   std::vector<ENISIAgent*> remoteAgents;
   _p_cellContext->selectAgents(
-    AgentGroup::Context::NON_LOCAL, 
+    CellGroup::Context::NON_LOCAL, 
     remoteAgents
   );
   int worldSize = repast::RepastProcess::instance()->worldSize();
@@ -83,7 +80,7 @@ void ASpatialProjectionTest::act()
     local_it++;
   }
 
-  _p_compartment->cellLayer()->synchronizeAgentStates();
+  _lumen.cellLayer()->synchronizeAgentStates();
 }
 
 void ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured()
@@ -91,7 +88,7 @@ void ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured()
   _assertRemoteLocalAgentSyncOccuredCalled = true;
   std::vector<ENISIAgent*> remoteAgents;
   _p_cellContext->selectAgents(
-    AgentGroup::Context::NON_LOCAL, 
+    CellGroup::Context::NON_LOCAL, 
     remoteAgents
   );
 
@@ -108,7 +105,7 @@ void ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured()
 
   std::vector<ENISIAgent*> localAgents;
   _p_cellContext->selectAgents(
-    AgentGroup::Context::LOCAL, 
+    CellGroup::Context::LOCAL, 
     localAgents
   );
 
@@ -125,14 +122,14 @@ void ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured()
     local_it++;
   }
 
-  _p_compartment->cellLayer()->synchronizeAgentStates();
+  _lumen.cellLayer()->synchronizeAgentStates();
 }
 
 void ASpatialProjectionTest::assertTransfersCleared()
 {
   std::vector<ENISIAgent*> remoteAgents;
   _p_cellContext->selectAgents(
-    AgentGroup::Context::NON_LOCAL, 
+    CellGroup::Context::NON_LOCAL, 
     remoteAgents
   );
 
@@ -149,7 +146,7 @@ void ASpatialProjectionTest::assertTransfersCleared()
 
   std::vector<ENISIAgent*> localAgents;
   _p_cellContext->selectAgents(
-    AgentGroup::Context::LOCAL, 
+    CellGroup::Context::LOCAL, 
     localAgents
   );
 

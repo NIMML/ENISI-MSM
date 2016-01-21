@@ -2,7 +2,7 @@
 
 BacteriaGroup::BacteriaGroup(
     const boost::uintmax_t bacteriaCount, CellLayer * p_layer)
-  : AgentGroup(p_layer)
+  : CellGroup(p_layer)
 {
   init(bacteriaCount);
 }

@@ -24,7 +24,7 @@ private:
 class AgentGroupFactory
 {
 public:
-  static AgentGroup * create(
+  static CellGroup * create(
     const std::string, ENISI::Compartment *, const boost::uintmax_t = 0);
 };
 
