@@ -20,7 +20,9 @@ public:
 
   bool isPointInBounds(const repast::Point<int> &);
 
+
 protected:
+  std::vector<double> randomMove(const double &, const repast::Point<int> &);
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
   const repast::GridDimensions & getDimensions() const;
 
