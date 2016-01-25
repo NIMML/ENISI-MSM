@@ -19,8 +19,6 @@ public:
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "DendriticsGroup"; }
 
-protected:
-  static std::vector<double> randomMove(const double &, const repast::Point<int> &);
 private:
   void act(State, const repast::Point<int> &);
 

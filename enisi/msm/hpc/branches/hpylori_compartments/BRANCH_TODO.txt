@@ -1,4 +1,10 @@
-* Fix SpatialProjection to actually pass in transfers
+* test that DEAD state exists in lumen, not epithelium
+* H.P agent should pass completely through epithelium (not linger inside it)
+* Work on moving cell states between compartments (start with DEAD)
+* Create mock subclass for testing cellgroup movement
+* SpatialProjectionTest: add DEAD state agent in bounds of rank 0 cellgroup.
+  move it outside bounds (so it transfers to rank 1)
+* Fix SpatialProjectionTest to actually pass in transfers
 * Confirm transferStateTo() is properly defined in AgentGroup, then eliminate call
   in TcellGroup & cast in SpatialProjectionTest
 * Move SpatialProjectionTest::act() into CellLayer::act()
@@ -6,6 +12,5 @@
 * Eliminate context()/space()/grid() calls in SpatialProjectionTest
 * Eliminate context()/space()/grid() calls in models
 * Make compartments fully work
-* H.P agent should pass completely through epithelium (not linger inside it)
 * Create monocyte agents
 * Epithelial damage indicator (?)

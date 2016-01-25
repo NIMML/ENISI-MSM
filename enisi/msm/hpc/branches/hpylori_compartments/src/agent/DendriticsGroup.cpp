@@ -32,21 +32,6 @@ DendriticsGroup::DendriticsGroup(
   }
 }
 
-std::vector<double> DendriticsGroup::randomMove(
-    const double & speed, const repast::Point<int> & fromPt) 
-{
-  double fullCircle = 2 * 3.14; // in radians
-  double angle = 
-    repast::Random::instance()->createUniDoubleGenerator(0, fullCircle).next();
-  double radius = 
-    repast::Random::instance()->createUniDoubleGenerator(0, speed).next();
-
-  std::vector<double> moveTo;
-  moveTo.push_back( fromPt.getX() + radius * cos(angle) );
-  moveTo.push_back( fromPt.getY() + radius * sin(angle) );
-
-  return moveTo;
-}
 void DendriticsGroup::act() 
 {
   typedef CoordMap::iterator it_type;

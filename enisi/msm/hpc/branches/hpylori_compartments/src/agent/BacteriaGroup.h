@@ -31,8 +31,6 @@ public:
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "BacteriaGroup"; }
 
-protected:
-  static std::vector<double> randomMove(const double &, const repast::Point<int> &);
 private:
   void act(State, const repast::Point<int> &);
   void init(const boost::uintmax_t);

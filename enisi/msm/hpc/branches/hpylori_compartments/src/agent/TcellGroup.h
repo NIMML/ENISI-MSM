@@ -40,7 +40,6 @@ public:
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "TcellGroup"; }
 protected:
-  std::vector<double> randomMove(const double &, const repast::Point<int> &);
 private:
   void act(State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
