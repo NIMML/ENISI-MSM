@@ -1,5 +1,5 @@
-* test in CellGroupCompartmentMovementTest that DEAD state exists in lumen, not epithelium
 * H.P agent should pass completely through epithelium (not linger inside it)
+* test after movement that DEAD state exists in epithelium, not lumen
 * Work on moving cell states between compartments (start with DEAD)
 * Create mock subclass for testing cellgroup movement
 * SpatialProjectionTest: add DEAD state agent in bounds of rank 0 cellgroup.
