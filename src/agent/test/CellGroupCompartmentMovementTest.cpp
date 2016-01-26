@@ -1,15 +1,15 @@
 #include "ScheduleTestFixture.h"
-#include "../agent/TcellGroup.h"
+#include "agent/TcellGroup.h"
 #include "RepastProcess.h"
-#include "../agent/AgentGroupPackage.h"
+#include "agent/AgentGroupPackage.h"
 
-class ASpatialProjectionTest: public ScheduleTestFixture 
+class ACellGroupCompartmentMovement: public ScheduleTestFixture 
 { 
 public:
   bool _requestCalled, _actCalled, _assertRemoteLocalAgentSyncOccuredCalled;
   repast::SharedContext<ENISIAgent> * _p_cellContext;
 
-  ASpatialProjectionTest() : 
+  ACellGroupCompartmentMovement() : 
     _requestCalled(false), _actCalled(false), _assertRemoteLocalAgentSyncOccuredCalled(false),
     _lumen(_dimensions)
     { }
@@ -42,13 +42,13 @@ private:
   CellGroup * tcells;
 };
 
-void ASpatialProjectionTest::requestAgents()
+void ACellGroupCompartmentMovement::requestAgents()
 {
   _requestCalled = true;
   _lumen.cellLayer()->requestAgents();
 }
 
-void ASpatialProjectionTest::act()
+void ACellGroupCompartmentMovement::act()
 {
   _actCalled = true;
   std::vector<ENISIAgent*> localAgents;
@@ -83,7 +83,7 @@ void ASpatialProjectionTest::act()
   _lumen.cellLayer()->synchronizeAgentStates();
 }
 
-void ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured()
+void ACellGroupCompartmentMovement::assertRemoteLocalAgentSyncOccured()
 {
   _assertRemoteLocalAgentSyncOccuredCalled = true;
   std::vector<ENISIAgent*> remoteAgents;
@@ -125,7 +125,7 @@ void ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured()
   _lumen.cellLayer()->synchronizeAgentStates();
 }
 
-void ASpatialProjectionTest::assertTransfersCleared()
+void ACellGroupCompartmentMovement::assertTransfersCleared()
 {
   std::vector<ENISIAgent*> remoteAgents;
   _p_cellContext->selectAgents(
@@ -167,7 +167,7 @@ void ASpatialProjectionTest::assertTransfersCleared()
   ASSERT_THAT(_assertRemoteLocalAgentSyncOccuredCalled, Eq(true));
 }
 
-TEST_F(ASpatialProjectionTest, SyncsAgentChangesAcrossProcesses)
+TEST_F(ACellGroupCompartmentMovement, SyncsAgentChangesAcrossProcesses)
 {
   repast::RepastProcess::init("");
 
@@ -175,23 +175,23 @@ TEST_F(ASpatialProjectionTest, SyncsAgentChangesAcrossProcesses)
     repast::RepastProcess::instance()->getScheduleRunner();
 
   runner.scheduleEvent(1, repast::Schedule::FunctorPtr(
-    new repast::MethodFunctor<ASpatialProjectionTest> (
-      this, &ASpatialProjectionTest::requestAgents)));
+    new repast::MethodFunctor<ACellGroupCompartmentMovement> (
+      this, &ACellGroupCompartmentMovement::requestAgents)));
 
   runner.scheduleEvent(2, repast::Schedule::FunctorPtr(
-    new repast::MethodFunctor<ASpatialProjectionTest> (
-      this, &ASpatialProjectionTest::act)));
+    new repast::MethodFunctor<ACellGroupCompartmentMovement> (
+      this, &ACellGroupCompartmentMovement::act)));
 
   runner.scheduleEvent(3, repast::Schedule::FunctorPtr(
-    new repast::MethodFunctor<ASpatialProjectionTest> (
-      this, &ASpatialProjectionTest::assertRemoteLocalAgentSyncOccured)));
+    new repast::MethodFunctor<ACellGroupCompartmentMovement> (
+      this, &ACellGroupCompartmentMovement::assertRemoteLocalAgentSyncOccured)));
 
   /*Schedule will repeat infinitely without a stop*/
   runner.scheduleStop(3); 
 
   runner.scheduleEndEvent(repast::Schedule::FunctorPtr(
-    new repast::MethodFunctor<ASpatialProjectionTest> (this, 
-      &ASpatialProjectionTest::assertTransfersCleared)));
+    new repast::MethodFunctor<ACellGroupCompartmentMovement> (this, 
+      &ACellGroupCompartmentMovement::assertTransfersCleared)));
 
   ASSERT_THAT(_requestCalled, Eq(false));
   ASSERT_THAT(_actCalled, Eq(false));
