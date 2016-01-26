@@ -24,8 +24,9 @@ public:
   int count();
   StateCount countByState();
 
-  void addStateAt(State, const repast::Point<int> &);
-
+  void addCellTo(State, const repast::Point<int> &);
+  void moveCellFromTo(State, const repast::Point<int> &, 
+                             const repast::Point<int> &);
   void transferStateTo(State, const repast::Point<int> &, unsigned int = 1);
 
   const StateCount &
