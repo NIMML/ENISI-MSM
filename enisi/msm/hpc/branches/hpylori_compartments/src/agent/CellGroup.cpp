@@ -1,7 +1,20 @@
 #include "CellGroup.h"
+#include "compartment/Compartment.h"
 
 CellGroup::CellGroup(CellLayer * p_layer)
- : _dimensions(p_layer->dimensions()) { }
+ : _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
+   _p_southBorder(NULL), _p_eastBorder(NULL), _p_westBorder(NULL)
+{ }
+
+void CellGroup::setBorder(
+    const std::string & direction, const CellGroup * border)
+{
+  if (direction == "N") { _p_northBorder = border; } 
+  if (direction == "S") { _p_southBorder = border; } 
+  if (direction == "E") { _p_eastBorder = border; } 
+  if (direction == "W") { _p_westBorder = border; } 
+  else { throw std::invalid_argument("Unknown border direction: " + direction); }
+}
 
 void CellGroup::transferStateTo(
     int state, const repast::Point<int> & loc, unsigned int count)
