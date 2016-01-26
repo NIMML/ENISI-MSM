@@ -1,5 +1,3 @@
-* add ENISI::Compartment * {north,south,east,west}Border;
-* add CellGroup::set{North,South,East,West}Border()
 * H.P agent should pass completely through epithelium (not linger inside it)
 * test after movement that DEAD state exists in epithelium, not lumen
 * Work on moving cell states between compartments (start with DEAD)
