@@ -1,5 +1,5 @@
 #include "RepastProcess.h"
-#include "model/ScheduleTestFixture.h"
+#include "ScheduleTestFixture.h"
 #include "DiffuserTest.h"
 #include "diffuser/ParallelDiffuser.h"
 
