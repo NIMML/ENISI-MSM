@@ -54,7 +54,7 @@ void ACellGroupCompartmentMovement::assertTH17inLumenNotEpithelium()
 {
   _assertTH17inLumenNotEpitheliumCalled = true;
 
-  _lumenTcells->addStateAt(TcellGroup::TH17, repast::Point<int>(5,5));
+  _lumenTcells->addCellTo(TcellGroup::TH17, repast::Point<int>(5,5));
   TcellGroup::StateCount lumenTcellCount = _lumenTcells->countByState();
   ASSERT_THAT(lumenTcellCount.state[TcellGroup::TH17], Eq(1));
 

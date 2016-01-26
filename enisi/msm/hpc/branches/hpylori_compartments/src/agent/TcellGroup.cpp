@@ -153,9 +153,16 @@ TcellGroup::StateCount TcellGroup::countByState()
   return total;
 }
 
-void TcellGroup::addStateAt(State state, const repast::Point<int> & loc)
+void TcellGroup::addCellTo(State state, const repast::Point<int> & loc)
 {
   coordMap[loc].state[state]++;
+}
+
+void TcellGroup::moveCellFromTo(State state, 
+    const repast::Point<int> & from, const repast::Point<int> & to)
+{
+  coordMap[from].state[state]--;
+  coordMap[to].state[state]++;
 }
 
 void TcellGroup::transferStateTo(

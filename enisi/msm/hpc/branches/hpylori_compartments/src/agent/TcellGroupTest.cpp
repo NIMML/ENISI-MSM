@@ -63,7 +63,7 @@ TEST_F(ATcellGroup, CanManuallyAddCells)
   TcellGroup::StateCount countBeforeAdd = _p_tcells->countByState();
   ASSERT_THAT(countBeforeAdd.state[TcellGroup::TH1], Eq(0));
 
-  _p_tcells->addStateAt(TcellGroup::TH1, repast::Point<int>(0, 0));
+  _p_tcells->addCellTo(TcellGroup::TH1, repast::Point<int>(0, 0));
 
   TcellGroup::StateCount countAfterAdd = _p_tcells->countByState();
   ASSERT_THAT(countAfterAdd.state[TcellGroup::TH1], Eq(1));
