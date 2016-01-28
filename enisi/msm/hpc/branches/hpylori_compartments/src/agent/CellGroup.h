@@ -4,7 +4,7 @@
 #include "ENISIAgent.h"
 #include "compartment/CellLayer.h"
 
-namespace ENISI { class Compartment; }
+class CellGroupImpl;
 
 class CellGroup : public ENISIAgent
 {
@@ -12,18 +12,17 @@ public:
   typedef repast::SharedContext<ENISIAgent> Context;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
-  CellGroup(CellLayer * p_layer);
+  ~CellGroup();
+  CellGroup(CellLayer *);
 
-  const Transfers & getTransfers() { return markedForTransfer; }
-  void clearTransfers() { markedForTransfer = Transfers(); }
-  void setTransfers(const Transfers & newTransfers) 
-  { 
-    markedForTransfer = newTransfers; 
-  }
+  const Transfers & getTransfers();
+  void clearTransfers();
+  void setTransfers(const Transfers &);
 
   bool isPointInBounds(const repast::Point<int> &);
 
   void setBorder(const std::string &, const CellGroup *);
+
 protected:
   std::vector<double> randomMove(const double &, const repast::Point<int> &);
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
@@ -33,13 +32,7 @@ protected:
                            const repast::Point<int> &);
 
 private:
-  Transfers markedForTransfer;
-  const repast::GridDimensions _dimensions;
-
-  const CellGroup * _p_northBorder;
-  const CellGroup * _p_southBorder;
-  const CellGroup * _p_eastBorder;
-  const CellGroup * _p_westBorder;
+  CellGroupImpl * _p_impl;
 };
 
 class TransferGroup : public CellGroup

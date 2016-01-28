@@ -1,12 +1,59 @@
 #include "CellGroup.h"
-#include "compartment/Compartment.h"
+#include "CellGroupImpl.h"
 
-CellGroup::CellGroup(CellLayer * p_layer)
- : _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
-   _p_southBorder(NULL), _p_eastBorder(NULL), _p_westBorder(NULL)
-{ }
+CellGroup::~CellGroup() { delete _p_impl; }
+
+CellGroup::CellGroup(CellLayer * p_layer) 
+  : _p_impl(new CellGroupImpl(p_layer)) { }
+
+const CellGroup::Transfers & CellGroup::getTransfers() { return _p_impl->getTransfers(); }
+
+void CellGroup::clearTransfers() { _p_impl->clearTransfers(); }
+
+void CellGroup::setTransfers(const CellGroup::Transfers & newTransfers) 
+{ 
+  _p_impl->setTransfers(newTransfers);
+}
+
+bool CellGroup::isPointInBounds(const repast::Point<int> & pt) 
+{ return _p_impl->isPointInBounds(pt); }
 
 void CellGroup::setBorder(
+    const std::string & direction, const CellGroup * p_border) 
+{ _p_impl->setBorder(direction, p_border); }
+
+std::vector<double> CellGroup::randomMove(
+    const double & speed, const repast::Point<int> & fromPt) 
+{ return _p_impl->randomMove(speed, fromPt); }
+
+void CellGroup::transferStateTo(
+    int state, const repast::Point<int> & loc, unsigned int count)
+{ _p_impl->transferStateTo(state, loc, count); }
+
+const repast::GridDimensions & CellGroup::getDimensions() const 
+{ return _p_impl->getDimensions(); }
+
+void CellGroup::moveCellFromTo(
+    int state, const repast::Point<int> & from, const repast::Point<int> & to)
+{ _p_impl->moveCellFromTo(state, from, to); }
+
+/* CellGroupImpl */
+CellGroupImpl::CellGroupImpl(CellLayer * p_layer)
+ : _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
+   _p_southBorder(NULL), _p_eastBorder(NULL), _p_westBorder(NULL) { }
+
+const CellGroup::Transfers & CellGroupImpl::getTransfers() 
+{ return markedForTransfer; }
+
+void CellGroupImpl::clearTransfers() 
+{ markedForTransfer = CellGroup::Transfers(); }
+
+void CellGroupImpl::setTransfers(const CellGroup::Transfers & newTransfers) 
+{ 
+  markedForTransfer = newTransfers; 
+}
+
+void CellGroupImpl::setBorder(
     const std::string & direction, const CellGroup * border)
 {
   if (direction == "N") { _p_northBorder = border; } 
@@ -16,7 +63,7 @@ void CellGroup::setBorder(
   else { throw std::invalid_argument("Unknown border direction: " + direction); }
 }
 
-void CellGroup::transferStateTo(
+void CellGroupImpl::transferStateTo(
     int state, const repast::Point<int> & loc, unsigned int count)
 {
   for (unsigned int i = 0; i < count; ++i)
@@ -26,7 +73,7 @@ void CellGroup::transferStateTo(
   }
 }
 
-bool CellGroup::isPointInBounds(const repast::Point<int> & pt)
+bool CellGroupImpl::isPointInBounds(const repast::Point<int> & pt)
 {
   bool ret = false;
 
@@ -46,12 +93,18 @@ bool CellGroup::isPointInBounds(const repast::Point<int> & pt)
   return ret;
 }
 
-const repast::GridDimensions & CellGroup::getDimensions() const
+const repast::GridDimensions & CellGroupImpl::getDimensions() const
 { 
   return _dimensions;
 }
 
-std::vector<double> CellGroup::randomMove(
+void CellGroupImpl::moveCellFromTo(
+    int state __attribute__((unused)), 
+    const repast::Point<int> & from __attribute__((unused)),
+    const repast::Point<int> & to __attribute__((unused)))
+{  }
+
+std::vector<double> CellGroupImpl::randomMove(
     const double & speed, const repast::Point<int> & fromPt) 
 {
   double fullCircle = 2 * 3.14; // in radians
