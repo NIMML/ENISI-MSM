@@ -1,3 +1,4 @@
+* Refactor CellGroup as pImpl
 * H.P agent should pass completely through epithelium (not linger inside it)
 * test after movement that DEAD state exists in epithelium, not lumen
 * Work on moving cell states between compartments (start with DEAD)
