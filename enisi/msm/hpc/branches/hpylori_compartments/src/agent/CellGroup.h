@@ -31,6 +31,12 @@ protected:
   void moveCellFromTo(int, const repast::Point<int> &, 
                            const repast::Point<int> &);
 
+  void addCellTo(int, const repast::Point<int> & pt);
+
+  typedef std::map<repast::Point<int>, std::vector<int> > CoordMap;
+  CoordMap::const_iterator coordMapBegin();
+  CoordMap::const_iterator coordMapEnd();
+
 private:
   CellGroupImpl * _p_impl;
 };

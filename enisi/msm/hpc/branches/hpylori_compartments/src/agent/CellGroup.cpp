@@ -37,20 +37,28 @@ void CellGroup::moveCellFromTo(
     int state, const repast::Point<int> & from, const repast::Point<int> & to)
 { _p_impl->moveCellFromTo(state, from, to); }
 
+void CellGroup::addCellTo(int cellState, const repast::Point<int> & pt) 
+{ _p_impl->addCellTo(cellState, pt); }
+
+CoordMap::const_iterator CellGroup::coordMapBegin() 
+{ return _p_impl->coordMapBegin(); }
+CoordMap::const_iterator CellGroup::coordMapEnd() 
+{ return _p_impl->coordMapEnd(); }
+
 /* CellGroupImpl */
 CellGroupImpl::CellGroupImpl(CellLayer * p_layer)
  : _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
    _p_southBorder(NULL), _p_eastBorder(NULL), _p_westBorder(NULL) { }
 
 const CellGroup::Transfers & CellGroupImpl::getTransfers() 
-{ return markedForTransfer; }
+{ return _markedForTransfer; }
 
 void CellGroupImpl::clearTransfers() 
-{ markedForTransfer = CellGroup::Transfers(); }
+{ _markedForTransfer = CellGroup::Transfers(); }
 
 void CellGroupImpl::setTransfers(const CellGroup::Transfers & newTransfers) 
 { 
-  markedForTransfer = newTransfers; 
+  _markedForTransfer = newTransfers; 
 }
 
 void CellGroupImpl::setBorder(
@@ -69,7 +77,7 @@ void CellGroupImpl::transferStateTo(
   for (unsigned int i = 0; i < count; ++i)
   {
     std::pair<int, int> pair(loc.getX(), loc.getY());
-    markedForTransfer[state].push_back(pair);
+    _markedForTransfer[state].push_back(pair);
   }
 }
 
@@ -98,12 +106,6 @@ const repast::GridDimensions & CellGroupImpl::getDimensions() const
   return _dimensions;
 }
 
-void CellGroupImpl::moveCellFromTo(
-    int state __attribute__((unused)), 
-    const repast::Point<int> & from __attribute__((unused)),
-    const repast::Point<int> & to __attribute__((unused)))
-{  }
-
 std::vector<double> CellGroupImpl::randomMove(
     const double & speed, const repast::Point<int> & fromPt) 
 {
@@ -120,3 +122,14 @@ std::vector<double> CellGroupImpl::randomMove(
   return moveTo;
 }
 
+void CellGroupImpl::addCellTo(int cellState, const repast::Point<int> & loc)
+{
+  _coordMap[loc][cellState]++;
+}
+
+void CellGroupImpl::moveCellFromTo(
+    int state, const repast::Point<int> & from, const repast::Point<int> & to)
+{  
+  _coordMap[from][state]--;
+  _coordMap[to][state]++;
+}
