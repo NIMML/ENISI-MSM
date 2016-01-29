@@ -35,7 +35,7 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
     std::vector<double> moveTo = randomMove(1, initialLoc);
     repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-    addCellAt(state, newLoc);
+    coordMap[newLoc].state[state]++;
   }
 
   BacteriaGroup::instances().push_back(this);
@@ -43,10 +43,9 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
 
 void BacteriaGroup::act()
 {
-  typedef CoordMap::const_iterator it_type;
-  it_type end = coordMapEnd();
+  typedef CoordMap::iterator it_type;
 
-  for(it_type it = coordMapBegin(); it != end; it++) 
+  for(it_type it = coordMap.begin(); it != coordMap.end(); it++) 
   {
     repast::Point<int> loc = it->first;
     StateCount stateCount  = it->second;
@@ -81,8 +80,8 @@ void BacteriaGroup::act(State state, const repast::Point<int> & loc)
 
     if ( (th1Count || th17Count) && (state == INFECTIOUS) )
     {
-      delCellAt(state, loc);
-      addCellAt(DEAD, loc);
+      coordMap[loc].state[state]--;
+      coordMap[loc].state[DEAD]++;
       return;
     }
     ++iter;
@@ -91,8 +90,6 @@ void BacteriaGroup::act(State state, const repast::Point<int> & loc)
   std::vector<double> moveTo = randomMove(1, loc);
   repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-  delCellAt(state, loc);
-  addCellAt(state, newLoc);
   coordMap[loc].state[state]--;
   coordMap[newLoc].state[state]++;
 }
