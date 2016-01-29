@@ -2,7 +2,7 @@
 
 TcellGroup::TcellGroup(
     const boost::uintmax_t tcellCount, CellLayer * p_layer)
-  : CellGroup(p_layer)
+  : CellGroup(p_layer, LAST_STATE_DO_NOT_MOVE)
 {
   init(tcellCount);
 }
@@ -33,7 +33,7 @@ void TcellGroup::init(const boost::uintmax_t tCellCount)
     std::vector<double> moveTo = randomMove(1, initialLoc);
     repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-    coordMap[newLoc].state[NAIVE]++;
+    addCellAt(NAIVE, newLoc);
   }
 
   TcellGroup::instances().push_back(this);
@@ -41,17 +41,18 @@ void TcellGroup::init(const boost::uintmax_t tCellCount)
 
 void TcellGroup::act()
 {
-  typedef CoordMap::iterator it_type;
+  typedef CoordMap::const_iterator it_type;
+  it_type end = coordMapEnd();
 
-  for(it_type it = coordMap.begin(); it != coordMap.end(); it++) 
+  for(it_type it = coordMapBegin(); it != end; it++) 
   {
     repast::Point<int> loc = it->first;
-    StateCount stateCount  = it->second;
+    std::vector<int> stateCount = it->second;
 
     for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
     {
       State state = static_cast<State>(i);
-      for (unsigned int j = 0; j < stateCount.state[i]; ++j)
+      for (int j = 0; j < stateCount[i]; ++j)
       {
 	act(state, loc);
       }
@@ -112,8 +113,8 @@ void TcellGroup::act(State state, const repast::Point<int> & loc)
   std::vector<double> moveTo = randomMove(1, loc);
   repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-  coordMap[loc].state[state]--;
-  coordMap[newLoc].state[newState]++;
+  delCellAt(state, loc);
+  addCellAt(newState, newLoc);
 }
 
 int TcellGroup::count()
@@ -121,14 +122,15 @@ int TcellGroup::count()
   int count = 0;
 
   typedef CoordMap::const_iterator it_type;
+  it_type end = coordMapEnd();
 
-  for(it_type it = coordMap.begin(); it != coordMap.end(); it++) 
+  for(it_type it = coordMapBegin(); it != end; it++) 
   {
-    StateCount stateCount  = it->second;
+    std::vector<int> stateCount  = it->second;
 
-    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
     {
-      count += stateCount.state[i];
+      count += stateCount[i];
     }
   }
 
@@ -140,29 +142,18 @@ TcellGroup::StateCount TcellGroup::countByState()
   StateCount total;
 
   typedef CoordMap::const_iterator it_type;
+  it_type end = coordMapEnd();
 
-  for(it_type it = coordMap.begin(); it != coordMap.end(); it++) 
+  for(it_type it = coordMapBegin(); it != end; it++) 
   {
-    StateCount stateCount  = it->second;
-    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    std::vector<int> stateCount  = it->second;
+    for (int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
     {
-      total.state[i] += stateCount.state[i];
+      total.state[i] += stateCount[i];
     }
   }
 
   return total;
-}
-
-void TcellGroup::addCellTo(State state, const repast::Point<int> & loc)
-{
-  coordMap[loc].state[state]++;
-}
-
-void TcellGroup::moveCellFromTo(State state, 
-    const repast::Point<int> & from, const repast::Point<int> & to)
-{
-  coordMap[from].state[state]--;
-  coordMap[to].state[state]++;
 }
 
 void TcellGroup::transferStateTo(

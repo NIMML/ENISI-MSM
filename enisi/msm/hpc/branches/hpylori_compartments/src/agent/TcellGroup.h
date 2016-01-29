@@ -15,7 +15,6 @@ public:
     StateCount() : state() { }
   };
 
-  typedef std::map<repast::Point<int>, StateCount> CoordMap;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
   TcellGroup(const boost::uintmax_t, CellLayer * p_layer);
@@ -24,13 +23,9 @@ public:
   int count();
   StateCount countByState();
 
-  void addCellTo(State, const repast::Point<int> &);
   void moveCellFromTo(State, const repast::Point<int> &, 
                              const repast::Point<int> &);
   void transferStateTo(State, const repast::Point<int> &, unsigned int = 1);
-
-  const StateCount &
-    getCellsAt(const repast::Point<int> & loc) { return coordMap[loc]; }
 
   static std::vector<TcellGroup *> & instances()
   {
@@ -44,8 +39,6 @@ protected:
 private:
   void act(State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
-
-  CoordMap coordMap;
 };
 
 #endif

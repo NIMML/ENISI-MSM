@@ -13,7 +13,7 @@ public:
   typedef repast::SharedContext<ENISIAgent> Context;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
-  CellGroupImpl(CellLayer * p_layer);
+  CellGroupImpl(CellLayer * p_layer, int);
 
   const Transfers & getTransfers();
   void clearTransfers();
@@ -30,12 +30,15 @@ public:
   void moveCellFromTo(int, const repast::Point<int> &, 
                            const repast::Point<int> &);
 
-  void addCellTo(int, const repast::Point<int> &);
+  void addCellAt(int, const repast::Point<int> &);
+  void delCellAt(int, const repast::Point<int> &);
+  const std::vector<int> * getCellsAt(const repast::Point<int> &);
 
   CoordMap::const_iterator coordMapBegin() { return _coordMap.begin(); }
   CoordMap::const_iterator coordMapEnd() { return _coordMap.end(); }
 
 private:
+  int _cellStateCount;
   CoordMap _coordMap;
 
   Transfers _markedForTransfer;

@@ -65,18 +65,18 @@ void BacteriaGroup::act(State state, const repast::Point<int> & loc)
 {
   if (state == DEAD) return;
 
-  const std::vector<TcellGroup::StateCount> 
+  const std::vector< const std::vector<int> *> 
     neighborList = getTcellNeighbors(loc);
 
-  std::vector<TcellGroup::StateCount>::const_iterator iter 
+  std::vector< const std::vector<int> *>::const_iterator iter 
     = neighborList.begin();
 
   while ( iter != neighborList.end() )
   {
-    const TcellGroup::StateCount tcellStateCount = *iter;
+    const std::vector<int> * p_tcellStateCount = *iter;
 
-    unsigned int th1Count = tcellStateCount.state[TcellGroup::TH1];
-    unsigned int th17Count = tcellStateCount.state[TcellGroup::TH17];
+    unsigned int th1Count = (*p_tcellStateCount)[TcellGroup::TH1];
+    unsigned int th17Count = (*p_tcellStateCount)[TcellGroup::TH17];
 
     if ( (th1Count || th17Count) && (state == INFECTIOUS) )
     {
@@ -94,19 +94,17 @@ void BacteriaGroup::act(State state, const repast::Point<int> & loc)
   coordMap[newLoc].state[state]++;
 }
 
-const std::vector<TcellGroup::StateCount> 
+const std::vector< const std::vector<int> *>
 BacteriaGroup::getTcellNeighbors(const repast::Point<int> & loc)
 {
   std::vector<TcellGroup *> & instances = TcellGroup::instances();
 
-  std::vector<TcellGroup::StateCount> allNeighbors;
+  std::vector< const std::vector<int> *> allNeighbors;
 
   for (size_t i = 0; i < instances.size(); ++i)
   {
-    const TcellGroup::StateCount & 
-      neighbors = instances[i]->getCellsAt(loc);
-
-    allNeighbors.push_back(neighbors);
+    const std::vector<int> * p_neighbors = instances[i]->getCellsAt(loc);
+    allNeighbors.push_back(p_neighbors);
   }
 
   return allNeighbors;
