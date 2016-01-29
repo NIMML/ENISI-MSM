@@ -146,4 +146,7 @@ void CellGroupImpl::delCellAt(int cellState, const repast::Point<int> & pt)
 { _coordMap[pt][cellState]--; }
 
 const std::vector<int> * CellGroupImpl::getCellsAt(const repast::Point<int> & pt)
-{ return &_coordMap[pt]; }
+{ 
+  if (_coordMap[pt].size() == 0)_coordMap[pt] = std::vector<int>(_cellStateCount);
+  return &_coordMap[pt]; 
+}
