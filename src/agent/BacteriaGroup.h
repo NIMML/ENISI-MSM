@@ -19,9 +19,6 @@ public:
   const std::vector< const std::vector<int> *> 
     getTcellNeighbors(const repast::Point<int> &);
 
-  const StateCount &
-    getCellsAt(const repast::Point<int> & loc) { return coordMap[loc]; }
-
   static std::vector<BacteriaGroup *> & instances()
   {
     static std::vector<BacteriaGroup *> instances;
@@ -34,7 +31,6 @@ public:
 private:
   void act(State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
-  CoordMap coordMap;
 };
 
 #endif
