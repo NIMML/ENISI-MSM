@@ -16,7 +16,7 @@ public:
 
   virtual void act();
 
-  const std::vector<TcellGroup::StateCount> 
+  const std::vector< const std::vector<int> *> 
     getTcellNeighbors(const repast::Point<int> &);
 
   const StateCount &

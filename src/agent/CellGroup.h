@@ -13,7 +13,7 @@ public:
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
   ~CellGroup();
-  CellGroup(CellLayer *);
+  CellGroup(CellLayer *, int = 0);
 
   const Transfers & getTransfers();
   void clearTransfers();
@@ -23,6 +23,10 @@ public:
 
   void setBorder(const std::string &, const CellGroup *);
 
+  void addCellAt(int, const repast::Point<int> &);
+  void delCellAt(int, const repast::Point<int> &);
+  const std::vector<int> * getCellsAt(const repast::Point<int> &);
+
 protected:
   std::vector<double> randomMove(const double &, const repast::Point<int> &);
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
@@ -31,7 +35,6 @@ protected:
   void moveCellFromTo(int, const repast::Point<int> &, 
                            const repast::Point<int> &);
 
-  void addCellTo(int, const repast::Point<int> & pt);
 
   typedef std::map<repast::Point<int>, std::vector<int> > CoordMap;
   CoordMap::const_iterator coordMapBegin();
