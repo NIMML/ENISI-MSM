@@ -3,8 +3,8 @@
 
 CellGroup::~CellGroup() { delete _p_impl; }
 
-CellGroup::CellGroup(CellLayer * p_layer, int cellStateCount) 
-  : _p_impl(new CellGroupImpl(p_layer, cellStateCount)) { }
+CellGroup::CellGroup(CellLayer * p_layer)
+  : _p_impl(new CellGroupImpl(p_layer)) { }
 
 const CellGroup::Transfers & CellGroup::getTransfers() { return _p_impl->getTransfers(); }
 
@@ -33,14 +33,9 @@ void CellGroup::transferStateTo(
 const repast::GridDimensions & CellGroup::getDimensions() const 
 { return _p_impl->getDimensions(); }
 
-void CellGroup::moveCellFromTo(
-    int state, const repast::Point<int> & from, const repast::Point<int> & to)
-{ _p_impl->moveCellFromTo(state, from, to); }
-
 /* CellGroupImpl */
-CellGroupImpl::CellGroupImpl(CellLayer * p_layer, int cellStateCount)
- : _cellStateCount(cellStateCount), 
-   _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
+CellGroupImpl::CellGroupImpl(CellLayer * p_layer)
+ : _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
    _p_southBorder(NULL), _p_eastBorder(NULL), _p_westBorder(NULL) { }
 
 const CellGroup::Transfers & CellGroupImpl::getTransfers() 
@@ -113,26 +108,4 @@ std::vector<double> CellGroupImpl::randomMove(
   moveTo.push_back( fromPt.getY() + radius * sin(angle) );
 
   return moveTo;
-}
-
-void CellGroupImpl::moveCellFromTo(
-    int state, const repast::Point<int> & from, const repast::Point<int> & to)
-{  
-  _coordMap[from][state]--;
-  _coordMap[to][state]++;
-}
-
-void CellGroupImpl::addCellAt(int cellState, const repast::Point<int> & pt)
-{ 
-  if (_coordMap[pt].size() == 0)_coordMap[pt] = std::vector<int>(_cellStateCount);
-  _coordMap[pt][cellState]++; 
-}
-
-void CellGroupImpl::delCellAt(int cellState, const repast::Point<int> & pt)
-{ _coordMap[pt][cellState]--; }
-
-const std::vector<int> * CellGroupImpl::getCellsAt(const repast::Point<int> & pt)
-{ 
-  if (_coordMap[pt].size() == 0)_coordMap[pt] = std::vector<int>(_cellStateCount);
-  return &_coordMap[pt]; 
 }

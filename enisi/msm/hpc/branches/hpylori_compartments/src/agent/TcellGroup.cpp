@@ -2,7 +2,7 @@
 
 TcellGroup::TcellGroup(
     const boost::uintmax_t tcellCount, CellLayer * p_layer)
-  : CellGroup(p_layer, LAST_STATE_DO_NOT_MOVE)
+  : CellGroup(p_layer)
 {
   init(tcellCount);
 }
