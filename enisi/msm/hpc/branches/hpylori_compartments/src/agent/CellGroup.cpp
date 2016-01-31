@@ -22,15 +22,6 @@ void CellGroup::setBorder(
     const std::string & direction, const CellGroup * p_border) 
 { _p_impl->setBorder(direction, p_border); }
 
-void CellGroup::addCellAt(int cellState, const repast::Point<int> & pt)
-{ _p_impl->addCellAt(cellState, pt); }
-
-void CellGroup::delCellAt(int cellState, const repast::Point<int> & pt)
-{ _p_impl->delCellAt(cellState, pt); }
-
-const std::vector<int> * CellGroup::getCellsAt(const repast::Point<int> & pt)
-{ return _p_impl->getCellsAt(pt); }
-
 std::vector<double> CellGroup::randomMove(
     const double & speed, const repast::Point<int> & fromPt) 
 { return _p_impl->randomMove(speed, fromPt); }
@@ -45,11 +36,6 @@ const repast::GridDimensions & CellGroup::getDimensions() const
 void CellGroup::moveCellFromTo(
     int state, const repast::Point<int> & from, const repast::Point<int> & to)
 { _p_impl->moveCellFromTo(state, from, to); }
-
-CoordMap::const_iterator CellGroup::coordMapBegin() 
-{ return _p_impl->coordMapBegin(); }
-CoordMap::const_iterator CellGroup::coordMapEnd() 
-{ return _p_impl->coordMapEnd(); }
 
 /* CellGroupImpl */
 CellGroupImpl::CellGroupImpl(CellLayer * p_layer, int cellStateCount)

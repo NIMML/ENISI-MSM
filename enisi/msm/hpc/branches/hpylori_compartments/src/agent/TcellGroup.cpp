@@ -47,12 +47,12 @@ void TcellGroup::act()
   for(it_type it = coordMapBegin(); it != end; it++) 
   {
     repast::Point<int> loc = it->first;
-    std::vector<int> stateCount = it->second;
+    const StateCount count = it->second;
 
     for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
     {
       State state = static_cast<State>(i);
-      for (int j = 0; j < stateCount[i]; ++j)
+      for (unsigned int j = 0; j < count.state[i]; ++j)
       {
 	act(state, loc);
       }
@@ -119,22 +119,22 @@ void TcellGroup::act(State state, const repast::Point<int> & loc)
 
 int TcellGroup::count()
 {
-  int count = 0;
+  int total = 0;
 
   typedef CoordMap::const_iterator it_type;
   it_type end = coordMapEnd();
 
   for(it_type it = coordMapBegin(); it != end; it++) 
   {
-    std::vector<int> stateCount  = it->second;
+    const StateCount count  = it->second;
 
-    for (int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
     {
-      count += stateCount[i];
+      total += count.state[i];
     }
   }
 
-  return count;
+  return total;
 }
 
 TcellGroup::StateCount TcellGroup::countByState()
@@ -146,10 +146,10 @@ TcellGroup::StateCount TcellGroup::countByState()
 
   for(it_type it = coordMapBegin(); it != end; it++) 
   {
-    std::vector<int> stateCount  = it->second;
+    const StateCount count  = it->second;
     for (int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
     {
-      total.state[i] += stateCount[i];
+      total.state[i] += count.state[i];
     }
   }
 
