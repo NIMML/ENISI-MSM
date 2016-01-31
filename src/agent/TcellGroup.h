@@ -19,8 +19,6 @@ public:
   int count();
   StateCount countByState();
 
-  void moveCellFromTo(State, const repast::Point<int> &, 
-                             const repast::Point<int> &);
   void transferStateTo(State, const repast::Point<int> &, unsigned int = 1);
 
   static std::vector<TcellGroup *> & instances()

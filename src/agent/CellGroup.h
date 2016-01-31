@@ -13,7 +13,7 @@ public:
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
   ~CellGroup();
-  CellGroup(CellLayer *, int = 0);
+  CellGroup(CellLayer *);
 
   const Transfers & getTransfers();
   void clearTransfers();
