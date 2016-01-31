@@ -54,12 +54,12 @@ void ACellGroupCompartmentMovement::assertTH17inLumenNotEpithelium()
 {
   _assertTH17inLumenNotEpitheliumCalled = true;
 
-  _lumenTcells->addCellAt(TcellGroup::TH17, repast::Point<int>(5,5));
-  TcellGroup::StateCount lumenTcellCount = _lumenTcells->countByState();
-  ASSERT_THAT(lumenTcellCount.state[TcellGroup::TH17], Eq(1));
+  _lumenTcells->addCellAt(TcellState::TH17, repast::Point<int>(5,5));
+  const TcellGroup::StateCount lumenTcellCount = _lumenTcells->countByState();
+  ASSERT_THAT(lumenTcellCount.state[TcellState::TH17], Eq(1));
 
-  TcellGroup::StateCount epitheliumTcellCount = _epitheliumTcells->countByState();
-  ASSERT_THAT(epitheliumTcellCount.state[TcellGroup::TH17], Eq(0));
+  const TcellGroup::StateCount epitheliumTcellCount = _epitheliumTcells->countByState();
+  ASSERT_THAT(epitheliumTcellCount.state[TcellState::TH17], Eq(0));
 }
 
 void ACellGroupCompartmentMovement::moveTH17betweenLumenEpitheliumBarrier()
