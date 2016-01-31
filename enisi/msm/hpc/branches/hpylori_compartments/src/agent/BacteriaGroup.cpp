@@ -75,8 +75,8 @@ void BacteriaGroup::act(State state, const repast::Point<int> & loc)
   {
     const TcellGroup::StateCount * p_tcellCount = *iter;
 
-    unsigned int th1Count = p_tcellCount->state[TcellGroup::TH1];
-    unsigned int th17Count = p_tcellCount->state[TcellGroup::TH17];
+    unsigned int th1Count = p_tcellCount->state[TcellState::TH1];
+    unsigned int th17Count = p_tcellCount->state[TcellState::TH17];
 
     if ( (th1Count || th17Count) && (state == INFECTIOUS) )
     {

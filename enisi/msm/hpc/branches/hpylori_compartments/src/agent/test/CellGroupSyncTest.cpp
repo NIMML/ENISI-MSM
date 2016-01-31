@@ -76,7 +76,7 @@ void ACellGroupSync::act()
   while(local_it != localAgents.end())
   {
     TcellGroup * localTcells = (TcellGroup*) (*local_it);
-    localTcells->transferStateTo(TcellGroup::DEAD, repast::Point<int>(0, 0), 5);
+    localTcells->transferStateTo(TcellState::DEAD, repast::Point<int>(0, 0), 5);
     local_it++;
   }
 
@@ -98,7 +98,7 @@ void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
     TcellGroup * remoteTcells = (TcellGroup*) (*remote_it);
 
     TcellGroup::Transfers remoteTransfers = remoteTcells->getTransfers();
-    ASSERT_THAT(remoteTransfers[TcellGroup::DEAD].size(), Eq(5));
+    ASSERT_THAT(remoteTransfers[TcellState::DEAD].size(), Eq(5));
 
     remote_it++;
   }
@@ -116,7 +116,7 @@ void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
     TcellGroup * localTcells = (TcellGroup*) (*local_it);
 
     TcellGroup::Transfers localTransfers = localTcells->getTransfers();
-    ASSERT_THAT(localTransfers[TcellGroup::DEAD].size(), Eq(5));
+    ASSERT_THAT(localTransfers[TcellState::DEAD].size(), Eq(5));
 
     localTcells->clearTransfers();
     local_it++;
@@ -139,7 +139,7 @@ void ACellGroupSync::assertTransfersCleared()
     TcellGroup * remoteTcells = (TcellGroup*) (*remote_it);
 
     TcellGroup::Transfers remoteTransfers = remoteTcells->getTransfers();
-    ASSERT_THAT(remoteTransfers[TcellGroup::DEAD].size(), Eq(0));
+    ASSERT_THAT(remoteTransfers[TcellState::DEAD].size(), Eq(0));
 
     remote_it++;
   }
@@ -157,7 +157,7 @@ void ACellGroupSync::assertTransfersCleared()
     TcellGroup * localTcells = (TcellGroup*) (*local_it);
 
     TcellGroup::Transfers localTransfers = localTcells->getTransfers();
-    ASSERT_THAT(localTransfers[TcellGroup::DEAD].size(), Eq(0));
+    ASSERT_THAT(localTransfers[TcellState::DEAD].size(), Eq(0));
 
     local_it++;
   }

@@ -6,11 +6,13 @@
 #include "Cytokines.h"
 #include "CoordMap.h"
 
-class TcellGroup: public CellGroup, public CoordinateMap<5>
+namespace TcellState {
+  enum State { NAIVE, TH1, TH17, TREG, DEAD, KEEP_AT_END};
+};
+
+class TcellGroup: public CellGroup, public CoordinateMap<TcellState::KEEP_AT_END>
 {
 public:
-  enum State { NAIVE, TH1, TH17, TREG, DEAD, LAST_STATE_DO_NOT_MOVE};
-
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
   TcellGroup(const boost::uintmax_t, CellLayer * p_layer);
@@ -19,7 +21,8 @@ public:
   int count();
   StateCount countByState();
 
-  void transferStateTo(State, const repast::Point<int> &, unsigned int = 1);
+  void transferStateTo(TcellState::State, const repast::Point<int> &, 
+      unsigned int = 1);
 
   static std::vector<TcellGroup *> & instances()
   {
@@ -31,7 +34,7 @@ public:
   virtual std::string classname() { return "TcellGroup"; }
 protected:
 private:
-  void act(State, const repast::Point<int> &);
+  void act(TcellState::State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
 };
 

@@ -33,7 +33,7 @@ void TcellGroup::init(const boost::uintmax_t tCellCount)
     std::vector<double> moveTo = randomMove(1, initialLoc);
     repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-    addCellAt(NAIVE, newLoc);
+    addCellAt(TcellState::NAIVE, newLoc);
   }
 
   TcellGroup::instances().push_back(this);
@@ -49,9 +49,9 @@ void TcellGroup::act()
     repast::Point<int> loc = it->first;
     const StateCount count = it->second;
 
-    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (unsigned int i = 0; i < TcellState::KEEP_AT_END; ++i)
     {
-      State state = static_cast<State>(i);
+      TcellState::State state = static_cast<TcellState::State>(i);
       for (unsigned int j = 0; j < count.state[i]; ++j)
       {
 	act(state, loc);
@@ -60,15 +60,15 @@ void TcellGroup::act()
   }
 }
 
-void TcellGroup::act(State state, const repast::Point<int> & loc)
+void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
 {
-  if (state == DEAD) return;
+  if (state == TcellState::DEAD) return;
 
   double IL6  = Cytokines::instance().get("IL6", loc);
   double TGFb = Cytokines::instance().get("TGFb", loc);
   double IL12 = Cytokines::instance().get("IL12", loc);
 
-  State newState = state;
+  TcellState::State newState = state;
 
   if (IL6 + TGFb + IL12 > 1.0) 
   {
@@ -102,11 +102,11 @@ void TcellGroup::act(State state, const repast::Point<int> & loc)
     cytoMap["IL10"]->setValueAtCoord(IL10, loc);
 
     if (IL17 > 0.5) {
-      newState = TH17;
+      newState = TcellState::TH17;
     } else if (IFNg > 0.5) {
-      newState = TH1;
+      newState = TcellState::TH1;
     } else if (IL10 > 0.5) {
-      newState = TREG;
+      newState = TcellState::TREG;
     }
   }
 
@@ -128,7 +128,7 @@ int TcellGroup::count()
   {
     const StateCount count  = it->second;
 
-    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (unsigned int i = 0; i < TcellState::KEEP_AT_END; ++i)
     {
       total += count.state[i];
     }
@@ -147,7 +147,7 @@ TcellGroup::StateCount TcellGroup::countByState()
   for(it_type it = coordMapBegin(); it != end; it++) 
   {
     const StateCount count  = it->second;
-    for (int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (int i = 0; i < TcellState::KEEP_AT_END; ++i)
     {
       total.state[i] += count.state[i];
     }
@@ -157,7 +157,7 @@ TcellGroup::StateCount TcellGroup::countByState()
 }
 
 void TcellGroup::transferStateTo(
-    State state, const repast::Point<int> & loc, unsigned int count)
+    TcellState::State state, const repast::Point<int> & loc, unsigned int count)
 {
   CellGroup::transferStateTo(state, loc, count);
 }
