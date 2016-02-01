@@ -28,9 +28,6 @@ protected:
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
   const repast::GridDimensions & getDimensions() const;
 
-  void moveCellFromTo(int, const repast::Point<int> &, 
-                           const repast::Point<int> &);
-
 private:
   CellGroupImpl * _p_impl;
 };

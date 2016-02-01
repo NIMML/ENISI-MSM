@@ -28,22 +28,23 @@ DendriticsGroup::DendriticsGroup(
     std::vector<double> moveTo = randomMove(1, initialLoc);
     repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-    coordMap[newLoc].state[IMMATURE]++;
+    addCellAt(DendriticState::IMMATURE, newLoc);
   }
 }
 
 void DendriticsGroup::act() 
 {
-  typedef CoordMap::iterator it_type;
+  typedef CoordMap::const_iterator it_type;
+  it_type end = coordMapEnd();
 
-  for(it_type it = coordMap.begin(); it != coordMap.end(); it++) 
+  for(it_type it = coordMapBegin(); it != end; it++) 
   {
     repast::Point<int> loc = it->first;
     StateCount stateCount = it->second;
 
-    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (unsigned int i = 0; i < DendriticState::KEEP_AT_END; ++i)
     {
-      State state = static_cast<State>(i);
+      DendriticState::State state = static_cast<DendriticState::State>(i);
       for (unsigned int j = 0; j < stateCount.state[i]; ++j)
       {
 	act(state, loc);
@@ -52,9 +53,10 @@ void DendriticsGroup::act()
   }
 }
 
-void DendriticsGroup::act(State state, const repast::Point<int> & loc)
+void DendriticsGroup::act(
+    DendriticState::State state, const repast::Point<int> & loc)
 {
-  if (state == DEAD) return;
+  if (state == DendriticState::DEAD) return;
 
   const std::vector<const BacteriaGroup::StateCount *> 
     neighborList = getBacteriaNeighbors(loc);
@@ -62,7 +64,7 @@ void DendriticsGroup::act(State state, const repast::Point<int> & loc)
   std::vector<const BacteriaGroup::StateCount *>::const_iterator iter 
     = neighborList.begin();
 
-  State newState = state;
+  DendriticState::State newState = state;
   while ( iter != neighborList.end() )
   {
     const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
@@ -72,24 +74,24 @@ void DendriticsGroup::act(State state, const repast::Point<int> & loc)
     unsigned int tolegenicBacteriaCount 
       = p_bacteriaStateCount->state[BacteriaGroup::TOLEGENIC];
 
-    if (infectiousBacteriaCount && state == IMMATURE) 
+    if (infectiousBacteriaCount && state == DendriticState::IMMATURE) 
     {
-      newState = EFFECTOR;
+      newState = DendriticState::EFFECTOR;
     } 
-    else if ( tolegenicBacteriaCount && state == IMMATURE ) 
+    else if ( tolegenicBacteriaCount && state == DendriticState::IMMATURE ) 
     {
-      newState = TOLEROGENIC;
+      newState = DendriticState::TOLEROGENIC;
     }
     ++iter;
   }
 
-  if (newState == EFFECTOR) 
+  if (newState == DendriticState::EFFECTOR) 
   {
     Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
     cytoMap["IL6"]->setValueAtCoord(70, loc);
     cytoMap["IL12"]->setValueAtCoord(70, loc);
   }
-  else if (newState == TOLEROGENIC) 
+  else if (newState == DendriticState::TOLEROGENIC) 
   {
     Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
     cytoMap["TGFb"]->setValueAtCoord(70, loc);
@@ -98,8 +100,8 @@ void DendriticsGroup::act(State state, const repast::Point<int> & loc)
   std::vector<double> moveTo = randomMove(1, loc);
   repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-  coordMap[loc].state[state]--;
-  coordMap[newLoc].state[newState]++;
+  delCellAt(state, loc);
+  addCellAt(newState, newLoc);
 }
 
 const std::vector<const BacteriaGroup::StateCount *> 
