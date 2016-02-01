@@ -6,10 +6,14 @@
 #include "Properties.h"
 #include "CoordMap.h"
 
-class BacteriaGroup: public CellGroup, public CoordinateMap<3> {
-public:
-  enum State { DEAD, INFECTIOUS, TOLEGENIC, LAST_STATE_DO_NOT_MOVE};
+namespace BacteriaState {
+  enum State { DEAD, INFECTIOUS, TOLEGENIC, KEEP_LAST};
+}
 
+class BacteriaGroup: public CellGroup, 
+                     public CoordinateMap<BacteriaState::KEEP_LAST> 
+{
+public:
   BacteriaGroup(const boost::uintmax_t, CellLayer * p_layer);
 
   virtual void act();
@@ -27,7 +31,7 @@ public:
   virtual std::string classname() { return "BacteriaGroup"; }
 
 private:
-  void act(State, const repast::Point<int> &);
+  void act(BacteriaState::State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
 };
 

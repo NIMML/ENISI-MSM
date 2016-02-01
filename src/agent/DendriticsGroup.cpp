@@ -70,9 +70,9 @@ void DendriticsGroup::act(
     const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
 
     unsigned int infectiousBacteriaCount 
-      = p_bacteriaStateCount->state[BacteriaGroup::INFECTIOUS];
+      = p_bacteriaStateCount->state[BacteriaState::INFECTIOUS];
     unsigned int tolegenicBacteriaCount 
-      = p_bacteriaStateCount->state[BacteriaGroup::TOLEGENIC];
+      = p_bacteriaStateCount->state[BacteriaState::TOLEGENIC];
 
     if (infectiousBacteriaCount && state == DendriticState::IMMATURE) 
     {
