@@ -11,8 +11,8 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
 {
   for (boost::uintmax_t i = 0; i < bacteriaCount; i++) 
   {
-    BacteriaGroup::State state = INFECTIOUS;
-    if (i >= bacteriaCount/2) { state = TOLEGENIC; } 
+    BacteriaState::State state = BacteriaState::INFECTIOUS;
+    if (i >= bacteriaCount/2) { state = BacteriaState::TOLEGENIC; } 
 
     const repast::GridDimensions & dimensions = getDimensions();
     repast::Point<double> extents = dimensions.extents();
@@ -51,9 +51,9 @@ void BacteriaGroup::act()
     repast::Point<int> loc = it->first;
     StateCount stateCount  = it->second;
 
-    for (unsigned int i = 0; i < LAST_STATE_DO_NOT_MOVE; ++i)
+    for (unsigned int i = 0; i < BacteriaState::KEEP_LAST; ++i)
     {
-      State state = static_cast<State>(i);
+      BacteriaState::State state = static_cast<BacteriaState::State>(i);
       for (unsigned int j = 0; j < stateCount.state[i]; ++j)
       {
 	act(state, loc);
@@ -62,9 +62,10 @@ void BacteriaGroup::act()
   }
 }
 
-void BacteriaGroup::act(State state, const repast::Point<int> & loc)
+void BacteriaGroup::act(
+    BacteriaState::State state, const repast::Point<int> & loc)
 {
-  if (state == DEAD) return;
+  if (state == BacteriaState::DEAD) return;
 
   const std::vector< const TcellGroup::StateCount *> 
     neighborList = getTcellNeighbors(loc);
@@ -79,10 +80,10 @@ void BacteriaGroup::act(State state, const repast::Point<int> & loc)
     unsigned int th1Count = p_tcellCount->state[TcellState::TH1];
     unsigned int th17Count = p_tcellCount->state[TcellState::TH17];
 
-    if ( (th1Count || th17Count) && (state == INFECTIOUS) )
+    if ( (th1Count || th17Count) && (state == BacteriaState::INFECTIOUS) )
     {
       delCellAt(state, loc);
-      addCellAt(DEAD, loc);
+      addCellAt(BacteriaState::DEAD, loc);
       return;
     }
     ++iter;
