@@ -3,14 +3,16 @@
 
 #include "CellGroup.h"
 #include "BacteriaGroup.h"
+#include "CoordMap.h"
 
-class DendriticsGroup: public CellGroup
+namespace DendriticState {
+  enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, KEEP_AT_END};
+}
+
+class DendriticsGroup: public CellGroup, 
+                       public CoordinateMap<DendriticState::KEEP_AT_END>
 {
 public:
-  enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, LAST_STATE_DO_NOT_MOVE};
-
-  struct StateCount { unsigned int state[LAST_STATE_DO_NOT_MOVE]; };
-  typedef std::map<repast::Point<int>, StateCount> CoordMap;
 
   DendriticsGroup(const boost::uintmax_t, CellLayer *);
 
@@ -20,12 +22,10 @@ public:
   virtual std::string classname() { return "DendriticsGroup"; }
 
 private:
-  void act(State, const repast::Point<int> &);
+  void act(DendriticState::State, const repast::Point<int> &);
 
   const std::vector<const BacteriaGroup::StateCount *> 
     getBacteriaNeighbors(const repast::Point<int> &);
-
-  CoordMap coordMap;
 };
 
 #endif
