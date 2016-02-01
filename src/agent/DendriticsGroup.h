@@ -22,7 +22,7 @@ public:
 private:
   void act(State, const repast::Point<int> &);
 
-  const std::vector<BacteriaGroup::StateCount> 
+  const std::vector<const BacteriaGroup::StateCount *> 
     getBacteriaNeighbors(const repast::Point<int> &);
 
   CoordMap coordMap;

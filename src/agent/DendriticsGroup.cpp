@@ -56,21 +56,21 @@ void DendriticsGroup::act(State state, const repast::Point<int> & loc)
 {
   if (state == DEAD) return;
 
-  const std::vector<BacteriaGroup::StateCount> 
+  const std::vector<const BacteriaGroup::StateCount *> 
     neighborList = getBacteriaNeighbors(loc);
 
-  std::vector<BacteriaGroup::StateCount>::const_iterator iter 
+  std::vector<const BacteriaGroup::StateCount *>::const_iterator iter 
     = neighborList.begin();
 
   State newState = state;
   while ( iter != neighborList.end() )
   {
-    const BacteriaGroup::StateCount bacteriaStateCount = *iter;
+    const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
 
     unsigned int infectiousBacteriaCount 
-      = bacteriaStateCount.state[BacteriaGroup::INFECTIOUS];
+      = p_bacteriaStateCount->state[BacteriaGroup::INFECTIOUS];
     unsigned int tolegenicBacteriaCount 
-      = bacteriaStateCount.state[BacteriaGroup::TOLEGENIC];
+      = p_bacteriaStateCount->state[BacteriaGroup::TOLEGENIC];
 
     if (infectiousBacteriaCount && state == IMMATURE) 
     {
@@ -102,17 +102,17 @@ void DendriticsGroup::act(State state, const repast::Point<int> & loc)
   coordMap[newLoc].state[newState]++;
 }
 
-const std::vector<BacteriaGroup::StateCount> 
+const std::vector<const BacteriaGroup::StateCount *> 
 DendriticsGroup::getBacteriaNeighbors(const repast::Point<int> & loc)
 {
   std::vector<BacteriaGroup *> & instances 
     = BacteriaGroup::instances();
 
-  std::vector<BacteriaGroup::StateCount> allNeighbors;
+  std::vector<const BacteriaGroup::StateCount *> allNeighbors;
 
   for (size_t i = 0; i < instances.size(); ++i)
   {
-    const BacteriaGroup::StateCount &
+    const BacteriaGroup::StateCount *
       neighbors = instances[i]->getCellsAt(loc);
 
     allNeighbors.push_back(neighbors);
