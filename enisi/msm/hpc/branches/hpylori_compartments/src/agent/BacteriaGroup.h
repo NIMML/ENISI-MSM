@@ -4,13 +4,11 @@
 #include "Bacteria.h"
 #include "TcellGroup.h"
 #include "Properties.h"
+#include "CoordMap.h"
 
-class BacteriaGroup: public CellGroup {
+class BacteriaGroup: public CellGroup, public CoordinateMap<3> {
 public:
   enum State { DEAD, INFECTIOUS, TOLEGENIC, LAST_STATE_DO_NOT_MOVE};
-
-  struct StateCount { unsigned int state[LAST_STATE_DO_NOT_MOVE]; };
-  typedef std::map<repast::Point<int>, StateCount> CoordMap;
 
   BacteriaGroup(const boost::uintmax_t, CellLayer * p_layer);
 
@@ -18,9 +16,6 @@ public:
 
   const std::vector< const TcellGroup::StateCount *> 
     getTcellNeighbors(const repast::Point<int> &);
-
-  const StateCount &
-    getCellsAt(const repast::Point<int> & loc) { return coordMap[loc]; }
 
   static std::vector<BacteriaGroup *> & instances()
   {
@@ -34,7 +29,6 @@ public:
 private:
   void act(State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
-  CoordMap coordMap;
 };
 
 #endif
