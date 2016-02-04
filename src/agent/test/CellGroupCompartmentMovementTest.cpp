@@ -27,10 +27,12 @@ public:
     ENISI::Compartment laminaPropria(_dimensions);
 
     const int tcellCount = 0;
-    _lumenTcells = (TcellGroup *) AgentGroupFactory::create(
+    _p_lumenTcells = (TcellGroup *) AgentGroupFactory::create(
     	"TcellGroup", &_lumen, tcellCount);
     _epitheliumTcells = (TcellGroup *) AgentGroupFactory::create(
     	"TcellGroup", &_epithelium, tcellCount);
+
+    _p_lumenTcells->setBorder("S", _epitheliumTcells);
 
     _p_cellContext = _lumen.cellLayer()->context();
   }
@@ -46,7 +48,7 @@ private:
   ENISI::Compartment _lumen;
   ENISI::Compartment _epithelium;
 
-  TcellGroup * _lumenTcells;
+  TcellGroup * _p_lumenTcells;
   TcellGroup * _epitheliumTcells;
 };
 
@@ -54,8 +56,8 @@ void ACellGroupCompartmentMovement::assertTH17inLumenNotEpithelium()
 {
   _assertTH17inLumenNotEpitheliumCalled = true;
 
-  _lumenTcells->addCellAt(TcellState::TH17, repast::Point<int>(5,5));
-  const TcellGroup::StateCount lumenTcellCount = _lumenTcells->countByState();
+  _p_lumenTcells->addCellAt(TcellState::TH17, repast::Point<int>(5,5));
+  const TcellGroup::StateCount lumenTcellCount = _p_lumenTcells->countByState();
   ASSERT_THAT(lumenTcellCount.state[TcellState::TH17], Eq(1));
 
   const TcellGroup::StateCount epitheliumTcellCount = _epitheliumTcells->countByState();
