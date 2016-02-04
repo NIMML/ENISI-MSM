@@ -50,12 +50,25 @@ void CellGroupImpl::setTransfers(const CellGroup::Transfers & newTransfers)
 }
 
 void CellGroupImpl::setBorder(
-    const std::string & direction, const CellGroup * border)
+    const std::string & direction, const CellGroup * p_border)
 {
-  if (direction == "N") { _p_northBorder = border; } 
-  if (direction == "S") { _p_southBorder = border; } 
-  if (direction == "E") { _p_eastBorder = border; } 
-  if (direction == "W") { _p_westBorder = border; } 
+  if (direction == "N") 
+  { 
+    _p_northBorder = p_border; 
+  } 
+  else if (direction == "S") 
+  { 
+    _p_southBorder = p_border; 
+  } 
+  else if (direction == "E") 
+  { 
+    _p_eastBorder = p_border; 
+  } 
+  else if (direction == "W") 
+  { 
+    _p_westBorder = p_border; 
+  } 
+
   else { throw std::invalid_argument("Unknown border direction: " + direction); }
 }
 
