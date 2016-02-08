@@ -1,7 +1,6 @@
 #ifndef ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
 #define ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
 
-#include "CellGroup.h"
 #include "BacteriaGroup.h"
 #include "CoordMap.h"
 
@@ -9,8 +8,7 @@ namespace DendriticState {
   enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, KEEP_AT_END};
 }
 
-class DendriticsGroup: public CellGroup, 
-                       public CoordinateMap<DendriticState::KEEP_AT_END>
+class DendriticsGroup: public CoordinateMap<DendriticState::KEEP_AT_END>
 {
 public:
 

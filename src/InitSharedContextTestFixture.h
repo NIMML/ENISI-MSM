@@ -9,15 +9,17 @@ using namespace testing;
 class InitSharedContext: public Test 
 {
 public:
-  const int _height;
-  const int _width;
+  const int _oriX;
+  const int _oriY;
+  const int _extentX;
+  const int _extentY;
   repast::GridDimensions _dimensions;
   ENISI::Compartment _compartment;
   AgentFactory _factory;
 
-  InitSharedContext() : _height(100), _width(100),
-    _dimensions(repast::Point<double>(0, 0), 
-	        repast::Point<double>(_width, _height)),
+  InitSharedContext() : _oriX(0), _oriY(0), _extentX(100), _extentY(100),
+    _dimensions(repast::Point<double>(_oriX, _oriY), 
+	        repast::Point<double>(_extentX, _extentY)),
     _compartment(_dimensions)
     { }
   void SetUp() { }

@@ -10,8 +10,7 @@ namespace BacteriaState {
   enum State { DEAD, INFECTIOUS, TOLEGENIC, KEEP_LAST};
 }
 
-class BacteriaGroup: public CellGroup, 
-                     public CoordinateMap<BacteriaState::KEEP_LAST> 
+class BacteriaGroup: public CoordinateMap<BacteriaState::KEEP_LAST> 
 {
 public:
   BacteriaGroup(const boost::uintmax_t, CellLayer * p_layer);
