@@ -5,8 +5,6 @@
 
 class CellGroup;
 
-typedef std::map<repast::Point<int>, std::vector<int> > CoordMap;
-
 class CellGroupImpl
 {
 public:
@@ -22,6 +20,7 @@ public:
   bool isPointInBounds(const repast::Point<int> &);
 
   void setBorder(const std::string &, const CellGroup *);
+  bool moveCellAcrossBorder(int, const repast::Point<int> &);
 
   std::vector<double> randomMove(const double &, const repast::Point<int> &);
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
@@ -30,6 +29,7 @@ public:
 private:
   Transfers _markedForTransfer;
   const repast::GridDimensions _dimensions;
+  const int _oriX, _oriY, _extentX, _extentY, _endX, _endY;
 
   const CellGroup * _p_northBorder;
   const CellGroup * _p_southBorder;

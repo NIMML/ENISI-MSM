@@ -23,10 +23,12 @@ public:
 
   void setBorder(const std::string &, const CellGroup *);
 
+  const repast::GridDimensions & getDimensions() const;
 protected:
+  bool moveCellAcrossBorder(int, const repast::Point<int> &);
+
   std::vector<double> randomMove(const double &, const repast::Point<int> &);
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
-  const repast::GridDimensions & getDimensions() const;
 
 private:
   CellGroupImpl * _p_impl;
