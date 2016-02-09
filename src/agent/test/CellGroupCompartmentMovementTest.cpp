@@ -127,18 +127,24 @@ std::string ACellGroupCompartmentMovement::getBorderCrossingDirection(
 
    int ptX = pt[0]; int ptY = pt[1];
 
-   bool xEastOfBounds = (ptX > endX);
-   bool xWestOfBounds = (ptX < _oriX);
-   bool xInBounds = (ptX >= _oriX && ptX <= endX);
+   bool xEastOfBounds = (ptX >= endX);
+   bool xWestOfBounds = (ptX <= _oriX);
+   bool xInBounds = (ptX > _oriX && ptX < endX);
 
-   bool yNorthOfBounds = (ptY < _oriY);
-   bool ySouthOfBounds = (ptY > endY);
-   bool yInBounds = (ptY >= _oriY && ptY <= endY);
+   bool yNorthOfBounds = (ptY <= _oriY);
+   bool ySouthOfBounds = (ptY >= endY);
+   bool yInBounds = (ptY > _oriY && ptY < endY);
 
    if      (xInBounds && yNorthOfBounds) { return "N"; }
-   if      (xInBounds && ySouthOfBounds) { return "S"; }
-   if      (xEastOfBounds && yInBounds)  { return "E"; }
+   else if (xInBounds && ySouthOfBounds) { return "S"; }
+   else if (xEastOfBounds && yInBounds)  { return "E"; }
    else if (xWestOfBounds && yInBounds)  { return "W"; }
+
+   else if (xWestOfBounds && yNorthOfBounds)  { return "NW"; }
+   else if (xEastOfBounds && yNorthOfBounds)  { return "NE"; }
+   else if (xWestOfBounds && ySouthOfBounds)  { return "SW"; }
+   else if (xEastOfBounds && ySouthOfBounds)  { return "SE"; }
+
    else { throw std::invalid_argument("Point not out of bounds"); }
 }
 
@@ -157,29 +163,47 @@ bool ACellGroupCompartmentMovement::addValueToCoord(
 TEST_F(ACellGroupCompartmentMovement, ChecksPointInBounds)
 {
   repast::StickyBorders borders(_dimensions);
+
+  /* Illustrate the closest to the border a point can go before throwing
+   * exceptions */
   std::vector<double> pt(2);
   pt[0] = _oriX + _extentX - 1; pt[1] = _oriY + _extentY - 1;
   borders.transform(pt, pt);
 
   std::vector<double> northPt(2);
-  northPt[0] = _oriX + _extentX/2; northPt[1] = _oriY - 1;
+  northPt[0] = _oriX + _extentX/2; northPt[1] = _oriY;
+  ASSERT_THAT(getBorderCrossingDirection(northPt), Eq("N"));
 
   std::vector<double> southPt(2);
-  southPt[0] = _oriX + _extentX/2; southPt[1] = _oriY + _extentY + 1;
+  southPt[0] = _oriX + _extentX/2; southPt[1] = _oriY + _extentY;
+  ASSERT_THAT(getBorderCrossingDirection(southPt), Eq("S"));
 
   std::vector<double> westPt(2);
-  westPt[0] = _oriX - 1; westPt[1] = _oriY + _extentY/2;
+  westPt[0] = _oriX; westPt[1] = _oriY + _extentY/2;
+  ASSERT_THAT(getBorderCrossingDirection(westPt), Eq("W"));
 
   std::vector<double> eastPt(2);
-  eastPt[0] = _oriX + _extentX + 1; eastPt[1] = _oriY + _extentY/2;
-
-  ASSERT_THAT(getBorderCrossingDirection(northPt), Eq("N"));
-  ASSERT_THAT(getBorderCrossingDirection(southPt), Eq("S"));
+  eastPt[0] = _oriX + _extentX; eastPt[1] = _oriY + _extentY/2;
   ASSERT_THAT(getBorderCrossingDirection(eastPt), Eq("E"));
-  ASSERT_THAT(getBorderCrossingDirection(westPt), Eq("W"));
+
+  std::vector<double> northWestPt(2);
+  northWestPt[0] = _oriX; northWestPt[1] = _oriY;
+  ASSERT_THAT(getBorderCrossingDirection(northWestPt), Eq("NW"));
+
+  std::vector<double> northEastPt(2);
+  northEastPt[0] = _oriX + _extentX; northEastPt[1] = _oriY;
+  ASSERT_THAT(getBorderCrossingDirection(northEastPt), Eq("NE"));
+
+  std::vector<double> southWestPt(2);
+  southWestPt[0] = _oriX; southWestPt[1] = _oriY + _extentY;
+  ASSERT_THAT(getBorderCrossingDirection(southWestPt), Eq("SW"));
+
+  std::vector<double> southEastPt(2);
+  southEastPt[0] = _oriX + _extentX; southEastPt[1] = _oriY + _extentY;
+  ASSERT_THAT(getBorderCrossingDirection(southEastPt), Eq("SE"));
+
 /*  if (! addValueToCoord(pt))*/
   //{
     //std::string direction = getBorderCrossingDirection(pt);
   /*}*/
 }
-

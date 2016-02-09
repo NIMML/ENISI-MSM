@@ -20,7 +20,7 @@ public:
 
   bool addCellAt(int cell, const repast::Point<int> & pt) 
   { 
-    std::vector<int> vectorPt(2);;
+    std::vector<int> vectorPt(2);
     vectorPt[0] = pt.getX(); vectorPt[1] = pt.getY();
 
     try { _borders.transform(vectorPt, vectorPt); } 

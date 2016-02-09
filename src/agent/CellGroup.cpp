@@ -22,6 +22,10 @@ void CellGroup::setBorder(
     const std::string & direction, const CellGroup * p_border) 
 { _p_impl->setBorder(direction, p_border); }
 
+bool CellGroup::moveCellAcrossBorder(
+    int cellState, const repast::Point<int> & pt) 
+{ return _p_impl->moveCellAcrossBorder(cellState, pt); }
+
 std::vector<double> CellGroup::randomMove(
     const double & speed, const repast::Point<int> & fromPt) 
 { return _p_impl->randomMove(speed, fromPt); }
@@ -34,9 +38,14 @@ const repast::GridDimensions & CellGroup::getDimensions() const
 { return _p_impl->getDimensions(); }
 
 /* CellGroupImpl */
-CellGroupImpl::CellGroupImpl(CellLayer * p_layer)
- : _dimensions(p_layer->dimensions()), _p_northBorder(NULL), 
-   _p_southBorder(NULL), _p_eastBorder(NULL), _p_westBorder(NULL) { }
+CellGroupImpl::CellGroupImpl(CellLayer * p_layer) : 
+  _dimensions(p_layer->dimensions()), 
+  _oriX(_dimensions.origin().getX()), _oriY(_dimensions.origin().getY()),
+  _extentX(_dimensions.extents().getX()), _extentY(_dimensions.extents().getY()),
+  _endX(_oriX + _extentX), _endY(_oriY + _extentY),
+  _p_northBorder(NULL), _p_southBorder(NULL), _p_eastBorder(NULL), 
+  _p_westBorder(NULL) 
+{ }
 
 const CellGroup::Transfers & CellGroupImpl::getTransfers() 
 { return _markedForTransfer; }
@@ -70,6 +79,47 @@ void CellGroupImpl::setBorder(
   } 
 
   else { throw std::invalid_argument("Unknown border direction: " + direction); }
+}
+
+bool CellGroupImpl::moveCellAcrossBorder(
+    int cellState __attribute__((unused)), 
+    const repast::Point<int> & pt __attribute__((unused))) 
+{ 
+  int ptX = pt[0]; int ptY = pt[1];
+
+  bool xEastOfBounds = (ptX >= _endX);
+  bool xWestOfBounds = (ptX <= _oriX);
+  bool xInBounds = (ptX > _oriX && ptX < _endX);
+
+  bool yNorthOfBounds = (ptY <= _oriY);
+  bool ySouthOfBounds = (ptY >= _endY);
+  bool yInBounds = (ptY > _oriY && ptY < _endY);
+
+  if (xInBounds && yNorthOfBounds /*&& _p_northBorder != NULL*/) 
+  { 
+/*    const repast::GridDimensions & borderDims  = _p_northBorder->getDimensions();*/
+    //int borderOriginX = borderDims.origin().getX();
+    //int borderOriginY = borderDims.origin().getY();
+    //int borderExtentX = borderDims.extents().getX();
+    //int borderExtentY = borderDims.extents().getY();
+    //int newX = (pt.getX() % borderExtentX) + borderOriginX;
+    //int newY = (pt.getY() % borderExtentY) + borderOriginY;
+    //repast::Point<int> newPt(newX, newY);
+    /*return _p_northBorder->addCellAt(cellState, newPt); */
+    return "N";
+  }
+  else if (xInBounds && ySouthOfBounds) { return "S"; }
+  else if (xEastOfBounds && yInBounds)  { return "E"; }
+  else if (xWestOfBounds && yInBounds)  { return "W"; }
+
+  else if (xWestOfBounds && yNorthOfBounds)  { return "NW"; }
+  else if (xEastOfBounds && yNorthOfBounds)  { return "NE"; }
+  else if (xWestOfBounds && ySouthOfBounds)  { return "SW"; }
+  else if (xEastOfBounds && ySouthOfBounds)  { return "SE"; }
+
+  else { throw std::invalid_argument("Point not out of bounds"); }
+
+  return true; 
 }
 
 void CellGroupImpl::transferStateTo(
