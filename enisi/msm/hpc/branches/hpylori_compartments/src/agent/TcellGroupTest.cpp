@@ -20,25 +20,6 @@ public:
   void TearDown() { }
 };
 
-TEST_F(ATcellGroup, HasHorizontalBoundariesBasedOnWorldSize)
-{
-  int rank = repast::RepastProcess::instance()->rank();
-
-  repast::Point<int> pt1(0,0);
-  repast::Point<int> pt2(51,0);
-
-  if (0 == rank)
-  {
-    ASSERT_TRUE(_p_tcells->isPointInBounds(pt1));
-    ASSERT_FALSE(_p_tcells->isPointInBounds(pt2));
-  }
-  else if (1 == rank)
-  {
-    ASSERT_FALSE(_p_tcells->isPointInBounds(pt1));
-    ASSERT_TRUE(_p_tcells->isPointInBounds(pt2));
-  }
-}
-
 TEST_F(ATcellGroup, HasExpectedCount)
 {
   ASSERT_THAT(_p_tcells->count(), Eq(tcellCount));
