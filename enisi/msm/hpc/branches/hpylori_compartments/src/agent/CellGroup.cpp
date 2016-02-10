@@ -82,8 +82,7 @@ void CellGroupImpl::setBorder(
 }
 
 bool CellGroupImpl::moveCellAcrossBorder(
-    int cellState __attribute__((unused)), 
-    const repast::Point<int> & pt __attribute__((unused))) 
+    int cellState , const repast::Point<int> & pt 
 { 
   int ptX = pt[0]; int ptY = pt[1];
 
