@@ -21,8 +21,6 @@ public:
 
   bool isPointInBounds(const repast::Point<int> &);
 
-  void setBorder(const std::string &, const CellGroup *);
-
   const repast::GridDimensions & getDimensions() const;
 protected:
   bool moveCellAcrossBorder(int, const repast::Point<int> &);
