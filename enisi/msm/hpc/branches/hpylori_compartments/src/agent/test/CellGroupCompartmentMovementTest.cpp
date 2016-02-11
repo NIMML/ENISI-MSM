@@ -45,7 +45,6 @@ public:
   void assertTransfersCleared();
 
   bool addValueToCoord(const std::vector<double> &);
-  std::string getBorderCrossingDirection(const std::vector<double> &);
 
 private:
   ENISI::Compartment _lumen;
@@ -60,21 +59,35 @@ void ACellGroupCompartmentMovement::assertTH17inLumenNotEpithelium()
   _assertTH17inLumenNotEpitheliumCalled = true;
 
   _p_lumenTcells->addCellAt(TcellState::TH17, repast::Point<int>(5,5));
-  const TcellGroup::StateCount lumenTcellCount = _p_lumenTcells->countByState();
+  const TcellGroup::StateCount 
+		lumenTcellCount = _p_lumenTcells->countByState();
   ASSERT_THAT(lumenTcellCount.state[TcellState::TH17], Eq(1));
 
-  const TcellGroup::StateCount epitheliumTcellCount = _epitheliumTcells->countByState();
+  const TcellGroup::StateCount 
+		epitheliumTcellCount = _epitheliumTcells->countByState();
   ASSERT_THAT(epitheliumTcellCount.state[TcellState::TH17], Eq(0));
 }
 
 void ACellGroupCompartmentMovement::moveTH17betweenLumenEpitheliumBarrier()
 {
   _moveTH17betweenLumenEpitheliumBarrierCalled = true;
+  _p_lumenTcells->delCellAt(TcellState::TH17, repast::Point<int>(5,5));
+
+	repast::Point<int> outOfSouthBounds(_oriX + _extentX/2, _oriY + _extentY + 1);
+  _p_lumenTcells->addCellAt(TcellState::TH17, outOfSouthBounds);
 }
 
 void ACellGroupCompartmentMovement::assertTH17inEpitheliumNotLumen()
 {
   _assertTH17inEpitheliumNotLumenCalled = true;
+
+  const TcellGroup::StateCount 
+		lumenTcellCount = _p_lumenTcells->countByState();
+  ASSERT_THAT(lumenTcellCount.state[TcellState::TH17], Eq(0));
+
+  const TcellGroup::StateCount 
+		epitheliumTcellCount = _epitheliumTcells->countByState();
+  ASSERT_THAT(epitheliumTcellCount.state[TcellState::TH17], Eq(1));
 }
 
 void ACellGroupCompartmentMovement::assertTransfersCleared()
@@ -119,35 +132,6 @@ TEST_F(ACellGroupCompartmentMovement, SyncsAgentChangesAcrossProcesses)
   repast::RepastProcess::instance()->done();
 }
 
-std::string ACellGroupCompartmentMovement::getBorderCrossingDirection(
-    const std::vector<double> & pt)
-{
-   int endX = _oriX + _extentX;
-   int endY = _oriY + _extentY;
-
-   int ptX = pt[0]; int ptY = pt[1];
-
-   bool xEastOfBounds = (ptX >= endX);
-   bool xWestOfBounds = (ptX <= _oriX);
-   bool xInBounds = (ptX > _oriX && ptX < endX);
-
-   bool yNorthOfBounds = (ptY <= _oriY);
-   bool ySouthOfBounds = (ptY >= endY);
-   bool yInBounds = (ptY > _oriY && ptY < endY);
-
-   if      (xInBounds && yNorthOfBounds) { return "N"; }
-   else if (xInBounds && ySouthOfBounds) { return "S"; }
-   else if (xEastOfBounds && yInBounds)  { return "E"; }
-   else if (xWestOfBounds && yInBounds)  { return "W"; }
-
-   else if (xWestOfBounds && yNorthOfBounds)  { return "NW"; }
-   else if (xEastOfBounds && yNorthOfBounds)  { return "NE"; }
-   else if (xWestOfBounds && ySouthOfBounds)  { return "SW"; }
-   else if (xEastOfBounds && ySouthOfBounds)  { return "SE"; }
-
-   else { throw std::invalid_argument("Point not out of bounds"); }
-}
-
 bool ACellGroupCompartmentMovement::addValueToCoord(
     const std::vector<double> & in) 
 {
@@ -168,42 +152,19 @@ TEST_F(ACellGroupCompartmentMovement, ChecksPointInBounds)
    * exceptions */
   std::vector<double> pt(2);
   pt[0] = _oriX + _extentX - 1; pt[1] = _oriY + _extentY - 1;
-  borders.transform(pt, pt);
 
-  std::vector<double> northPt(2);
-  northPt[0] = _oriX + _extentX/2; northPt[1] = _oriY;
-  ASSERT_THAT(getBorderCrossingDirection(northPt), Eq("N"));
+  std::vector<double> pt2(2);
+  pt2[0] = _oriX; pt2[1] = _oriY;
 
-  std::vector<double> southPt(2);
-  southPt[0] = _oriX + _extentX/2; southPt[1] = _oriY + _extentY;
-  ASSERT_THAT(getBorderCrossingDirection(southPt), Eq("S"));
+	ASSERT_NO_THROW( borders.transform(pt, pt) );
+	ASSERT_NO_THROW( borders.transform(pt2, pt2) );
 
-  std::vector<double> westPt(2);
-  westPt[0] = _oriX; westPt[1] = _oriY + _extentY/2;
-  ASSERT_THAT(getBorderCrossingDirection(westPt), Eq("W"));
+	std::vector<double> outOfBounds(2);
+	outOfBounds[0] = _oriX + _extentX; outOfBounds[1] = _oriY + _extentY;
+	ASSERT_THROW( borders.transform(outOfBounds, outOfBounds), std::exception);
 
-  std::vector<double> eastPt(2);
-  eastPt[0] = _oriX + _extentX; eastPt[1] = _oriY + _extentY/2;
-  ASSERT_THAT(getBorderCrossingDirection(eastPt), Eq("E"));
+	std::vector<double> outOfBounds2(2);
+	outOfBounds2[0] = _oriX - 1; outOfBounds2[1] = _oriY - 1;
+	ASSERT_THROW( borders.transform(outOfBounds2, outOfBounds2), std::exception);
 
-  std::vector<double> northWestPt(2);
-  northWestPt[0] = _oriX; northWestPt[1] = _oriY;
-  ASSERT_THAT(getBorderCrossingDirection(northWestPt), Eq("NW"));
-
-  std::vector<double> northEastPt(2);
-  northEastPt[0] = _oriX + _extentX; northEastPt[1] = _oriY;
-  ASSERT_THAT(getBorderCrossingDirection(northEastPt), Eq("NE"));
-
-  std::vector<double> southWestPt(2);
-  southWestPt[0] = _oriX; southWestPt[1] = _oriY + _extentY;
-  ASSERT_THAT(getBorderCrossingDirection(southWestPt), Eq("SW"));
-
-  std::vector<double> southEastPt(2);
-  southEastPt[0] = _oriX + _extentX; southEastPt[1] = _oriY + _extentY;
-  ASSERT_THAT(getBorderCrossingDirection(southEastPt), Eq("SE"));
-
-/*  if (! addValueToCoord(pt))*/
-  //{
-    //std::string direction = getBorderCrossingDirection(pt);
-  /*}*/
 }

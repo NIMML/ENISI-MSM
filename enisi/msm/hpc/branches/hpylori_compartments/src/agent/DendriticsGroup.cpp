@@ -6,10 +6,10 @@ DendriticsGroup::DendriticsGroup(
 {
   for (boost::uintmax_t i = 0; i < dendriticsCount; i++) 
   {
-    repast::GridDimensions dimensions = getDimensions();
+    const repast::GridDimensions * p_dimensions = getDimensions();
 
-    repast::Point<double> extents = dimensions.extents();
-    repast::Point<double> origin = dimensions.origin();
+    repast::Point<double> extents = p_dimensions->extents();
+    repast::Point<double> origin = p_dimensions->origin();
 
     double xStart = origin.getX();
     double yStart = origin.getY();

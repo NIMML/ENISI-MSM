@@ -1,5 +1,3 @@
-* Have setBorder() auto-set the CellGroup's opposite border (A setting B as a
-  north border should auto-set B as A's south border)
 * H.P agent should pass completely through epithelium (not linger inside it)
 * test after movement that DEAD state exists in epithelium, not lumen
 * Work on moving cell states between compartments (start with DEAD)

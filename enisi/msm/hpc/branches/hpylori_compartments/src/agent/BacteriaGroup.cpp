@@ -14,9 +14,9 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
     BacteriaState::State state = BacteriaState::INFECTIOUS;
     if (i >= bacteriaCount/2) { state = BacteriaState::TOLEGENIC; } 
 
-    const repast::GridDimensions & dimensions = getDimensions();
-    repast::Point<double> extents = dimensions.extents();
-    repast::Point<double> origin = dimensions.origin();
+    const repast::GridDimensions * p_dimensions = getDimensions();
+    repast::Point<double> extents = p_dimensions->extents();
+    repast::Point<double> origin = p_dimensions->origin();
 
     double xStart = origin.getX();
     double yStart = origin.getY();
