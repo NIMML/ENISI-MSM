@@ -9,10 +9,13 @@ namespace MacrophageState {
 
 class MacrophageGroup : public CoordinateMap<MacrophageState::KEEP_AT_END>
 {
+public:
   MacrophageGroup(const boost::uintmax_t, CellLayer * p_layer);
   virtual void act();
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "MacrophageGroup"; }
+private:
+  void act(MacrophageState::State, const repast::Point<int> &);
 };
 
 #endif
