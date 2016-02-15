@@ -4,7 +4,7 @@
 #include "CoordMap.h"
 
 namespace HPyloriState {
-  enum State { ALIVE, DEAD, KEEP_AT_END};
+  enum State { NAIVE, DEAD, KEEP_AT_END};
 };
 
 class HPyloriGroup : public CoordinateMap<HPyloriState::KEEP_AT_END>
