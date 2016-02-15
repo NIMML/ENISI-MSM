@@ -54,6 +54,8 @@ public:
     return &_dimensions;
   }
 protected:
+  typedef typename CoordMap::const_iterator coordMapConstIter;
+
   bool moveCellAcrossBorder(int, const repast::Point<int> &);
 
 private:
