@@ -9,6 +9,7 @@ namespace HPyloriState {
 
 class HPyloriGroup : public CoordinateMap<HPyloriState::KEEP_AT_END>
 {
+  HPyloriGroup(const boost::uintmax_t, CellLayer * p_layer);
   virtual void act();
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "HPyloriGroup"; }
