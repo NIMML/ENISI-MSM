@@ -9,7 +9,9 @@ namespace HPyloriState {
 
 class HPyloriGroup : public CoordinateMap<HPyloriState::KEEP_AT_END>
 {
-
+  virtual void act();
+  virtual Color getColor() { return black; }
+  virtual std::string classname() { return "HPyloriGroup"; }
 };
 
 #endif
