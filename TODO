@@ -1,0 +1,9 @@
+* Create MacrophageGroup class
+* H.P agent should pass completely through epithelium (not linger inside it)
+* Confirm transferStateTo() is properly defined in AgentGroup, then eliminate
+  call in TcellGroup & cast in CellGroupSyncTest
+* Move CellGroupSyncTest::act() into CellLayer::act()
+* Change AgentGroupPackage agent from ENISIAgent to AgentGroup
+* Eliminate context()/space()/grid() calls in CellGroupSyncTest
+* Eliminate context()/space()/grid() calls in models
+* Epithelial damage indicator (?)
