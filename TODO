@@ -1,3 +1,5 @@
+* Make H.P. class move in act()
+* Change all CoordMap subclasses to use coordMapConstIter
 * Add MacrophageGroup act() rules
 * MacrophageGroup class
 * H.P agent should pass completely through epithelium (not linger inside it)

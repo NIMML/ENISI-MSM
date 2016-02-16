@@ -41,10 +41,9 @@ void TcellGroup::init(const boost::uintmax_t tCellCount)
 
 void TcellGroup::act()
 {
-  typedef CoordMap::const_iterator it_type;
-  it_type end = coordMapEnd();
+  coordMapConstIter end = coordMapEnd();
 
-  for(it_type it = coordMapBegin(); it != end; it++) 
+  for(coordMapConstIter it = coordMapBegin(); it != end; it++) 
   {
     repast::Point<int> loc = it->first;
     const StateCount count = it->second;
@@ -121,10 +120,9 @@ int TcellGroup::count()
 {
   int total = 0;
 
-  typedef CoordMap::const_iterator it_type;
-  it_type end = coordMapEnd();
+  coordMapConstIter end = coordMapEnd();
 
-  for(it_type it = coordMapBegin(); it != end; it++) 
+  for(coordMapConstIter it = coordMapBegin(); it != end; it++) 
   {
     const StateCount count  = it->second;
 
@@ -141,10 +139,9 @@ TcellGroup::StateCount TcellGroup::countByState()
 {
   StateCount total;
 
-  typedef CoordMap::const_iterator it_type;
-  it_type end = coordMapEnd();
+  coordMapConstIter end = coordMapEnd();
 
-  for(it_type it = coordMapBegin(); it != end; it++) 
+  for(coordMapConstIter it = coordMapBegin(); it != end; it++) 
   {
     const StateCount count  = it->second;
     for (int i = 0; i < TcellState::KEEP_AT_END; ++i)
