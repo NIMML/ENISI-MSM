@@ -33,3 +33,16 @@ HPyloriGroup::HPyloriGroup(
 }
 
 void HPyloriGroup::act() { }
+
+void HPyloriGroup::act(
+    HPyloriState::State state, const repast::Point<int> & loc)
+{
+  if (state == HPyloriState::DEAD) return;
+
+  std::vector<double> moveTo = randomMove(1, loc);
+  repast::Point<int> newLoc(moveTo[0], moveTo[1]);
+
+  delCellAt(state, loc);
+  addCellAt(state, newLoc);
+}
+

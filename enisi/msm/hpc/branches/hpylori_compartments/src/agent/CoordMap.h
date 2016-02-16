@@ -26,17 +26,7 @@ public:
 
   typedef std::map<repast::Point<int>, StateCount > CoordMap;
 
-  bool addCellAt(int cellState, const repast::Point<int> & pt) 
-  { 
-    std::vector<int> vectorPt(2);
-    vectorPt[0] = pt.getX(); vectorPt[1] = pt.getY();
-
-    try { _borders.transform(vectorPt, vectorPt); } 
-    catch(const std::exception&) { return moveCellAcrossBorder(cellState, pt); }
-
-    _coordMap[pt].state[cellState]++; 
-    return true;
-  }
+  bool addCellAt(int, const repast::Point<int> &); 
 
   void delCellAt(int cell, const repast::Point<int> & pt)
   { _coordMap[pt].state[cell]--; }
@@ -95,6 +85,19 @@ void CoordinateMap<N>::setBorder(
 }
 
 template <size_t N>
+bool CoordinateMap<N>::addCellAt(int cellState, const repast::Point<int> & pt) 
+{ 
+  std::vector<int> vectorPt(2);
+  vectorPt[0] = pt.getX(); vectorPt[1] = pt.getY();
+
+  try { _borders.transform(vectorPt, vectorPt); } 
+  catch(const std::exception&) { return moveCellAcrossBorder(cellState, pt); }
+
+  _coordMap[pt].state[cellState]++; 
+  return true;
+}
+
+template <size_t N>
 bool CoordinateMap<N>::moveCellAcrossBorder(
     int cellState, const repast::Point<int> & pt)
 { 
@@ -133,64 +136,64 @@ bool CoordinateMap<N>::moveCellAcrossBorder(
   }
   else if ( xInBounds && ySouthOfBounds ) 
   { 
-		if ( _p_southBorder != NULL )	
-		{
-			const repast::GridDimensions * p_borderDims  = _p_southBorder->getDimensions();
-			int borderOriginX = p_borderDims->origin().getX();
-			int borderOriginY = p_borderDims->origin().getY();
-			int borderExtentX = p_borderDims->extents().getX();
+    if ( _p_southBorder != NULL )	
+    {
+	    const repast::GridDimensions * p_borderDims  = _p_southBorder->getDimensions();
+	    int borderOriginX = p_borderDims->origin().getX();
+	    int borderOriginY = p_borderDims->origin().getY();
+	    int borderExtentX = p_borderDims->extents().getX();
 
-			int newX = abs(ptX % borderExtentX) + borderOriginX;
-			int newY = borderOriginY;
+	    int newX = abs(ptX % borderExtentX) + borderOriginX;
+	    int newY = borderOriginY;
 
-			repast::Point<int> newPt(newX, newY);
-			ret = _p_southBorder->addCellAt(cellState, newPt); 
-		} else 
-		{	
-			repast::Point<int> newPt(ptX, _endY);
-			ret = _p_southBorder->addCellAt(cellState, newPt); 
-		}
+	    repast::Point<int> newPt(newX, newY);
+	    ret = _p_southBorder->addCellAt(cellState, newPt); 
+    } else 
+    {	
+	    repast::Point<int> newPt(ptX, _endY);
+	    ret = _p_southBorder->addCellAt(cellState, newPt); 
+    }
   }
   else if ( xEastOfBounds && yInBounds )  
   { 
-		if ( _p_eastBorder != NULL )
-		{
-			const repast::GridDimensions * p_borderDims  = _p_eastBorder->getDimensions();
-			int borderOriginX = p_borderDims->origin().getX();
-			int borderOriginY = p_borderDims->origin().getY();
-			int borderExtentY = p_borderDims->extents().getY();
+    if ( _p_eastBorder != NULL )
+    {
+	    const repast::GridDimensions * p_borderDims  = _p_eastBorder->getDimensions();
+	    int borderOriginX = p_borderDims->origin().getX();
+	    int borderOriginY = p_borderDims->origin().getY();
+	    int borderExtentY = p_borderDims->extents().getY();
 
-			int newX = borderOriginX;
-			int newY = abs(ptY % borderExtentY) + borderOriginY; 
+	    int newX = borderOriginX;
+	    int newY = abs(ptY % borderExtentY) + borderOriginY; 
 
-			repast::Point<int> newPt(newX, newY);
-			ret = _p_eastBorder->addCellAt(cellState, newPt); 
-		} else
-		{
-			repast::Point<int> newPt(_endX, ptY);
-			ret = _p_eastBorder->addCellAt(cellState, newPt); 
-		}
+	    repast::Point<int> newPt(newX, newY);
+	    ret = _p_eastBorder->addCellAt(cellState, newPt); 
+    } else
+    {
+	    repast::Point<int> newPt(_endX, ptY);
+	    ret = _p_eastBorder->addCellAt(cellState, newPt); 
+    }
   }
   else if (xWestOfBounds && yInBounds )  
   { 
-		if ( _p_westBorder != NULL )
-		{
-			const repast::GridDimensions * p_borderDims  = _p_westBorder->getDimensions();
-			int borderOriginX = p_borderDims->origin().getX();
-			int borderOriginY = p_borderDims->origin().getY();
-			int borderExtentX = p_borderDims->extents().getX();
-			int borderExtentY = p_borderDims->extents().getY();
+    if ( _p_westBorder != NULL )
+    {
+	    const repast::GridDimensions * p_borderDims  = _p_westBorder->getDimensions();
+	    int borderOriginX = p_borderDims->origin().getX();
+	    int borderOriginY = p_borderDims->origin().getY();
+	    int borderExtentX = p_borderDims->extents().getX();
+	    int borderExtentY = p_borderDims->extents().getY();
 
-			int newX = borderOriginX + borderExtentX - 1; 
-			int newY = abs(ptY % borderExtentY) + borderOriginY;
+	    int newX = borderOriginX + borderExtentX - 1; 
+	    int newY = abs(ptY % borderExtentY) + borderOriginY;
 
-			repast::Point<int> newPt(newX, newY);
-			ret = _p_westBorder->addCellAt(cellState, newPt); 
-		} else 
-		{
-			repast::Point<int> newPt(_oriX, ptY);
-			ret = _p_eastBorder->addCellAt(cellState, newPt); 
-		}
+	    repast::Point<int> newPt(newX, newY);
+	    ret = _p_westBorder->addCellAt(cellState, newPt); 
+    } else 
+    {
+	    repast::Point<int> newPt(_oriX, ptY);
+	    ret = _p_eastBorder->addCellAt(cellState, newPt); 
+    }
   }
   else if (xWestOfBounds && yNorthOfBounds)  
   { 
