@@ -43,10 +43,9 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
 
 void BacteriaGroup::act()
 {
-  typedef CoordMap::const_iterator it_type;
-  it_type end = coordMapEnd();
+  coordMapConstIter end = coordMapEnd();
 
-  for(it_type it = coordMapBegin(); it != end; it++) 
+  for(coordMapConstIter it = coordMapBegin(); it != end; it++) 
   {
     repast::Point<int> loc = it->first;
     StateCount stateCount  = it->second;
