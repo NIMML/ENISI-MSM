@@ -1,8 +1,7 @@
-* Make H.P. class move in act()
-* Change all CoordMap subclasses to use coordMapConstIter
 * Add MacrophageGroup act() rules
 * MacrophageGroup class
 * H.P agent should pass completely through epithelium (not linger inside it)
+-------
 * Confirm transferStateTo() is properly defined in AgentGroup, then eliminate
   call in TcellGroup & cast in CellGroupSyncTest
 * Move CellGroupSyncTest::act() into CellLayer::act()
