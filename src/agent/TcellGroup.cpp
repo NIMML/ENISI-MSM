@@ -84,16 +84,6 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
     double IL17 = odeModel.getConcentration("IL17");
     double IL10 = odeModel.getConcentration("IL10");
 
-/*    std::cout << "CD4+ T Cell at (" << loc.getX() << ", " << loc.getY() << ")\n";*/
-    //std::cout << "Inputs Cytokines:\n";
-    //std::cout << "IL12 : " << IL12 << "\n";
-    //std::cout << "IL6 : " << IL6 << "\n";
-    //std::cout << "TGFb : " << TGFb << "\n";
-    //std::cout << "Outputs Cytokines:\n";
-    //std::cout << "IFNg : " << IFNg << "\n";
-    //std::cout << "IL17 : " << IL17 << "\n";
-    /*std::cout << "IL10 : " << IL10 << "\n";*/
-
     /* get output cytokines */
     Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
     cytoMap["IFNg"]->setValueAtCoord(IFNg, loc);
