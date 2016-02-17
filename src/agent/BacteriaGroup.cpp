@@ -37,8 +37,6 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
 
     addCellAt(state, newLoc);
   }
-
-  BacteriaGroup::instances().push_back(this);
 }
 
 void BacteriaGroup::act()

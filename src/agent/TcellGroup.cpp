@@ -35,8 +35,6 @@ void TcellGroup::init(const boost::uintmax_t tCellCount)
 
     addCellAt(TcellState::NAIVE, newLoc);
   }
-
-  TcellGroup::instances().push_back(this);
 }
 
 void TcellGroup::act()

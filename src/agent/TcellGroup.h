@@ -23,12 +23,6 @@ public:
   void transferStateTo(TcellState::State, const repast::Point<int> &, 
       unsigned int = 1);
 
-  static std::vector<TcellGroup *> & instances()
-  {
-    static std::vector<TcellGroup *> instances;
-    return instances;
-  }
-
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "TcellGroup"; }
 protected:
