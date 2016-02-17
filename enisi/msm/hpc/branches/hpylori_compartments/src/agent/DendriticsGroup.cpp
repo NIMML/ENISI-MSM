@@ -106,18 +106,20 @@ void DendriticsGroup::act(
 const std::vector<const BacteriaGroup::StateCount *> 
 DendriticsGroup::getBacteriaNeighbors(const repast::Point<int> & loc)
 {
-  std::vector<BacteriaGroup *> & instances 
-    = BacteriaGroup::instances();
-
   std::vector<const BacteriaGroup::StateCount *> allNeighbors;
 
-  for (size_t i = 0; i < instances.size(); ++i)
-  {
-    const BacteriaGroup::StateCount *
-      neighbors = instances[i]->getCellsAt(loc);
+  std::vector<ENISIAgent *> agents = layer()->selectAllAgents();
 
-    allNeighbors.push_back(neighbors);
+  for (size_t i = 0; i < agents.size(); ++i)
+  {
+    if (agents[i]->classname() == "BacteriaGroup") 
+    {
+      /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+       * agents only */
+      BacteriaGroup * p_bacteriaGroup = static_cast<BacteriaGroup *>(agents[i]);
+      allNeighbors.push_back(p_bacteriaGroup->getCellsAt(loc));
+    }
   }
 
-  return allNeighbors;
+    return allNeighbors;
 }
