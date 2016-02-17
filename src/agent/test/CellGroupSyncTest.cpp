@@ -7,7 +7,6 @@ class ACellGroupSync: public ScheduleTestFixture
 { 
 public:
   bool _requestCalled, _actCalled, _assertRemoteLocalAgentSyncOccuredCalled;
-  repast::SharedContext<ENISIAgent> * _p_cellContext;
 
   ACellGroupSync() : 
     _requestCalled(false), _actCalled(false), _assertRemoteLocalAgentSyncOccuredCalled(false),
@@ -23,10 +22,7 @@ public:
     ENISI::Compartment laminaPropria(_dimensions);
 
     const int tcellCount = 0;
-    tcells = AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount);
-
-    _p_cellContext = _lumen.cellLayer()->context();
-
+    AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount);
   }
 
   void TearDown() { }
@@ -38,8 +34,6 @@ public:
 
 private:
   ENISI::Compartment _lumen;
-
-  CellGroup * tcells;
 };
 
 void ACellGroupSync::requestAgents()
@@ -51,24 +45,16 @@ void ACellGroupSync::requestAgents()
 void ACellGroupSync::act()
 {
   _actCalled = true;
-  std::vector<ENISIAgent*> localAgents;
-  _p_cellContext->selectAgents(
-    CellGroup::Context::LOCAL, 
-    localAgents
-  );
+
+  std::vector<ENISIAgent *> localAgents = _lumen.cellLayer()->selectLocalAgents();
   ASSERT_THAT(localAgents.size(), Eq(1));
 
-  std::vector<ENISIAgent*> remoteAgents;
-  _p_cellContext->selectAgents(
-    CellGroup::Context::NON_LOCAL, 
-    remoteAgents
-  );
+  std::vector<ENISIAgent*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
   int worldSize = repast::RepastProcess::instance()->worldSize();
   int remoteAgentSize = worldSize - 1;
   ASSERT_THAT(remoteAgents.size(), Eq(remoteAgentSize));
 
-  std::vector<ENISIAgent*> allAgents;
-  _p_cellContext->selectAgents(allAgents);
+  std::vector<ENISIAgent*> allAgents = _lumen.cellLayer()->selectAllAgents();
   ASSERT_THAT(allAgents.size(), Eq(worldSize));
 
   std::vector<ENISIAgent*>::const_iterator local_it = localAgents.begin();
@@ -86,11 +72,7 @@ void ACellGroupSync::act()
 void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
 {
   _assertRemoteLocalAgentSyncOccuredCalled = true;
-  std::vector<ENISIAgent*> remoteAgents;
-  _p_cellContext->selectAgents(
-    CellGroup::Context::NON_LOCAL, 
-    remoteAgents
-  );
+  std::vector<ENISIAgent*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
 
   std::vector<ENISIAgent*>::const_iterator remote_it = remoteAgents.begin();
   while(remote_it != remoteAgents.end())
@@ -103,12 +85,8 @@ void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
     remote_it++;
   }
 
-  std::vector<ENISIAgent*> localAgents;
-  _p_cellContext->selectAgents(
-    CellGroup::Context::LOCAL, 
-    localAgents
-  );
-
+  std::vector<ENISIAgent *> localAgents = _lumen.cellLayer()->selectLocalAgents();
+  
   std::vector<ENISIAgent*>::const_iterator local_it = localAgents.begin();
 
   while(local_it != localAgents.end())
@@ -127,12 +105,8 @@ void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
 
 void ACellGroupSync::assertTransfersCleared()
 {
-  std::vector<ENISIAgent*> remoteAgents;
-  _p_cellContext->selectAgents(
-    CellGroup::Context::NON_LOCAL, 
-    remoteAgents
-  );
-
+  std::vector<ENISIAgent*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
+  
   std::vector<ENISIAgent*>::const_iterator remote_it = remoteAgents.begin();
   while(remote_it != remoteAgents.end())
   {
@@ -144,12 +118,8 @@ void ACellGroupSync::assertTransfersCleared()
     remote_it++;
   }
 
-  std::vector<ENISIAgent*> localAgents;
-  _p_cellContext->selectAgents(
-    CellGroup::Context::LOCAL, 
-    localAgents
-  );
-
+  std::vector<ENISIAgent *> localAgents = _lumen.cellLayer()->selectLocalAgents();
+  
   std::vector<ENISIAgent*>::const_iterator local_it = localAgents.begin();
 
   while(local_it != localAgents.end())
