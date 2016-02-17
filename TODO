@@ -2,8 +2,6 @@
 * MacrophageGroup class
 * Make all CellGroup subclasses pass their class name into the constructor
 * instead of each defining a classname() method
-* Change ::instances() to return a std::map (keyed by compartment) instead of
-  a vector
 * H.P agent should pass completely through epithelium (not linger inside it)
 -------
 * Confirm transferStateTo() is properly defined in AgentGroup, then eliminate
