@@ -49,3 +49,27 @@ TEST_F(AnENISICompartment, CanFindItsAgent)
 
   ASSERT_THAT(loc.size(), Eq(2));
 }
+
+/* This test is necessary for other cell groups during their act() phase to 
+ * verify that they can react to their neighbors and change state accordingly */
+TEST_F(AnENISICompartment, CanFindMultipleCellGroupsInTheCellLayer)
+{
+  //CellGroup * p_tcells = 
+    AgentGroupFactory::create("TcellGroup", _p_compartment, 0);
+
+  //CellGroup * p_dendritics = 
+    AgentGroupFactory::create("DendriticsGroup", _p_compartment, 0);
+
+  std::vector<ENISIAgent *> agents = 
+    _p_compartment->cellLayer()->selectAllAgents();
+
+  bool dendriticsFound = false, tcellFound = false;
+  ASSERT_THAT(agents.size(), Eq(2));
+  for (size_t i = 0; i < agents.size(); ++i)
+  {
+    if (agents[i]->classname() == "DendriticsGroup") { dendriticsFound = true; }
+    else if (agents[i]->classname() == "TcellGroup") { tcellFound = true; }
+  }
+  ASSERT_THAT(dendriticsFound, Eq(true));
+  ASSERT_THAT(tcellFound, Eq(true));
+}
