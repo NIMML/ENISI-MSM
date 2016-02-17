@@ -96,16 +96,23 @@ void BacteriaGroup::act(
 }
 
 const std::vector< const TcellGroup::StateCount *>
-BacteriaGroup::getTcellNeighbors(const repast::Point<int> & loc)
+BacteriaGroup::getTcellNeighbors(const repast::Point<int> & loc __attribute__((unused)))
 {
-  std::vector<TcellGroup *> & instances = TcellGroup::instances();
+  std::vector<TcellGroup *> & instances __attribute__((unused)) = TcellGroup::instances();
 
   std::vector< const TcellGroup::StateCount *> allNeighbors;
 
-  for (size_t i = 0; i < instances.size(); ++i)
+  std::vector<ENISIAgent *> agents = layer()->selectAllAgents();
+
+  for (size_t i = 0; i < agents.size(); ++i)
   {
-    const TcellGroup::StateCount * p_neighbors = instances[i]->getCellsAt(loc);
-    allNeighbors.push_back(p_neighbors);
+    if (agents[i]->classname() == "TcellGroup") 
+    {
+      /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+       * agents only */
+      TcellGroup * p_tcellGroup = static_cast<TcellGroup *>(agents[i]);
+      allNeighbors.push_back(p_tcellGroup->getCellsAt(loc));
+    }
   }
 
   return allNeighbors;

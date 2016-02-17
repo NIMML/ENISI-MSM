@@ -8,8 +8,8 @@ class CoordinateMap : public CellGroup
 {
 public:
   CoordinateMap(CellLayer * p_layer) 
-    : CellGroup(p_layer), 
-      _dimensions(p_layer->dimensions()), _borders(_dimensions), 
+    : CellGroup(p_layer), _p_layer(p_layer),
+      _dimensions(_p_layer->dimensions()), _borders(_dimensions), 
       _oriX(_dimensions.origin().getX()), _oriY(_dimensions.origin().getY()),
       _extentX(_dimensions.extents().getX()), 
       _extentY(_dimensions.extents().getY()),
@@ -47,8 +47,10 @@ protected:
   typedef typename CoordMap::const_iterator coordMapConstIter;
 
   bool moveCellAcrossBorder(int, const repast::Point<int> &);
+  CellLayer * layer() { return _p_layer; }
 
 private:
+  CellLayer * _p_layer;
   const repast::GridDimensions _dimensions;
   repast::StickyBorders _borders;
   const int _oriX, _oriY, _extentX, _extentY, _endX, _endY;
