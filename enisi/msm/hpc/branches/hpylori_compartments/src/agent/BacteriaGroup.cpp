@@ -96,10 +96,8 @@ void BacteriaGroup::act(
 }
 
 const std::vector< const TcellGroup::StateCount *>
-BacteriaGroup::getTcellNeighbors(const repast::Point<int> & loc __attribute__((unused)))
+BacteriaGroup::getTcellNeighbors(const repast::Point<int> & loc)
 {
-  std::vector<TcellGroup *> & instances __attribute__((unused)) = TcellGroup::instances();
-
   std::vector< const TcellGroup::StateCount *> allNeighbors;
 
   std::vector<ENISIAgent *> agents = layer()->selectAllAgents();
