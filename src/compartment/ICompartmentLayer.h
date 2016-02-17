@@ -34,6 +34,11 @@ public:
   void requestAgents();
   void synchronizeAgentStates();
 
+  std::vector<A *> selectAllAgents();
+  std::vector<A *> selectLocalAgents();
+  std::vector<A *> selectRemoteAgents();
+
+
   Space * space() { return _p_space; }
   Grid * grid() { return _p_grid; }
   Context * context() { return &_context; }
@@ -163,5 +168,28 @@ std::vector<A*> ICompartmentLayer<A, P, PP, PR>::getNeighborsAt(
 
 }
 
+template <class A, class P, class PP, class PR>
+std::vector<A *> ICompartmentLayer<A, P, PP, PR>::selectAllAgents() 
+{ 
+  std::vector<A *> agents; 
+  _context.selectAgents(agents); 
+  return agents;
+}
+
+template <class A, class P, class PP, class PR>
+std::vector<A *> ICompartmentLayer<A, P, PP, PR>::selectLocalAgents() 
+{ 
+  std::vector<A *> agents; 
+  _context.selectAgents(Context::LOCAL, agents); 
+  return agents;
+}
+
+template <class A, class P, class PP, class PR>
+std::vector<A *> ICompartmentLayer<A, P, PP, PR>::selectRemoteAgents() 
+{ 
+  std::vector<A *> agents; 
+  _context.selectAgents(Context::NON_LOCAL, agents); 
+  return agents;
+}
 
 #endif
