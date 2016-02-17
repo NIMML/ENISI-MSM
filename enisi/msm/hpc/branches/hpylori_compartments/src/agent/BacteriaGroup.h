@@ -20,12 +20,6 @@ public:
   const std::vector< const TcellGroup::StateCount *> 
     getTcellNeighbors(const repast::Point<int> &);
 
-  static std::vector<BacteriaGroup *> & instances()
-  {
-    static std::vector<BacteriaGroup *> instances;
-    return instances;
-  }
-
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "BacteriaGroup"; }
 
