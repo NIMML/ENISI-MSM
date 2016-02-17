@@ -1,4 +1,4 @@
-#include "MacrophageGroup.h"
+#include "agent/MacrophageGroup.h"
 
 MacrophageGroup::MacrophageGroup(
     const boost::uintmax_t macrophageCount, CellLayer * p_layer)
@@ -75,3 +75,23 @@ void MacrophageGroup::act(
   addCellAt(newState, newLoc);
 }
 
+const std::vector< const HPyloriGroup::StateCount *>
+MacrophageGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
+{
+  std::vector< const HPyloriGroup::StateCount *> allNeighbors;
+
+  std::vector<ENISIAgent *> agents = layer()->selectAllAgents();
+
+  for (size_t i = 0; i < agents.size(); ++i)
+  {
+    if (agents[i]->classname() == "HPyloriGroup") 
+    {
+      /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+       * agents only */
+      HPyloriGroup * p_tcellGroup = static_cast<HPyloriGroup *>(agents[i]);
+      allNeighbors.push_back(p_tcellGroup->getCellsAt(loc));
+    }
+  }
+
+  return allNeighbors;
+}
