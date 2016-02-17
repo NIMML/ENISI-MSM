@@ -10,8 +10,6 @@ public:
        _moveTH17betweenLumenEpitheliumBarrierCalled, 
        _assertTH17inEpitheliumNotLumenCalled;
 
-  repast::SharedContext<ENISIAgent> * _p_cellContext;
-
   ACellGroupCompartmentMovement() : 
     _assertTH17inLumenNotEpitheliumCalled(false), 
     _moveTH17betweenLumenEpitheliumBarrierCalled(false), 
@@ -33,8 +31,6 @@ public:
     	"TcellGroup", &_epithelium, tcellCount);
 
     _p_lumenTcells->setBorder("S", _epitheliumTcells);
-
-    _p_cellContext = _lumen.cellLayer()->context();
   }
 
   void TearDown() { }
