@@ -4,7 +4,7 @@
 #include "CoordMap.h"
 
 namespace MacrophageState {
-  enum State { BASE /*Monocyte*/, REGULATORY, DEAD, KEEP_AT_END};
+  enum State { MONOCYTE/*base state*/, REGULATORY, DEAD, KEEP_AT_END};
 };
 
 class MacrophageGroup : public CoordinateMap<MacrophageState::KEEP_AT_END>
