@@ -15,6 +15,12 @@ endif()
 
 if("${BUILD_STEP}" STREQUAL "build")
   message(STATUS "Building VisIt...")
+
+  # Start of migration over to using locally-cached dependencies instead of
+  # downloading them over the internet. 
+  file(COPY ${DEPS_DIR}/szip-2.1.tar.gz DESTINATION ${VISIT_SVN_BIN_DIR})
+  file(COPY ${DEPS_DIR}/zlib-1.2.7.tar.gz DESTINATION ${VISIT_SVN_BIN_DIR})
+
   execute_process(
     COMMAND ./build_visit --no-thirdparty --console --no-visit --szip --hdf5 --zlib --silo
     WORKING_DIRECTORY ${VISIT_SVN_BIN_DIR}
