@@ -49,11 +49,6 @@ private:
 
   ENISI::Compartment * _p_compartment;
 
-  CellGroup::Context * _p_context;
-
-  AgentGroupPackageProvider * _p_provider;
-  AgentGroupPackageReceiver * _p_receiver;
-
   ValueLayer * _p_valueLayer;
 
   std::map<std::string, int> _cytokineMultipliers; 

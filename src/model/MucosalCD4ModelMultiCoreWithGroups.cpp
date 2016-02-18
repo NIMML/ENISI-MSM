@@ -7,11 +7,6 @@ MucosalCD4ModelMultiCoreWithGroups::~MucosalCD4ModelMultiCoreWithGroups()
   delete _p_bacteria;
 
   delete _p_valueLayer;
-
-  delete _p_receiver;
-  delete _p_provider;
-
-  delete _p_compartment;
 }
 
 MucosalCD4ModelMultiCoreWithGroups::MucosalCD4ModelMultiCoreWithGroups(
@@ -23,10 +18,7 @@ MucosalCD4ModelMultiCoreWithGroups::MucosalCD4ModelMultiCoreWithGroups(
       repast::Point<double>(0, 0), 
       repast::Point<double>(_width, _height)
     ),
-    _p_compartment(new ENISI::Compartment(_dimensions)),
-    _p_context(_p_compartment->cellLayer()->context()), 
-    _p_provider(new AgentGroupPackageProvider(_p_context)),
-    _p_receiver(new AgentGroupPackageReceiver(_p_context))
+    _p_compartment(new ENISI::Compartment(_dimensions))
 { }
 
 void MucosalCD4ModelMultiCoreWithGroups::init() 
@@ -47,7 +39,7 @@ void MucosalCD4ModelMultiCoreWithGroups::setUpValueLayer()
   bool dense = true;
 
   _p_valueLayer = new ValueLayer(name, _dimensions, dense);
-  _p_context->addValueLayer(_p_valueLayer);
+  _p_compartment->cellLayer()->addValueLayer(_p_valueLayer);
 }
 
 void MucosalCD4ModelMultiCoreWithGroups::setUpCytokines()
@@ -215,17 +207,12 @@ void MucosalCD4ModelMultiCoreWithGroups::act()
   if(repast::RepastProcess::instance()->rank() == startRank) 
     std::cout << " TICK " << runner.currentTick() << std::endl;
 
-  std::vector<ENISIAgent*> remoteAgents;
-  _p_context->selectAgents(
-    CellGroup::Context::NON_LOCAL, 
-    remoteAgents
-  );
+  std::vector<CellLayer::AgentType*> remoteAgents = 
+    _p_compartment->cellLayer()->selectRemoteAgents();
 
-  std::vector<ENISIAgent*> localAgents;
-  _p_context->selectAgents(
-    CellGroup::Context::LOCAL, 
-    localAgents
-  );
+  std::vector<CellLayer::AgentType*> localAgents =
+    _p_compartment->cellLayer()->selectLocalAgents();
+
 
   std::vector<ENISIAgent*>::iterator it = localAgents.begin();
 
@@ -243,12 +230,7 @@ void MucosalCD4ModelMultiCoreWithGroups::act()
 
 void MucosalCD4ModelMultiCoreWithGroups::syncAgents()
 {
-  repast::RepastProcess::instance()->synchronizeAgentStates
-  <
-    AgentGroupPackage, 
-    AgentGroupPackageProvider, 
-    AgentGroupPackageReceiver
-  >(*_p_provider, *_p_receiver);
+  _p_compartment->cellLayer()->synchronizeAgentStates();
 }
 
 void MucosalCD4ModelMultiCoreWithGroups::diffuse() 
@@ -272,9 +254,9 @@ void MucosalCD4ModelMultiCoreWithGroups::requestAgents()
   {                     
     if(i != rank)// ... except this one
     {                                      
-      std::vector<ENISIAgent*> agents;        
       /* Choose all agents */
-      _p_context->selectAgents(agents);
+      std::vector<CellLayer::AgentType*> agents =
+	_p_compartment->cellLayer()->selectAllAgents();
 
       for(size_t j = 0; j < agents.size(); j++)
       {
@@ -289,13 +271,7 @@ void MucosalCD4ModelMultiCoreWithGroups::requestAgents()
     }
   }
 
-  repast::RepastProcess::instance()->requestAgents
-    <
-      ENISIAgent, 
-      AgentGroupPackage, 
-      AgentGroupPackageProvider, 
-      AgentGroupPackageReceiver
-    >(*_p_context, req, *_p_provider, *_p_receiver, *_p_receiver);
+  _p_compartment->cellLayer()->requestAgents();
 
   return;
 }

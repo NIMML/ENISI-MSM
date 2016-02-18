@@ -49,11 +49,6 @@ private:
   ENISI::Compartment _gastricLymphNode;
   ENISI::Compartment _laminaPropria;
 
-  ENISIAgent::Context * _p_lumenCellContext;
-
-  AgentGroupPackageProvider _provider;
-  AgentGroupPackageReceiver _receiver;
-
   ValueLayer * _p_valueLayer;
 
   std::vector<Diffuser *> _valueDiffusers;

@@ -20,10 +20,7 @@ HPModel::HPModel(const repast::Properties * p_props)
     _lumen(_dimensions),
     _epithelium(_dimensions),
     _gastricLymphNode(_dimensions),
-    _laminaPropria(_dimensions),
-    _p_lumenCellContext(_lumen.cellLayer()->context()),
-    _provider(_p_lumenCellContext),
-    _receiver(_p_lumenCellContext)
+    _laminaPropria(_dimensions)
 { 
 
 
@@ -87,9 +84,9 @@ void HPModel::requestAgents()
   {                     
     if(i != rank)// ... except this one
     {                                      
-      std::vector<ENISIAgent*> agents;        
       /* Choose all agents */
-      _p_lumenCellContext->selectAgents(agents);
+      std::vector<CellLayer::AgentType*> agents =
+	_lumen.cellLayer()->selectAllAgents();
 
       for(size_t j = 0; j < agents.size(); j++)
       {
@@ -104,14 +101,7 @@ void HPModel::requestAgents()
     }
   }
 
-  repast::RepastProcess::instance()->requestAgents
-    <
-      ENISIAgent, 
-      AgentGroupPackage, 
-      AgentGroupPackageProvider, 
-      AgentGroupPackageReceiver
-    >(*_p_lumenCellContext, req, _provider, _receiver, _receiver);
-
+  _lumen.cellLayer()->requestAgents();
   _lumen.requestDiffuserAgents();
 }
 
@@ -124,19 +114,13 @@ void HPModel::act()
   if(repast::RepastProcess::instance()->rank() == startRank) 
     std::cout << " TICK " << runner.currentTick() << std::endl;
 
-  std::vector<ENISIAgent*> remoteAgents;
-  _p_lumenCellContext->selectAgents(
-    CellGroup::Context::NON_LOCAL, 
-    remoteAgents
-  );
+  std::vector<CellLayer::AgentType*> remoteAgents = 
+    _lumen.cellLayer()->selectRemoteAgents();
 
-  std::vector<ENISIAgent*> localAgents;
-  _p_lumenCellContext->selectAgents(
-    CellGroup::Context::LOCAL, 
-    localAgents
-  );
+  std::vector<CellLayer::AgentType*> localAgents =
+    _lumen.cellLayer()->selectLocalAgents();
 
-  std::vector<ENISIAgent*>::iterator it = localAgents.begin();
+  std::vector<CellLayer::AgentType*>::iterator it = localAgents.begin();
 
   while(it != localAgents.end())
   {
@@ -153,12 +137,7 @@ void HPModel::act()
 
 void HPModel::syncAgents()
 {
-  repast::RepastProcess::instance()->synchronizeAgentStates
-  <
-    AgentGroupPackage, 
-    AgentGroupPackageProvider, 
-    AgentGroupPackageReceiver
-  >(_provider, _receiver);
+  _lumen.cellLayer()->synchronizeAgentStates();
 }
 
 void HPModel::diffuse() 
@@ -186,7 +165,7 @@ void HPModel::setUpValueLayer()
   bool dense = true;
 
   _p_valueLayer = new ValueLayer(name, _dimensions, dense);
-  _p_lumenCellContext->addValueLayer(_p_valueLayer);
+  _lumen.cellLayer()->addValueLayer(_p_valueLayer);
 }
 
 void HPModel::setUpCytokines()
