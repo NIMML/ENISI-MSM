@@ -38,10 +38,7 @@ public:
   std::vector<A *> selectLocalAgents();
   std::vector<A *> selectRemoteAgents();
 
-
-  Space * space() { return _p_space; }
-  Grid * grid() { return _p_grid; }
-  Context * context() { return &_context; }
+  void addValueLayer(repast::DiscreteValueLayer<double, Borders> *);
 
 protected:
   const static int x[2];
@@ -192,4 +189,10 @@ std::vector<A *> ICompartmentLayer<A, P, PP, PR>::selectRemoteAgents()
   return agents;
 }
 
+template <class A, class P, class PP, class PR>
+void ICompartmentLayer<A, P, PP, PR>::addValueLayer(
+    repast::DiscreteValueLayer<double, Borders> * p_vl)
+{
+  _context.addValueLayer(p_vl);
+}
 #endif
