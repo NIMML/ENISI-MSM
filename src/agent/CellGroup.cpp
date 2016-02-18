@@ -1,5 +1,6 @@
-#include "CellGroup.h"
+#include "compartment/CellLayer.h"
 #include "CellGroupImpl.h"
+#include "CellGroup.h"
 
 CellGroup::~CellGroup() { delete _p_impl; }
 

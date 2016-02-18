@@ -1,7 +1,7 @@
 #ifndef ENISI_MSM_AGENT_AGENTGROUPPACKAGE_H
 #define ENISI_MSM_AGENT_AGENTGROUPPACKAGE_H
 
-#include "ENISIAgent.h"
+#include "agent/CellGroup.h"
 #include "SharedContext.h"
 
 /* Serializable Agent Package */

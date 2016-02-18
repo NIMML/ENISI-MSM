@@ -1,7 +1,9 @@
 #ifndef ENISI_MSM_AGENT_COORDMAP_H
 #define ENISI_MSM_AGENT_COORDMAP_H
 
+#include "compartment/CellLayer.h"
 #include "CellGroup.h"
+#include "GridComponents.h" /* repast::StickyBorders */
 
 template <size_t N>
 class CoordinateMap : public CellGroup
