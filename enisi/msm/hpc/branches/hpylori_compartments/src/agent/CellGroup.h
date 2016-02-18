@@ -9,7 +9,6 @@ class CellGroupImpl;
 class CellGroup : public ENISIAgent
 {
 public:
-  typedef repast::SharedContext<ENISIAgent> Context;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
   ~CellGroup();
