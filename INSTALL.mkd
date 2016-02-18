@@ -30,7 +30,7 @@ Required by the VisIt installer
 Compression library needed by Silo
 
   CentOS: `sudo yum install zlib-devel`
-  Ubuntu: `sudo apd-get install zlib1g-dev`
+  Ubuntu: `sudo apt-get install zlib1g-dev`
 
 
 The remaining dependencies are automatically downloaded and built by the cmake
