@@ -44,6 +44,7 @@ ExternalProject_Add(project_visit
   BUILD_IN_SOURCE 1 # Use source dir for build dir
 
   BUILD_COMMAND cmake  -DBUILD_STEP=build
+    -DDEPS_DIR=${DEPS_DIR}
     -DVISIT_DIR=${VISIT_DIR}
     -DVISIT_SVN_BIN_DIR=${VISIT_SVN_BIN_DIR}
     -DLOG_DIR=${CMAKE_BINARY_DIR}
