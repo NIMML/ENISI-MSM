@@ -10,4 +10,5 @@
 * Change AgentGroupPackage agent from ENISIAgent to AgentGroup
 * Epithelial damage (lesion) indicator (?)
 TRUNK SPECIFIC
+* Copy szip into VisIt build
 * Patch GridComponents.h Borders class to remove const qualifier on _dimensions
