@@ -50,29 +50,28 @@ void MucosalCD4ModelMultiCoreWithGroups::setUpCytokines()
 
   Cytokines::CytoMap & cytomap = Cytokines::instance().map();
 
-  DiffuserLayer * p_diffusionLayer = _p_compartment->newDiffuserLayer();
-
-  cytomap["IL6"] = new Diffuser(p_diffusionLayer, 0.95, diffusion, toroidal);
+  cytomap["IL6"] = new Diffuser(
+      _p_compartment->newDiffuserLayer(), 0.95, diffusion, toroidal);
   _valueDiffusers.push_back(cytomap["IL6"]);
 
   cytomap["TGFb"] = new Diffuser(
-      p_diffusionLayer, evaporation, diffusion, toroidal);
+      _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
   _valueDiffusers.push_back(cytomap["TGFb"]);
 
   cytomap["IL12"] = new Diffuser(
-      p_diffusionLayer, evaporation, diffusion, toroidal);
+      _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
   _valueDiffusers.push_back(cytomap["IL12"]);
 
   cytomap["IL17"] = new Diffuser(
-      p_diffusionLayer, evaporation, diffusion, toroidal);
+      _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
   _valueDiffusers.push_back(cytomap["IL17"]);
 
   cytomap["IL10"] = new Diffuser(
-      p_diffusionLayer, evaporation, diffusion, toroidal);
+      _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
   _valueDiffusers.push_back(cytomap["IL10"]);
 
   cytomap["IFNg"] = new Diffuser(
-      p_diffusionLayer, evaporation, diffusion, toroidal);
+      _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
   _valueDiffusers.push_back(cytomap["IFNg"]);
 
   setUpCytokineMultipliers();
