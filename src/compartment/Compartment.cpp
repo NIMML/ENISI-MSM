@@ -27,7 +27,7 @@ DiffuserLayer * Compartment::newDiffuserLayer()
   return p_layer;
 }
 
-void Compartment::requestAgents()
+void Compartment::requestDiffuserAgents()
 {
   for (size_t i = 0; i < _diffuserLayers.size(); ++i)
   {

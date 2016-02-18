@@ -19,7 +19,7 @@ public:
 
   DiffuserLayer * newDiffuserLayer();
 
-  void requestAgents();
+  void requestDiffuserAgents();
   void diffuse();
   void updateReferenceDiffuserGrid();
 private:
