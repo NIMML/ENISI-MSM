@@ -1,5 +1,5 @@
 #include "AgentGroupPackage.h"
-#include "agent/CellGroup.h"
+#include "compartment/CellLayer.h"
 
 /* Serializable Agent Package Data */
 

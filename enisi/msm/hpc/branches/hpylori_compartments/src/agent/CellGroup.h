@@ -1,9 +1,9 @@
 #ifndef ENISI_MSM_AGENT_CELLGROUP_H
 #define ENISI_MSM_AGENT_CELLGROUP_H
 
-#include "ENISIAgent.h"
-#include "compartment/CellLayer.h"
+#include "agent/ENISIAgent.h"
 
+class CellLayer;
 class CellGroupImpl;
 
 class CellGroup : public ENISIAgent
