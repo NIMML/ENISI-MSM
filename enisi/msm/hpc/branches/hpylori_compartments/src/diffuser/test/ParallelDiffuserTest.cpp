@@ -41,7 +41,7 @@ private:
 
 void AParallelDiffuser::requestAgents()
 {
-  _compartment.requestAgents();
+  _compartment.requestDiffuserAgents();
   _requestCalled = 1;
 }
 

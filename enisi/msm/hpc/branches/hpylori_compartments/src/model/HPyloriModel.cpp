@@ -112,7 +112,7 @@ void HPModel::requestAgents()
       AgentGroupPackageReceiver
     >(*_p_lumenCellContext, req, _provider, _receiver, _receiver);
 
-  _lumen.requestAgents();
+  _lumen.requestDiffuserAgents();
 }
 
 void HPModel::act()
