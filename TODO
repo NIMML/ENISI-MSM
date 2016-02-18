@@ -9,3 +9,5 @@
 * Move CellGroupSyncTest::act() into CellLayer::act()
 * Change AgentGroupPackage agent from ENISIAgent to AgentGroup
 * Epithelial damage (lesion) indicator (?)
+TRUNK SPECIFIC
+* Patch GridComponents.h Borders class to remove const qualifier on _dimensions
