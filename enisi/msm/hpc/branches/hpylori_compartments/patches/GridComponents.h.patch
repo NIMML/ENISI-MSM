@@ -1,0 +1,11 @@
+--- GridComponents.h	2016-02-18 14:21:00.000000000 -0500
++++ GridComponents.h	2016-02-18 14:20:28.000000000 -0500
+@@ -57,7 +57,7 @@
+ class Borders {
+ 
+ protected:
+-	const GridDimensions _dimensions;
++	GridDimensions _dimensions;
+ 
+ 	void boundsCheck(const std::vector<int>& pt) const;
+ 	void boundsCheck(const std::vector<double>& pt) const;
