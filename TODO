@@ -8,6 +8,4 @@
   call in TcellGroup & cast in CellGroupSyncTest
 * Move CellGroupSyncTest::act() into CellLayer::act()
 * Change AgentGroupPackage agent from ENISIAgent to AgentGroup
-* Eliminate context()/space()/grid() calls in CellGroupSyncTest
-* Eliminate context()/space()/grid() calls in models
 * Epithelial damage (lesion) indicator (?)
