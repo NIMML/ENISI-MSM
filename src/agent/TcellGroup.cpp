@@ -94,8 +94,8 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
       newState = TcellState::TH1;
     } else if (IL10 > 0.5) {
       newState = TcellState::TREG;
-    }
-   //Add new rule here regarding Tr
+    }//else if (IL10>0.5*IFNg) {
+    //newState = TcellState:: TR;}//Add new rule here regarding TR
   }
 
   std::vector<double> moveTo = randomMove(1, loc);

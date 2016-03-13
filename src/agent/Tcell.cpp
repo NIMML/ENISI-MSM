@@ -22,6 +22,8 @@ Tcell::Color Tcell::getColor(){
     case AgentState::TREG:
       color = green;
       break;
+      //case AgentState::Tr:
+      //color = cyan;
     case AgentState::DEAD:
       color = black;
       break;
