@@ -3,6 +3,7 @@
 
 #include "BacteriaGroup.h"
 #include "CoordMap.h"
+#include "HPyloriGroup.h"
 
 namespace ENISI {
 
@@ -28,6 +29,9 @@ private:
 
   const std::vector<const BacteriaGroup::StateCount *> 
     getBacteriaNeighbors(const repast::Point<int> &);
+
+  const std::vector<const HPyloriGroup::StateCount *>
+    getHPyloriNeighbors(const repast::Point<int> &);
 };
 
 } // namespace ENISI
