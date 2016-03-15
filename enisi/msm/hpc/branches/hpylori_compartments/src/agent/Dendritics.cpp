@@ -2,21 +2,21 @@
 
 void Dendritics::act()
 {
-  if (getState() == AgentState::DEAD) return;
+  if (getState() == ENISI::AgentState::DEAD) return;
 
-  std::vector<ENISIAgent*> neighborList = getNeighbors("Bacteria");
-  std::vector<ENISIAgent*>::const_iterator iter = neighborList.begin();
+  std::vector<ENISI::Agent*> neighborList = getNeighbors("Bacteria");
+  std::vector<ENISI::Agent*>::const_iterator iter = neighborList.begin();
 
   while ( iter != neighborList.end() )
   {
-    ENISIAgent * b = *iter;
-    if (b->getState() == AgentState::INFECTIOUS && getState() == AgentState::IMMATURE) 
+      ENISI::Agent * b = *iter;
+    if (b->getState() == ENISI::AgentState::INFECTIOUS && getState() == ENISI::AgentState::IMMATURE)
     {
-      setState(AgentState::EFFECTOR);
+      setState(ENISI::AgentState::EFFECTOR);
     } 
-    else if ( b->getState() == AgentState::TOLEGENIC && getState() == AgentState::IMMATURE ) 
+    else if ( b->getState() == ENISI::AgentState::TOLEGENIC && getState() == ENISI::AgentState::IMMATURE )
     {
-      setState(AgentState::TOLEROGENIC);
+      setState(ENISI::AgentState::TOLEROGENIC);
     }
     ++iter;
   }
@@ -24,12 +24,12 @@ void Dendritics::act()
   std::vector<double> loc = getLocation();
   repast::Point<int> pt(loc[0], loc[1]);
 
-  if (getState() == AgentState::EFFECTOR) 
+  if (getState() == ENISI::AgentState::EFFECTOR)
   {
     cytoMap["IL6"]->set(70, pt);
     cytoMap["IL12"]->set(70, pt);
   }
-  else if (getState() == AgentState::TOLEROGENIC) 
+  else if (getState() == ENISI::AgentState::TOLEROGENIC)
   {
     cytoMap["TGFb"]->set(70, pt);
   }
@@ -41,16 +41,16 @@ Dendritics::Color Dendritics::getColor()
   Color color;
 
   switch(getState()){
-    case AgentState::IMMATURE:
+    case ENISI::AgentState::IMMATURE:
       color = pink;
       break;
-    case AgentState::EFFECTOR:
+    case ENISI::AgentState::EFFECTOR:
       color = red;
       break;
-    case AgentState::TOLEROGENIC:
+    case ENISI::AgentState::TOLEROGENIC:
       color = green;
       break;
-    case AgentState::DEAD:
+    case ENISI::AgentState::DEAD:
       color = black;
       break;
     default:

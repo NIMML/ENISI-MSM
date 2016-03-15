@@ -20,8 +20,8 @@ extern repast::Point<int> westPt;
        
 extern repast::Point<int> doubleWestPt;
 
-void assertStepZeroDiffusionValuesAtCoord(Diffuser & d);
-void assertStepOneDiffusionValuesAtCoord(Diffuser & d);
-void assertStepTwoDiffusionValuesAtCoord(Diffuser & d);
+void assertStepZeroDiffusionValuesAtCoord(ENISI::Diffuser & d);
+void assertStepOneDiffusionValuesAtCoord(ENISI::Diffuser & d);
+void assertStepTwoDiffusionValuesAtCoord(ENISI::Diffuser & d);
 
 #endif

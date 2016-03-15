@@ -11,12 +11,14 @@
 
 #include "compartment/Compartment.h"
 
+namespace ENISI {
+
 class AgentFactory
 {
 public:
   AgentFactory() { }
 
-  ENISIAgent * create(const std::string &, ENISI::Compartment *);
+  Agent * create(const std::string &, Compartment *);
 
 private:
 };
@@ -25,7 +27,8 @@ class AgentGroupFactory
 {
 public:
   static CellGroup * create(
-    const std::string, ENISI::Compartment *, const boost::uintmax_t = 0);
+    const std::string, Compartment *, const boost::uintmax_t = 0);
 };
 
+} // namespace ENISI
 #endif

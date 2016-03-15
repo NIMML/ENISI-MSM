@@ -3,11 +3,13 @@
 
 using namespace testing;
 
-class MockAgentGroup: public CellGroup
+class MockAgentGroup: public ENISI::CellGroup
 {		  
-  public:
-  MockAgentGroup(ENISI::Compartment * p_cmp) 
-    : CellGroup(p_cmp->cellLayer()) { }
+public:
+  MockAgentGroup(ENISI::Compartment * p_cmp) :
+    ENISI::CellGroup(p_cmp)
+  {}
+
   virtual Color getColor() { return black; }
   virtual void act() { }
   virtual std::string classname() { return "MockAgentGroup"; }
@@ -41,8 +43,8 @@ private:
 
 TEST_F(AnENISICompartment, CanFindItsAgent)
 {
-  CellGroup * p_agent = 
-    AgentGroupFactory::create("TcellGroup", _p_compartment, 0);
+  ENISI::CellGroup * p_agent =
+      ENISI::AgentGroupFactory::create("TcellGroup", _p_compartment, 0);
 
   std::vector<double> loc;
   _p_compartment->cellLayer()->getLocation(p_agent->getId(), loc);
@@ -55,12 +57,12 @@ TEST_F(AnENISICompartment, CanFindItsAgent)
 TEST_F(AnENISICompartment, CanFindMultipleCellGroupsInTheCellLayer)
 {
   //CellGroup * p_tcells = 
-    AgentGroupFactory::create("TcellGroup", _p_compartment, 0);
+    ENISI::AgentGroupFactory::create("TcellGroup", _p_compartment, 0);
 
   //CellGroup * p_dendritics = 
-    AgentGroupFactory::create("DendriticsGroup", _p_compartment, 0);
+    ENISI::AgentGroupFactory::create("DendriticsGroup", _p_compartment, 0);
 
-  std::vector<ENISIAgent *> agents = 
+  std::vector<ENISI::Agent *> agents =
     _p_compartment->cellLayer()->selectAllAgents();
 
   bool dendriticsFound = false, tcellFound = false;

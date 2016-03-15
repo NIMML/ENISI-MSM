@@ -5,7 +5,7 @@
 class MockImmuneCell: public ImmuneCell
 {		  
   public:
-  MockImmuneCell(CellLayer * p_layer) 
+  MockImmuneCell(ENISI::CellLayer * p_layer)
     : ImmuneCell(p_layer) { }
 
   virtual Color getColor() { return black; }

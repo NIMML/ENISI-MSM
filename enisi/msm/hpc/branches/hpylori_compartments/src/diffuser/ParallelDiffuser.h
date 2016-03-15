@@ -4,6 +4,8 @@
 #include "diffuser/Diffuser.h"
 #include "compartment/Compartment.h"
 
+namespace ENISI {
+
 class ParallelDiffuser : public Diffuser
 {
 public:
@@ -16,5 +18,7 @@ public:
 private:
   Diffuser * _p_parallelDiffuser;
 };
+
+} // namespace ENISI
 
 #endif

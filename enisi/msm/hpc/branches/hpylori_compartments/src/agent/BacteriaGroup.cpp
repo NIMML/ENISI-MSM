@@ -1,8 +1,9 @@
 #include "BacteriaGroup.h"
 
-BacteriaGroup::BacteriaGroup(
-    const boost::uintmax_t bacteriaCount, CellLayer * p_layer)
-  : CoordinateMap(p_layer)
+using namespace ENISI;
+
+BacteriaGroup::BacteriaGroup(const boost::uintmax_t bacteriaCount, Compartment * pCompartment) :
+  CoordinateMap(pCompartment)
 {
   init(bacteriaCount);
 }
@@ -98,7 +99,7 @@ BacteriaGroup::getTcellNeighbors(const repast::Point<int> & loc)
 {
   std::vector< const TcellGroup::StateCount *> allNeighbors;
 
-  std::vector<ENISIAgent *> agents = layer()->selectAllAgents();
+  std::vector<Agent *> agents = layer()->selectAllAgents();
 
   for (size_t i = 0; i < agents.size(); ++i)
   {

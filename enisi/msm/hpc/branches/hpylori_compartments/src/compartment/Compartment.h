@@ -5,9 +5,9 @@
 #include "SharedDiscreteSpace.h" // repast::SharedDiscreteSpace
 #include "Moore2DGridQuery.h"
 
-class CellLayer; class DiffuserLayer;
-
 namespace ENISI {
+
+class CellLayer; class DiffuserLayer;
 
 class Compartment
 {

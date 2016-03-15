@@ -8,8 +8,8 @@ class AParallelDiffuser: public ScheduleTestFixture
 public:
   int _requestCalled, _actCalled, _updateCalled;
   /* Create 2 diffusers to verify they diffuse without affecting each other */
-  ParallelDiffuser _diffuser;
-  ParallelDiffuser _diffuser2;
+  ENISI::ParallelDiffuser _diffuser;
+  ENISI::ParallelDiffuser _diffuser2;
 
   AParallelDiffuser() 
     : _requestCalled(0), _actCalled(0), _updateCalled(0),
@@ -84,7 +84,7 @@ TEST_F(AParallelDiffuser, GetsExpectedCoordinatesAssignedToCurrentRank)
 
   ENISI::Compartment smallCompartment(dimensions);
 
-  Diffuser diffuser(smallCompartment.newDiffuserLayer());
+  ENISI::Diffuser diffuser(smallCompartment.newDiffuserLayer());
 
   std::vector<repast::Point<int> > 
     coords = diffuser.getGridCoordsAssignedToRank();

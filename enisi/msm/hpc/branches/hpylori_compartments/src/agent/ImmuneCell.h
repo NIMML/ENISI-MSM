@@ -8,13 +8,13 @@
 
 class CellLayer;
 
-class ImmuneCell : public ENISIAgent
+class ImmuneCell : public ENISI::Agent
 {
 public:
   typedef repast::DiscreteValueLayer<double, repast::StickyBorders> GridValueLayer;
   typedef std::map<std::string, GridValueLayer*> CytoMap;
 
-  ImmuneCell(CellLayer *);
+  ImmuneCell(ENISI::CellLayer *);
 
   void addCytoLayer(std::string, GridValueLayer*);
 
@@ -24,12 +24,12 @@ public:
   double randomMove(double = 1);
 
   std::vector<double> getLocation();
-  std::vector<ENISIAgent *> getNeighbors(const std::string);
+  std::vector<ENISI::Agent *> getNeighbors(const std::string);
 
 protected:
   CytoMap cytoMap;
 private:
-  CellLayer * _p_layer;
+  ENISI::CellLayer * _p_layer;
 };
 
 #endif

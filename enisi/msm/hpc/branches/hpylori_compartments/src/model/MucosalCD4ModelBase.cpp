@@ -6,33 +6,33 @@ void MucosalCD4ModelBase::setUpCytokines()
 	 diffusion = 0.6;
   bool toroidal = false;
 
-  Cytokines::CytoMap & cytomap = Cytokines::instance().map();
+  ENISI::Cytokines::CytoMap & cytomap = ENISI::Cytokines::instance().map();
 
-  DiffuserLayer * p_diffusionLayer = _p_compartment->newDiffuserLayer();
+  ENISI::DiffuserLayer * p_diffusionLayer = _p_compartment->newDiffuserLayer();
 
-  cytomap["IL6"] = new Diffuser(
+  cytomap["IL6"].first = new ENISI::Diffuser(
       p_diffusionLayer, 0.95, diffusion, toroidal);
-  valueDiffusers.push_back(cytomap["IL6"]);
+  valueDiffusers.push_back(cytomap["IL6"].first);
 
-  cytomap["TGFb"] = new Diffuser(
+  cytomap["TGFb"].first = new ENISI::Diffuser(
       p_diffusionLayer, evaporation, diffusion, toroidal);
-  valueDiffusers.push_back(cytomap["TGFb"]);
+  valueDiffusers.push_back(cytomap["TGFb"].first);
 
-  cytomap["IL12"] = new Diffuser(
+  cytomap["IL12"].first = new ENISI::Diffuser(
       p_diffusionLayer, evaporation, diffusion, toroidal);
-  valueDiffusers.push_back(cytomap["IL12"]);
+  valueDiffusers.push_back(cytomap["IL12"].first);
 
-  cytomap["IL17"] = new Diffuser(
+  cytomap["IL17"].first = new ENISI::Diffuser(
       p_diffusionLayer, evaporation, diffusion, toroidal);
-  valueDiffusers.push_back(cytomap["IL17"]);
+  valueDiffusers.push_back(cytomap["IL17"].first);
 
-  cytomap["IL10"] = new Diffuser(
+  cytomap["IL10"].first = new ENISI::Diffuser(
       p_diffusionLayer, evaporation, diffusion, toroidal);
-  valueDiffusers.push_back(cytomap["IL10"]);
+  valueDiffusers.push_back(cytomap["IL10"].first);
 
-  cytomap["IFNg"] = new Diffuser(
+  cytomap["IFNg"].first = new ENISI::Diffuser(
       p_diffusionLayer, evaporation, diffusion, toroidal);
-  valueDiffusers.push_back(cytomap["IFNg"]);
+  valueDiffusers.push_back(cytomap["IFNg"].first);
 
   setUpCytokineMultipliers();
   summation();
@@ -104,7 +104,7 @@ void MucosalCD4ModelBase::recordResults()
 
 void MucosalCD4ModelBase::createBacteria(int count)
 {
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   for (int i = 0; i < count; i++) 
   {
@@ -112,13 +112,13 @@ void MucosalCD4ModelBase::createBacteria(int count)
     Bacteria * b = (Bacteria *) factory.create("Bacteria", _p_compartment);
     /* 1/2 of bacteria created should be infectious (the default) while the
      * other 1/2 should be tolerogenic */
-    if (i >= count/2) { b->setState(AgentState::TOLEGENIC); } 
+    if (i >= count/2) { b->setState(ENISI::AgentState::TOLEGENIC); }
   }
 }
 
 void MucosalCD4ModelBase::createTcells(int count)
 {
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   for (int i = 0; i < count; i++) 
   {
@@ -135,7 +135,7 @@ void MucosalCD4ModelBase::createTcells(int count)
 
 void MucosalCD4ModelBase::createDendritics(int count)
 {
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   for (int i = 0; i < count; i++) 
   {

@@ -5,7 +5,7 @@ using namespace testing;
 
 const std::string ENISIAgentClassName = "MockENISIAgent";
 
-class MockENISIAgent: public ENISIAgent
+class MockENISIAgent: public ENISI::Agent
 {		  
   public:
   MockENISIAgent() { } 
@@ -51,8 +51,8 @@ TEST_F(AnENISIAgent, SuccessfullySetsId)
 
 TEST_F(AnENISIAgent, SuccessfullySetsState) 
 {
-  _p_agent1->setState(AgentState::DEAD);
-  ASSERT_THAT(_p_agent1->getState(), Eq(AgentState::DEAD));
+  _p_agent1->setState(ENISI::AgentState::DEAD);
+  ASSERT_THAT(_p_agent1->getState(), Eq(ENISI::AgentState::DEAD));
 }
 
 TEST_F(AnENISIAgent, AgentIdRankMatchesRepastProcessInstanceRank)

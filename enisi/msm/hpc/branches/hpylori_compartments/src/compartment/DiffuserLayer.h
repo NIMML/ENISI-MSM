@@ -4,6 +4,8 @@
 #include "diffuser/DiffuserPackage.h"
 #include "ICompartmentLayer.h"
 
+namespace ENISI {
+
 class ParallelDiffuser;
 
 class DiffuserLayer : public ICompartmentLayer<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>
@@ -19,4 +21,8 @@ public:
 private:
   ParallelDiffuser * _p_referenceDiffuser;
 }; 
+
+} // namespace ENISI
+
+
 #endif

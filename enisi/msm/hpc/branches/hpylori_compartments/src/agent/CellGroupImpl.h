@@ -3,12 +3,14 @@
 
 #include "compartment/CellLayer.h"
 
+namespace ENISI {
+
 class CellGroup;
 
 class CellGroupImpl
 {
 public:
-  typedef repast::SharedContext<ENISIAgent> Context;
+  typedef repast::SharedContext<Agent> Context;
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
   CellGroupImpl(CellLayer * p_layer);
@@ -23,5 +25,7 @@ public:
 private:
   Transfers _markedForTransfer;
 };
+
+} // namespace ENISI
 
 #endif

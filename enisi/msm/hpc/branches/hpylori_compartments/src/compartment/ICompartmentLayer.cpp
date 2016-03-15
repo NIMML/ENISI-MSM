@@ -2,6 +2,8 @@
 #include "diffuser/DiffuserPackage.h"
 #include "agent/AgentGroupPackage.h"
 
+using namespace ENISI;
+
 template <class A, class P, class PP, class PR>
 void ICompartmentLayer<A, P, PP, PR>::requestAgents() 
 { 
@@ -45,7 +47,7 @@ void ICompartmentLayer<A, P, PP, PR>::synchronizeAgentStates()
 }
 
 template class ICompartmentLayer<
-  ENISIAgent, 
+  Agent,
   AgentGroupPackage, 
   AgentGroupPackageProvider, 
   AgentGroupPackageReceiver>;

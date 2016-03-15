@@ -225,28 +225,28 @@ public:
 	 */
 	DiscreteValueLayer(const std::string& name, const GridDimensions& dimensions, bool dense,
 			const ValueType& defaultValue = ValueType());
-	~DiscreteValueLayer();
+	virtual ~DiscreteValueLayer();
 
-	/**
-	 * Gets the value at the specified point. If no value
-	 * has been set at the specified point then this returns
-	 * the default value.
-	 *
-	 * param pt the location to get the value of
-	 *
-	 * @return the value at the specified point, or if no value has been
-	 * set, then the default value.
-	 */
-	ValueType& get(const Point<int>& pt);
+  /**
+   * Gets the value at the specified point. If no value
+   * has been set at the specified point then this returns
+   * some default value. Subclasses will determine the default value.
+   *
+   * param pt the location to get the value of
+   *
+   * @return the value at the specified point, or if no value has been
+   * set, then some default value.
+   */
+  virtual ValueType& get(const Point<int>& pt);
 
-	/**
-	 * Sets the value at the specified point.
-	 *
-	 * @param value the value
-	 * @param pt the point where the value should be stored
-	 *
-	 */
-	void set(const ValueType& value, const Point<int>& pt);
+  /**
+   * Sets the value at the specified point.
+   *
+   * @param value the value
+   * @param pt the point where the value should be stored
+   *
+   */
+  virtual void set(const ValueType& value, const Point<int>& pt);
 };
 
 template<typename ValueType, typename Borders>
@@ -338,7 +338,7 @@ void DiscreteValueLayer<ValueType, Borders>::set(const ValueType& value, const P
 }
 
 /**
- * Continous value layer whose location coordinates are double.
+ * Continuous value layer whose location coordinates are double.
  *
  * @tparam ValueType the type of what the value layer stores.
  * @tparam Borders the type of borders (wrapped / periodic, strict). Border types
@@ -372,29 +372,29 @@ public:
 	 */
 	ContinuousValueLayer(const std::string& name, const GridDimensions& dimensions, const ValueType& defaultValue =
 			ValueType());
-	~ContinuousValueLayer() {
+	virtual ~ContinuousValueLayer() {
 	}
 
-	/**
-	 * Gets the value at the specified point. If no value
-	 * has been set at the specified point then this returns
-	 * the default value.
-	 *
-	 * param pt the location to get the value of
-	 *
-	 * @return the value at the specified point, or if no value has been
-	 * set, then the default value.
-	 */
-	ValueType& get(const Point<double>& pt);
+  /**
+   * Gets the value at the specified point. If no value
+   * has been set at the specified point then this returns
+   * some default value. Subclasses will determine the default value.
+   *
+   * param pt the location to get the value of
+   *
+   * @return the value at the specified point, or if no value has been
+   * set, then some default value.
+   */
+  virtual ValueType& get(const Point<double>& pt);
 
-	/**
-	 * Sets the value at the specified point.
-	 *
-	 * @param value the value
-	 * @param pt the point where the value should be stored
-	 *
-	 */
-	void set(const ValueType& value, const Point<double>& pt);
+  /**
+   * Sets the value at the specified point.
+   *
+   * @param value the value
+   * @param pt the point where the value should be stored
+   *
+   */
+  virtual void set(const ValueType& value, const Point<double>& pt);
 };
 
 

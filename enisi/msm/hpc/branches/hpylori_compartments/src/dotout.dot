@@ -1,0 +1,4 @@
+graph G {
+	graph [bb="0,0,0,0"];
+	node [label="\N"];
+}

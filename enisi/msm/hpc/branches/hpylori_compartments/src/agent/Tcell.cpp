@@ -10,21 +10,19 @@ Tcell::Color Tcell::getColor(){
   Color color;
 
   switch(getState()){
-    case AgentState::NAIVE:
+    case ENISI::AgentState::NAIVE:
       color = pink;
       break;
-    case AgentState::TH1:
+    case ENISI::AgentState::TH1:
       color = red;
       break;
-    case AgentState::TH17:
+    case ENISI::AgentState::TH17:
       color = blue;
       break;
-    case AgentState::TREG:
+    case ENISI::AgentState::TREG:
       color = green;
       break;
-      //case AgentState::Tr:
-      //color = cyan;
-    case AgentState::DEAD:
+    case ENISI::AgentState::DEAD:
       color = black;
       break;
     default:
@@ -36,7 +34,7 @@ Tcell::Color Tcell::getColor(){
 
 void Tcell::act()
 {
-  if (getState() == AgentState::DEAD) return;
+  if (getState() == ENISI::AgentState::DEAD) return;
 
   /* get the grid location of this cell */
   std::vector<double> loc = getLocation();
@@ -66,11 +64,11 @@ void Tcell::act()
     cytoMap["IL10"]->set(IL10, pt);
 
     if (IL17 > 0.5) {
-      setState(AgentState::TH17);
+      setState(ENISI::AgentState::TH17);
     } else if (IFNg > 0.5) {
-      setState(AgentState::TH1);
+      setState(ENISI::AgentState::TH1);
     } else if (IL10 > 0.5) {
-      setState(AgentState::TREG);
+      setState(ENISI::AgentState::TREG);
     }
   }
   randomMove();

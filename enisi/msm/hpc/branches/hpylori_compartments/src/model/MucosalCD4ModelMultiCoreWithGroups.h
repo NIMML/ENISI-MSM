@@ -45,7 +45,7 @@ private:
 
   repast::GridDimensions _dimensions;
 
-  std::vector<Diffuser *> _valueDiffusers;
+  std::vector<ENISI::Diffuser *> _valueDiffusers;
 
   ENISI::Compartment * _p_compartment;
 
@@ -53,9 +53,9 @@ private:
 
   std::map<std::string, int> _cytokineMultipliers; 
 
-  CellGroup * _p_bacteria;
-  CellGroup * _p_tcells;
-  CellGroup * _p_dendritics;
+  ENISI::CellGroup * _p_bacteria;
+  ENISI::CellGroup * _p_tcells;
+  ENISI::CellGroup * _p_dendritics;
 };
 
 #endif

@@ -6,14 +6,19 @@
 #include "Properties.h"
 #include "CoordMap.h"
 
-namespace BacteriaState {
+namespace ENISI
+{
+
+class BacteriaState
+{
+public:
   enum State { DEAD, INFECTIOUS, TOLEGENIC, KEEP_LAST};
-}
+};
 
 class BacteriaGroup: public CoordinateMap<BacteriaState::KEEP_LAST> 
 {
 public:
-  BacteriaGroup(const boost::uintmax_t, CellLayer * p_layer);
+  BacteriaGroup(const boost::uintmax_t, Compartment * pCompartment);
 
   virtual void act();
 
@@ -28,4 +33,5 @@ private:
   void init(const boost::uintmax_t);
 };
 
+} // namespace ENISI
 #endif

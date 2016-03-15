@@ -1,11 +1,11 @@
-#include "DendriticsGroup.h"
+#include "EpithelialCellGroup.h"
 
 using namespace ENISI;
 
-DendriticsGroup::DendriticsGroup(const boost::uintmax_t dendriticsCount, Compartment * pCompartment) :
+EpithelialCellGroup::EpithelialCellGroup(const boost::uintmax_t count, Compartment * pCompartment) :
   CoordinateMap(pCompartment)
 {
-  for (boost::uintmax_t i = 0; i < dendriticsCount; i++) 
+  for (boost::uintmax_t i = 0; i < count; i++)
   {
     const repast::GridDimensions * p_dimensions = getDimensions();
 
@@ -29,11 +29,11 @@ DendriticsGroup::DendriticsGroup(const boost::uintmax_t dendriticsCount, Compart
     std::vector<double> moveTo = randomMove(1, initialLoc);
     repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-    addCellAt(DendriticState::IMMATURE, newLoc);
+    addCellAt(EpithelialCellState::IMMATURE, newLoc);
   }
 }
 
-void DendriticsGroup::act() 
+void EpithelialCellGroup::act()
 {
   coordMapConstIter end = coordMapEnd();
 
@@ -42,29 +42,28 @@ void DendriticsGroup::act()
     repast::Point<int> loc = it->first;
     StateCount stateCount = it->second;
 
-    for (unsigned int i = 0; i < DendriticState::KEEP_AT_END; ++i)
+    for (unsigned int i = 0; i < EpithelialCellState::KEEP_AT_END; ++i)
     {
-      DendriticState::State state = static_cast<DendriticState::State>(i);
+        EpithelialCellState::State state = static_cast<EpithelialCellState::State>(i);
       for (unsigned int j = 0; j < stateCount.state[i]; ++j)
       {
-	act(state, loc);
+        act(state, loc);
       }
     }
   }
 }
 
-void DendriticsGroup::act(
-    DendriticState::State state, const repast::Point<int> & loc)
+void EpithelialCellGroup::act(EpithelialCellState::State state, const repast::Point<int> & loc)
 {
-  if (state == DendriticState::DEAD) return;
+  if (state == EpithelialCellState::DEAD) return;
 
   const std::vector<const BacteriaGroup::StateCount *> 
-    neighborList = getBacteriaNeighbors(loc);
+    neighborList = getNeighbors(loc);
 
   std::vector<const BacteriaGroup::StateCount *>::const_iterator iter 
     = neighborList.begin();
 
-  DendriticState::State newState = state;
+  EpithelialCellState::State newState = state;
   while ( iter != neighborList.end() )
   {
     const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
@@ -74,24 +73,24 @@ void DendriticsGroup::act(
     unsigned int tolegenicBacteriaCount 
       = p_bacteriaStateCount->state[BacteriaState::TOLEGENIC];
 
-    if (infectiousBacteriaCount && state == DendriticState::IMMATURE) 
+    if (infectiousBacteriaCount && state == EpithelialCellState::IMMATURE)
     {
-      newState = DendriticState::EFFECTOR;
+      newState = EpithelialCellState::EFFECTOR;
     } 
-    else if ( tolegenicBacteriaCount && state == DendriticState::IMMATURE ) 
+    else if ( tolegenicBacteriaCount && state == EpithelialCellState::IMMATURE )
     {
-      newState = DendriticState::TOLEROGENIC;
+      newState = EpithelialCellState::TOLEROGENIC;
     }
     ++iter;
   }
 
-  if (newState == DendriticState::EFFECTOR) 
+  if (newState == EpithelialCellState::EFFECTOR)
   {
     ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
     cytoMap["IL6"].first->setValueAtCoord(70, loc);
     cytoMap["IL12"].first->setValueAtCoord(70, loc);
   }
-  else if (newState == DendriticState::TOLEROGENIC) 
+  else if (newState == EpithelialCellState::TOLEROGENIC)
   {
     ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
     cytoMap["TGFb"].first->setValueAtCoord(70, loc);
@@ -105,7 +104,7 @@ void DendriticsGroup::act(
 }
 
 const std::vector<const BacteriaGroup::StateCount *> 
-DendriticsGroup::getBacteriaNeighbors(const repast::Point<int> & loc)
+EpithelialCellGroup::getNeighbors(const repast::Point<int> & loc)
 {
   std::vector<const BacteriaGroup::StateCount *> allNeighbors;
 

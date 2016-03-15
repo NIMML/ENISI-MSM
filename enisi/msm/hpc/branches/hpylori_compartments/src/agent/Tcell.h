@@ -10,10 +10,10 @@
 class Tcell: public ImmuneCell 
 {
 public:
-  Tcell(CellLayer * p_layer) 
-    : ImmuneCell(p_layer) { setState(AgentState::NAIVE); }
+  Tcell(ENISI::CellLayer * p_layer)
+    : ImmuneCell(p_layer) { setState(ENISI::AgentState::NAIVE); }
 
-  Tcell(CellLayer * p_layer, AgentState::State st) 
+  Tcell(ENISI::CellLayer * p_layer, ENISI::AgentState::State st)
     : ImmuneCell(p_layer) { setState(st); }
 
   virtual Color getColor();

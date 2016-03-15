@@ -25,10 +25,8 @@ public:
     ENISI::Compartment laminaPropria(_dimensions);
 
     const int tcellCount = 0;
-    _p_lumenTcells = (TcellGroup *) AgentGroupFactory::create(
-    	"TcellGroup", &_lumen, tcellCount);
-    _epitheliumTcells = (TcellGroup *) AgentGroupFactory::create(
-    	"TcellGroup", &_epithelium, tcellCount);
+    _p_lumenTcells = static_cast< ENISI::TcellGroup * >(ENISI::AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount));
+    _epitheliumTcells = static_cast< ENISI::TcellGroup * >(ENISI::AgentGroupFactory::create("TcellGroup", &_epithelium, tcellCount));
 
     _p_lumenTcells->setBorder("S", _epitheliumTcells);
   }
@@ -46,44 +44,44 @@ private:
   ENISI::Compartment _lumen;
   ENISI::Compartment _epithelium;
 
-  TcellGroup * _p_lumenTcells;
-  TcellGroup * _epitheliumTcells;
+  ENISI::TcellGroup * _p_lumenTcells;
+  ENISI::TcellGroup * _epitheliumTcells;
 };
 
 void ACellGroupCompartmentMovement::assertTH17inLumenNotEpithelium()
 {
   _assertTH17inLumenNotEpitheliumCalled = true;
 
-  _p_lumenTcells->addCellAt(TcellState::TH17, repast::Point<int>(5,5));
-  const TcellGroup::StateCount 
+  _p_lumenTcells->addCellAt(ENISI::TcellState::TH17, repast::Point<int>(5,5));
+  const ENISI::TcellGroup::StateCount
 		lumenTcellCount = _p_lumenTcells->countByState();
-  ASSERT_THAT(lumenTcellCount.state[TcellState::TH17], Eq(1));
+  ASSERT_THAT(lumenTcellCount.state[ENISI::TcellState::TH17], Eq(1));
 
-  const TcellGroup::StateCount 
+  const ENISI::TcellGroup::StateCount
 		epitheliumTcellCount = _epitheliumTcells->countByState();
-  ASSERT_THAT(epitheliumTcellCount.state[TcellState::TH17], Eq(0));
+  ASSERT_THAT(epitheliumTcellCount.state[ENISI::TcellState::TH17], Eq(0));
 }
 
 void ACellGroupCompartmentMovement::moveTH17betweenLumenEpitheliumBarrier()
 {
   _moveTH17betweenLumenEpitheliumBarrierCalled = true;
-  _p_lumenTcells->delCellAt(TcellState::TH17, repast::Point<int>(5,5));
+  _p_lumenTcells->delCellAt(ENISI::TcellState::TH17, repast::Point<int>(5,5));
 
 	repast::Point<int> outOfSouthBounds(_oriX + _extentX/2, _oriY + _extentY + 1);
-  _p_lumenTcells->addCellAt(TcellState::TH17, outOfSouthBounds);
+  _p_lumenTcells->addCellAt(ENISI::TcellState::TH17, outOfSouthBounds);
 }
 
 void ACellGroupCompartmentMovement::assertTH17inEpitheliumNotLumen()
 {
   _assertTH17inEpitheliumNotLumenCalled = true;
 
-  const TcellGroup::StateCount 
+  const ENISI::TcellGroup::StateCount
 		lumenTcellCount = _p_lumenTcells->countByState();
-  ASSERT_THAT(lumenTcellCount.state[TcellState::TH17], Eq(0));
+  ASSERT_THAT(lumenTcellCount.state[ENISI::TcellState::TH17], Eq(0));
 
-  const TcellGroup::StateCount 
+  const ENISI::TcellGroup::StateCount
 		epitheliumTcellCount = _epitheliumTcells->countByState();
-  ASSERT_THAT(epitheliumTcellCount.state[TcellState::TH17], Eq(1));
+  ASSERT_THAT(epitheliumTcellCount.state[ENISI::TcellState::TH17], Eq(1));
 }
 
 void ACellGroupCompartmentMovement::assertTransfersCleared()

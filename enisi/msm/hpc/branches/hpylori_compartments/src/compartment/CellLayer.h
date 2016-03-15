@@ -4,7 +4,10 @@
 #include "agent/AgentGroupPackage.h"
 #include "ICompartmentLayer.h"
 
-class CellLayer : public ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver>
+namespace ENISI
+{
+
+class CellLayer : public ICompartmentLayer<Agent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver>
 {
 public:
   CellLayer(const repast::GridDimensions &);
@@ -12,4 +15,7 @@ public:
 
 private:
 }; 
+
+} // namespace ENISI
+
 #endif

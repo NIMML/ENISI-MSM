@@ -10,15 +10,15 @@
 #include "GridComponents.h" // repast::StickyBorders repast::SimpleAdder
 #include "Random.h" // repast::Random
 
-class Bacteria: public ENISIAgent
+class Bacteria: public ENISI::Agent
 {
 public:
-  Bacteria(CellLayer * p_layer) : _p_layer(p_layer)
+  Bacteria(ENISI::CellLayer * p_layer) : _p_layer(p_layer)
   {
-    setState(AgentState::INFECTIOUS); 
+    setState(ENISI::AgentState::INFECTIOUS);
   }
 
-  Bacteria(CellLayer * p_layer, AgentState::State st) : _p_layer(p_layer)
+  Bacteria(ENISI::CellLayer * p_layer, ENISI::AgentState::State st) : _p_layer(p_layer)
   {
     setState(st);
   }
@@ -30,10 +30,10 @@ public:
   void move(double x, double y);
   double randomMove(double = 1);
   std::vector<double> getLocation();
-  std::vector<ENISIAgent *> getNeighbors(const std::string);
+  std::vector<ENISI::Agent *> getNeighbors(const std::string);
 
 private:
-  CellLayer * _p_layer;
+  ENISI::CellLayer * _p_layer;
 };
 
 #endif

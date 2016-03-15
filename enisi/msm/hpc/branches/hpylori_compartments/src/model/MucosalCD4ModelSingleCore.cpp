@@ -86,16 +86,16 @@ void MucosalCD4ModelSingleCore::act()
     if ((*agent)->classname() == "Tcell")
     {
       switch ((*agent)->getState()) {
-	case AgentState::NAIVE:
+	case ENISI::AgentState::NAIVE:
 	  ThNaiveCount++;
 	  break;
-	case AgentState::TH1:
+	case ENISI::AgentState::TH1:
 	  Th1Count++;
 	  break;
-	case AgentState::TH17:
+	case ENISI::AgentState::TH17:
 	  Th17Count++;
 	  break;
-	case AgentState::TREG:
+	case ENISI::AgentState::TREG:
 	  TregCount++;
 	  break;
 	default:

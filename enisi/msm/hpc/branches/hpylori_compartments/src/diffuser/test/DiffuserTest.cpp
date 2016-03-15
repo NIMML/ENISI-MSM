@@ -36,7 +36,7 @@ TEST_F(ADiffuser, SuccessfullyDiffusesValues)
   double diffusionConstant = 0.6;
   bool toroidal = true;
 
-  Diffuser d(
+  ENISI::Diffuser d(
     _compartment.newDiffuserLayer(),
     evaporationConstant,
     diffusionConstant,
@@ -58,12 +58,12 @@ TEST_F(ADiffuser, SuccessfullyDiffusesValues)
 
 TEST_F(ADiffuser, IsSuccessfullyConstructed)
 {
-  Diffuser a(_compartment.newDiffuserLayer());
+  ENISI::Diffuser a(_compartment.newDiffuserLayer());
   a.setDimensions(_dimensions);
-  Diffuser c(_compartment.newDiffuserLayer(),0.95,0.6);
-  Diffuser d(_compartment.newDiffuserLayer(),0.95,0.6,true);
+  ENISI::Diffuser c(_compartment.newDiffuserLayer(),0.95,0.6);
+  ENISI::Diffuser d(_compartment.newDiffuserLayer(),0.95,0.6,true);
 }
-void assertStepZeroDiffusionValuesAtCoord(Diffuser & d)
+void assertStepZeroDiffusionValuesAtCoord(ENISI::Diffuser & d)
 {
 
   ASSERT_THAT(d.getCoordValue(DIFFUSION_TEST_CENTER_PT), 
@@ -84,7 +84,7 @@ void assertStepZeroDiffusionValuesAtCoord(Diffuser & d)
 
 }
 
-void assertStepOneDiffusionValuesAtCoord(Diffuser & d)
+void assertStepOneDiffusionValuesAtCoord(ENISI::Diffuser & d)
 {
   ASSERT_THAT(d.getCoordValue(DIFFUSION_TEST_CENTER_PT),    Eq(19));
 
@@ -102,7 +102,7 @@ void assertStepOneDiffusionValuesAtCoord(Diffuser & d)
   ASSERT_THAT(d.getCoordValue(doubleWestPt), Eq(0));
 }
 
-void assertStepTwoDiffusionValuesAtCoord(Diffuser & d)
+void assertStepTwoDiffusionValuesAtCoord(ENISI::Diffuser & d)
 {
   ASSERT_THAT(d.getCoordValue(DIFFUSION_TEST_CENTER_PT), DoubleEq(9.98165));
 

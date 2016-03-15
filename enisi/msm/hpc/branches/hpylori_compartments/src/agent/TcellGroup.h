@@ -5,7 +5,12 @@
 #include "Cytokines.h"
 #include "CoordMap.h"
 
-namespace TcellState {
+namespace ENISI
+{
+
+class TcellState
+{
+public:
   enum State { NAIVE, TH1, TH17, TREG, DEAD, KEEP_AT_END};
   //enum State { NAIVE, TH1, TH17, TREG, TR, DEAD, KEEP_AT_END }; /*Adding another state TR to the group*/
 };
@@ -15,7 +20,7 @@ class TcellGroup: public CoordinateMap<TcellState::KEEP_AT_END>
 public:
   typedef std::map<int, std::vector<std::pair<int, int> > > Transfers;
 
-  TcellGroup(const boost::uintmax_t, CellLayer * p_layer);
+  TcellGroup(const boost::uintmax_t, Compartment * pCompartment);
 
   virtual void act();
   int count();
@@ -31,5 +36,7 @@ private:
   void act(TcellState::State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
 };
+
+} // namespace ENISI
 
 #endif

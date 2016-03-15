@@ -2,6 +2,8 @@
 #include "../agent/TcellGroup.h"
 #include "RepastProcess.h"
 
+namespace ENISI {
+
 class ATcellGroup: public InitSharedContext 
 { 
 public:
@@ -49,4 +51,6 @@ TEST_F(ATcellGroup, CanManuallyAddCells)
   TcellGroup::StateCount countAfterAdd = _p_tcells->countByState();
   ASSERT_THAT(countAfterAdd.state[TcellState::TH1], Eq(1));
 }
+
+} // namespace ENISI
 

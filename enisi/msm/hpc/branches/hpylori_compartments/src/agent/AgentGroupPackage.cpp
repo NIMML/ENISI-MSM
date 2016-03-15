@@ -2,6 +2,7 @@
 #include "compartment/CellLayer.h"
 
 /* Serializable Agent Package Data */
+using namespace ENISI;
 
 AgentGroupPackage::AgentGroupPackage(){ }
 
@@ -13,10 +14,12 @@ AgentGroupPackage::AgentGroupPackage(
 id(_id), rank(_rank), type(_type), currentRank(_currentRank), 
   classname(_classname), transfers(_transfers)
 { }
-AgentGroupPackageProvider::AgentGroupPackageProvider(repast::SharedContext<ENISIAgent>* agentPtr): agents(agentPtr){ }
 
-void AgentGroupPackageProvider::providePackage(
-    ENISIAgent * agent, std::vector<AgentGroupPackage>& out)
+AgentGroupPackageProvider::AgentGroupPackageProvider(repast::SharedContext<Agent>* agentPtr) :
+  agents(agentPtr)
+{}
+
+void AgentGroupPackageProvider::providePackage(Agent * agent, std::vector<AgentGroupPackage>& out)
 {
   repast::AgentId id = agent->getId();
 
@@ -26,33 +29,36 @@ void AgentGroupPackageProvider::providePackage(
     id.agentType(), 
     id.currentRank(), 
     agent->classname(),
-    ((CellGroup*)agent)->getTransfers()
+    static_cast<ENISI::CellGroup*>(agent)->getTransfers()
   );
 
   out.push_back(package);
 }
 
-void AgentGroupPackageProvider::provideContent(
-    repast::AgentRequest req, std::vector<AgentGroupPackage>& out)
+void AgentGroupPackageProvider::provideContent(repast::AgentRequest req,
+                                               std::vector<AgentGroupPackage>& out)
 {
   std::vector<repast::AgentId> ids = req.requestedAgents();
+
+  Agent * agent;
 
   for(size_t i = 0; i < ids.size(); i++)
   {
     /* RepastProcess doesn't clear the AgentRequest when executing
      * requestAgents() multiple times. This leads to agent id "bleedover" from
      * other contexts, causing getAgent() to return null agents if not checked */
-    if (agents->getAgent(ids[i]))
-      providePackage(agents->getAgent(ids[i]), out);
+    if ((agent = agents->getAgent(ids[i])) != NULL)
+      {
+        providePackage(agent, out);
+      }
   }
 }
 
+AgentGroupPackageReceiver::AgentGroupPackageReceiver(repast::SharedContext<Agent>* agentPtr):
+  agents(agentPtr)
+{}
 
-AgentGroupPackageReceiver::AgentGroupPackageReceiver(
-    repast::SharedContext<ENISIAgent>* agentPtr): agents(agentPtr){}
-
-ENISIAgent * 
-AgentGroupPackageReceiver::createAgent(AgentGroupPackage package)
+Agent * AgentGroupPackageReceiver::createAgent(AgentGroupPackage package)
 {
   repast::AgentId id(package.id, package.rank, package.type, package.currentRank);
 
@@ -61,7 +67,9 @@ AgentGroupPackageReceiver::createAgent(AgentGroupPackage package)
 
   CellLayer layer(dims);
 
-  ENISIAgent * agent = new TransferGroup(&layer);
+  Agent * agent = NULL;
+
+  // agent = new TransferGroup(&layer);
 
   agent->setId(id);
 
@@ -71,8 +79,8 @@ AgentGroupPackageReceiver::createAgent(AgentGroupPackage package)
 void AgentGroupPackageReceiver::updateAgent(AgentGroupPackage package)
 {
   repast::AgentId id(package.id, package.rank, package.type);
-  ENISIAgent * agent = agents->getAgent(id);
+  Agent * agent = agents->getAgent(id);
   agent->setId(id);
-  ((CellGroup*)agent)->setTransfers(package.transfers);
+  static_cast< ENISI::CellGroup * >(agent)->setTransfers(package.transfers);
 }
 

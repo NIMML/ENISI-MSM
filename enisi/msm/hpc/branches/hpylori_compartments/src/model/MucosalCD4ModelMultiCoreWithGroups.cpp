@@ -48,31 +48,31 @@ void MucosalCD4ModelMultiCoreWithGroups::setUpCytokines()
 	 diffusion = 0.6;
   bool toroidal = false;
 
-  Cytokines::CytoMap & cytomap = Cytokines::instance().map();
+  ENISI::Cytokines::CytoMap & cytomap = ENISI::Cytokines::instance().map();
 
-  cytomap["IL6"] = new Diffuser(
+  cytomap["IL6"].first = new ENISI::Diffuser(
       _p_compartment->newDiffuserLayer(), 0.95, diffusion, toroidal);
-  _valueDiffusers.push_back(cytomap["IL6"]);
+  _valueDiffusers.push_back(cytomap["IL6"].first);
 
-  cytomap["TGFb"] = new Diffuser(
+  cytomap["TGFb"].first = new ENISI::Diffuser(
       _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
-  _valueDiffusers.push_back(cytomap["TGFb"]);
+  _valueDiffusers.push_back(cytomap["TGFb"].first);
 
-  cytomap["IL12"] = new Diffuser(
+  cytomap["IL12"].first = new ENISI::Diffuser(
       _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
-  _valueDiffusers.push_back(cytomap["IL12"]);
+  _valueDiffusers.push_back(cytomap["IL12"].first);
 
-  cytomap["IL17"] = new Diffuser(
+  cytomap["IL17"].first = new ENISI::Diffuser(
       _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
-  _valueDiffusers.push_back(cytomap["IL17"]);
+  _valueDiffusers.push_back(cytomap["IL17"].first);
 
-  cytomap["IL10"] = new Diffuser(
+  cytomap["IL10"].first = new ENISI::Diffuser(
       _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
-  _valueDiffusers.push_back(cytomap["IL10"]);
+  _valueDiffusers.push_back(cytomap["IL10"].first);
 
-  cytomap["IFNg"] = new Diffuser(
+  cytomap["IFNg"].first = new ENISI::Diffuser(
       _p_compartment->newDiffuserLayer(), evaporation, diffusion, toroidal);
-  _valueDiffusers.push_back(cytomap["IFNg"]);
+  _valueDiffusers.push_back(cytomap["IFNg"].first);
 
   setUpCytokineMultipliers();
   summation();
@@ -92,18 +92,17 @@ void MucosalCD4ModelMultiCoreWithGroups::setUpCytokineMultipliers()
 
 void MucosalCD4ModelMultiCoreWithGroups::summation() 
 {
-  Cytokines::CytoMap & cytomap = Cytokines::instance().map();
+  ENISI::Cytokines::CytoMap & cytomap = ENISI::Cytokines::instance().map();
 
   for (int x = 0; x < _width; ++x) 
   {
     for (int y = 0; y < _height; ++y) 
     {
       double value = 0.0f;
-      for(std::map<std::string, Diffuser*>::iterator it = cytomap.begin(); 
-	  it != cytomap.end(); it++) 
+      for (ENISI::Cytokines::CytoMap::iterator it = cytomap.begin(); it != cytomap.end(); it++)
       {
 	std::string cytokineName = it->first;
-	Diffuser * cytokineValueLayer = it->second;
+	ENISI::Diffuser * cytokineValueLayer = it->second.first;
 
 	int currentVal = cytokineValueLayer->getCoordValue(Point<int>(x, y));
 	int multiplier = _cytokineMultipliers[cytokineName];
@@ -128,7 +127,7 @@ void MucosalCD4ModelMultiCoreWithGroups::createBacteria()
 
   unsigned int numOfBacteriaPerProcess = bacteriaCount / worldSize;
 
-  _p_bacteria = AgentGroupFactory::create(
+  _p_bacteria = ENISI::AgentGroupFactory::create(
     "BacteriaGroup", _p_compartment, numOfBacteriaPerProcess
   );
 }
@@ -147,7 +146,7 @@ void MucosalCD4ModelMultiCoreWithGroups::createTcells()
   unsigned int numOfTcellsPerProcess = tcellCount / worldSize;
 
   _p_tcells = 
-    AgentGroupFactory::create("TcellGroup", _p_compartment, numOfTcellsPerProcess);
+      ENISI::AgentGroupFactory::create("TcellGroup", _p_compartment, numOfTcellsPerProcess);
   return;
 }
 
@@ -165,7 +164,7 @@ void MucosalCD4ModelMultiCoreWithGroups::createDendritics()
 
   unsigned int numOfDendriticsPerProcess = dendriticCount / worldSize;
 
-  AgentGroupFactory::create(
+  ENISI::AgentGroupFactory::create(
     "DendriticsGroup", _p_compartment, numOfDendriticsPerProcess
   );
 }
@@ -206,14 +205,14 @@ void MucosalCD4ModelMultiCoreWithGroups::act()
   if(repast::RepastProcess::instance()->rank() == startRank) 
     std::cout << " TICK " << runner.currentTick() << std::endl;
 
-  std::vector<CellLayer::AgentType*> remoteAgents = 
+  std::vector<ENISI::CellLayer::AgentType*> remoteAgents =
     _p_compartment->cellLayer()->selectRemoteAgents();
 
-  std::vector<CellLayer::AgentType*> localAgents =
+  std::vector<ENISI::CellLayer::AgentType*> localAgents =
     _p_compartment->cellLayer()->selectLocalAgents();
 
 
-  std::vector<ENISIAgent*>::iterator it = localAgents.begin();
+  std::vector<ENISI::Agent*>::iterator it = localAgents.begin();
 
   while(it != localAgents.end())
   {
@@ -254,7 +253,7 @@ void MucosalCD4ModelMultiCoreWithGroups::requestAgents()
     if(i != rank)// ... except this one
     {                                      
       /* Choose all agents */
-      std::vector<CellLayer::AgentType*> agents =
+      std::vector<ENISI::CellLayer::AgentType*> agents =
 	_p_compartment->cellLayer()->selectAllAgents();
 
       for(size_t j = 0; j < agents.size(); j++)

@@ -15,11 +15,11 @@ public:
 
 TEST_F(ABacteria, DefaultStateIsINFECTIOUS)
 {
-  ASSERT_THAT(_p_bacteria->getState(), Eq(AgentState::INFECTIOUS));
+  ASSERT_THAT(_p_bacteria->getState(), Eq(ENISI::AgentState::INFECTIOUS));
 }
 
 TEST_F(ABacteria, SuccessfullyChangesState)
 {
-  _p_bacteria->setState(AgentState::TOLEGENIC);
-  ASSERT_THAT(_p_bacteria->getState(), Eq(AgentState::TOLEGENIC));
+  _p_bacteria->setState(ENISI::AgentState::TOLEGENIC);
+  ASSERT_THAT(_p_bacteria->getState(), Eq(ENISI::AgentState::TOLEGENIC));
 }

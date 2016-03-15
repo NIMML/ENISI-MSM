@@ -1,7 +1,7 @@
 #include "../InitSharedContextTestFixture.h"
 #include "HPyloriModel.h"
 
-using namespace testing;
+// using namespace testing;
 
 class AnHPyloriModel: public InitSharedContext { };
 

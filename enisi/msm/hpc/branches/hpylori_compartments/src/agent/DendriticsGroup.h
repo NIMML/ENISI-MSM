@@ -4,15 +4,19 @@
 #include "BacteriaGroup.h"
 #include "CoordMap.h"
 
-namespace DendriticState {
+namespace ENISI {
+
+class DendriticState
+{
+public:
   enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, KEEP_AT_END};
-}
+};
 
 class DendriticsGroup: public CoordinateMap<DendriticState::KEEP_AT_END>
 {
 public:
 
-  DendriticsGroup(const boost::uintmax_t, CellLayer *);
+  DendriticsGroup(const boost::uintmax_t, Compartment * pCompartment);
 
   virtual void act();
 
@@ -26,4 +30,5 @@ private:
     getBacteriaNeighbors(const repast::Point<int> &);
 };
 
+} // namespace ENISI
 #endif

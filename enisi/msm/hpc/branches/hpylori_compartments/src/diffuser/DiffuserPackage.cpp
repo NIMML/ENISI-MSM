@@ -2,8 +2,9 @@
 #include "diffuser/Diffuser.h" 
 #include "compartment/DiffuserLayer.h"
 
-/* Serializable Agent Package Data */
+using namespace ENISI;
 
+/* Serializable Agent Package Data */
 DiffuserPackage::DiffuserPackage(){ }
 
 DiffuserPackage::DiffuserPackage(

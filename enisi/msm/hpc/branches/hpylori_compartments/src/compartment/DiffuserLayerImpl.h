@@ -37,7 +37,7 @@ private:
   boost::mpi::communicator * _p_comm;
   repast::SharedContext<Diffuser> _context;
   const int _buffer;
-  const static int _pDims[2];
+  static const int _pDims[2];
   std::vector<int> _processDims;
   Space  _space;
   Grid   _grid;

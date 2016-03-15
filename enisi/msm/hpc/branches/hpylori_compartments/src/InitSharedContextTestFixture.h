@@ -15,7 +15,7 @@ public:
   const int _extentY;
   repast::GridDimensions _dimensions;
   ENISI::Compartment _compartment;
-  AgentFactory _factory;
+  ENISI::AgentFactory _factory;
 
   InitSharedContext() : _oriX(0), _oriY(0), _extentX(100), _extentY(100),
     _dimensions(repast::Point<double>(_oriX, _oriY), 

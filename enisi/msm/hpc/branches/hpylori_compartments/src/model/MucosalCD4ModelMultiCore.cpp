@@ -73,7 +73,7 @@ void MucosalCD4ModelMultiCore::init()
 
 void MucosalCD4ModelMultiCore::createBacteria()
 {
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   int bacteriaCount = repast::strToInt(props->getProperty("bacteria.count"));
   int worldSize = repast::RepastProcess::instance()->worldSize();
@@ -88,7 +88,7 @@ void MucosalCD4ModelMultiCore::createBacteria()
 
 void MucosalCD4ModelMultiCore::createTcells()
 {
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   int tCellCount = repast::strToInt(props->getProperty("tcell.count"));
   int worldSize = repast::RepastProcess::instance()->worldSize();
@@ -103,7 +103,7 @@ void MucosalCD4ModelMultiCore::createTcells()
 
 void MucosalCD4ModelMultiCore::createDendritics()
 {
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   int dendriticCount = repast::strToInt(props->getProperty("dendritic.count"));
   int worldSize = repast::RepastProcess::instance()->worldSize();
@@ -125,10 +125,10 @@ void MucosalCD4ModelMultiCore::act()
   if(repast::RepastProcess::instance()->rank() == initialRank) 
     std::cout << " TICK " << runner.currentTick() << std::endl;
 
-  std::vector<ENISIAgent*> agents;
-  context.selectAgents(ENISIAgent::Context::LOCAL, agents);
+  std::vector<ENISI::Agent*> agents;
+  context.selectAgents(ENISI::Agent::Context::LOCAL, agents);
 
-  std::vector<ENISIAgent*>::iterator it = agents.begin();
+  std::vector<ENISI::Agent*>::iterator it = agents.begin();
 
   int ThNaiveCount = 0;
   int Th1Count = 0;
@@ -140,16 +140,16 @@ void MucosalCD4ModelMultiCore::act()
     if ( (*it)->classname() == "Tcell" )
     {
       switch ((*it)->getState()) {
-	case AgentState::NAIVE:
+	case ENISI::AgentState::NAIVE:
 	  ThNaiveCount++;
 	  break;
-	case AgentState::TH1:
+	case ENISI::AgentState::TH1:
 	  Th1Count++;
 	  break;
-	case AgentState::TH17:
+	case ENISI::AgentState::TH17:
 	  Th17Count++;
 	  break;
-	case AgentState::TREG:
+	case ENISI::AgentState::TREG:
 	  TregCount++;
 	  break;
 	default:
@@ -214,7 +214,7 @@ void MucosalCD4ModelMultiCore::requestAgents()
   {                     
     if(i != rank)// ... except this one
     {                                      
-      std::vector<ENISIAgent*> agents;        
+      std::vector<ENISI::Agent*> agents;
       /* Choose all agents */
       context.selectAgents(agents);
 
@@ -232,7 +232,7 @@ void MucosalCD4ModelMultiCore::requestAgents()
   }
   repast::RepastProcess::instance()->requestAgents
     <
-      ENISIAgent, 
+    ENISI::Agent,
       RepastHPCDemoAgentPackage, 
       RepastHPCDemoAgentPackageProvider, 
       RepastHPCDemoAgentPackageReceiver
@@ -243,7 +243,7 @@ void MucosalCD4ModelMultiCore::syncAgents()
 {
  repast::RepastProcess::instance()->synchronizeAgentStatus
   <
-    ENISIAgent, 
+  ENISI::Agent,
     RepastHPCDemoAgentPackage, 
     RepastHPCDemoAgentPackageProvider, 
     RepastHPCDemoAgentPackageReceiver

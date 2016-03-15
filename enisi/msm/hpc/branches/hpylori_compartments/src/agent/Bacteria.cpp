@@ -5,13 +5,13 @@ Bacteria::Color Bacteria::getColor(){
 
   switch(getState())
   {
-    case AgentState::INFECTIOUS:
+    case ENISI::AgentState::INFECTIOUS:
     color = red;
     break;
-    case AgentState::TOLEGENIC:
+    case ENISI::AgentState::TOLEGENIC:
     color = green;
     break;
-    case AgentState::DEAD:
+    case ENISI::AgentState::DEAD:
     color = black;
     break;
   default:		
@@ -23,17 +23,17 @@ Bacteria::Color Bacteria::getColor(){
 
 void Bacteria::act()
 {
-  if (getState() == AgentState::DEAD) return;
+  if (getState() == ENISI::AgentState::DEAD) return;
 
-  std::vector<ENISIAgent*> neighborList = getNeighbors("Tcell");
+  std::vector<ENISI::Agent*> neighborList = getNeighbors("Tcell");
 
-  std::vector<ENISIAgent*>::const_iterator iter = neighborList.begin();
+  std::vector<ENISI::Agent*>::const_iterator iter = neighborList.begin();
 
   while ( iter != neighborList.end() ){
-    ENISIAgent * tc = *iter;
-    if (tc->getState() == AgentState::TH1 || tc->getState() == AgentState::TH17) {
-      if (getState() == AgentState::INFECTIOUS) {
-	setState(AgentState::DEAD);
+      ENISI::Agent * tc = *iter;
+    if (tc->getState() == ENISI::AgentState::TH1 || tc->getState() == ENISI::AgentState::TH17) {
+      if (getState() == ENISI::AgentState::INFECTIOUS) {
+	setState(ENISI::AgentState::DEAD);
 	return;
       }
     }
@@ -72,7 +72,7 @@ double Bacteria::randomMove(double speed)
   return radius;
 }
 
-std::vector<ENISIAgent *> Bacteria::getNeighbors(const std::string name)
+std::vector<ENISI::Agent *> Bacteria::getNeighbors(const std::string name)
 {
   std::vector<double> loc = getLocation();
   repast::Point<int> pt(loc[0], loc[1]);
