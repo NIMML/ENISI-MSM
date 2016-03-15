@@ -2,13 +2,15 @@
 #include "compartment/CellLayer.h"
 #include "compartment/DiffuserLayer.h"
 
-namespace ENISI {
+using namespace ENISI;
 
-Compartment::Compartment(
-    const repast::GridDimensions & dimensions)
-  : _dimensions(dimensions)
-    ,_p_cellLayer(new CellLayer(_dimensions))
-{ }
+Compartment::Compartment(const repast::GridDimensions & dimensions,
+                         const std::string name) :
+  _dimensions(dimensions),
+  _p_cellLayer(new CellLayer(_dimensions)),
+  _diffuserLayers(),
+  mName(name)
+{}
 
 Compartment::~Compartment()
 {
@@ -51,4 +53,7 @@ void Compartment::updateReferenceDiffuserGrid()
   }
 }
 
+const std::string & Compartment::getName() const
+{
+  return mName;
 }

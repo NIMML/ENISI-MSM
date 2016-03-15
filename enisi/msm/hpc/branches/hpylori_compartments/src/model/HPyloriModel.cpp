@@ -17,10 +17,10 @@ HPModel::HPModel(const repast::Properties * p_props)
     _dimensions(
       repast::Point<double>(0, 0), repast::Point<double>(_width, _height)
     ),
-    _lumen(_dimensions),
-    _epithelium(_dimensions),
-    _gastricLymphNode(_dimensions),
-    _laminaPropria(_dimensions)
+    _lumen(_dimensions, "Lumen"),
+    _epithelium(_dimensions, "Epithelium"),
+    _gastricLymphNode(_dimensions, "GastricLymphNode"),
+    _laminaPropria(_dimensions, "LaminaPropria")
 { 
 
 

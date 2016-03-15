@@ -69,7 +69,7 @@ void DendriticsGroup::act(
   const std::vector<const HPyloriGroup::StateCount *>
     neighborList2 = getHPyloriNeighbors(loc);
 
-  std::vector<const HPyloriGroup:StateCount *>::const_iterator iter2
+  std::vector<const HPyloriGroup::StateCount *>::const_iterator iter2
     = neighborList2.begin();
 
   DendriticState::State newState = state;
@@ -97,25 +97,33 @@ void DendriticsGroup::act(
     }
     /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
      *  0.5 is arbitrary */
-    else if ( liveHPyloriCount > 0.5*tolegenicBacteriaCount+1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::epithelium)
+    else if (liveHPyloriCount > 0.5*tolegenicBacteriaCount+1
+             && state == DendriticState::IMMATURE
+             && mpCompartment->getName() == "Epithelium")
     {
       newState = DendriticState::EFFECTOR;
     }
     /*if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
      *  0.5 is arbitrary */
-    else if ( liveHPyloriCount <= 0.5*tolegenicBacteriaCount+1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::epithelium)
+    else if (liveHPyloriCount <= 0.5*tolegenicBacteriaCount+1
+             && state == DendriticState::IMMATURE
+             && mpCompartment->getName() == "Epithelium")
     {
       newState = DendriticState::TOLEROGENIC;
     }
     /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
      *  1 is arbitrary */
-    else if ( liveHPyloriCount+tolegenicBacteriaCount>1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::laminaPropria)
+    else if (liveHPyloriCount+tolegenicBacteriaCount>1
+             && state == DendriticState::IMMATURE
+             && mpCompartment->getName() == "LaminaPropria")
     {
       newState = DendriticState::EFFECTOR;
     }
     /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
      *  1 is arbitrary */
-    else if ( liveHPyloriCount+tolegenicBacteriaCount<=1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::laminaPropria)
+    else if (liveHPyloriCount+tolegenicBacteriaCount<=1
+             && state == DendriticState::IMMATURE
+             && mpCompartment->getName() == "LaminaPropria")
     {
       newState = DendriticState::TOLEROGENIC;
     }
