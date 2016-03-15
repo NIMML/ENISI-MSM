@@ -22,6 +22,9 @@ Tcell::Color Tcell::getColor(){
     case ENISI::AgentState::TREG:
       color = green;
       break;
+    case ENISI::AgentState::Tr:
+          color = cyan;
+          break;
     case ENISI::AgentState::DEAD:
       color = black;
       break;
