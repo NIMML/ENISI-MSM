@@ -65,12 +65,12 @@ protected:
    */
   void transferStateTo(int, const repast::Point<int> &, unsigned int = 1);
 
-private:
   /**
    *
    */
   Compartment * mpCompartment;
 
+private:
   /**
    *
    */

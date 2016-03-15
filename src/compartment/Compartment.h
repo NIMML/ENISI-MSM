@@ -12,7 +12,8 @@ class CellLayer; class DiffuserLayer;
 class Compartment
 {
 public:
-  Compartment(const repast::GridDimensions &);
+  Compartment(const repast::GridDimensions &,
+              const std::string name = "Default");
   ~Compartment();
 
   CellLayer * cellLayer();
@@ -22,11 +23,14 @@ public:
   void requestDiffuserAgents();
   void diffuse();
   void updateReferenceDiffuserGrid();
+  const std::string & getName() const;
+
 private:
   const repast::GridDimensions & _dimensions;
   CellLayer * _p_cellLayer;
-
   std::vector<DiffuserLayer *> _diffuserLayers;
+  const std::string mName;
+
 }; /* end Compartment */
 
 }
