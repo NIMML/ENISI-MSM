@@ -1,6 +1,8 @@
 #include "ParallelDiffuser.h"
 #include "compartment/DiffuserLayer.h"
 
+using namespace ENISI;
+
 ParallelDiffuser::~ParallelDiffuser()
 {
   /* repast::Context deletes this pointer. Don't do it manually */

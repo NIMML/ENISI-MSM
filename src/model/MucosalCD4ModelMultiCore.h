@@ -9,10 +9,10 @@
 class MucosalCD4ModelMultiCore : public MucosalCD4ModelBase
 {
 public:
-  typedef ENISIAgent Node;
-  typedef repast::RepastEdge<ENISIAgent> Edge;
-  typedef repast::RepastEdgeContent<ENISIAgent> EdgeCont;
-  typedef repast::RepastEdgeContentManager<ENISIAgent> EdgeContMgr;
+  typedef ENISI::Agent Node;
+  typedef repast::RepastEdge<ENISI::Agent> Edge;
+  typedef repast::RepastEdgeContent<ENISI::Agent> EdgeCont;
+  typedef repast::RepastEdgeContentManager<ENISI::Agent> EdgeContMgr;
   typedef repast::SharedNetwork<Node, Edge, EdgeCont, EdgeContMgr> Network;
 
   MucosalCD4ModelMultiCore(repast::Properties*, boost::mpi::communicator*);

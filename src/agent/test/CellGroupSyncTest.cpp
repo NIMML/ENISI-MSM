@@ -22,7 +22,7 @@ public:
     ENISI::Compartment laminaPropria(_dimensions);
 
     const int tcellCount = 0;
-    AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount);
+    ENISI::AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount);
   }
 
   void TearDown() { }
@@ -46,24 +46,24 @@ void ACellGroupSync::act()
 {
   _actCalled = true;
 
-  std::vector<CellLayer::AgentType *> localAgents = 
+  std::vector<ENISI::CellLayer::AgentType *> localAgents =
     _lumen.cellLayer()->selectLocalAgents();
   ASSERT_THAT(localAgents.size(), Eq(1));
 
-  std::vector<CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
+  std::vector<ENISI::CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
   int worldSize = repast::RepastProcess::instance()->worldSize();
   int remoteAgentSize = worldSize - 1;
   ASSERT_THAT(remoteAgents.size(), Eq(remoteAgentSize));
 
-  std::vector<CellLayer::AgentType*> allAgents = _lumen.cellLayer()->selectAllAgents();
+  std::vector<ENISI::CellLayer::AgentType*> allAgents = _lumen.cellLayer()->selectAllAgents();
   ASSERT_THAT(allAgents.size(), Eq(worldSize));
 
-  std::vector<CellLayer::AgentType*>::const_iterator local_it = localAgents.begin();
+  std::vector<ENISI::CellLayer::AgentType*>::const_iterator local_it = localAgents.begin();
 
   while(local_it != localAgents.end())
   {
-    TcellGroup * localTcells = (TcellGroup*) (*local_it);
-    localTcells->transferStateTo(TcellState::DEAD, repast::Point<int>(0, 0), 5);
+    ENISI::TcellGroup * localTcells = static_cast< ENISI::TcellGroup *>(*local_it);
+    localTcells->transferStateTo(ENISI::TcellState::DEAD, repast::Point<int>(0, 0), 5);
     local_it++;
   }
 
@@ -73,29 +73,29 @@ void ACellGroupSync::act()
 void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
 {
   _assertRemoteLocalAgentSyncOccuredCalled = true;
-  std::vector<CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
+  std::vector<ENISI::CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
 
-  std::vector<CellLayer::AgentType*>::const_iterator remote_it = remoteAgents.begin();
+  std::vector<ENISI::CellLayer::AgentType*>::const_iterator remote_it = remoteAgents.begin();
   while(remote_it != remoteAgents.end())
   {
-    TcellGroup * remoteTcells = (TcellGroup*) (*remote_it);
+    ENISI::TcellGroup * remoteTcells = (ENISI::TcellGroup*) (*remote_it);
 
-    TcellGroup::Transfers remoteTransfers = remoteTcells->getTransfers();
-    ASSERT_THAT(remoteTransfers[TcellState::DEAD].size(), Eq(5));
+    ENISI::TcellGroup::Transfers remoteTransfers = remoteTcells->getTransfers();
+    ASSERT_THAT(remoteTransfers[ENISI::TcellState::DEAD].size(), Eq(5));
 
     remote_it++;
   }
 
-  std::vector<CellLayer::AgentType *> localAgents = _lumen.cellLayer()->selectLocalAgents();
+  std::vector<ENISI::CellLayer::AgentType *> localAgents = _lumen.cellLayer()->selectLocalAgents();
   
-  std::vector<CellLayer::AgentType*>::const_iterator local_it = localAgents.begin();
+  std::vector<ENISI::CellLayer::AgentType*>::const_iterator local_it = localAgents.begin();
 
   while(local_it != localAgents.end())
   {
-    TcellGroup * localTcells = (TcellGroup*) (*local_it);
+    ENISI::TcellGroup * localTcells = (ENISI::TcellGroup*) (*local_it);
 
-    TcellGroup::Transfers localTransfers = localTcells->getTransfers();
-    ASSERT_THAT(localTransfers[TcellState::DEAD].size(), Eq(5));
+    ENISI::TcellGroup::Transfers localTransfers = localTcells->getTransfers();
+    ASSERT_THAT(localTransfers[ENISI::TcellState::DEAD].size(), Eq(5));
 
     localTcells->clearTransfers();
     local_it++;
@@ -106,29 +106,29 @@ void ACellGroupSync::assertRemoteLocalAgentSyncOccured()
 
 void ACellGroupSync::assertTransfersCleared()
 {
-  std::vector<CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
+  std::vector<ENISI::CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
   
-  std::vector<CellLayer::AgentType*>::const_iterator remote_it = remoteAgents.begin();
+  std::vector<ENISI::CellLayer::AgentType*>::const_iterator remote_it = remoteAgents.begin();
   while(remote_it != remoteAgents.end())
-  {
-    TcellGroup * remoteTcells = (TcellGroup*) (*remote_it);
+    {
+      ENISI::TcellGroup * remoteTcells = (ENISI::TcellGroup*) (*remote_it);
 
-    TcellGroup::Transfers remoteTransfers = remoteTcells->getTransfers();
-    ASSERT_THAT(remoteTransfers[TcellState::DEAD].size(), Eq(0));
+      ENISI::TcellGroup::Transfers remoteTransfers = remoteTcells->getTransfers();
+    ASSERT_THAT(remoteTransfers[ENISI::TcellState::DEAD].size(), Eq(0));
 
     remote_it++;
   }
 
-  std::vector<CellLayer::AgentType *> localAgents = _lumen.cellLayer()->selectLocalAgents();
+  std::vector<ENISI::CellLayer::AgentType *> localAgents = _lumen.cellLayer()->selectLocalAgents();
   
-  std::vector<CellLayer::AgentType*>::const_iterator local_it = localAgents.begin();
+  std::vector<ENISI::CellLayer::AgentType*>::const_iterator local_it = localAgents.begin();
 
   while(local_it != localAgents.end())
   {
-    TcellGroup * localTcells = (TcellGroup*) (*local_it);
+      ENISI::TcellGroup * localTcells = (ENISI::TcellGroup*) (*local_it);
 
-    TcellGroup::Transfers localTransfers = localTcells->getTransfers();
-    ASSERT_THAT(localTransfers[TcellState::DEAD].size(), Eq(0));
+      ENISI::TcellGroup::Transfers localTransfers = localTcells->getTransfers();
+    ASSERT_THAT(localTransfers[ENISI::TcellState::DEAD].size(), Eq(0));
 
     local_it++;
   }

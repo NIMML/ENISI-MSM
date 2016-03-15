@@ -1,9 +1,11 @@
 #include "AgentFactory.h"
 
-ENISIAgent * AgentFactory::create(
-    const std::string & agentType, ENISI::Compartment * p_cmp)
+using namespace ENISI;
+
+Agent * AgentFactory::create(const std::string & agentType,
+                                  Compartment * p_cmp)
 { 
-  ENISIAgent * p_agent;
+  Agent * p_agent;
 
   if ( agentType == "Tcell" ) 
   { 
@@ -25,10 +27,9 @@ ENISIAgent * AgentFactory::create(
   return p_agent;
 }
 
-CellGroup * AgentGroupFactory::create(
-    const std::string agentType, 
-    ENISI::Compartment * p_compartment, 
-    const boost::uintmax_t agentCount)
+CellGroup * AgentGroupFactory::create(const std::string agentType,
+                                      Compartment * p_compartment,
+                                      const boost::uintmax_t agentCount)
 { 
   /* Context deals with this pointer automatically in its destructor */
   /* Don't delete them unless you want a segmentation fault */
@@ -36,15 +37,15 @@ CellGroup * AgentGroupFactory::create(
 
   if ( agentType == "BacteriaGroup" ) 
   { 
-    p_agent = new BacteriaGroup(agentCount, p_compartment->cellLayer());
+    p_agent = new BacteriaGroup(agentCount, p_compartment);
   }
   else if ( agentType == "TcellGroup" ) 
   { 
-    p_agent = new TcellGroup(agentCount, p_compartment->cellLayer());
+    p_agent = new TcellGroup(agentCount, p_compartment);
   }
   else if ( agentType == "DendriticsGroup" ) 
   { 
-    p_agent = new DendriticsGroup(agentCount, p_compartment->cellLayer());
+    p_agent = new DendriticsGroup(agentCount, p_compartment);
   }
 
   else { throw std::invalid_argument("Unknown agent type: " + agentType); }

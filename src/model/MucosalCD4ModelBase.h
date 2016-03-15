@@ -30,11 +30,11 @@ public:
   ~MucosalCD4ModelBase();
 
   typedef repast::StickyBorders Borders;
-  typedef repast::SimpleAdder<ENISIAgent> Adder;
+  typedef repast::SimpleAdder<ENISI::Agent> Adder;
 
-  typedef ENISIAgent::Context Context;
-  typedef repast::SharedContinuousSpace<ENISIAgent, Borders, Adder> Space;
-  typedef repast::SharedDiscreteSpace<ENISIAgent, Borders, Adder> Grid;
+  typedef ENISI::Agent::Context Context;
+  typedef repast::SharedContinuousSpace<ENISI::Agent, Borders, Adder> Space;
+  typedef repast::SharedDiscreteSpace<ENISI::Agent, Borders, Adder> Grid;
 
   typedef repast::DiscreteValueLayer<double, Borders> ValueLayer;
 
@@ -57,7 +57,7 @@ protected:
 
   repast::GridDimensions gridDimensions;
 
-  std::vector<Diffuser *> valueDiffusers;
+  std::vector<ENISI::Diffuser *> valueDiffusers;
 
   virtual void setUpCytokines();
   void setUpCytokineMultipliers();

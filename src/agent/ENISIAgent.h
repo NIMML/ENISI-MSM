@@ -7,24 +7,27 @@
 #include "RepastProcess.h"
 
 //TODO reconcile TOLEGENIC and TOLEROGENIC
-namespace AgentState {
+namespace ENISI {
+
+class AgentState {
+public:
   enum State { 
     DEAD, IMMATURE, EFFECTOR, INFECTIOUS, TOLEGENIC, TOLEROGENIC, 
     NAIVE, TH1, TH17, TREG
   };
 };
 
-class ENISIAgent: public repast::Agent 
+class Agent: public repast::Agent
 {
 public:
-  typedef repast::SharedContext<ENISIAgent> Context;
+  typedef repast::SharedContext<Agent> Context;
   enum Color { pink, red, blue, green, black };
 
-  ENISIAgent();
+  Agent();
 
-  virtual void act() =0;
+  virtual void act() = 0;
 
-  virtual ~ENISIAgent() { }
+  virtual ~Agent() { }
 
   /* Required Getters */
   virtual repast::AgentId& getId(){                   return id;    }
@@ -38,7 +41,7 @@ public:
 
   /* Used by AgentPackageReceiver to create/sync agents across processes 
      Ensure the return string matches the corresponding code in AgentFactory */
-  virtual std::string classname() =0;
+  virtual std::string classname() = 0;
 
 protected:
 
@@ -48,5 +51,7 @@ private:
   static int agentCount;
   repast::AgentId id;
 };
+
+} // namespace ENISI
 
 #endif

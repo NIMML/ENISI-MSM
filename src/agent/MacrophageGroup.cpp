@@ -1,8 +1,10 @@
 #include "agent/MacrophageGroup.h"
 
-MacrophageGroup::MacrophageGroup(
-    const boost::uintmax_t macrophageCount, CellLayer * p_layer)
-  : CoordinateMap(p_layer)
+using namespace ENISI;
+
+MacrophageGroup::MacrophageGroup(const boost::uintmax_t macrophageCount,
+                                 Compartment * pCompartment) :
+  CoordinateMap(pCompartment)
 {
   for (boost::uintmax_t i = 0; i < macrophageCount; i++) 
   {
@@ -80,7 +82,7 @@ MacrophageGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
 {
   std::vector< const HPyloriGroup::StateCount *> allNeighbors;
 
-  std::vector<ENISIAgent *> agents = layer()->selectAllAgents();
+  std::vector<Agent *> agents = layer()->selectAllAgents();
 
   for (size_t i = 0; i < agents.size(); ++i)
   {

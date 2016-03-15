@@ -3,10 +3,12 @@
 
 #include "agent/ENISIAgent.h" 
 
+namespace ENISI {
+
 class DiffuserLayer;
 class DiffuserImpl;
 
-class Diffuser : public ENISIAgent
+class Diffuser : public Agent
 {
 public:
   Diffuser(DiffuserLayer * p_cl, 
@@ -51,5 +53,7 @@ private:
   DiffuserImpl * p_impl;
   DiffuserLayer * _p_layer;
 };
- 
+
+} // namespace ENISI
+
 #endif

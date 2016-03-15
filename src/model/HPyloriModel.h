@@ -22,7 +22,6 @@ public:
 protected:
   void setUpValueLayer();
   void setUpCytokines();
-  void setUpCytokineMultipliers();
 
   void createAgentGroup(const std::string & num, const std::string & grp);
 
@@ -51,9 +50,7 @@ private:
 
   ValueLayer * _p_valueLayer;
 
-  std::vector<Diffuser *> _valueDiffusers;
-
-  std::map<std::string, int> _cytokineMultipliers; 
+  std::vector<ENISI::Diffuser *> _valueDiffusers;
 };
 
 boost::uintmax_t strToUIntMax(const std::string);

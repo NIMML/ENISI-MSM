@@ -7,10 +7,10 @@
 
 class Dendritics: public ImmuneCell {
 public:
-  Dendritics(CellLayer * p_layer) 
-    : ImmuneCell(p_layer) { setState(AgentState::IMMATURE); }
+  Dendritics(ENISI::CellLayer * p_layer)
+    : ImmuneCell(p_layer) { setState(ENISI::AgentState::IMMATURE); }
 
-  Dendritics(CellLayer * p_layer, AgentState::State st) 
+  Dendritics(ENISI::CellLayer * p_layer, ENISI::AgentState::State st)
     : ImmuneCell(p_layer) { setState(st); }
 
   virtual void act();

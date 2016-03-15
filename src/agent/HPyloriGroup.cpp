@@ -1,8 +1,9 @@
 #include "HPyloriGroup.h"
 
-HPyloriGroup::HPyloriGroup(
-    const boost::uintmax_t macrophageCount, CellLayer * p_layer)
-  : CoordinateMap(p_layer)
+namespace ENISI {
+
+HPyloriGroup::HPyloriGroup(const boost::uintmax_t macrophageCount, Compartment * pCompartment) :
+    CoordinateMap(pCompartment)
 {
   for (boost::uintmax_t i = 0; i < macrophageCount; i++) 
   {
@@ -46,3 +47,4 @@ void HPyloriGroup::act(
   addCellAt(state, newLoc);
 }
 
+}

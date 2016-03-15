@@ -15,7 +15,7 @@ public:
 
 TEST_F(ATcell, HasDefaultStateNAIVE)
 {
-  ASSERT_THAT(_p_tcell->getState(), Eq(AgentState::NAIVE));
+  ASSERT_THAT(_p_tcell->getState(), Eq(ENISI::AgentState::NAIVE));
 }
 
 TEST_F(ATcell, SuccessfullyAddsCytoLayer)

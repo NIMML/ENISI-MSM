@@ -6,6 +6,9 @@
 #include <stdexcept>
 #include <vector>
 
+namespace ENISI {
+
+
 class DiffuserImpl 
 {
 public:
@@ -101,5 +104,7 @@ private:
 
   std::vector<repast::Point<int> > _gridPointsToDiffuse;
 };
+
+} // namespace ENISI
 
 #endif

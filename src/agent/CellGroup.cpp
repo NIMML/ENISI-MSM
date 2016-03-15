@@ -1,11 +1,16 @@
-#include "compartment/CellLayer.h"
-#include "CellGroupImpl.h"
 #include "CellGroup.h"
+#include "CellGroupImpl.h"
+#include "compartment/CellLayer.h"
+#include "compartment/Compartment.h"
+
+using namespace ENISI;
 
 CellGroup::~CellGroup() { delete _p_impl; }
 
-CellGroup::CellGroup(CellLayer * p_layer)
-  : _p_impl(new CellGroupImpl(p_layer)) { }
+CellGroup::CellGroup(Compartment * pCompartment) :
+  mpCompartment(pCompartment),
+  _p_impl(new CellGroupImpl(pCompartment->cellLayer()))
+{}
 
 const CellGroup::Transfers & CellGroup::getTransfers() { return _p_impl->getTransfers(); }
 
@@ -62,4 +67,17 @@ std::vector<double> CellGroupImpl::randomMove(
   moveTo.push_back( fromPt.getY() + radius * sin(angle) );
 
   return moveTo;
+}
+
+TransferGroup::TransferGroup(Compartment * pCompartment) :
+  CellGroup(pCompartment)
+{}
+
+// virtual
+void TransferGroup::act() {}
+
+// virtual
+std::string TransferGroup::classname()
+{
+  return "TransferGroup";
 }

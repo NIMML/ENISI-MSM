@@ -1,5 +1,7 @@
 #include "compartment/CellLayer.h"
 
+using namespace ENISI;
+
 /* CellLayer class */
 CellLayer::CellLayer(const repast::GridDimensions & dims)
-  : ICompartmentLayer<ENISIAgent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver>(dims) { }
+  : ICompartmentLayer<Agent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver>(dims) { }

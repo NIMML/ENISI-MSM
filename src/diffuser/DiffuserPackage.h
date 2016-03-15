@@ -5,6 +5,8 @@
 #include "SharedContext.h" 
 #include "diffuser/Diffuser.h" 
 
+namespace ENISI {
+
 /* Serializable Agent Package */
 struct DiffuserPackage {
 	
@@ -70,5 +72,7 @@ public:
     void updateAgent(DiffuserPackage package);
 	
 };
+
+} // namespace ENISI
 
 #endif

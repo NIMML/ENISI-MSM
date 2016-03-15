@@ -6,6 +6,8 @@
 #include "Moore2DGridQuery.h"
 #include "agent/ENISIAgent.h"
 
+namespace ENISI {
+
 template <class A, class P, class PP, class PR>
 class ICompartmentLayer
 { 
@@ -41,7 +43,7 @@ public:
   void addValueLayer(repast::DiscreteValueLayer<double, Borders> *);
 
 protected:
-  const static int x[2];
+  static const int x[2];
   boost::mpi::communicator * _p_comm;
   repast::SharedContext<A> _context;
   std::vector<int> _processDims;
@@ -66,16 +68,15 @@ ICompartmentLayer<A, P, PP, PR>::~ICompartmentLayer()
 }
 
 template <class A, class P, class PP, class PR>
-ICompartmentLayer<A, P, PP, PR>::ICompartmentLayer(
-    const repast::GridDimensions & dimensions) 
-: _p_comm(repast::RepastProcess::instance()->getCommunicator()), 
+ICompartmentLayer<A, P, PP, PR>::ICompartmentLayer(const repast::GridDimensions & dimensions) :
+  _p_comm(repast::RepastProcess::instance()->getCommunicator()),
   _context(_p_comm), 
-  _processDims(x, x + sizeof x / sizeof x[0]), _buffer(1),
+  _processDims(x, x + sizeof x / sizeof x[0]),
+  _buffer(1),
   _p_space(new Space("space", dimensions, _processDims, _buffer, _p_comm)),
   _p_grid(new Grid("grid", dimensions, _processDims, _buffer, _p_comm)),
   _provider(&_context),
   _receiver(&_context)
-
 {
   _context.addProjection(_p_space);
   _context.addProjection(_p_grid);
@@ -95,19 +96,15 @@ void ICompartmentLayer<A, P, PP, PR>::addAgentToRandomLocation(A * agent)
   double xEnd = origin.getX() + extents.getX();
   double yEnd = origin.getY() + extents.getY();
 
-  double xRand = repast::Random::instance()
-    ->createUniDoubleGenerator(xStart, xEnd).next();
+  double xRand = repast::Random::instance()->createUniDoubleGenerator(xStart, xEnd).next();
+  double yRand = repast::Random::instance()->createUniDoubleGenerator(yStart, yEnd).next();
 
-  double yRand = repast::Random::instance()
-    ->createUniDoubleGenerator(yStart, yEnd).next();
-
-  this->moveAgentTo(agent, repast::Point<double>(xRand, yRand));
+  moveAgentTo(agent, repast::Point<double>(xRand, yRand));
 }
 
 template <class A, class P, class PP, class PR>
-void ICompartmentLayer<A, P, PP, PR>::moveAgentTo(
-    const A * agent, const repast::Point<double> & pt
-) {
+void ICompartmentLayer<A, P, PP, PR>::moveAgentTo(const A * agent, const repast::Point<double> & pt)
+{
   _p_space->moveTo(agent, pt);
   _p_grid->moveTo(agent, repast::Point<int>(pt.getX(), pt.getY()));
 }
@@ -126,15 +123,15 @@ const repast::GridDimensions ICompartmentLayer<A, P, PP, PR>::dimensions() const
 }
 
 template <class A, class P, class PP, class PR>
-void ICompartmentLayer<A, P, PP, PR>::getLocation(
-    const repast::AgentId & id, std::vector<double> & loc) const
+void ICompartmentLayer<A, P, PP, PR>::getLocation(const repast::AgentId & id,
+                                                  std::vector<double> & loc) const
 { 
   _p_space->getLocation(id, loc);
 }
 
 template <class A, class P, class PP, class PR>
-std::vector<A*> ICompartmentLayer<A, P, PP, PR>::getNeighborsAt(
-    const std::string neighborName, const repast::Point<int> & pt) const
+std::vector<A*> ICompartmentLayer<A, P, PP, PR>::getNeighborsAt(const std::string neighborName,
+                                                                const repast::Point<int> & pt) const
 { 
   std::vector<A*> agentsToPlay;
 
@@ -195,4 +192,7 @@ void ICompartmentLayer<A, P, PP, PR>::addValueLayer(
 {
   _context.addValueLayer(p_vl);
 }
+
+} // namespace ENISI
+
 #endif

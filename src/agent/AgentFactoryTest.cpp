@@ -6,10 +6,10 @@ using namespace testing;
 class AnAgentFactory: public InitSharedContext 
 { 
 public:
-  AgentFactory * factory;
+  ENISI::AgentFactory * factory;
   void SetUp() {
     InitSharedContext::SetUp(); 
-    factory = new AgentFactory();
+    factory = new ENISI::AgentFactory();
   }
   void TearDown() {
     delete factory;

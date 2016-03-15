@@ -1,6 +1,6 @@
 #include "ImmuneCell.h"
 
-ImmuneCell::ImmuneCell(CellLayer * p_layer) : _p_layer(p_layer) { }
+ImmuneCell::ImmuneCell(ENISI::CellLayer * p_layer) : _p_layer(p_layer) { }
 
 void ImmuneCell::addCytoLayer(std::string name, GridValueLayer* gvl)
 {
@@ -36,7 +36,7 @@ double ImmuneCell::randomMove(double speed)
   return radius;
 }
 
-std::vector<ENISIAgent *> ImmuneCell::getNeighbors(const std::string name)
+std::vector<ENISI::Agent *> ImmuneCell::getNeighbors(const std::string name)
 {
   std::vector<double> loc = getLocation();
   repast::Point<int> pt(loc[0], loc[1]);

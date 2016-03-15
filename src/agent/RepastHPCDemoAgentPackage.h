@@ -3,7 +3,7 @@
 
 #include "AgentFactory.h" // repast::SharedContext
 
-typedef ENISIAgent RepastHPCDemoAgent;
+typedef ENISI::Agent RepastHPCDemoAgent;
 
 /* Serializable Agent Package */
 struct RepastHPCDemoAgentPackage {
@@ -14,13 +14,13 @@ public:
     int    type;
     int    currentRank;
     std::string classname;
-    AgentState::State state;
+    ENISI::AgentState::State state;
 	
     /* Constructors */
     RepastHPCDemoAgentPackage(); // For serialization
     RepastHPCDemoAgentPackage(
     	int _id, int _rank, int _type, int _currentRank, 
-    	std::string _classname, AgentState::State _state
+    	std::string _classname, ENISI::AgentState::State _state
     );
 	
     /* For archive packaging */

@@ -6,7 +6,7 @@ RepastHPCDemoAgentPackage::RepastHPCDemoAgentPackage(){ }
 
 RepastHPCDemoAgentPackage::RepastHPCDemoAgentPackage(
     int _id, int _rank, int _type, int _currentRank, 
-    std::string _classname, AgentState::State _state
+    std::string _classname, ENISI::AgentState::State _state
     ):
 id(_id), rank(_rank), type(_type), currentRank(_currentRank), 
   classname(_classname), state(_state)
@@ -36,12 +36,12 @@ void RepastHPCDemoAgentPackageProvider::provideContent(repast::AgentRequest req,
 
 RepastHPCDemoAgentPackageReceiver::RepastHPCDemoAgentPackageReceiver(repast::SharedContext<RepastHPCDemoAgent>* agentPtr): agents(agentPtr){}
 
-ENISIAgent * RepastHPCDemoAgentPackageReceiver::createAgent(
+ENISI::Agent * RepastHPCDemoAgentPackageReceiver::createAgent(
       RepastHPCDemoAgentPackage package)
 {
   repast::AgentId id(package.id, package.rank, package.type, package.currentRank);
 
-  AgentFactory factory;
+  ENISI::AgentFactory factory;
 
   const repast::Point<double> origin(0, 0);
   const repast::Point<double> extents(0, 0);
@@ -50,7 +50,7 @@ ENISIAgent * RepastHPCDemoAgentPackageReceiver::createAgent(
 
   ENISI::Compartment compartment(dimensions);
 
-  ENISIAgent * agent = factory.create(package.classname, &compartment);
+  ENISI::Agent * agent = factory.create(package.classname, &compartment);
   agent->setId(id);
   agent->setState(package.state);
 

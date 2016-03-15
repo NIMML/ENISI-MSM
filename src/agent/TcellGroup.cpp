@@ -1,8 +1,9 @@
 #include "TcellGroup.h"
 
-TcellGroup::TcellGroup(
-    const boost::uintmax_t tcellCount, CellLayer * p_layer)
-  : CoordinateMap(p_layer)
+using namespace ENISI;
+
+TcellGroup::TcellGroup(const boost::uintmax_t tcellCount, Compartment * pCompartment) :
+  CoordinateMap(pCompartment)
 {
   init(tcellCount);
 }
@@ -84,9 +85,9 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
 
     /* get output cytokines */
     Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-    cytoMap["IFNg"]->setValueAtCoord(IFNg, loc);
-    cytoMap["IL17"]->setValueAtCoord(IL17, loc);
-    cytoMap["IL10"]->setValueAtCoord(IL10, loc);
+    cytoMap["IFNg"].first->setValueAtCoord(IFNg, loc);
+    cytoMap["IL17"].first->setValueAtCoord(IL17, loc);
+    cytoMap["IL10"].first->setValueAtCoord(IL10, loc);
 
     if (IL17 > 0.5) {
       newState = TcellState::TH17;

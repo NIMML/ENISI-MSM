@@ -2,6 +2,8 @@
 #include "DiffuserImpl.h"
 #include "Diffuser.h"
 
+using namespace ENISI;
+
 Diffuser::~Diffuser() 
 { 
   delete p_impl; 

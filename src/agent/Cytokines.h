@@ -5,12 +5,14 @@
 #include "../diffuser/Diffuser.h" // repast::ValueLayer
 #include "../compartment/Compartment.h"
 
+namespace ENISI {
+
 class Cytokines 
 {
 public:
   //typedef repast::DiscreteValueLayer<double, ENISI::Compartment::Borders> GridValueLayer;
   typedef Diffuser GridValueLayer;
-  typedef std::map<std::string, GridValueLayer*> CytoMap;
+  typedef std::map< std::string, std::pair< GridValueLayer *, double > > CytoMap;
 
   Cytokines() { }
 
@@ -30,5 +32,8 @@ protected:
 private:
   CytoMap cytoMap;
 };
+
+} // namespace ENISI
+
 
 #endif
