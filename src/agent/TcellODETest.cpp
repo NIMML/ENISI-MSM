@@ -3,7 +3,7 @@
 
 TEST(ATcellODE, SetsInitialConcentrations)
 {
-  TcellODE& odeModel = TcellODE::getInstance();
+  ENISI::TcellODE& odeModel = ENISI::TcellODE::getInstance();
 
   odeModel.setInitialConcentration("IL6", 70);
   odeModel.setInitialConcentration("TGFb", 70);

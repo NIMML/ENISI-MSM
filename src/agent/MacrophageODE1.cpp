@@ -1,11 +1,11 @@
-#include "TcellODE.h"
+#include "MacrophageODE1.h"
 #include "COPASI.h"
 
 using namespace ENISI;
 
-TcellODE* TcellODE::instance = NULL;
+MacrophageODE1* MacrophageODE1::instance = NULL;
 
-TcellODE::TcellODE() : DEBUG(false)
+MacrophageODE1::MacrophageODE1() : DEBUG(false)
 {
   std::string modelFileName("./modelfiles/MSM_CD4.cps");
 
@@ -86,7 +86,7 @@ TcellODE::TcellODE() : DEBUG(false)
 }
 
 
-void TcellODE::setInitialConcentration(std::string name, double value) {
+void MacrophageODE1::setInitialConcentration(std::string name, double value) {
   if ( nameMetabs.find(name) != nameMetabs.end() ) 
   {
     CMetab* m = nameMetabs[name];
@@ -97,7 +97,7 @@ void TcellODE::setInitialConcentration(std::string name, double value) {
   }
 }
 
-void TcellODE::setUpReport() {
+void MacrophageODE1::setUpReport() {
   // create a report with the correct filename and all the species against time.
   CReportDefinitionVector* reports = dataModel->getReportDefinitionList();
   // create a new report definition object
@@ -162,7 +162,7 @@ void TcellODE::setUpReport() {
   }
 } 
 
-void TcellODE::setUpTask() {
+void MacrophageODE1::setUpTask() {
   // get the task list
   CCopasiVectorN< CCopasiTask > & TaskList = * dataModel->getTaskList();
 
@@ -215,7 +215,7 @@ void TcellODE::setUpTask() {
 
 } 
 
-void TcellODE::runTimeCourse() {
+void MacrophageODE1::runTimeCourse() {
   model->applyInitialValues();
 
   bool result = true;
@@ -244,7 +244,7 @@ void TcellODE::runTimeCourse() {
   }
 } 
 
-double TcellODE::getConcentration(std::string name) {
+double MacrophageODE1::getConcentration(std::string name) {
 
   double d = 0.0;
 

@@ -2,35 +2,23 @@
 #define ENISI_MSM_TCELLODE_H
 
 #include <string>
-#include <iostream>
 #include <map>
-#include <fstream> 
+#include <vector>
 
+class CReportDefinition;
+class CCopasiDataModel;
+class CModel;
+class CTrajectoryTask;
+class CMetab;
+class CRegisteredObjectName;
 
-#include <copasi/copasi.h> 
-#include <copasi/model/CCompartment.h>
-#include <copasi/CopasiDataModel/CCopasiDataModel.h>
-#include <copasi/utilities/CCopasiMessage.h>
-#include <copasi/utilities/CCopasiMethod.h>
-#include <copasi/utilities/CCopasiParameter.h>
-#include <copasi/report/CCopasiStaticString.h> // CCopasiReportSeparator
-#include <copasi/report/CCopasiRootContainer.h> 
-#include <copasi/utilities/CCopasiTask.h>
-#include <copasi/model/CMetab.h>
-#include <copasi/model/CModel.h>
-#include <copasi/model/CModelValue.h> //CModelEntity
-#include <copasi/model/CReaction.h>
-#include <copasi/report/CCopasiObjectName.h> // CRegisteredObjectName
-#include <copasi/report/CReportDefinition.h>
-#include <copasi/report/CReportDefinitionVector.h>
-#include <copasi/trajectory/CTrajectoryMethod.h>
-#include <copasi/trajectory/CTrajectoryProblem.h>
-#include <copasi/trajectory/CTrajectoryTask.h>
+namespace ENISI
+{
 
 class TcellODE 
 {
 public:
-  typedef std::vector<CRegisteredObjectName>* ReportItemVector;
+  typedef std::vector< CRegisteredObjectName > * ReportItemVector;
 
   TcellODE();
   void setInitialConcentration(std::string, double);
@@ -42,17 +30,20 @@ public:
     if (instance == NULL) instance = new TcellODE();
     return *instance;
   }
+
 private:
-  CReportDefinition* report;
-  CCopasiDataModel* dataModel;
-  CModel* model;
-  CTrajectoryTask* trajectoryTask;
+  CReportDefinition * report;
+  CCopasiDataModel * dataModel;
+  CModel * model;
+  CTrajectoryTask * trajectoryTask;
   std::map<std::string, CMetab*> nameMetabs;
 
   void setUpReport();
   void setUpTask();
-  static TcellODE* instance;
+  static TcellODE * instance;
   bool DEBUG;
 };
+
+} // namespace ENISI
 
 #endif
