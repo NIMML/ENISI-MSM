@@ -12,7 +12,7 @@ class TcellState
 {
 public:
   enum State { NAIVE, TH1, TH17, TREG, DEAD, KEEP_AT_END};
-  //enum State { NAIVE, TH1, TH17, TREG, TR, DEAD, KEEP_AT_END }; /*Adding another state TR to the group*/
+  //enum State { NAIVE, TH1, TH17, TREG, Tr, DEAD, KEEP_AT_END }; /*Adding another state TR to the group*/
 };
 
 class TcellGroup: public CoordinateMap<TcellState::KEEP_AT_END>
