@@ -11,8 +11,7 @@ namespace ENISI
 class TcellState
 {
 public:
-  enum State { NAIVE, TH1, TH17, TREG, DEAD, KEEP_AT_END};
-  //enum State { NAIVE, TH1, TH17, TREG, Tr, DEAD, KEEP_AT_END }; /*Adding another state TR to the group*/
+  enum State { NAIVE, TH1, TH17, TREG, Tr, DEAD, KEEP_AT_END };
 };
 
 class TcellGroup: public CoordinateMap<TcellState::KEEP_AT_END>
@@ -32,7 +31,7 @@ public:
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "TcellGroup"; }
   //Added the declaration of getTcellNeighbors function here
-  const std::vector< const TcellGroup::StateCount *>
+  std::vector< const TcellGroup::StateCount *>
   getMacrophageNeighbors(const repast::Point<int> &);
 protected:
 private:

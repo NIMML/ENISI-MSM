@@ -1,4 +1,5 @@
 #include "TcellGroup.h"
+#include "MacrophageGroup.h"
 
 using namespace ENISI;
 
@@ -61,59 +62,61 @@ void TcellGroup::act()
 void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
 {
   if (state == TcellState::DEAD) return;
-  const std::vector< const MacrophageGroup::StateCount *>
+  const std::vector< const StateCount *>
           neighborList = getMacrophageNeighbors(loc);
 
-        std::vector< const MacrophageGroup::StateCount *>::const_iterator iter
+        std::vector< const StateCount *>::const_iterator iter
           = neighborList.begin();
 
     TcellState::State newState = state;
   double IL6  = Cytokines::instance().get("IL6", loc);
   double TGFb = Cytokines::instance().get("TGFb", loc);
   double IL12 = Cytokines::instance().get("IL12", loc);
-  while ( iter != neighborList.end() )
-{
-   const MacrophageGroup::StateCount * p_macrophageCount = *iter;
-   unsigned int macrophageregCount  = p_macrophageStateCount->state[MacrophageState::REGULATORY];
-  if (IL6 + TGFb + IL12 > 1.0) 
-  {
-    /* set initial concentrations */
-    TcellODE & odeModel = TcellODE::getInstance();
-    odeModel.setInitialConcentration("IL6", IL6);
-    odeModel.setInitialConcentration("TGFb", TGFb);
-    odeModel.setInitialConcentration("IL12", IL12);
-    
-    /* run time course */
-    odeModel.runTimeCourse();
-    
-    double IFNg = odeModel.getConcentration("IFNg");
-    double IL17 = odeModel.getConcentration("IL17");
-    double IL10 = odeModel.getConcentration("IL10");
+	while (iter != neighborList.end()) {
+		const StateCount * p_macrophageCount = *iter;
+		unsigned int macrophageregCount =
+				p_macrophageCount->state[MacrophageState::REGULATORY];
 
-    /* get output cytokines */
-    Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-    cytoMap["IFNg"].first->setValueAtCoord(IFNg, loc);
-    cytoMap["IL17"].first->setValueAtCoord(IL17, loc);
-    cytoMap["IL10"].first->setValueAtCoord(IL10, loc);
+		if (IL6 + TGFb + IL12 > 1.0) {
+			/* set initial concentrations */
+			TcellODE & odeModel = TcellODE::getInstance();
+			odeModel.setInitialConcentration("IL6", IL6);
+			odeModel.setInitialConcentration("TGFb", TGFb);
+			odeModel.setInitialConcentration("IL12", IL12);
 
-    if (IL17 > 0.5) {
-      newState = TcellState::TH17;
-    } else if (IFNg > 0.5) {
-      newState = TcellState::TH1;
-    } else if (IL10 > 0.5) {
-      newState = TcellState::TREG;
-    } else if ( (IL10 > 0.5*IFNg) && (state == MacrophageState::REGULATORY) ){
-      newState = TcellState::TR;
-    }// The rule is if nT is in contact with REGULATORY macrophages, and if IL10> a* IFNg
-    //then nT -> Tr (state transition). Here, 'a' has been hard coded as 0.5
-        ++iter;
-  }
+			/* run time course */
+			odeModel.runTimeCourse();
 
-  std::vector<double> moveTo = randomMove(1, loc);
-  repast::Point<int> newLoc(moveTo[0], moveTo[1]);
+			double IFNg = odeModel.getConcentration("IFNg");
+			double IL17 = odeModel.getConcentration("IL17");
+			double IL10 = odeModel.getConcentration("IL10");
 
-  delCellAt(state, loc);
-  addCellAt(newState, newLoc);
+			/* get output cytokines */
+			Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
+			cytoMap["IFNg"].first->setValueAtCoord(IFNg, loc);
+			cytoMap["IL17"].first->setValueAtCoord(IL17, loc);
+			cytoMap["IL10"].first->setValueAtCoord(IL10, loc);
+
+			if (IL17 > 0.5) {
+				newState = TcellState::TH17;
+			} else if (IFNg > 0.5) {
+				newState = TcellState::TH1;
+			} else if (IL10 > 0.5) {
+				newState = TcellState::TREG;
+			} else if ((IL10 > 0.5 * IFNg)
+					&& (macrophageregCount > 0)) {
+				newState = TcellState::Tr;
+			} // The rule is if nT is in contact with REGULATORY macrophages, and if IL10> a* IFNg
+			  //then nT -> Tr (state transition). Here, 'a' has been hard coded as 0.5
+			++iter;
+		}
+
+		std::vector<double> moveTo = randomMove(1, loc);
+		repast::Point<int> newLoc(moveTo[0], moveTo[1]);
+
+		delCellAt(state, loc);
+		addCellAt(newState, newLoc);
+	}
 }
 
 int TcellGroup::count()
@@ -160,7 +163,7 @@ void TcellGroup::transferStateTo(
 }
 
 /*definition for function to find all neighbors that are Macrophages */
-const std::vector< const TcellGroup::StateCount *>
+std::vector< const TcellGroup::StateCount *>
 TcellGroup::getMacrophageNeighbors(const repast::Point<int> & loc)
 {
 	  std::vector<const MacrophageGroup::StateCount *> allNeighbors;
