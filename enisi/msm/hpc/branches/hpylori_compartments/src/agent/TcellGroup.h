@@ -4,6 +4,7 @@
 #include "TcellODE.h"
 #include "Cytokines.h"
 #include "CoordMap.h"
+#include "MacrophageGroup.h"
 
 namespace ENISI
 {
@@ -31,8 +32,7 @@ public:
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "TcellGroup"; }
   //Added the declaration of getTcellNeighbors function here
-  std::vector< const TcellGroup::StateCount *>
-  getMacrophageNeighbors(const repast::Point<int> &);
+  std::vector< const MacrophageGroup::StateCount *>  getMacrophageNeighbors(const repast::Point<int> &);
 protected:
 private:
 

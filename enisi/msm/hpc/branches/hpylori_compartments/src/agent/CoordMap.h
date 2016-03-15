@@ -15,7 +15,10 @@ public:
   struct StateCount
     {
       unsigned int state[N];
-      StateCount() : state() { }
+
+      StateCount() :
+        state()
+      {}
     };
 
   typedef std::map<repast::Point<int>, StateCount > CoordMap;
@@ -39,13 +42,20 @@ public:
 
   bool addCellAt(int cellState, const repast::Point<int> & pt)
   {
-    std::vector<int> vectorPt(2);
-    vectorPt[0] = pt.getX(); vectorPt[1] = pt.getY();
+    std::vector<int> vectorPt = pt.coords();
 
-    try { _borders.transform(vectorPt, vectorPt); }
-    catch(const std::exception&) { return moveCellAcrossBorder(cellState, pt); }
+    try
+      {
+        _borders.transform(vectorPt, vectorPt);
+      }
+
+    catch(const std::exception&)
+      {
+        return moveCellAcrossBorder(cellState, pt);
+      }
 
     _coordMap[pt].state[cellState]++;
+
     return true;
   }
 

@@ -13,7 +13,7 @@ class AgentState {
 public:
   enum State { 
     DEAD, IMMATURE, EFFECTOR, INFECTIOUS, TOLEGENIC, TOLEROGENIC, 
-    NAIVE, TH1, TH17, TREG
+    NAIVE, TH1, TH17, TREG, Tr
   };
 };
 
@@ -21,7 +21,7 @@ class Agent: public repast::Agent
 {
 public:
   typedef repast::SharedContext<Agent> Context;
-  enum Color { pink, red, blue, green, black };
+  enum Color { pink, red, blue, green, black, cyan };
 
   Agent();
 
