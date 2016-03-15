@@ -61,13 +61,20 @@ void TcellGroup::act()
 void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
 {
   if (state == TcellState::DEAD) return;
+  const std::vector< const MacrophageGroup::StateCount *>
+          neighborList = getMacrophageNeighbors(loc);
 
+        std::vector< const MacrophageGroup::StateCount *>::const_iterator iter
+          = neighborList.begin();
+
+    TcellState::State newState = state;
   double IL6  = Cytokines::instance().get("IL6", loc);
   double TGFb = Cytokines::instance().get("TGFb", loc);
   double IL12 = Cytokines::instance().get("IL12", loc);
-
-  TcellState::State newState = state;
-
+  while ( iter != neighborList.end() )
+{
+   const MacrophageGroup::StateCount * p_macrophageCount = *iter;
+   unsigned int macrophageregCount  = p_macrophageStateCount->state[MacrophageState::REGULATORY];
   if (IL6 + TGFb + IL12 > 1.0) 
   {
     /* set initial concentrations */
@@ -95,9 +102,11 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
       newState = TcellState::TH1;
     } else if (IL10 > 0.5) {
       newState = TcellState::TREG;
-    }//else if (IL10>0.5*IFNg) {
-    //newState = TcellState:: TR;}//Add new rule here regarding TR
-    //thatis add getneighbor information
+    } else if ( (IL10 > 0.5*IFNg) && (state == MacrophageState::REGULATORY) ){
+      newState = TcellState::TR;
+    }// The rule is if nT is in contact with REGULATORY macrophages, and if IL10> a* IFNg
+    //then nT -> Tr (state transition). Here, 'a' has been hard coded as 0.5
+        ++iter;
   }
 
   std::vector<double> moveTo = randomMove(1, loc);
@@ -148,4 +157,26 @@ void TcellGroup::transferStateTo(
     TcellState::State state, const repast::Point<int> & loc, unsigned int count)
 {
   CellGroup::transferStateTo(state, loc, count);
+}
+
+/*definition for function to find all neighbors that are Macrophages */
+const std::vector< const TcellGroup::StateCount *>
+TcellGroup::getMacrophageNeighbors(const repast::Point<int> & loc)
+{
+	  std::vector<const MacrophageGroup::StateCount *> allNeighbors;
+
+	  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
+
+	  for (size_t i = 0; i < agents.size(); ++i)
+	  {
+	    if (agents[i]->classname() == "MacrophageGroup")
+	    {
+	      /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+	       * agents only */
+	      MacrophageGroup * p_macrophageGroup = static_cast<MacrophageGroup *>(agents[i]);
+	      allNeighbors.push_back(p_macrophageGroup->getCellsAt(loc));
+	    }
+	  }
+
+	    return allNeighbors;
 }

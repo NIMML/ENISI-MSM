@@ -31,8 +31,12 @@ public:
 
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "TcellGroup"; }
+  //Added the declaration of getTcellNeighbors function here
+  const std::vector< const TcellGroup::StateCount *>
+  getMacrophageNeighbors(const repast::Point<int> &);
 protected:
 private:
+
   void act(TcellState::State, const repast::Point<int> &);
   void init(const boost::uintmax_t);
 };
