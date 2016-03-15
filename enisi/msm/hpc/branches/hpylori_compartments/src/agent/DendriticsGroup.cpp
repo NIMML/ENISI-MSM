@@ -58,30 +58,68 @@ void DendriticsGroup::act(
 {
   if (state == DendriticState::DEAD) return;
 
+  /* get TolB neighbors */
   const std::vector<const BacteriaGroup::StateCount *> 
     neighborList = getBacteriaNeighbors(loc);
 
   std::vector<const BacteriaGroup::StateCount *>::const_iterator iter 
     = neighborList.begin();
 
+  /* get HPylori neighbors */
+  const std::vector<const HPyloriGroup::StateCount *>
+    neighborList2 = getHPyloriNeighbors(loc);
+
+  std::vector<const HPyloriGroup:StateCount *>::const_iterator iter2
+    = neighborList2.begin();
+
   DendriticState::State newState = state;
-  while ( iter != neighborList.end() )
+  while ( iter != neighborList.end() && iter2 != neighborList2.end())
   {
     const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
 
+    /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
+     * tolegenic are all in lumen     */
     unsigned int infectiousBacteriaCount 
       = p_bacteriaStateCount->state[BacteriaState::INFECTIOUS];
     unsigned int tolegenicBacteriaCount 
       = p_bacteriaStateCount->state[BacteriaState::TOLEGENIC];
 
-    if (infectiousBacteriaCount && state == DendriticState::IMMATURE) 
+    const HPyloriGroup::StateCount * p_hpyloriStateCount = *iter2;
+
+    /*identify states of HPylori counted -- naive name should be changed to LIVE*/
+    unsigned int liveHPyloriCount
+	  = p_hpyloriStateCount->state[HPyloriState::NAIVE];
+
+    /* if no bacteria is around DC, then stays immature */
+    if (infectiousBacteriaCount+liveHPyloriCount == 0 && state == DendriticState::IMMATURE)
+    {
+      newState = DendriticState::IMMATURE;
+    }
+    /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
+     *  0.5 is arbitrary */
+    else if ( liveHPyloriCount > 0.5*tolegenicBacteriaCount+1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::epithelium)
     {
       newState = DendriticState::EFFECTOR;
-    } 
-    else if ( tolegenicBacteriaCount && state == DendriticState::IMMATURE ) 
+    }
+    /*if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
+     *  0.5 is arbitrary */
+    else if ( liveHPyloriCount <= 0.5*tolegenicBacteriaCount+1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::epithelium)
     {
       newState = DendriticState::TOLEROGENIC;
     }
+    /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
+     *  1 is arbitrary */
+    else if ( liveHPyloriCount+tolegenicBacteriaCount>1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::laminaPropria)
+    {
+      newState = DendriticState::EFFECTOR;
+    }
+    /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
+     *  1 is arbitrary */
+    else if ( liveHPyloriCount+tolegenicBacteriaCount<=1 && state == DendriticState::IMMATURE && compartment == DendriticCompartment::laminaPropria)
+    {
+      newState = DendriticState::TOLEROGENIC;
+    }
+
     ++iter;
   }
 
@@ -124,3 +162,26 @@ DendriticsGroup::getBacteriaNeighbors(const repast::Point<int> & loc)
 
     return allNeighbors;
 }
+
+/*function to find all neighbors that are HPylori */
+const std::vector<const HPyloriGroup::StateCount *>
+DendriticsGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
+{
+	  std::vector<const HPyloriGroup::StateCount *> allNeighbors;
+
+	  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
+
+	  for (size_t i = 0; i < agents.size(); ++i)
+	  {
+	    if (agents[i]->classname() == "HPyloriGroup")
+	    {
+	      /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+	       * agents only */
+	      HPyloriGroup * p_hpyloriGroup = static_cast<HPyloriGroup *>(agents[i]);
+	      allNeighbors.push_back(p_hpyloriGroup->getCellsAt(loc));
+	    }
+	  }
+
+	    return allNeighbors;
+	}
+
