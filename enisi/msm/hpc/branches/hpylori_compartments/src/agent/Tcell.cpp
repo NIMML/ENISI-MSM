@@ -2,8 +2,8 @@
 
 /* "construct on first use" idiom */
 /* http://www.parashift.com/c++-faq/static-init-order-on-first-use.html */
-TcellODE& odeModel() {
-  return TcellODE::getInstance();
+ENISI::TcellODE& odeModel() {
+  return ENISI::TcellODE::getInstance();
 }
 
 Tcell::Color Tcell::getColor(){
