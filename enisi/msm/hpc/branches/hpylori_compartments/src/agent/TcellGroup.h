@@ -31,14 +31,18 @@ public:
 
   virtual Color getColor() { return black; }
   virtual std::string classname() { return "TcellGroup"; }
-  //Added the declaration of getTcellNeighbors function here
-  std::vector< const MacrophageGroup::StateCount *>  getMacrophageNeighbors(const repast::Point<int> &);
-  std::vector< const TcellGroup::StateCount *> getTcellNeighbors (const repast::Point<int> &);
-  std::vector< const DendriticsGroup::StateCount *>  getDendriticsNeighbors(const repast::Point<int> &);
+
 protected:
 private:
 
   void act(TcellState::State, const repast::Point<int> &);
+  //Added the declaration of getTcellNeighbors function here
+    std::vector< const MacrophageGroup::StateCount *>
+    	getMacrophageNeighbors(const repast::Point<int> &);
+    std::vector< const TcellGroup::StateCount *>
+    	getTcellNeighbors (const repast::Point<int> &);
+    std::vector< const DendriticsGroup::StateCount *>
+    	getDendriticsNeighbors(const repast::Point<int> &);
   void init(const boost::uintmax_t);
 };
 
