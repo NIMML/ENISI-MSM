@@ -33,16 +33,15 @@ namespace ENISI
 
 class COPASI
 {
-  public:
-    COPASI();
-    virtual ~COPASI();
+public:
+  COPASI();
+  virtual ~COPASI();
 
-    static CCopasiDataModel * loadDataModel(const std::string &fileName);
+  static CCopasiDataModel * loadDataModel(const std::string &fileName);
 
-  private:
-    static bool initialized;
+private:
+  static bool initialized;
 };
-
 } // namespace ENISI
 
 #endif // ENISI_COPASI

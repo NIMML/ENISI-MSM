@@ -2,24 +2,25 @@
 #include "../agent/TcellGroup.h"
 #include "RepastProcess.h"
 
-namespace ENISI {
+namespace ENISI
+{
 
-class ATcellGroup: public InitSharedContext 
-{ 
+class ATcellGroup: public InitSharedContext
+{
 public:
   const int tcellCount;
   TcellGroup * _p_tcells;
 
-  ATcellGroup() : tcellCount(2) { }
+  ATcellGroup() : tcellCount(2) {}
 
-  void SetUp() 
+  void SetUp()
   {
-    InitSharedContext::SetUp(); 
+    InitSharedContext::SetUp();
 
-    _p_tcells = (TcellGroup *) 
-      AgentGroupFactory::create("TcellGroup", &_compartment, tcellCount);
+    _p_tcells = (TcellGroup *)
+                AgentGroupFactory::create("TcellGroup", &_compartment, tcellCount);
   }
-  void TearDown() { }
+  void TearDown() {}
 };
 
 TEST_F(ATcellGroup, HasExpectedCount)
@@ -29,7 +30,7 @@ TEST_F(ATcellGroup, HasExpectedCount)
   TcellGroup::StateCount count = _p_tcells->countByState();
   ASSERT_THAT(count.state[TcellState::TH1],   Eq(0));
   ASSERT_THAT(count.state[TcellState::TH17],  Eq(0));
-  ASSERT_THAT(count.state[TcellState::TREG],  Eq(0));
+  ASSERT_THAT(count.state[TcellState::iTREG],  Eq(0));
   ASSERT_THAT(count.state[TcellState::DEAD],  Eq(0));
   ASSERT_THAT(count.state[TcellState::NAIVE], Eq(tcellCount));
 }
@@ -51,6 +52,4 @@ TEST_F(ATcellGroup, CanManuallyAddCells)
   TcellGroup::StateCount countAfterAdd = _p_tcells->countByState();
   ASSERT_THAT(countAfterAdd.state[TcellState::TH1], Eq(1));
 }
-
 } // namespace ENISI
-

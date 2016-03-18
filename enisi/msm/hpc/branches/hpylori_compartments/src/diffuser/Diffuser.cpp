@@ -75,10 +75,12 @@ DiffuserImpl::~DiffuserImpl()
   delete _p_computed2dVals;
 }
 
-DiffuserImpl::DiffuserImpl(
-  const repast::GridDimensions dims, double e, double d, bool t) 
-: maxValue(DEFAULT_MAX), _minValue(DEFAULT_MIN),
-  evaporationConst(e), diffusionConst(d), toroidal(t), 
+DiffuserImpl::DiffuserImpl(const repast::GridDimensions dims, double e, double d, bool t) :
+  maxValue(DEFAULT_MAX),
+  _minValue(DEFAULT_MIN),
+  evaporationConst(e),
+  diffusionConst(d),
+  toroidal(t),
   _dimensions(dims), 
   _width(_dimensions.extents().getX() + 1), 
   _height(_dimensions.extents().getY() + 1), 

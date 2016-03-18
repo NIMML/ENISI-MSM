@@ -1,16 +1,11 @@
 #ifndef ENISI_EpithelialCellGroup
 #define ENISI_EpithelialCellGroup
 
-#include "BacteriaGroup.h"
+#include "AgentStates.h"
 #include "CoordMap.h"
 
-namespace ENISI {
-
-class EpithelialCellState
+namespace ENISI
 {
-public:
-  enum State { IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, KEEP_AT_END};
-};
 
 class EpithelialCellGroup: public CoordinateMap<EpithelialCellState::KEEP_AT_END>
 {
@@ -20,15 +15,14 @@ public:
 
   virtual void act();
 
-  virtual Color getColor() { return black; }
-  virtual std::string classname() { return "EpithelialCellGroup"; }
+  virtual Color getColor() {return black;}
+  virtual std::string classname() {return "EpithelialCellGroup";}
 
 private:
   void act(EpithelialCellState::State, const repast::Point<int> &);
 
-  const std::vector<const BacteriaGroup::StateCount *> 
-    getNeighbors(const repast::Point<int> &);
+  const std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * >
+  getNeighbors(const repast::Point<int> &);
 };
-
 } // namespace ENISI
 #endif // ENISI_EpithelialCellGroup

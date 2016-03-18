@@ -6,41 +6,42 @@ using namespace testing;
 const std::string ENISIAgentClassName = "MockENISIAgent";
 
 class MockENISIAgent: public ENISI::Agent
-{		  
-  public:
-  MockENISIAgent() { } 
+{
+public:
+  MockENISIAgent() {}
 
-  virtual Color getColor() { return black; }
-  virtual void act() { }
-  virtual std::string classname() { return ENISIAgentClassName; }
+  virtual Color getColor() {return black;}
+  virtual void act() {}
+  virtual std::string classname() {return ENISIAgentClassName;}
 };
 
-class AnENISIAgent: public InitSharedContext 
-{ 
+class AnENISIAgent: public InitSharedContext
+{
 public:
   MockENISIAgent * _p_agent1;
-  void SetUp() 
+  void SetUp()
   {
     _p_agent1 = new MockENISIAgent;
   }
-  void TearDown() {
+  void TearDown()
+  {
     delete _p_agent1;
-  }	
+  }
 };
 
-TEST_F(AnENISIAgent, HasUniqueID) 
+TEST_F(AnENISIAgent, HasUniqueID)
 {
   MockENISIAgent agent2;
 
-  ASSERT_THAT(_p_agent1->getId(), Ne(agent2.getId()) );
+  ASSERT_THAT(_p_agent1->getId(), Ne(agent2.getId()));
 }
 
-TEST_F(AnENISIAgent, ReturnsClassName) 
+TEST_F(AnENISIAgent, ReturnsClassName)
 {
-  ASSERT_THAT(_p_agent1->classname(), Eq(ENISIAgentClassName) );
+  ASSERT_THAT(_p_agent1->classname(), Eq(ENISIAgentClassName));
 }
 
-TEST_F(AnENISIAgent, SuccessfullySetsId) 
+TEST_F(AnENISIAgent, SuccessfullySetsId)
 {
   repast::AgentId id(0, 0, 0);
   ASSERT_THAT(_p_agent1->getId(), Ne(id));
@@ -49,7 +50,7 @@ TEST_F(AnENISIAgent, SuccessfullySetsId)
   ASSERT_THAT(_p_agent1->getId(), Eq(id));
 }
 
-TEST_F(AnENISIAgent, SuccessfullySetsState) 
+TEST_F(AnENISIAgent, SuccessfullySetsState)
 {
   _p_agent1->setState(ENISI::AgentState::DEAD);
   ASSERT_THAT(_p_agent1->getState(), Eq(ENISI::AgentState::DEAD));

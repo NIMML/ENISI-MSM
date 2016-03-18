@@ -3,14 +3,15 @@
 
 using namespace testing;
 
-class ABacteria: public InitSharedContext 
-{ 
+class ABacteria: public InitSharedContext
+{
 public:
   Bacteria * _p_bacteria;
-  void SetUp() {
+  void SetUp()
+  {
     _p_bacteria = (Bacteria *) _factory.create("Bacteria", &_compartment);
   }
-  void TearDown() { }
+  void TearDown() {}
 };
 
 TEST_F(ABacteria, DefaultStateIsINFECTIOUS)

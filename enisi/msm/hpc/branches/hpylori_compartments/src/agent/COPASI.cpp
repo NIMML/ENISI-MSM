@@ -18,10 +18,11 @@ bool COPASI::initialized = false;
 // static
 CCopasiDataModel * COPASI::loadDataModel(const std::string &fileName)
 {
-  if (!initialized) {
+  if (!initialized)
+    {
       CCopasiRootContainer::init(0, NULL);
       initialized = true;
-  }
+    }
 
   CCopasiDataModel * pDataModel = CCopasiRootContainer::addDatamodel();
   bool success = true;
@@ -52,5 +53,4 @@ COPASI::COPASI()
 
 COPASI::~COPASI()
 {}
-
 } /* namespace ENISI */

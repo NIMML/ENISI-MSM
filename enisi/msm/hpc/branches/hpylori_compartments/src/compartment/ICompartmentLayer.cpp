@@ -24,13 +24,13 @@ void ICompartmentLayer<A, P, PP, PR>::requestAgents()
 
       for(size_t j = 0; j < agents.size(); j++)
       {
-	/* Transform each local agent's id into a matching non-local one */
-	repast::AgentId local = agents[j]->getId();
-	repast::AgentId other(local.id(), i, 0);
-	other.currentRank(i);
+        /* Transform each local agent's id into a matching non-local one */
+        repast::AgentId local = agents[j]->getId();
+        repast::AgentId other(local.id(), i, 0);
+        other.currentRank(i);
 
-	/* Add it to the agent request */
-	req.addRequest(other);
+        /* Add it to the agent request */
+        req.addRequest(other);
       }
     }
   }

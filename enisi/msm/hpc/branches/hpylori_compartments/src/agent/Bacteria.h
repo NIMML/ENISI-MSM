@@ -24,7 +24,7 @@ public:
   }
 
   virtual Color getColor();
-  virtual std::string classname() { return "Bacteria"; }
+  virtual std::string classname() {return "Bacteria";}
   virtual void act();
 
   void move(double x, double y);

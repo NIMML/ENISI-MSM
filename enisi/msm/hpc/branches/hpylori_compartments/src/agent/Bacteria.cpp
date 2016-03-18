@@ -1,22 +1,26 @@
 #include "Bacteria.h"
 
-Bacteria::Color Bacteria::getColor(){
+Bacteria::Color Bacteria::getColor()
+{
   Color color;
 
-  switch(getState())
-  {
-    case ENISI::AgentState::INFECTIOUS:
-    color = red;
-    break;
-    case ENISI::AgentState::TOLEGENIC:
-    color = green;
-    break;
-    case ENISI::AgentState::DEAD:
-    color = black;
-    break;
-  default:		
-    throw std::invalid_argument("invalid state when getting Bacteria color");
-  }
+  switch (getState())
+    {
+      case ENISI::AgentState::INFECTIOUS:
+        color = red;
+        break;
+
+      case ENISI::AgentState::TOLEGENIC:
+        color = green;
+        break;
+
+      case ENISI::AgentState::DEAD:
+        color = black;
+        break;
+
+      default:
+        throw std::invalid_argument("invalid state when getting Bacteria color");
+    }
 
   return color;
 }
@@ -29,17 +33,22 @@ void Bacteria::act()
 
   std::vector<ENISI::Agent*>::const_iterator iter = neighborList.begin();
 
-  while ( iter != neighborList.end() ){
+  while (iter != neighborList.end())
+    {
       ENISI::Agent * tc = *iter;
-    if (tc->getState() == ENISI::AgentState::TH1 || tc->getState() == ENISI::AgentState::TH17) {
-      if (getState() == ENISI::AgentState::INFECTIOUS) {
-	setState(ENISI::AgentState::DEAD);
-	return;
-      }
+
+      if (tc->getState() == ENISI::AgentState::TH1 || tc->getState() == ENISI::AgentState::TH17)
+        {
+          if (getState() == ENISI::AgentState::INFECTIOUS)
+            {
+              setState(ENISI::AgentState::DEAD);
+              return;
+            }
+        }
+
+      ++iter;
     }
-    ++iter;
-  }
-  
+
   randomMove();
 }
 
@@ -55,12 +64,12 @@ void Bacteria::move(double x, double y)
   _p_layer->moveAgentTo(this, repast::Point<double>(x, y));
 }
 
-double Bacteria::randomMove(double speed) 
+double Bacteria::randomMove(double speed)
 {
   double fullCircle = 2 * 3.14; // in radians
-  double angle = 
+  double angle =
     repast::Random::instance()->createUniDoubleGenerator(0, fullCircle).next();
-  double radius = 
+  double radius =
     repast::Random::instance()->createUniDoubleGenerator(0, speed).next();
 
   std::vector<double> loc = getLocation();
@@ -78,4 +87,3 @@ std::vector<ENISI::Agent *> Bacteria::getNeighbors(const std::string name)
   repast::Point<int> pt(loc[0], loc[1]);
   return _p_layer->getNeighborsAt(name, pt);
 }
-

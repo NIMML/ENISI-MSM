@@ -3,7 +3,8 @@
 
 #include "compartment/CellLayer.h"
 
-namespace ENISI {
+namespace ENISI
+{
 
 class CellGroup;
 
@@ -25,7 +26,6 @@ public:
 private:
   Transfers _markedForTransfer;
 };
-
 } // namespace ENISI
 
 #endif
