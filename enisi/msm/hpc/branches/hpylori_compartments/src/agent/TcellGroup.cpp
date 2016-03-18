@@ -3,6 +3,19 @@
 #include "DendriticsGroup.h"
 
 using namespace ENISI;
+int p_rule19;/*Rule 19 parameter*/
+int p_rule20;/*Rule 20 parameter*/
+int p_rule21;/*Rule 21 parameter*/
+int p_rule22;/*Rule 22 parameter*/
+int p_rule23;/*Rule 23 parameter*/
+int p_rule31;/*Rule 31 parameter*/
+int p_rule35;/*Rule 35 parameter*/
+int p_rule36;/*Rule 36 parameter*/
+int p_rule37;/*Rule 37 parameter*/
+int p_rule39;/*Rule 39 parameter*/
+int p_rule40;/*Rule 40 parameter*/
+int p_rule41;/*Rule 41 parameter*/
+
 
 TcellGroup::TcellGroup(const boost::uintmax_t tcellCount,
                        Compartment * pCompartment) :
@@ -137,64 +150,72 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
             }
           else if ((IL10 > 0.5 * IFNg) && (macrophageregCount > 0)
                    && state == TcellState::NAIVE
-                   && mpCompartment->getName() == "LaminaPropria")
+                   && mpCompartment->getName() == "LaminaPropria" && (p_rule31 > rand()%1+0))
             {
               newState = TcellState::Tr; /* Rule 31- The rule is if nT is in contact with regulatory macrophages, and if IL10> a* IFNg
            //then nT -> Tr (state transition). Here, 'a' is an arbitrary constant and has been hard coded to 0.5 */
             }
           else if ((th17Count > 0) && state == TcellState::TH17
-                   && mpCompartment->getName() == "GLN")
+                   && mpCompartment->getName() == "GLN" && (p_rule36 > rand()%1+0))
             {
               newState = TcellState::iTREG; /*Rule 36*/
             }
           else if ((itregCount > 0) && state == TcellState::TH17
-                   && mpCompartment->getName() == "GLN")
+                   && mpCompartment->getName() == "GLN" && (p_rule35 > rand()%1+0))
             {
               newState = TcellState::iTREG; /*Rule 35*/
             }
           else if ((th17Count > 0) && state == TcellState::iTREG
-                   && mpCompartment->getName() == "GLN")
+                   && mpCompartment->getName() == "GLN"&& (p_rule37 > rand()%1+0))
             {
               newState = TcellState::TH17; /*Rule 37*/
             }
           else if ((eDCCount > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getName() == "GLN")
+                   && mpCompartment->getName() == "GLN"&& (p_rule39 > rand()%1+0))
             {
               newState = TcellState::TH1; /*Rule 39*/
             }
           else if ((eDCCount > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getName() == "GLN")
+                   && mpCompartment->getName() == "GLN"&& (p_rule40 > rand()%1+0))
             {
-              newState = TcellState::DEAD; /*Rule 40*/
+        	  delCellAt(state, loc);/*Rule 40* - nT can die when in contact with eDC in GLN*/
+        	  addCellAt(TcellState::DEAD, loc); /*Rule 40* - nT can 'proliferate' when in contact with nT in GLN */
+
             }
           else if ((itregCount > 0) && state == TcellState::iTREG
-                   && mpCompartment->getName() == "LaminaPropria")
+                   && mpCompartment->getName() == "LaminaPropria"&& (p_rule20 > rand()%1+0))
             {
               newState = TcellState::TH17; /*Rule 20*/
             }
           else if ((th17Count > 0) && state == TcellState::TH17
-                   && mpCompartment->getName() == "LaminaPropria")
+                   && mpCompartment->getName() == "LaminaPropria"&& (p_rule21 > rand()%1+0))
             {
               newState = TcellState::TH17; /*Rule 21*/
             }
           else if ((itregCount > 0) && state == TcellState::TH1
-                   && mpCompartment->getName() == "LaminaPropria")
+                   && mpCompartment->getName() == "LaminaPropria" && (p_rule22 > rand()%1+0))
             {
               newState = TcellState::iTREG; /*Rule 22*/
             }
           else if ((tDCCount > 0) && state == TcellState::TH17
-                   && mpCompartment->getName() == "LaminaPropria")
+                   && mpCompartment->getName() == "LaminaPropria"&& (p_rule23 > rand()%1+0))
             {
               newState = TcellState::iTREG; /*Rule 23*/
             }
           else if ((th1Count > 0) && state == TcellState::iTREG
-                   && mpCompartment->getName() == "LaminaPropria")
+                   && mpCompartment->getName() == "LaminaPropria"&& (p_rule19 > rand()%1+0))
             {
               newState = TcellState::TH17; /*Rule 19*/
             }
+          else if ((eDCCount > 0) && state == TcellState::NAIVE
+          				&& mpCompartment->getName() == "LaminaPropria" && (p_rule41 > rand()%1+0))
+          	{
+          	delCellAt(state, loc);/*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
+          	addCellAt(TCellState::DEAD, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
+          	}
         }
 
-      //Add conditions for Rules 18 - 23 and 36-40
+      //Added conditions for Rules 18 - 23 and 36-41
       ++iter; //Macrophage Count
       ++iter2; //Tcellcount
       ++iter3; //Dendritic Cell count
