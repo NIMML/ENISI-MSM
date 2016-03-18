@@ -3,13 +3,12 @@
 
 using namespace testing;
 
-class ADendritic: public InitSharedContext { };
+class ADendritic: public InitSharedContext {};
 
-TEST_F(ADendritic, IsNotNull) 
+TEST_F(ADendritic, IsNotNull)
 {
-  Dendritics * p_dendritics = 
+  Dendritics * p_dendritics =
     (Dendritics *) _factory.create("Dendritics", &_compartment);
 
-  ASSERT_THAT( p_dendritics, NotNull() );
+  ASSERT_THAT(p_dendritics, NotNull());
 }
-

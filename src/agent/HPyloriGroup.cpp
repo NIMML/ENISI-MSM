@@ -1,42 +1,43 @@
 #include "HPyloriGroup.h"
 
-namespace ENISI {
+namespace ENISI
+{
 
 HPyloriGroup::HPyloriGroup(const boost::uintmax_t macrophageCount, Compartment * pCompartment) :
-    CoordinateMap(pCompartment)
+  CoordinateMap(pCompartment)
 {
-  for (boost::uintmax_t i = 0; i < macrophageCount; i++) 
-  {
-    const repast::GridDimensions * p_dimensions = getDimensions();
+  for (boost::uintmax_t i = 0; i < macrophageCount; i++)
+    {
+      const repast::GridDimensions * p_dimensions = getDimensions();
 
-    repast::Point<double> extents = p_dimensions->extents();
-    repast::Point<double> origin = p_dimensions->origin();
+      repast::Point<double> extents = p_dimensions->extents();
+      repast::Point<double> origin = p_dimensions->origin();
 
-    double xStart = origin.getX();
-    double yStart = origin.getY();
+      double xStart = origin.getX();
+      double yStart = origin.getY();
 
-    double xEnd = origin.getX() + extents.getX();
-    double yEnd = origin.getY() + extents.getY();
+      double xEnd = origin.getX() + extents.getX();
+      double yEnd = origin.getY() + extents.getY();
 
-    double xCoord = repast::Random::instance()
-      ->createUniDoubleGenerator(xStart, xEnd).next();
+      double xCoord = repast::Random::instance()
+                      ->createUniDoubleGenerator(xStart, xEnd).next();
 
-    double yCoord = repast::Random::instance()
-      ->createUniDoubleGenerator(yStart, yEnd).next();
+      double yCoord = repast::Random::instance()
+                      ->createUniDoubleGenerator(yStart, yEnd).next();
 
-    repast::Point<int> initialLoc(xCoord, yCoord);
+      repast::Point<int> initialLoc(xCoord, yCoord);
 
-    std::vector<double> moveTo = randomMove(1, initialLoc);
-    repast::Point<int> newLoc(moveTo[0], moveTo[1]);
+      std::vector<double> moveTo = randomMove(1, initialLoc);
+      repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-    addCellAt(HPyloriState::NAIVE, newLoc);
-  }
+      addCellAt(HPyloriState::NAIVE, newLoc);
+    }
 }
 
-void HPyloriGroup::act() { }
+void HPyloriGroup::act() {}
 
 void HPyloriGroup::act(
-    HPyloriState::State state, const repast::Point<int> & loc)
+  HPyloriState::State state, const repast::Point<int> & loc)
 {
   if (state == HPyloriState::DEAD) return;
 
@@ -46,5 +47,4 @@ void HPyloriGroup::act(
   delCellAt(state, loc);
   addCellAt(state, newLoc);
 }
-
 }

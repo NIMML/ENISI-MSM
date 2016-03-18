@@ -18,7 +18,7 @@ public:
 
   void addCytoLayer(std::string, GridValueLayer*);
 
-  virtual Color getColor() =0;
+  virtual Color getColor() = 0;
 
   void move(double x, double y);
   double randomMove(double = 1);

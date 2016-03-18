@@ -3,19 +3,19 @@
 #include "ImmuneCell.h"
 
 class MockImmuneCell: public ImmuneCell
-{		  
-  public:
+{
+public:
   MockImmuneCell(ENISI::CellLayer * p_layer)
-    : ImmuneCell(p_layer) { }
+    : ImmuneCell(p_layer) {}
 
-  virtual Color getColor() { return black; }
-  virtual void act() { }
-  virtual std::string classname() { return "MockImmuneCell"; }
-  CytoMap getCytoMap() const { return cytoMap; }
+  virtual Color getColor() {return black;}
+  virtual void act() {}
+  virtual std::string classname() {return "MockImmuneCell";}
+  CytoMap getCytoMap() const {return cytoMap;}
 };
 
-class AnImmuneCell: public InitSharedContext 
-{ 
+class AnImmuneCell: public InitSharedContext
+{
 public:
   MockImmuneCell * _p_immuneCell1;
   MockImmuneCell * _p_immuneCell2;
@@ -23,25 +23,26 @@ public:
   typedef repast::DiscreteValueLayer<double, repast::StickyBorders> ValueLayer;
   ValueLayer * pValueLayer;
 
-  void SetUp() 
+  void SetUp()
   {
-    InitSharedContext::SetUp(); 
+    InitSharedContext::SetUp();
 
     _p_immuneCell1 = new MockImmuneCell(_compartment.cellLayer());
     _p_immuneCell2 = new MockImmuneCell(_compartment.cellLayer());
 
     addValueLayer();
   }
-  void TearDown() {
+  void TearDown()
+  {
     delete pValueLayer;
     delete _p_immuneCell2;
     delete _p_immuneCell1;
-  }	
+  }
 private:
   void addValueLayer();
 };
 
-repast::Point<int> pt(5, 5); 
+repast::Point<int> pt(5, 5);
 
 void AnImmuneCell::addValueLayer()
 {

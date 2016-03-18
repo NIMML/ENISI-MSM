@@ -15,7 +15,7 @@ class CRegisteredObjectName;
 namespace ENISI
 {
 
-class TcellODE 
+class TcellODE
 {
 public:
   typedef std::vector< CRegisteredObjectName > * ReportItemVector;
@@ -25,9 +25,10 @@ public:
   void runTimeCourse();
   double getConcentration(std::string);
 
-  static TcellODE& getInstance() 
+  static TcellODE& getInstance()
   {
     if (instance == NULL) instance = new TcellODE();
+
     return *instance;
   }
 
@@ -43,7 +44,6 @@ private:
   static TcellODE * instance;
   bool DEBUG;
 };
-
 } // namespace ENISI
 
 #endif

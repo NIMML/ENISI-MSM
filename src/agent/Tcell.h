@@ -7,17 +7,17 @@
 #include "TcellODE.h"
 #include "compartment/CellLayer.h"
 
-class Tcell: public ImmuneCell 
+class Tcell: public ImmuneCell
 {
 public:
   Tcell(ENISI::CellLayer * p_layer)
-    : ImmuneCell(p_layer) { setState(ENISI::AgentState::NAIVE); }
+    : ImmuneCell(p_layer) {setState(ENISI::AgentState::NAIVE);}
 
   Tcell(ENISI::CellLayer * p_layer, ENISI::AgentState::State st)
-    : ImmuneCell(p_layer) { setState(st); }
+    : ImmuneCell(p_layer) {setState(st);}
 
   virtual Color getColor();
-  virtual std::string classname() { return "Tcell"; }
+  virtual std::string classname() {return "Tcell";}
 
   virtual void act();
 };

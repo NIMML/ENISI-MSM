@@ -46,11 +46,11 @@ void ACellGroupSync::act()
 {
   _actCalled = true;
 
-  std::vector<ENISI::CellLayer::AgentType *> localAgents =
-    _lumen.cellLayer()->selectLocalAgents();
+  std::vector<ENISI::CellLayer::AgentType *> localAgents = _lumen.cellLayer()->selectLocalAgents();
   ASSERT_THAT(localAgents.size(), Eq(1));
 
   std::vector<ENISI::CellLayer::AgentType*> remoteAgents = _lumen.cellLayer()->selectRemoteAgents();
+
   int worldSize = repast::RepastProcess::instance()->worldSize();
   int remoteAgentSize = worldSize - 1;
   ASSERT_THAT(remoteAgents.size(), Eq(remoteAgentSize));

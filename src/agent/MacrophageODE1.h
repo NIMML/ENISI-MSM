@@ -12,7 +12,8 @@ class CTrajectoryTask;
 class CMetab;
 class CRegisteredObjectName;
 
-namespace ENISI {
+namespace ENISI
+{
 
 class MacrophageODE1
 {
@@ -27,6 +28,7 @@ public:
   static MacrophageODE1& getInstance()
   {
     if (instance == NULL) instance = new MacrophageODE1();
+
     return *instance;
   }
 private:
@@ -41,7 +43,6 @@ private:
   static MacrophageODE1 * instance;
   bool DEBUG;
 };
-
 } // name space ENISI
 
 #endif // ENISI_MSM_MacrophageODE1

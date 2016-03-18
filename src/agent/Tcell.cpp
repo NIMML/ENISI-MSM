@@ -13,26 +13,32 @@ Tcell::Color Tcell::getColor()
 
   switch (getState())
     {
-    case ENISI::AgentState::NAIVE:
-      color = pink;
-      break;
-    case ENISI::AgentState::TH1:
-      color = red;
-      break;
-    case ENISI::AgentState::TH17:
-      color = blue;
-      break;
-    case ENISI::AgentState::TREG:
-      color = green;
-      break;
-    case ENISI::AgentState::Tr:
-      color = cyan;
-      break;
-    case ENISI::AgentState::DEAD:
-      color = black;
-      break;
-    default:
-      throw std::invalid_argument("invalid state when getting Tcell color");
+      case ENISI::AgentState::NAIVE:
+        color = pink;
+        break;
+
+      case ENISI::AgentState::TH1:
+        color = red;
+        break;
+
+      case ENISI::AgentState::TH17:
+        color = blue;
+        break;
+
+      case ENISI::AgentState::TREG:
+        color = green;
+        break;
+
+      case ENISI::AgentState::Tr:
+        color = cyan;
+        break;
+
+      case ENISI::AgentState::DEAD:
+        color = black;
+        break;
+
+      default:
+        throw std::invalid_argument("invalid state when getting Tcell color");
     }
 
   return color;
@@ -83,5 +89,6 @@ void Tcell::act()
           setState(ENISI::AgentState::TREG);
         }
     }
+
   randomMove();
 }

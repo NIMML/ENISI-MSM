@@ -3,7 +3,8 @@
 
 #include "agent/ENISIAgent.h"
 
-namespace ENISI {
+namespace ENISI
+{
 
 class Compartment;
 class CellGroupImpl;
@@ -96,7 +97,6 @@ public:
    */
   virtual std::string classname();
 };
-
 } // namespace ENISI
 
 #endif

@@ -1,16 +1,17 @@
 #include "../ValueLayer.h"
 #include "InitSharedContextTestFixture.h"
 
-class ATcell: public InitSharedContext 
-{ 
+class ATcell: public InitSharedContext
+{
 public:
   Tcell * _p_tcell;
-  void SetUp() {
-    InitSharedContext::SetUp(); 
+  void SetUp()
+  {
+    InitSharedContext::SetUp();
 
     _p_tcell = (Tcell *) _factory.create("Tcell", &_compartment);
   }
-  void TearDown() { }
+  void TearDown() {}
 };
 
 TEST_F(ATcell, HasDefaultStateNAIVE)
@@ -23,7 +24,7 @@ TEST_F(ATcell, SuccessfullyAddsCytoLayer)
   std::string name = "ValueLayer";
   bool dense = true;
   repast::DiscreteValueLayer<double, repast::StickyBorders>
-    valueLayer(name, _dimensions, dense);
+  valueLayer(name, _dimensions, dense);
 
   _p_tcell->addCytoLayer("test", &valueLayer);
 }
