@@ -28,7 +28,7 @@ public:
     _p_lumenTcells = static_cast< ENISI::TcellGroup * >(ENISI::AgentGroupFactory::create("TcellGroup", &_lumen, tcellCount));
     _epitheliumTcells = static_cast< ENISI::TcellGroup * >(ENISI::AgentGroupFactory::create("TcellGroup", &_epithelium, tcellCount));
 
-    _p_lumenTcells->setBorder("S", _epitheliumTcells);
+    _p_lumenTcells->setRightBorder(1, ENISI::Borders::PERMIABLE, _epitheliumTcells);
   }
 
   void TearDown() { }
