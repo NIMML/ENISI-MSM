@@ -54,11 +54,6 @@ protected:
   /**
    *
    */
-  bool moveCellAcrossBorder(int, const repast::Point<int> &);
-
-  /**
-   *
-   */
   std::vector<double> randomMove(const double &, const repast::Point<int> &);
 
   /**
