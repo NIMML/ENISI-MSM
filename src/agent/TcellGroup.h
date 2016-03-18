@@ -5,6 +5,8 @@
 #include "Cytokines.h"
 #include "CoordMap.h"
 #include "MacrophageGroup.h"
+#include "TcellGroup.h"
+#include "DendriticsGroup.h"
 
 namespace ENISI
 {
