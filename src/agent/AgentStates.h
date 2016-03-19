@@ -32,7 +32,7 @@ public:
 class MacrophageState
 {
 public:
-  enum State {MONOCYTE/*base state*/, REGULATORY, DEAD, KEEP_AT_END};
+  enum State {MONOCYTE/*base state*/, REGULATORY, INFLAMMATORY, DEAD, KEEP_AT_END};
 };
 
 class HPyloriState
@@ -44,7 +44,7 @@ public:
 class EpithelialCellState
 {
 public:
-  enum State {IMMATURE, EFFECTOR, TOLEROGENIC, DEAD, KEEP_AT_END};
+  enum State {HEALTHY, DAMAGED, DEAD, KEEP_AT_END};
 };
 } // namespace ENISI
 

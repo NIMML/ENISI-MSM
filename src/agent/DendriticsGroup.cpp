@@ -134,6 +134,7 @@ void DendriticsGroup::act(
         }
 
       ++iter;
+      ++iter2;
     }
 
   if (newState == DendriticState::EFFECTOR)
