@@ -41,10 +41,102 @@ void HPyloriGroup::act(
 {
   if (state == HPyloriState::DEAD) return;
 
+  const std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
+  neighborList = getEpithelialCellNeighbors(loc);
+
+  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >::const_iterator iter
+    = neighborList.begin();
+
+  const std::vector< const TcellGroup::StateCount *>
+  neighborList2 = getTcellNeighbors(loc);
+
+  std::vector< const TcellGroup::StateCount *>::const_iterator iter2
+    = neighborList2.begin();
+
+  while (iter != neighborList.end() && iter2 != neighborList2.end())
+       {
+         const EpithelialCellGroup::StateCount * p_epithelialcellStateCount = *iter;
+
+         /*identify states of Epithelial Cells counted */
+         unsigned int damagedEpithelialCellCount
+           = p_epithelialcellStateCount->state[EpithelialCellState::DAMAGED];
+
+
+         /* move HPylori across epithelial border if in contact with damaged Epithelial cell */
+         if (damagedEpithelialCellCount && mpCompartment->getName() == "Lumen")
+         {
+        	std::vector HPyloriLoc;
+        	CoordinateMap -> getLocation (state, loc);
+        	std::vector NewHPyloriLoc;
+        	NewHPyloriLoc.push_back(HPyloriLoc[0]);
+        	NewHPyloriLoc.push_back(HPyloriLoc[1]+2);
+        	delCellAt(state,loc);
+        	addCellAt(state,NewHPyloriLoc);
+         }
+
+         const TcellGroup::StateCount * p_tcellCount = *iter2;
+
+         unsigned int th1Count = p_tcellCount->state[TcellState::TH1];
+         unsigned int th17Count = p_tcellCount->state[TcellState::TH17];
+
+         /* HPylori dies is nearby damaged epithelial cell, th1 or th17*/
+         if (damagedEpithelialCellCount || th1Count || th17Count)
+         {
+        	 newState = HPyloriState::DEAD;
+         }
+++iter
+++iter2
+
+       }
+
+  /* TODO: H Pylori are removed when macrophage uptake/differentiate */
+
   std::vector<double> moveTo = randomMove(1, loc);
   repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
   delCellAt(state, loc);
   addCellAt(state, newLoc);
 }
+}
+
+const std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
+HPyloriGroup::getEpithelialCellNeighbors(const repast::Point<int> & loc)
+{
+  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > allNeighbors;
+
+  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
+
+  for (size_t i = 0; i < agents.size(); ++i)
+    {
+      if (agents[i]->classname() == "EpithelialCellGroup")
+        {
+          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+           * agents only */
+          EpithelialCellGroup * p_epithelialcellGroup = static_cast<EpithelialCellGroup *>(agents[i]);
+          allNeighbors.push_back(p_epithelialcellGroup->getCellsAt(loc));
+        }
+    }
+
+  return allNeighbors;
+}
+
+const std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
+HPyloriGroup::getTcellNeighbors(const repast::Point<int> & loc)
+{
+  std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > allNeighbors;
+
+  std::vector<Agent *> agents = layer()->selectAllAgents();
+
+  for (size_t i = 0; i < agents.size(); ++i)
+    {
+      if (agents[i]->classname() == "TcellGroup")
+        {
+          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+           * agents only */
+          TcellGroup * p_tcellGroup = static_cast<TcellGroup *>(agents[i]);
+          allNeighbors.push_back(p_tcellGroup->getCellsAt(loc));
+        }
+    }
+
+  return allNeighbors;
 }
