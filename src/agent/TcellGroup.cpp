@@ -81,16 +81,31 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
     return;
 
   // Get Macrophage Neighbors
-  const std::vector< const typename CoordinateMap<MacrophageState::KEEP_AT_END>::StateCount * > neighborList = getMacrophageNeighbors(loc);
-  std::vector< const typename CoordinateMap<MacrophageState::KEEP_AT_END>::StateCount * >::const_iterator iter = neighborList.begin();
+   const std::vector< const typename CoordinateMap<MacrophageState::KEEP_AT_END>::StateCount * >
+   neighborList = getMacrophageNeighbors(loc);
 
-  //Get Tcell Neighbors for Rules 19-23 and 36-38
-  const std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > neighborListTcells = getTcellNeighbors(loc);
-  std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >::const_iterator iter2 =  neighborListTcells.begin();
+   std::vector< const typename CoordinateMap<MacrophageState::KEEP_AT_END>::StateCount * >::const_iterator iter
+   	  = neighborList.begin();
 
-  // Get Dendritic cell Neighbors for Rule 39
-  const std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * > neighborListDC = getDendriticsNeighbors(loc);
-  std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * >::const_iterator iter3 = neighborListDC.begin();
+   //Get Tcell Neighbors for Rules 18-23 and 36-38
+   const std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
+   neighborListTcells = getTcellNeighbors(loc);
+
+   std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >::const_iterator iter2
+   =  neighborListTcells.begin();
+  //Get Dendritic cell Neighbors for Rule 39
+  const std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * >
+  neighborListDC = getDendriticsNeighbors(loc);
+
+  std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * >::const_iterator iter3
+  = neighborListDC.begin();
+
+  //Get Epithelial cell Neighbors for Rule 18
+   const std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
+     neighborList = getEpithelialCellNeighbors(loc);
+
+     std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >::const_iterator iter4
+       = neighborList.begin();
 
   TcellState::State newState = state;
   double IL6 = Cytokines::instance().get("IL6", loc);
@@ -100,22 +115,36 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
   //Rules 19-23 and 36-38 for iter2 and neighborListTcells, and iter3 for DCs
   while (iter != neighborList.end()
          && iter2 != neighborListTcells.end()
-         && iter3 != neighborListDC.end())
+         && iter3 != neighborListDC.end()
+		 && iter4 != neighborListEpithelialcells.end())
     {
+	  //iter for counting MacrophageNeighbors
+	  const MacrophageGroup::StateCount * p_macrophageCount = *iter;
       unsigned int macrophageregCount =
-        (*iter)->state[MacrophageState::REGULATORY];
+    		  p_macrophageCount-> state[MacrophageState::REGULATORY];
+
       //iter2 for counting TcellNeighbors - TH17,iTREG, TH1
       const TcellGroup::StateCount * p_tcellCount = *iter2;
-      unsigned int th17Count = p_tcellCount->state[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
-      unsigned int itregCount = p_tcellCount->state[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
-      unsigned int th1Count = p_tcellCount->state[TcellState::TH1];
-      //iter 3 for counting Dendritic Cell Neighbbors - effector and TOLEROGENIC DC
-      unsigned int eDCCount =
-        (*iter3)->state[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
-      unsigned int tDCCount =
-        (*iter3)->state[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
+      unsigned int th17Count =
+    		  p_tcellCount->state[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
+      unsigned int itregCount =
+    		  p_tcellCount->state[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
+      unsigned int th1Count =
+    		  p_tcellCount->state[TcellState::TH1];
 
-      if (IL6 + TGFb + IL12 > 1.0)
+      //iter 3 for counting Dendritic Cell Neighbors - effector and TOLEROGENIC DC
+      const DendriticsGroup::StateCount * p_dendriticsCount = *iter3;
+      uunsigned int eDCCount =
+    		  p_dendriticsCount-> state[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
+      unsigned int tDCCount =
+    		  p_dendriticsCount-> state[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
+
+      //iter4 for counting EpithelialcellNeighbors
+      const EpithelialCellGroup::StateCount * p_epithelialcellStateCount = *iter4;
+      unsigned int damagedEpithelialCellCount =
+    		  p_epithelialcellStateCount-> state[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellCount
+
+     if (IL6 + TGFb + IL12 > 1.0)
         {
           /* set initial concentrations */
           TcellODE & odeModel = TcellODE::getInstance();
@@ -348,3 +377,29 @@ TcellGroup::getDendriticsNeighbors(const repast::Point<int> & loc)
 
   return allNeighbors;
 }
+
+/*definition for function to find all neighbors that are Epithelial cells */
+std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
+	TcellGroup::getEpithelialCellNeighbors(const repast::Point<int> & loc)
+{
+  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > allNeighbors;
+
+  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
+
+  for (size_t i = 0; i < agents.size(); ++i)
+    {
+      if (agents[i]->classname() == "EpithelialCellGroup")
+        {
+          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+           * agents only */
+          EpithelialCellGroup * p_epithelialcellGroup = static_cast<EpithelialCellGroup *>(agents[i]);
+          allNeighbors.push_back(p_epithelialcellGroup->getCellsAt(loc));
+        }
+    }
+
+  return allNeighbors;
+}
+
+
+
+
