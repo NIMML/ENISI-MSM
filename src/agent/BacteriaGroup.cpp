@@ -6,7 +6,7 @@ using namespace ENISI;
 
 BacteriaGroup::BacteriaGroup(const boost::uintmax_t bacteriaCount,
                              Compartment * pCompartment) :
-    CoordinateMap(pCompartment)
+  CoordinateMap(pCompartment)
 {
   init(bacteriaCount);
 }
@@ -33,10 +33,10 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
       double yEnd = origin.getY() + extents.getY();
 
       double xCoord = repast::Random::instance()->createUniDoubleGenerator(
-          xStart, xEnd).next();
+                        xStart, xEnd).next();
 
       double yCoord = repast::Random::instance()->createUniDoubleGenerator(
-          yStart, yEnd).next();
+                        yStart, yEnd).next();
 
       repast::Point<int> initialLoc(xCoord, yCoord);
 
@@ -74,27 +74,26 @@ void BacteriaGroup::act(BacteriaState::State state,
   if (state == BacteriaState::DEAD)
     return;
 
-  const std::vector<
-      const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *> neighborList =
-      getEpithelialCellNeighbors(loc);
+  const std::vector <
+  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > neighborList =
+    getEpithelialCellNeighbors(loc);
 
-  std::vector<
-      const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *>::const_iterator iter =
-      neighborList.begin();
+  std::vector <
+  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >::const_iterator iter =
+    neighborList.begin();
 
   const std::vector<const TcellGroup::StateCount *> neighborList2 =
-      getTcellNeighbors(loc);
+    getTcellNeighbors(loc);
 
   std::vector<const TcellGroup::StateCount *>::const_iterator iter2 =
-      neighborList2.begin();
+    neighborList2.begin();
 
   BacteriaState::State newState = state;
-
 
   while (iter != neighborList.end() && iter2 != neighborList2.end())
     {
       /*identify states of Epithelial Cells counted */
-      unsigned int damagedEpithelialCellCount =  (*iter)->state[EpithelialCellState::DAMAGED];
+      unsigned int damagedEpithelialCellCount = (*iter)->state[EpithelialCellState::DAMAGED];
 
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
       if (damagedEpithelialCellCount && mpCompartment->getName() == "Lumen")
@@ -160,10 +159,10 @@ BacteriaGroup::getEpithelialCellNeighbors(const repast::Point< int > & loc)
 }
 
 std::vector<const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *> BacteriaGroup::getTcellNeighbors(
-    const repast::Point<int> & loc)
+  const repast::Point<int> & loc)
 {
-  std::vector<
-      const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *> allNeighbors;
+  std::vector <
+  const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > allNeighbors;
 
   std::vector<Agent *> agents = layer()->selectAllAgents();
 

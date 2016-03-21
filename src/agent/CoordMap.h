@@ -117,38 +117,39 @@ protected:
           }
 
         switch (*itState)
-        {
-          case Borders::OUT_LEFT:
-            if (*itLeftBorder != NULL)
-              {
-                pTarget = *itLeftBorder;
-                const repast::GridDimensions * pDimensions = pTarget->getDimensions();
-                *itOut = pDimensions->origin(i) + pDimensions->extents(i) + *itIn - _dimensions.origin(i);
-              }
-            else
-              {
-                throw std::invalid_argument("No adjacent Compartment");
-              }
-            break;
+          {
+            case Borders::OUT_LEFT:
+              if (*itLeftBorder != NULL)
+                {
+                  pTarget = *itLeftBorder;
+                  const repast::GridDimensions * pDimensions = pTarget->getDimensions();
+                  *itOut = pDimensions->origin(i) + pDimensions->extents(i) + *itIn - _dimensions.origin(i);
+                }
+              else
+                {
+                  throw std::invalid_argument("No adjacent Compartment");
+                }
 
-          case Borders::OUT_RIGHT:
-            if (*itRightBorder != NULL)
-              {
-                pTarget = *itRightBorder;
-                const repast::GridDimensions * pDimensions = pTarget->getDimensions();
-                *itOut = pDimensions->origin(i) + *itIn - _dimensions.origin(i) - _dimensions.extents(i);
-              }
-            else
-              {
-                throw std::invalid_argument("No adjacent Compartment");
-              }
+              break;
 
-            break;
+            case Borders::OUT_RIGHT:
+              if (*itRightBorder != NULL)
+                {
+                  pTarget = *itRightBorder;
+                  const repast::GridDimensions * pDimensions = pTarget->getDimensions();
+                  *itOut = pDimensions->origin(i) + *itIn - _dimensions.origin(i) - _dimensions.extents(i);
+                }
+              else
+                {
+                  throw std::invalid_argument("No adjacent Compartment");
+                }
 
-          case Borders::IN_BOUND:
-            *itOut = *itIn;
-            break;
-        }
+              break;
+
+            case Borders::IN_BOUND:
+              *itOut = *itIn;
+              break;
+          }
       }
 
     if (pTarget != NULL)
@@ -170,6 +171,5 @@ private:
   std::vector< CoordinateMap * > mLeftBorders;
   std::vector< CoordinateMap * > mRightBorders;
 };
-
 } // namespace ENISI
 #endif

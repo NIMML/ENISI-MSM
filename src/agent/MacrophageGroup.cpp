@@ -80,59 +80,61 @@ void MacrophageGroup::act(
   //then new state -> m_reg-
 
   while (iter != neighborList.end())
-      {
-        const HPyloriGroup::StateCount * p_hpyloriStateCount = *iter;
+    {
+      const HPyloriGroup::StateCount * p_hpyloriStateCount = *iter;
 
-        /*identify states of HPylori counted -- naive name should be changed to LIVE*/
-        unsigned int liveHPyloriCount
-          = p_hpyloriStateCount->state[HPyloriState::NAIVE];
+      /*identify states of HPylori counted -- naive name should be changed to LIVE*/
+      unsigned int liveHPyloriCount
+        = p_hpyloriStateCount->state[HPyloriState::NAIVE];
 
-        /*get concentration of IFNg and IL10 for COPASI input*/
-        double IFNg = Cytokines::instance().get("IFNg", loc);
-        double IL10 = Cytokines::instance().get("IL10", loc);
+      /*get concentration of IFNg and IL10 for COPASI input*/
+      double IFNg = Cytokines::instance().get("IFNg", loc);
+      double IL10 = Cytokines::instance().get("IL10", loc);
 
-        /* if no bacteria is around DC, then stays immature */
-        if (liveHPyloriCount && state == MacrophageState::MONOCYTE)
-          {
-        	 /* set initial concentrations */
-        	          MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
-        	          odeModel.setInitialConcentration("IFNg", IFNg);
-        	          odeModel.setInitialConcentration("IL10", IL10);
+      /* if no bacteria is around DC, then stays immature */
+      if (liveHPyloriCount && state == MacrophageState::MONOCYTE)
+        {
+          /* set initial concentrations */
+          MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
+          odeModel.setInitialConcentration("IFNg", IFNg);
+          odeModel.setInitialConcentration("IL10", IL10);
 
-        	          /* run time course */
-        	          odeModel.runTimeCourse();
+          /* run time course */
+          odeModel.runTimeCourse();
 
-        	          // double IFNg = odeModel.getConcentration("IFNg");
-        	          // double IL10 = odeModel.getConcentration("IL10");
-        	          double Mreg = odeModel.getConcentration("Mreg");
-        	          double Minf = odeModel.getConcentration("Minf");
+          // double IFNg = odeModel.getConcentration("IFNg");
+          // double IL10 = odeModel.getConcentration("IL10");
+          double Mreg = odeModel.getConcentration("Mreg");
+          double Minf = odeModel.getConcentration("Minf");
 
-        	          /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
-        	          if (Mreg >= Minf)
-        	          {
-        	        	  newState = MacrophageState::REGULATORY;
-        	          }
-        	          /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
-        	          if (Minf > Mreg)
-        	          {
-        	        	  newState = MacrophageState::INFLAMMATORY;
-        	          }
-          }
-       /* regulatory macrophages produce IL10 */
-        if (newState == MacrophageState::REGULATORY)
+          /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
+          if (Mreg >= Minf)
             {
-              ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-              cytoMap["IL10"].first->setValueAtCoord(70, loc);
-            }
-        /* inflammatory macrophages produce IFNg */
-        else if (newState == MacrophageState::INFLAMMATORY)
-            {
-              ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-              cytoMap["IFNg"].first->setValueAtCoord(70, loc);
+              newState = MacrophageState::REGULATORY;
             }
 
-        ++iter;
-      }
+          /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
+          if (Minf > Mreg)
+            {
+              newState = MacrophageState::INFLAMMATORY;
+            }
+        }
+
+      /* regulatory macrophages produce IL10 */
+      if (newState == MacrophageState::REGULATORY)
+        {
+          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
+          cytoMap["IL10"].first->setValueAtCoord(70, loc);
+        }
+      /* inflammatory macrophages produce IFNg */
+      else if (newState == MacrophageState::INFLAMMATORY)
+        {
+          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
+          cytoMap["IFNg"].first->setValueAtCoord(70, loc);
+        }
+
+      ++iter;
+    }
 
   std::vector<double> moveTo = randomMove(1, loc);
   repast::Point<int> newLoc(moveTo[0], moveTo[1]);
