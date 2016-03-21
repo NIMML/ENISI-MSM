@@ -1,6 +1,7 @@
 #include "TcellGroup.h"
 #include "MacrophageGroup.h"
 #include "DendriticsGroup.h"
+#include "EpithelialCellGroup.h"
 
 using namespace ENISI;
 int p_rule19;/*Rule 19 parameter*/
@@ -231,6 +232,13 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
             {
               newState = TcellState::iTREG; /*Rule 23*/
             }
+          else if ((damagedEpithelialCellCount > 0) && state == TcellState::iTREG
+                                       && mpCompartment->getName() == "Epithelium" && (p_rule18 > rand()%1+0))
+            {
+              newState = TcellState::TH17; /*Rule 18*/
+              /* CHECK : Here there should be a function for information regarding the Layer,
+              for eg. This rule requires the state transition when iTREG is in contact with Edamaged at 'Epithelium and LaminaPropria' membrane*/
+             }
           else if ((th1Count > 0) && state == TcellState::iTREG
                    && mpCompartment->getName() == "LaminaPropria"&& (p_rule19 > rand()%1+0))
             {
@@ -242,12 +250,14 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
               delCellAt(state, loc);/*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
               addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
           	}
+
         }
 
       //Added conditions for Rules 18 - 23 and 36-41
       ++iter; //Macrophage Count
       ++iter2; //Tcellcount
       ++iter3; //Dendritic Cell count
+      ++iter4; // Epithelial Cell count
     }
 
   if (newState == TcellState::TH1) //Rule 29 If T cell state is TH1, then release IFNg
@@ -315,7 +325,7 @@ void TcellGroup::transferStateTo(TcellState::State state,
 
 /*definition for function to find all neighbors that are Macrophages */
 std::vector< const typename CoordinateMap<MacrophageState::KEEP_AT_END>::StateCount * >
-TcellGroup::getMacrophageNeighbors(const repast::Point<int> & loc)
+	TcellGroup::getMacrophageNeighbors(const repast::Point<int> & loc)
 {
   std::vector< const typename CoordinateMap<MacrophageState::KEEP_AT_END>::StateCount * > allNeighbors;
 
@@ -337,7 +347,8 @@ TcellGroup::getMacrophageNeighbors(const repast::Point<int> & loc)
 }
 
 /*definition for function to find all neighbors that are Tcells (TH17 and iTREG */
-std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >TcellGroup::getTcellNeighbors(const repast::Point<int> & loc)
+std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
+	TcellGroup::getTcellNeighbors(const repast::Point<int> & loc)
 {
   std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > allNeighbors;
 
@@ -358,7 +369,7 @@ std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *
 }
 /*definition for function to find all neighbors that are Dendritic cells */
 std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * >
-TcellGroup::getDendriticsNeighbors(const repast::Point<int> & loc)
+	TcellGroup::getDendriticsNeighbors(const repast::Point<int> & loc)
 {
   std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * > allNeighbors;
 

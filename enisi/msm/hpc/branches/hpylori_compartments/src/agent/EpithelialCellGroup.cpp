@@ -1,6 +1,7 @@
 #include "EpithelialCellGroup.h"
 #include "BacteriaGroup.h"
 #include "Cytokines.h"
+#include "TcellGroup.h"
 
 using namespace ENISI;
 
@@ -66,9 +67,16 @@ void EpithelialCellGroup::act(EpithelialCellState::State state, const repast::Po
   std::vector<const BacteriaGroup::StateCount *>::const_iterator iter
     = neighborList.begin();
 
+  //Get Tcell Neighbors for Rules 9 and 10
+      const std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > neighborListTcells
+  	= getTcellNeighbors(loc);
+      std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >::const_iterator iter2
+  	=  neighborListTcells.begin();
+
+
   EpithelialCellState::State newState = state;
 
-  while (iter != neighborList.end())
+  while (iter != neighborList.end() && iter2 !=neighborListTcell.end)
     {
       const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
 
@@ -76,6 +84,13 @@ void EpithelialCellGroup::act(EpithelialCellState::State state, const repast::Po
         = p_bacteriaStateCount->state[BacteriaState::INFECTIOUS];
       unsigned int tolegenicBacteriaCount
         = p_bacteriaStateCount->state[BacteriaState::TOLEROGENIC];
+    //Rules 9 and 10
+      const TcellGroup::StateCount * p_tcellCount = *iter2;
+
+            unsigned int th17Count
+      	  	  = p_tcellCount->state[TcellState::TH17]; //Rule 10 when Th17 is in contact
+            unsigned int th1Count
+      	  	  = p_tcellCount->state[TcellState::TH1];//RUle 9 when Th1 is in contact
 
       if (infectiousBacteriaCount && state == EpithelialCellState::HEALTHY)
         {
@@ -85,8 +100,27 @@ void EpithelialCellGroup::act(EpithelialCellState::State state, const repast::Po
         {
           newState = EpithelialCellState::HEALTHY;
         }
-
+      else if (th17Count && state = EpithelialCellState::IMMATURE
+         		  && mpCompartment->getName() == "LaminaPropria")
+        {
+          newState = EpithelialCellState::DAMAGED; /*Rule 10*/
+          /* CHECK : Here there should be a function for information regarding the Layer,
+          for eg. This rule requires the state transition when TH17 in LaminaPropria is in contact with E at 'Epithelium and LaminaPropria' membrane*/
+        }
+      else if (th1Count && state = EpithelialCellState::IMMATURE
+               		  && mpCompartment->getName() == "LaminaPropria")
+         {
+           newState = EpithelialCellState::DAMAGED; /*Rule 9*/
+           /* CHECK : Here there should be a function for information regarding the Layer,
+           for eg. This rule requires the state transition when TH1 in LaminaPropria is in contact with E at 'Epithelium and LaminaPropria' membrane*/
+          }
+       else if (state = EpithelialCellState::IMMATURE && mpCompartment->getName() == "Epithelium")
+          {
+         	 addCellAt(state, newLoc);/* Rule 8*/
+         	 delCellAt(EpithelialCellState::DAMAGED, loc); /*Rule 11*/
+           }
       ++iter;
+      ++iter2;
     }
 
   if (newState == EpithelialCellState::DAMAGED)
@@ -123,3 +157,29 @@ EpithelialCellGroup::getNeighbors(const repast::Point<int> & loc)
 
   return allNeighbors;
 }
+
+/*definition for function to find all neighbors that are Tcells (TH17 and TH1) */
+std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
+	EpithelialCellGroup::getTcellNeighbors(const repast::Point<int> & loc)
+{
+  std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > allNeighbors;
+
+  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
+
+  for (size_t i = 0; i < agents.size(); ++i)
+    {
+      if (agents[i]->classname() == "TcellGroup")
+        {
+          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
+           * agents only */
+          TcellGroup * p_TcellGroup = static_cast<TcellGroup *>(agents[i]);
+          allNeighbors.push_back(p_TcellGroup->getCellsAt(loc));
+        }
+    }
+
+  return allNeighbors;
+}
+
+
+
+

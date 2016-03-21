@@ -23,6 +23,10 @@ private:
 
   const std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * >
   getNeighbors(const repast::Point<int> &);
+
+  //Added the declaration of getTcellNeighbors function here
+  std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
+  getTcellNeighbors(const repast::Point<int> &);
 };
 } // namespace ENISI
 #endif // ENISI_EpithelialCellGroup
