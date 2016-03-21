@@ -40,6 +40,8 @@ private:
   std::vector< const typename CoordinateMap<DendriticState::KEEP_AT_END>::StateCount * >
   getDendriticsNeighbors(const repast::Point<int> &);
   void init(const boost::uintmax_t);
+  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
+  getEpithelialCellNeighbors(const repast::Point<int> &);
 };
 } // namespace ENISI
 
