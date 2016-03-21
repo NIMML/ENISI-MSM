@@ -21,7 +21,6 @@ private:
   std::vector< const typename CoordinateMap< TcellState::KEEP_AT_END >::StateCount * >
   getTcellNeighbors(const repast::Point<int> &);
 };
-
 }
 
 #endif

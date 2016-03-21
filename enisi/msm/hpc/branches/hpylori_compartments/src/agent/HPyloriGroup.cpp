@@ -6,7 +6,7 @@ using namespace ENISI;
 
 HPyloriGroup::HPyloriGroup(const boost::uintmax_t macrophageCount,
                            Compartment * pCompartment) :
-    CoordinateMap(pCompartment)
+  CoordinateMap(pCompartment)
 {
   for (boost::uintmax_t i = 0; i < macrophageCount; i++)
     {
@@ -21,11 +21,8 @@ HPyloriGroup::HPyloriGroup(const boost::uintmax_t macrophageCount,
       double xEnd = origin.getX() + extents.getX();
       double yEnd = origin.getY() + extents.getY();
 
-      double xCoord = repast::Random::instance()->createUniDoubleGenerator(
-          xStart, xEnd).next();
-
-      double yCoord = repast::Random::instance()->createUniDoubleGenerator(
-          yStart, yEnd).next();
+      double xCoord = repast::Random::instance()->createUniDoubleGenerator(xStart, xEnd).next();
+      double yCoord = repast::Random::instance()->createUniDoubleGenerator(yStart, yEnd).next();
 
       repast::Point<int> initialLoc(xCoord, yCoord);
 
@@ -46,25 +43,25 @@ void HPyloriGroup::act(HPyloriState::State state,
   if (state == HPyloriState::DEAD)
     return;
 
-  const std::vector<
-      const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *> neighborList =
-      getEpithelialCellNeighbors(loc);
-  std::vector<
-      const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *>::const_iterator iter =
-      neighborList.begin();
+  const std::vector <
+  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > neighborList =
+    getEpithelialCellNeighbors(loc);
+  std::vector <
+  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >::const_iterator iter =
+    neighborList.begin();
 
-  std::vector<
-      const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *> neighborList2 =
-      getTcellNeighbors(loc);
-  std::vector<
-      const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *>::const_iterator iter2 =
-      neighborList2.begin();
+  std::vector <
+  const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > neighborList2 =
+    getTcellNeighbors(loc);
+  std::vector <
+  const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >::const_iterator iter2 =
+    neighborList2.begin();
 
   while (iter != neighborList.end() && iter2 != neighborList2.end())
     {
       /*identify states of Epithelial Cells counted */
       unsigned int damagedEpithelialCellCount =
-          (*iter)->state[EpithelialCellState::DAMAGED];
+        (*iter)->state[EpithelialCellState::DAMAGED];
 
       /* move HPylori across epithelial border if in contact with damaged Epithelial cell */
       if (damagedEpithelialCellCount && mpCompartment->getName() == "Lumen")
@@ -97,12 +94,12 @@ void HPyloriGroup::act(HPyloriState::State state,
   addCellAt(state, newLoc);
 }
 
-std::vector<
-    const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *> HPyloriGroup::getEpithelialCellNeighbors(
-    const repast::Point<int> & loc)
+std::vector <
+const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > HPyloriGroup::getEpithelialCellNeighbors(
+  const repast::Point<int> & loc)
 {
-  std::vector<
-      const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *> allNeighbors;
+  std::vector <
+  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > allNeighbors;
 
   std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
 
@@ -113,7 +110,7 @@ std::vector<
           /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
            * agents only */
           EpithelialCellGroup * p_epithelialcellGroup =
-              static_cast<EpithelialCellGroup *>(agents[i]);
+            static_cast<EpithelialCellGroup *>(agents[i]);
           allNeighbors.push_back(p_epithelialcellGroup->getCellsAt(loc));
         }
     }
@@ -122,10 +119,10 @@ std::vector<
 }
 
 std::vector<const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *> HPyloriGroup::getTcellNeighbors(
-    const repast::Point<int> & loc)
+  const repast::Point<int> & loc)
 {
-  std::vector<
-      const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *> allNeighbors;
+  std::vector <
+  const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > allNeighbors;
 
   std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
 
