@@ -31,7 +31,7 @@ EpithelialCellGroup::EpithelialCellGroup(const boost::uintmax_t count, Compartme
       std::vector<double> moveTo = randomMove(1, initialLoc);
       repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
-      addCellAt(EpithelialCellState::IMMATURE, newLoc);
+      addCellAt(EpithelialCellState::HEALTHY, newLoc);
     }
 }
 
@@ -75,30 +75,25 @@ void EpithelialCellGroup::act(EpithelialCellState::State state, const repast::Po
       unsigned int infectiousBacteriaCount
         = p_bacteriaStateCount->state[BacteriaState::INFECTIOUS];
       unsigned int tolegenicBacteriaCount
-        = p_bacteriaStateCount->state[BacteriaState::TOLEGENIC];
+        = p_bacteriaStateCount->state[BacteriaState::TOLEROGENIC];
 
-      if (infectiousBacteriaCount && state == EpithelialCellState::IMMATURE)
+      if (infectiousBacteriaCount && state == EpithelialCellState::HEALTHY)
         {
-          newState = EpithelialCellState::EFFECTOR;
+          newState = EpithelialCellState::DAMAGED;
         }
-      else if (tolegenicBacteriaCount && state == EpithelialCellState::IMMATURE)
+      else if (tolegenicBacteriaCount && state == EpithelialCellState::HEALTHY)
         {
-          newState = EpithelialCellState::TOLEROGENIC;
+          newState = EpithelialCellState::HEALTHY;
         }
 
       ++iter;
     }
 
-  if (newState == EpithelialCellState::EFFECTOR)
+  if (newState == EpithelialCellState::DAMAGED)
     {
       ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
       cytoMap["IL6"].first->setValueAtCoord(70, loc);
       cytoMap["IL12"].first->setValueAtCoord(70, loc);
-    }
-  else if (newState == EpithelialCellState::TOLEROGENIC)
-    {
-      ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-      cytoMap["TGFb"].first->setValueAtCoord(70, loc);
     }
 
   std::vector<double> moveTo = randomMove(1, loc);

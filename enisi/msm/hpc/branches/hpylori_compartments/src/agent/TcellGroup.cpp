@@ -210,8 +210,8 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
           else if ((eDCCount > 0) && state == TcellState::NAIVE
           				&& mpCompartment->getName() == "LaminaPropria" && (p_rule41 > rand()%1+0))
           	{
-          	delCellAt(state, loc);/*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
-          	addCellAt(TCellState::DEAD, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
+              delCellAt(state, loc);/*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
+              addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
           	}
         }
 

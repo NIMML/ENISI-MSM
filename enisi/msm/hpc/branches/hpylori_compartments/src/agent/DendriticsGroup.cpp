@@ -87,7 +87,7 @@ void DendriticsGroup::act(
       unsigned int infectiousBacteriaCount
         = p_bacteriaStateCount->state[BacteriaState::INFECTIOUS];
       unsigned int tolegenicBacteriaCount
-        = p_bacteriaStateCount->state[BacteriaState::TOLEGENIC];
+        = p_bacteriaStateCount->state[BacteriaState::TOLEROGENIC];
 
       const HPyloriGroup::StateCount * p_hpyloriStateCount = *iter2;
 

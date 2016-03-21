@@ -21,6 +21,6 @@ TEST_F(ABacteria, DefaultStateIsINFECTIOUS)
 
 TEST_F(ABacteria, SuccessfullyChangesState)
 {
-  _p_bacteria->setState(ENISI::AgentState::TOLEGENIC);
-  ASSERT_THAT(_p_bacteria->getState(), Eq(ENISI::AgentState::TOLEGENIC));
+  _p_bacteria->setState(ENISI::AgentState::TOLEROGENIC);
+  ASSERT_THAT(_p_bacteria->getState(), Eq(ENISI::AgentState::TOLEROGENIC));
 }

@@ -112,7 +112,7 @@ void MucosalCD4ModelBase::createBacteria(int count)
     Bacteria * b = (Bacteria *) factory.create("Bacteria", _p_compartment);
     /* 1/2 of bacteria created should be infectious (the default) while the
      * other 1/2 should be tolerogenic */
-    if (i >= count/2) { b->setState(ENISI::AgentState::TOLEGENIC); }
+    if (i >= count/2) { b->setState(ENISI::AgentState::TOLEROGENIC); }
   }
 }
 
