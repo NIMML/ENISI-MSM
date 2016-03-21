@@ -14,8 +14,11 @@ public:
 
   virtual void act();
 
-  const std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
+  std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
   getTcellNeighbors(const repast::Point<int> &);
+
+  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
+  getEpithelialCellNeighbors(const repast::Point<int> & loc);
 
   virtual Color getColor() {return black;}
   virtual std::string classname() {return "BacteriaGroup";}

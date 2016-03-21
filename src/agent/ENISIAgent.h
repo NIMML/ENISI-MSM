@@ -6,7 +6,7 @@
 #include "SharedContext.h"
 #include "RepastProcess.h"
 
-//TODO reconcile TOLEGENIC and TOLEROGENIC
+//TODO reconcile TOLEROGENIC and TOLEROGENIC
 namespace ENISI
 {
 
@@ -15,7 +15,7 @@ class AgentState
 public:
   enum State
   {
-    DEAD, IMMATURE, EFFECTOR, INFECTIOUS, TOLEGENIC, TOLEROGENIC,
+    DEAD, IMMATURE, EFFECTOR, INFECTIOUS, TOLEROGENIC,
     NAIVE, TH1, TH17, TREG, Tr
   };
 };

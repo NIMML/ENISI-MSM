@@ -10,7 +10,7 @@ Bacteria::Color Bacteria::getColor()
         color = red;
         break;
 
-      case ENISI::AgentState::TOLEGENIC:
+      case ENISI::AgentState::TOLEROGENIC:
         color = green;
         break;
 

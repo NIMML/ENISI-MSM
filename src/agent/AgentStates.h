@@ -26,7 +26,7 @@ public:
 class BacteriaState
 {
 public:
-  enum State {DEAD, INFECTIOUS, TOLEGENIC, KEEP_AT_END};
+  enum State {DEAD, INFECTIOUS, TOLEROGENIC, KEEP_AT_END};
 };
 
 class MacrophageState

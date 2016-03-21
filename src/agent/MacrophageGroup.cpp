@@ -1,5 +1,8 @@
 #include "agent/MacrophageGroup.h"
 #include "agent/HPyloriGroup.h"
+#include "agent/Cytokines.h"
+#include "agent/MacrophageODE1.h"
+#include "agent/MacrophageODE2.h"
 
 using namespace ENISI;
 
@@ -92,15 +95,15 @@ void MacrophageGroup::act(
         if (liveHPyloriCount && state == MacrophageState::MONOCYTE)
           {
         	 /* set initial concentrations */
-        	          MacrophageODE & odeModel = MacrophageODE::getInstance();
+        	          MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
         	          odeModel.setInitialConcentration("IFNg", IFNg);
         	          odeModel.setInitialConcentration("IL10", IL10);
 
         	          /* run time course */
         	          odeModel.runTimeCourse();
 
-        	          double IFNg = odeModel.getConcentration("IFNg");
-        	          double IL10 = odeModel.getConcentration("IL10");
+        	          // double IFNg = odeModel.getConcentration("IFNg");
+        	          // double IL10 = odeModel.getConcentration("IL10");
         	          double Mreg = odeModel.getConcentration("Mreg");
         	          double Minf = odeModel.getConcentration("Minf");
 
@@ -128,6 +131,9 @@ void MacrophageGroup::act(
               cytoMap["IFNg"].first->setValueAtCoord(70, loc);
             }
 
+        ++iter;
+      }
+
   std::vector<double> moveTo = randomMove(1, loc);
   repast::Point<int> newLoc(moveTo[0], moveTo[1]);
 
@@ -137,12 +143,11 @@ void MacrophageGroup::act(
   addCellAt(newState, newLoc);
 }
 
-const std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
-MacrophageGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
+std::vector< const typename CoordinateMap< HPyloriState::KEEP_AT_END >::StateCount * > MacrophageGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
 {
-  std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * > allNeighbors;
+  std::vector< const typename CoordinateMap< HPyloriState::KEEP_AT_END >::StateCount * > allNeighbors;
 
-  std::vector<Agent *> agents = layer()->selectAllAgents();
+  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
 
   for (size_t i = 0; i < agents.size(); ++i)
     {

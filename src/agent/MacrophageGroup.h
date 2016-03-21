@@ -15,7 +15,7 @@ public:
   virtual Color getColor() {return black;}
   virtual std::string classname() {return "MacrophageGroup";}
 
-  const std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
+  std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
   getHPyloriNeighbors(const repast::Point<int> &);
 private:
   void act(MacrophageState::State, const repast::Point<int> &);

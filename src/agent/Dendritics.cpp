@@ -15,7 +15,7 @@ void Dendritics::act()
         {
           setState(ENISI::AgentState::EFFECTOR);
         }
-      else if (b->getState() == ENISI::AgentState::TOLEGENIC && getState() == ENISI::AgentState::IMMATURE)
+      else if (b->getState() == ENISI::AgentState::TOLEROGENIC && getState() == ENISI::AgentState::IMMATURE)
         {
           setState(ENISI::AgentState::TOLEROGENIC);
         }
