@@ -1,60 +1,34 @@
 #include "CellGroup.h"
-#include "CellGroupImpl.h"
 #include "compartment/CellLayer.h"
 #include "compartment/Compartment.h"
 
 using namespace ENISI;
 
-CellGroup::~CellGroup() {delete _p_impl;}
+CellGroup::~CellGroup()
+{}
 
 CellGroup::CellGroup(Compartment * pCompartment) :
   mpCompartment(pCompartment),
-  _p_impl(pCompartment != NULL ? new CellGroupImpl(pCompartment->cellLayer()) : NULL)
+  mMarkedForTransfer()
 {}
 
-const CellGroup::Transfers & CellGroup::getTransfers() {return _p_impl->getTransfers();}
+const CellGroup::Transfers & CellGroup::getTransfers()
+{
+  return mMarkedForTransfer;
+}
 
-void CellGroup::clearTransfers() {_p_impl->clearTransfers();}
+void CellGroup::clearTransfers()
+{
+  mMarkedForTransfer.clear();
+}
 
 void CellGroup::setTransfers(const CellGroup::Transfers & newTransfers)
 {
-  _p_impl->setTransfers(newTransfers);
+  mMarkedForTransfer = newTransfers;
 }
 
-std::vector<double> CellGroup::randomMove(
-  const double & speed, const repast::Point<int> & fromPt)
-{return _p_impl->randomMove(speed, fromPt);}
-
-void CellGroup::transferStateTo(
-  int state, const repast::Point<int> & loc, unsigned int count)
-{_p_impl->transferStateTo(state, loc, count);}
-
-/* CellGroupImpl */
-CellGroupImpl::CellGroupImpl(CellLayer * p_layer __attribute__((unused))) {}
-
-const CellGroup::Transfers & CellGroupImpl::getTransfers()
-{return _markedForTransfer;}
-
-void CellGroupImpl::clearTransfers()
-{_markedForTransfer = CellGroup::Transfers();}
-
-void CellGroupImpl::setTransfers(const CellGroup::Transfers & newTransfers)
-{
-  _markedForTransfer = newTransfers;
-}
-
-void CellGroupImpl::transferStateTo(
-  int state, const repast::Point<int> & loc, unsigned int count)
-{
-  for (unsigned int i = 0; i < count; ++i)
-    {
-      std::pair<int, int> pair(loc.getX(), loc.getY());
-      _markedForTransfer[state].push_back(pair);
-    }
-}
-
-std::vector<double> CellGroupImpl::randomMove(
-  const double & speed, const repast::Point<int> & fromPt)
+std::vector<double> CellGroup::randomMove(const double & speed,
+                                          const repast::Point<int> & fromPt)
 {
   double fullCircle = 2 * 3.14; // in radians
   double angle =
@@ -67,6 +41,18 @@ std::vector<double> CellGroupImpl::randomMove(
   moveTo.push_back(fromPt.getY() + radius * sin(angle));
 
   return moveTo;
+}
+
+void CellGroup::transferStateTo(int state,
+                                const repast::Point<int> & loc,
+                                unsigned int count)
+{
+  std::pair<int, int> Location(loc.getX(), loc.getY());
+
+  for (unsigned int i = 0; i < count; ++i)
+    {
+      mMarkedForTransfer[state].push_back(Location);
+    }
 }
 
 TransferGroup::TransferGroup(Compartment * pCompartment) :

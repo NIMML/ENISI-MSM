@@ -22,11 +22,9 @@ HPModel::HPModel(const repast::Properties * p_props)
     _gastricLymphNode(_dimensions, "GastricLymphNode"),
     _laminaPropria(_dimensions, "LaminaPropria")
 { 
+  // setUpValueLayer();
 
-
-  setUpValueLayer();
-
-  setUpCytokines();
+  // setUpCytokines();
 
   createAgentGroup("Bacteria", "bacteria.count");
   createAgentGroup("Tcell", "tcell.count");

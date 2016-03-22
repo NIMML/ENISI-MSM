@@ -14,7 +14,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.base.2111468901" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+				<configuration artifactName="${ProjName}" buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.base.2111468901" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.2111468901.1713126950" name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.1104218085" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.1368151698" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
@@ -22,6 +22,7 @@
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="build"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="bin"/>
 								</outputEntries>
 							</builder>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.base.6681878" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
@@ -30,6 +31,7 @@
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/ext/Boost/Boost_1.54/include"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include/repast_hpc"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_copasi"/>
+									<listOptionValue builtIn="false" value="../../deps/src/project_googlemock/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2118659381" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -38,6 +40,7 @@
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/ext/Boost/Boost_1.54/include"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include/repast_hpc"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_copasi"/>
+									<listOptionValue builtIn="false" value="../../deps/src/project_googlemock/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1918079095" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -53,6 +56,7 @@
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/ext/Boost/Boost_1.54/include"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include/repast_hpc"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_copasi"/>
+									<listOptionValue builtIn="false" value="../../deps/src/project_googlemock/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1026730274" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>

@@ -26,6 +26,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>bin</name>
+			<type>2</type>
+			<location>/home/shoops/git/ENISI/bin</location>
+		</link>
+		<link>
 			<name>build</name>
 			<type>2</type>
 			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/build</locationURI>

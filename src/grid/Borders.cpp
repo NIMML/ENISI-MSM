@@ -37,6 +37,22 @@ Borders::Borders(repast::GridDimensions d):
 Borders::~Borders()
 {}
 
+int Borders::distanceFromBorder(const std::vector<int>& pt,
+                                const Borders::Coodinate &coordinate,
+                                const Borders::Side & side)
+{
+  int border = _dimensions.origin()[coordinate] + (side == LOW) ? 0 : _dimensions.extents()[coordinate];
+  return abs(border - pt[coordinate]);
+}
+
+double Borders::distanceFromBorder(const std::vector<double>& pt,
+                                   const Borders::Coodinate & coordinate,
+                                   const Borders::Side & side)
+{
+  double border = _dimensions.origin()[coordinate] + (side == LOW) ? 0 : _dimensions.extents()[coordinate];
+  return abs(border - pt[coordinate]);
+}
+
 bool Borders::boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * pBoundState) const
 {
   static std::vector<BoundState> State(mDimension);
@@ -70,26 +86,26 @@ bool Borders::boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * 
       if (*itPt < *itOrigin)
         if (*itTypeLeft == PERMIABLE || *itTypeLeft == STICKY)
           {
-            *itState = OUT_LEFT;
+            *itState = OUT_LOW;
             inBounds = false;
           }
         else
           {
-            *itState = IN_BOUND;
+            *itState = INBOUND;
           }
       else if (*itPt >= *itOrigin + *itExtend)
         if (*itTypeRight == PERMIABLE || *itTypeLeft == STICKY)
           {
-            *itState = OUT_RIGHT;
+            *itState = OUT_HIGH;
             inBounds = false;
           }
         else
           {
-            *itState = IN_BOUND;
+            *itState = INBOUND;
           }
       else
         {
-          *itState = IN_BOUND;
+          *itState = INBOUND;
         }
     }
 
@@ -129,26 +145,26 @@ bool Borders::boundsCheck(const std::vector<double>& pt, std::vector<BoundState>
       if (*itPt < *itOrigin)
         if (*itTypeLeft == PERMIABLE || *itTypeLeft == STICKY)
           {
-            *itState = OUT_LEFT;
+            *itState = OUT_LOW;
             inBounds = false;
           }
         else
           {
-            *itState = IN_BOUND;
+            *itState = INBOUND;
           }
       else if (*itPt >= *itOrigin + *itExtend)
         if (*itTypeRight == PERMIABLE || *itTypeLeft == STICKY)
           {
-            *itState = OUT_RIGHT;
+            *itState = OUT_HIGH;
             inBounds = false;
           }
         else
           {
-            *itState = IN_BOUND;
+            *itState = INBOUND;
           }
       else
         {
-          *itState = IN_BOUND;
+          *itState = INBOUND;
         }
     }
 
@@ -285,12 +301,12 @@ void Borders::translate(const std::vector<int>& in, std::vector<int>& out, const
 {
   std::vector<int>::const_iterator itIn = in.begin();
   std::vector<int>::const_iterator endIn = in.end();
-  std::vector<int>::const_iterator itShift = move.begin();
+  std::vector<int>::const_iterator itMove = move.begin();
   std::vector<int>::iterator itOut = out.begin();
 
-  for (; itIn != endIn; ++itIn, ++itOut, ++itShift)
+  for (; itIn != endIn; ++itIn, ++itOut, ++itMove)
     {
-      *itOut = *itIn * *itShift;
+      *itOut = *itIn + *itMove;
     }
 }
 
@@ -299,12 +315,12 @@ void Borders::translate(const std::vector<double>& in, std::vector<double>& out,
 {
   std::vector<double>::const_iterator itIn = in.begin();
   std::vector<double>::const_iterator endIn = in.end();
-  std::vector<double>::const_iterator itShift = move.begin();
+  std::vector<double>::const_iterator itMove = move.begin();
   std::vector<double>::iterator itOut = out.begin();
 
-  for (; itIn != endIn; ++itIn, ++itOut, ++itShift)
+  for (; itIn != endIn; ++itIn, ++itOut, ++itMove)
     {
-      *itOut = *itIn * *itShift;
+      *itOut = *itIn + *itMove;
     }
 }
 
