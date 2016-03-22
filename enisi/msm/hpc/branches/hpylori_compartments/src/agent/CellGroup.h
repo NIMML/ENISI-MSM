@@ -70,7 +70,7 @@ private:
   /**
    *
    */
-  CellGroupImpl * _p_impl;
+  Transfers mMarkedForTransfer;
 };
 
 class TransferGroup : public CellGroup

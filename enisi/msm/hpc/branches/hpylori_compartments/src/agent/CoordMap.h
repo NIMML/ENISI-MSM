@@ -118,7 +118,7 @@ protected:
 
         switch (*itState)
           {
-            case Borders::OUT_LEFT:
+            case Borders::OUT_LOW:
               if (*itLeftBorder != NULL)
                 {
                   pTarget = *itLeftBorder;
@@ -132,7 +132,7 @@ protected:
 
               break;
 
-            case Borders::OUT_RIGHT:
+            case Borders::OUT_HIGH:
               if (*itRightBorder != NULL)
                 {
                   pTarget = *itRightBorder;
@@ -146,7 +146,7 @@ protected:
 
               break;
 
-            case Borders::IN_BOUND:
+            case Borders::INBOUND:
               *itOut = *itIn;
               break;
           }

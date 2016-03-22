@@ -17,7 +17,9 @@ class Borders : public repast::Borders
 {
 public:
   enum Type { REFLECT, WRAP, STICKY, PERMIABLE } ;
-  enum BoundState { OUT_LEFT = -1, IN_BOUND = 0, OUT_RIGHT = 1};
+  enum BoundState { OUT_LOW = -1, INBOUND = 0, OUT_HIGH = 1};
+  enum Coodinate { X = 0, Y = 1, Z = 2 };
+  enum Side { LOW = 0, HIGH };
 
 private:
   Borders();
@@ -25,6 +27,9 @@ private:
 public:
   Borders(repast::GridDimensions d);
   virtual ~Borders();
+
+  int distanceFromBorder(const std::vector<int>& pt, const Coodinate &coordinate, const Side & side);
+  double distanceFromBorder(const std::vector<double>& pt, const Coodinate & coordinate, const Side & side);
 
   bool boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * pBoundState = NULL) const;
   bool boundsCheck(const std::vector<double>& pt, std::vector<BoundState> * pBoundState = NULL) const;

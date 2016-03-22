@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 
   repast::Properties props(propsFile, argc, argv, &world);
 
-  repast::RepastProcess::init(configFile);
+  repast::RepastProcess::init(configFile, &world);
 
   std::string debugWaitString = props.getProperty("debug.wait");
   bool debugwait = 0;
@@ -23,15 +23,17 @@ int main(int argc, char** argv)
   if(debugwait)
   {
     int rank = repast::RepastProcess::instance()->rank() ;
-    printf("RANK %d PID %d\n", rank, getpid());
+
     if (rank == 0) 
     {
       std::cout << "Waiting for GDB to connect\n";
       std::cout << "After connecting, run the following commands:\n";
       std::cout << "(gdb) set debugwait = 0\n";
       std::cout << "(gdb) continue\n";
-      std::cout << "\nConnect to GDB on the ports listed above\n";
+      std::cout << "\nConnect to GDB on the PIDs listed below\n";
     }
+
+    printf("RANK %d PID %d\n", rank, getpid());
   }
   while (debugwait) ;
 

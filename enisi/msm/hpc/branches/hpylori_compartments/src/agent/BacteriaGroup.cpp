@@ -40,10 +40,7 @@ void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
 
       repast::Point<int> initialLoc(xCoord, yCoord);
 
-      std::vector<double> moveTo = randomMove(1, initialLoc);
-      repast::Point<int> newLoc(moveTo[0], moveTo[1]);
-
-      addCellAt(state, newLoc);
+      addCellAt(state, initialLoc);
     }
 }
 
