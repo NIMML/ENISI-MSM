@@ -5,7 +5,7 @@ using namespace ENISI;
 
 /* DiffuserLayer class */
 DiffuserLayer::DiffuserLayer(const repast::GridDimensions & dims)
-  : ICompartmentLayer<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>(dims)
+  : ICompartmentLayer<Diffuser, DiffuserPackage, DiffuserPackageProvider, DiffuserPackageReceiver>("", dims, dims)
   { }
 
 void DiffuserLayer::diffuse() 

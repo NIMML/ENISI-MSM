@@ -2,6 +2,7 @@
 #include "agent/AgentFactory.h"
 #include "compartment/CellLayer.h"
 #include "diffuser/ParallelDiffuser.h" 
+#include "compartment/Compartment.h"
 
 HPModel::~HPModel()
 {
@@ -16,19 +17,16 @@ HPModel::HPModel(const repast::Properties * p_props)
     _width(repast::strToInt(_p_props->getProperty("grid.width"))),
     _dimensions(
       repast::Point<double>(0, 0), repast::Point<double>(_width, _height)
-    ),
-    _lumen(_dimensions, "Lumen"),
-    _epithelium(_dimensions, "Epithelium"),
-    _gastricLymphNode(_dimensions, "GastricLymphNode"),
-    _laminaPropria(_dimensions, "LaminaPropria")
+    )
 { 
+  ENISI::Compartment::instance(ENISI::Compartment::lumen);
   // setUpValueLayer();
 
   // setUpCytokines();
 
-  createAgentGroup("Bacteria", "bacteria.count");
-  createAgentGroup("Tcell", "tcell.count");
-  createAgentGroup("Dendritics", "dendritic.count");
+  // createAgentGroup("Bacteria", "bacteria.count");
+  // createAgentGroup("Tcell", "tcell.count");
+  // createAgentGroup("Dendritics", "dendritic.count");
 }
 
 void HPModel::initSchedule(repast::ScheduleRunner & runner) 
@@ -71,6 +69,7 @@ void HPModel::initSchedule(repast::ScheduleRunner & runner)
 
 void HPModel::requestAgents()
 {
+
   int rank = repast::RepastProcess::instance()->rank();
 
   int worldSize= repast::RepastProcess::instance()->worldSize();
@@ -84,7 +83,7 @@ void HPModel::requestAgents()
     {                                      
       /* Choose all agents */
       std::vector<ENISI::CellLayer::AgentType*> agents =
-	_lumen.cellLayer()->selectAllAgents();
+	ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectAllAgents();
 
       for(size_t j = 0; j < agents.size(); j++)
       {
@@ -99,8 +98,8 @@ void HPModel::requestAgents()
     }
   }
 
-  _lumen.cellLayer()->requestAgents();
-  _lumen.requestDiffuserAgents();
+  ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->requestAgents();
+  ENISI::Compartment::instance(ENISI::Compartment::lumen)->requestDiffuserAgents();
 }
 
 void HPModel::act()
@@ -113,10 +112,10 @@ void HPModel::act()
     std::cout << " TICK " << runner.currentTick() << std::endl;
 
   std::vector<ENISI::CellLayer::AgentType*> remoteAgents =
-    _lumen.cellLayer()->selectRemoteAgents();
+    ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectRemoteAgents();
 
   std::vector<ENISI::CellLayer::AgentType*> localAgents =
-    _lumen.cellLayer()->selectLocalAgents();
+    ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectLocalAgents();
 
   std::vector<ENISI::CellLayer::AgentType*>::iterator it = localAgents.begin();
 
@@ -135,12 +134,12 @@ void HPModel::act()
 
 void HPModel::syncAgents()
 {
-  _lumen.cellLayer()->synchronizeAgentStates();
+  ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->synchronizeAgentStates();
 }
 
 void HPModel::diffuse() 
 {
-  _lumen.diffuse();
+  ENISI::Compartment::instance(ENISI::Compartment::lumen)->diffuse();
 /*  for (size_t i = 0; i < _valueDiffusers.size(); ++i) */
   //{
     //_valueDiffusers[i]->diffuse();
@@ -149,7 +148,7 @@ void HPModel::diffuse()
 
 void HPModel::updateReferenceDiffuserGrid()
 {
-  _lumen.updateReferenceDiffuserGrid();
+  ENISI::Compartment::instance(ENISI::Compartment::lumen)->updateReferenceDiffuserGrid();
 }
 
 void HPModel::recordResults()
@@ -163,7 +162,7 @@ void HPModel::setUpValueLayer()
   bool dense = true;
 
   _p_valueLayer = new ValueLayer(name, _dimensions, dense);
-  _lumen.cellLayer()->addValueLayer(_p_valueLayer);
+  ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->addValueLayer(_p_valueLayer);
 }
 
 void HPModel::setUpCytokines()
@@ -178,22 +177,22 @@ void HPModel::setUpCytokines()
    * 10000, 100, 1, 0, 0, 0
    * They don't have any inherent meaning otherwise */
 
-  cytomap["IL6"] = std::make_pair(new ENISI::ParallelDiffuser(_lumen, 0.95, diffusion, toroidal), 10000);
+  cytomap["IL6"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), 0.95, diffusion, toroidal), 10000);
   _valueDiffusers.push_back(cytomap["IL6"].first);
 
-  cytomap["TGFb"] = std::make_pair(new ENISI::ParallelDiffuser(_lumen, evaporation, diffusion, toroidal), 100);
+  cytomap["TGFb"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 100);
   _valueDiffusers.push_back(cytomap["TGFb"].first);
 
-  cytomap["IL12"] = std::make_pair(new ENISI::ParallelDiffuser(_lumen, evaporation, diffusion, toroidal), 1);
+  cytomap["IL12"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 1);
   _valueDiffusers.push_back(cytomap["IL12"].first);
 
-  cytomap["IL17"] = std::make_pair(new ENISI::ParallelDiffuser(_lumen, evaporation, diffusion, toroidal), 0);
+  cytomap["IL17"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 0);
   _valueDiffusers.push_back(cytomap["IL17"].first);
 
-  cytomap["IL10"] = std::make_pair(new ENISI::ParallelDiffuser(_lumen, evaporation, diffusion, toroidal), 0);
+  cytomap["IL10"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 0);
   _valueDiffusers.push_back(cytomap["IL10"].first);
 
-  cytomap["IFNg"] = std::make_pair(new ENISI::ParallelDiffuser(_lumen, evaporation, diffusion, toroidal), 0);
+  cytomap["IFNg"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 0);
   _valueDiffusers.push_back(cytomap["IFNg"].first);
 
   summation();
@@ -238,7 +237,7 @@ void HPModel::createAgentGroup(const std::string & agentName, const std::string 
   if ( remainder && (remainder > rank) ) countPerProcess++;
 
   ENISI::AgentGroupFactory::create(
-    agentName + "Group", &_lumen, countPerProcess
+    agentName + "Group", ENISI::Compartment::instance(ENISI::Compartment::lumen), countPerProcess
   );
 }
 

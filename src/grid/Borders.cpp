@@ -9,6 +9,8 @@
 
 using namespace ENISI;
 
+// static
+const char* Borders::TypeNames[] = {"REFLECT", "WRAP", "STICKY", "PERMIABLE", NULL};
 
 Borders::Borders(repast::GridDimensions d):
   repast::Borders(d),
@@ -324,22 +326,22 @@ void Borders::translate(const std::vector<double>& in, std::vector<double>& out,
     }
 }
 
-void Borders::setBorderTypeLeft(const size_t & i, const Borders::Type & type)
+void Borders::setLowBorderType(const size_t & i, const Borders::Type & type)
 {
   mBorderTypeLeft[i] = type;
 }
 
-const Borders::Type & Borders::getBorderTypeLeft(const size_t & i) const
+const Borders::Type & Borders::getLowBorderType(const size_t & i) const
 {
   return mBorderTypeLeft[i];
 }
 
-void Borders::setBorderTypeRight(const size_t & i, const Borders::Type & type)
+void Borders::setHighBorderType(const size_t & i, const Borders::Type & type)
 {
   mBorderTypeRight[i] = type;
 }
 
-const Borders::Type & Borders::getBorderTypeRight(const size_t & i) const
+const Borders::Type & Borders::getHighBorderType(const size_t & i) const
 {
   return mBorderTypeRight[i];
 }

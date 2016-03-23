@@ -1,8 +1,8 @@
 #ifndef DIFFUSERIMPL_H_
 #define DIFFUSERIMPL_H_
 
-#include "Point.h"
-#include "GridComponents.h" /* repast::StickyBorders  */
+#include "repast_hpc/Point.h"
+#include "repast_hpc/GridComponents.h" /* repast::StickyBorders  */
 #include <stdexcept>
 #include <vector>
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <boost/mpi.hpp>
 #include "model/HPyloriModel.h"
-#include "RepastProcess.h"
+#include "repast_hpc/RepastProcess.h"
 
 void benchmarkModel(int &argc, char** argv) 
 {

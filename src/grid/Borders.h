@@ -8,7 +8,7 @@
 #ifndef GRID_BORDERS_H_
 #define GRID_BORDERS_H_
 
-#include "GridComponents.h"
+#include "repast_hpc/GridComponents.h"
 
 namespace ENISI
 {
@@ -16,7 +16,9 @@ namespace ENISI
 class Borders : public repast::Borders
 {
 public:
-  enum Type { REFLECT, WRAP, STICKY, PERMIABLE } ;
+  static const char* TypeNames[];
+
+  enum Type { REFLECT, WRAP, STICKY, PERMIABLE};
   enum BoundState { OUT_LOW = -1, INBOUND = 0, OUT_HIGH = 1};
   enum Coodinate { X = 0, Y = 1, Z = 2 };
   enum Side { LOW = 0, HIGH };
@@ -40,14 +42,14 @@ public:
   void translate(const std::vector<double>& oldPos, std::vector<double>& newPos, const std::vector<double>& displacement) const;
   void translate(const std::vector<int>& oldPos, std::vector<int>& newPos, const std::vector<int>& displacement) const;
 
-  void setBorderTypeLeft(const size_t & i, const Type & type);
-  const Type & getBorderTypeLeft(const size_t & i) const;
+  void setLowBorderType(const size_t & i, const Type & type);
+  const Type & getLowBorderType(const size_t & i) const;
 
-  void setBorderTypeRight(const size_t & i, const Type & type);
-  const Type & getBorderTypeRight(const size_t & i) const;
+  void setHighBorderType(const size_t & i, const Type & type);
+  const Type & getHighBorderType(const size_t & i) const;
 
 protected:
-  const size_t mDimension;
+  size_t mDimension;
 
 private:
   std::vector<Type> mBorderTypeLeft;

@@ -29,18 +29,18 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1816929276" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base">
 								<option id="gnu.cpp.compiler.option.include.paths.1542913571" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/ext/Boost/Boost_1.54/include"/>
-									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include/repast_hpc"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_copasi"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_googlemock/include"/>
+									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2118659381" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1017306899" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 								<option id="gnu.c.compiler.option.include.paths.636410761" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/ext/Boost/Boost_1.54/include"/>
-									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include/repast_hpc"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_copasi"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_googlemock/include"/>
+									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1918079095" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -54,9 +54,9 @@
 							<tool id="cdt.managedbuild.tool.gnu.assembler.base.523161098" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
 								<option id="gnu.both.asm.option.include.paths.72527460" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../deps/src/project_repast/ext/Boost/Boost_1.54/include"/>
-									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include/repast_hpc"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_copasi"/>
 									<listOptionValue builtIn="false" value="../../deps/src/project_googlemock/include"/>
+									<listOptionValue builtIn="false" value="../../deps/src/project_repast/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1026730274" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>

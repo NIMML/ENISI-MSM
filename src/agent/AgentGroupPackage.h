@@ -2,7 +2,7 @@
 #define ENISI_MSM_AGENT_AGENTGROUPPACKAGE_H
 
 #include "agent/CellGroup.h"
-#include "SharedContext.h"
+#include "repast_hpc/SharedContext.h"
 
 namespace ENISI
 {

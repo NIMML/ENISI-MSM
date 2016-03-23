@@ -4,7 +4,7 @@
 #include "compartment/Compartment.h"
 #include "compartment/CellLayer.h"
 #include "CellGroup.h"
-#include "GridComponents.h" /* repast::StickyBorders */
+#include "repast_hpc/GridComponents.h" /* repast::StickyBorders */
 #include "grid/Borders.h"
 
 namespace ENISI
@@ -74,13 +74,13 @@ public:
 
   void setLeftBorder(const size_t & i, const Borders::Type & type, CoordinateMap * p_border)
   {
-    _borders.setBorderTypeLeft(i, type);
+    _borders.setLowBorderType(i, type);
     mLeftBorders[i] = p_border;
   }
 
   void setRightBorder(const size_t & i, const Borders::Type & type, CoordinateMap * p_border)
   {
-    _borders.setBorderTypeRight(i, type);
+    _borders.setHighBorderType(i, type);
     mRightBorders[i] = p_border;
   }
 

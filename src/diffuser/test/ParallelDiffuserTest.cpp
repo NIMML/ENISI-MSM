@@ -1,4 +1,4 @@
-#include "RepastProcess.h"
+#include "repast_hpc/RepastProcess.h"
 #include "ScheduleTestFixture.h"
 #include "DiffuserTest.h"
 #include "diffuser/ParallelDiffuser.h"

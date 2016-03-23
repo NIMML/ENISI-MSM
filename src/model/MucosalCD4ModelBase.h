@@ -7,8 +7,8 @@
 #include "../SiloWriter.h"
 
 /* Repast libs */
-#include "Properties.h"
-#include "initialize_random.h"
+#include "repast_hpc/Properties.h"
+#include "repast_hpc/initialize_random.h"
 
 class MucosalCD4ModelBase 
 {

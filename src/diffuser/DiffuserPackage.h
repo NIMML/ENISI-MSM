@@ -2,7 +2,7 @@
 #define ENISI_MSM_DIFFUSER_DIFFUSERPACKAGE_H
 
 #include <vector>
-#include "SharedContext.h" 
+#include "repast_hpc/SharedContext.h"
 #include "diffuser/Diffuser.h" 
 
 namespace ENISI {
