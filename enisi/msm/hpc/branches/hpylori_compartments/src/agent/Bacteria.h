@@ -6,9 +6,9 @@
 #include <math.h>
 #include "ENISIAgent.h"
 #include "Tcell.h"
-#include "SharedContinuousSpace.h"
-#include "GridComponents.h" // repast::StickyBorders repast::SimpleAdder
-#include "Random.h" // repast::Random
+#include "repast_hpc/SharedContinuousSpace.h"
+#include "repast_hpc/GridComponents.h" // repast::StickyBorders repast::SimpleAdder
+#include "repast_hpc/Random.h" // repast::Random
 
 class Bacteria: public ENISI::Agent
 {

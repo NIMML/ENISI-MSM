@@ -1,6 +1,6 @@
 #include "gmock/gmock.h"
-#include "RepastProcess.h" // repast::RepastProcess, repast::SharedContext
-#include "Properties.h" // repast::RepastProcess, repast::SharedContext
+#include "repast_hpc/RepastProcess.h" // repast::RepastProcess, repast::SharedContext
+#include "repast_hpc/Properties.h" // repast::RepastProcess, repast::SharedContext
 
 int main(int argc, char** argv) 
 {

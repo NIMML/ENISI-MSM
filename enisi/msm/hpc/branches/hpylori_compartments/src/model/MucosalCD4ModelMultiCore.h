@@ -4,7 +4,7 @@
 #include "MucosalCD4ModelBase.h"
 
 #include "../agent/RepastHPCDemoAgentPackage.h"
-#include "SharedNetwork.h"
+#include "repast_hpc/SharedNetwork.h"
 
 class MucosalCD4ModelMultiCore : public MucosalCD4ModelBase
 {

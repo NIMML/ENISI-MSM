@@ -10,8 +10,8 @@
 #include <stdexcept>
 #include <map>
 
-#include "Point.h"
-#include "RepastErrors.h"
+#include "repast_hpc/Point.h"
+#include "repast_hpc/RepastErrors.h"
 
 using repast::Point;
 using repast::err_msg;

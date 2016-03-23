@@ -43,8 +43,8 @@
 
 #include <boost/noncopyable.hpp>
 
-#include "Point.h"
-#include "GridDimensions.h"
+#include "repast_hpc/Point.h"
+#include "repast_hpc/GridDimensions.h"
 #include "matrix.h"
 
 #include <functional>

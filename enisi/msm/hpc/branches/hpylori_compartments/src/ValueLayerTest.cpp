@@ -1,6 +1,6 @@
 #include "gmock/gmock.h"
 #include "ValueLayer.h" /* should use local modified ValueLayer.h */
-#include "GridComponents.h" /* repast::StickyBorders */
+#include "repast_hpc/GridComponents.h" /* repast::StickyBorders */
 
 /* Test that the patched ValueLayer.h (originally part of repast, but copied
  * to the ENISI MSM src and modified) will successfully construct a

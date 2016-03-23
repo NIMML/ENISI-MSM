@@ -4,11 +4,12 @@
 #include "MucosalCD4ModelMultiCore.h"
 #include "../agent/AgentGroupPackage.h"
 #include "../agent/Cytokines.h"
+#include "grid/Borders.h"
 
 class MucosalCD4ModelMultiCoreWithGroups 
 {
 public:
-  typedef repast::StickyBorders Borders;
+  typedef ENISI::Borders Borders;
   typedef repast::DiscreteValueLayer<double, Borders> ValueLayer;
 
   MucosalCD4ModelMultiCoreWithGroups(

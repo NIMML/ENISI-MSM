@@ -11,6 +11,14 @@
 namespace ENISI
 {
 
+class Space2Grid
+{
+public:
+  double grid;
+  double space;
+  double scale;
+};
+
 class TcellState
 {
 public:

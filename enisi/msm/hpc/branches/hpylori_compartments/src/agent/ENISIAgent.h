@@ -2,9 +2,9 @@
 #define ENISI_MSM_ENISIAGENT_H
 
 #include <stdexcept>
-#include "AgentId.h" //repast::Agent, repast::AgentId
-#include "SharedContext.h"
-#include "RepastProcess.h"
+#include "repast_hpc/AgentId.h" //repast::Agent, repast::AgentId
+#include "repast_hpc/SharedContext.h"
+#include "repast_hpc/RepastProcess.h"
 
 //TODO reconcile TOLEROGENIC and TOLEROGENIC
 namespace ENISI

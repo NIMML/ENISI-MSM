@@ -1,6 +1,6 @@
 #include "ScheduleTestFixture.h"
 #include "agent/TcellGroup.h"
-#include "RepastProcess.h"
+#include "repast_hpc/RepastProcess.h"
 #include "agent/AgentGroupPackage.h"
 
 class ACellGroupSync: public ScheduleTestFixture 

@@ -1,16 +1,18 @@
 #ifndef ENISI_MSM_H_PYLORI_MODEL_H
 #define ENISI_MSM_H_PYLORI_MODEL_H
 
-#include <Properties.h>
+#include <repast_hpc/Properties.h>
 #include "../ValueLayer.h"
 #include "agent/AgentGroupPackage.h"
 #include "agent/Cytokines.h"
+#include "grid/Borders.h"
+
 #include <boost/cstdint.hpp>
 
 class HPModel
 { 
 public:
-  typedef repast::StickyBorders Borders;
+  typedef ENISI::Borders Borders;
   typedef repast::DiscreteValueLayer<double, Borders> ValueLayer;
 
 
@@ -42,11 +44,6 @@ private:
   const int _width;
 
   repast::GridDimensions _dimensions;
-
-  ENISI::Compartment _lumen;
-  ENISI::Compartment _epithelium;
-  ENISI::Compartment _gastricLymphNode;
-  ENISI::Compartment _laminaPropria;
 
   ValueLayer * _p_valueLayer;
 

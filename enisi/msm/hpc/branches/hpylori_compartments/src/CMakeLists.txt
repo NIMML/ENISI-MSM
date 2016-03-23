@@ -30,7 +30,7 @@ include_directories(SYSTEM
   ${HDF5_DIR}/include
   ${SILO_DIR}/include
   ${BOOST_DIR}/include
-  ${REPAST_DIR}/include/repast_hpc
+  ${REPAST_DIR}/include
   ${DEPS_DIR}/src/project_copasi
   ${DEPS_DIR}/src/project_copasi/copasi
   ${GMOCK_DIR}/include
