@@ -3,7 +3,6 @@
 
 #include <string>
 #include <map>
-#include "compartment/CellLayer.h"
 #include "../ValueLayer.h" // repast::ValueLayer
 
 class CellLayer;

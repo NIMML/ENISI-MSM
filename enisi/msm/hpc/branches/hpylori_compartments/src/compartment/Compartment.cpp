@@ -1,5 +1,4 @@
 #include "Compartment.h"
-#include "compartment/CellLayer.h"
 #include "compartment/DiffuserLayer.h"
 #include "grid/Properties.h"
 
@@ -25,14 +24,15 @@ Compartment* Compartment::instance(const Compartment::Type & type)
 }
 
 Compartment::Compartment(const Type & type):
-  _dimensions(NULL),
-  _p_cellLayer(NULL),
   _diffuserLayers(),
   mType(type),
   mProperties(),
+  mDimensions(),
   mpLayer(NULL),
   mpBorders(NULL),
-  mpLocalBorders(NULL)
+  mpLocalBorders(NULL),
+  mAdjacentCompartments(2),
+  mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0))
 {
   std::string Name = Names[mType];
 
@@ -56,33 +56,27 @@ Compartment::Compartment(const Type & type):
   std::vector< double > GridExtents(2);
   GridExtents[Borders::X] = mProperties.gridX;
   GridExtents[Borders::Y] = mProperties.gridY;
-  repast::GridDimensions SpaceDimensions(Origin, SpaceExtents);
+  mDimensions(Origin, SpaceExtents);
+
   repast::GridDimensions GridDimensions(Origin, GridExtents);
 
-  mpLayer = new SharedLayer(Name, SpaceDimensions, GridDimensions);
+  mpLayer = new SharedLayer(Name, mDimensions, GridDimensions);
 
-  mpBorders = new Borders(SpaceDimensions);
-  mpBorders->setLowBorderType(Borders::Y, mProperties.borderLowType);
-  mpBorders->setHighBorderType(Borders::Y, mProperties.borderHighType);
+  mpBorders = new Borders(mDimensions);
+  mpBorders->setBorderType(Borders::Y, Borders::LOW, mProperties.borderLowType);
+  mpBorders->setBorderType(Borders::Y, Borders::HIGH, mProperties.borderHighType);
 
   mpLocalBorders = new Borders(mpLayer->dimensions());
-  mpLocalBorders->setLowBorderType(Borders::X, Borders::PERMIABLE);
-  mpLocalBorders->setHighBorderType(Borders::X, Borders::PERMIABLE);
-  mpLocalBorders->setLowBorderType(Borders::Y, Borders::PERMIABLE);
-  mpLocalBorders->setHighBorderType(Borders::Y, Borders::PERMIABLE);
-}
+  mpLocalBorders->setBorderType(Borders::X, Borders::LOW, Borders::PERMIABLE);
+  mpLocalBorders->setBorderType(Borders::X, Borders::HIGH, Borders::PERMIABLE);
+  mpLocalBorders->setBorderType(Borders::Y, Borders::LOW, Borders::PERMIABLE);
+  mpLocalBorders->setBorderType(Borders::Y, Borders::HIGH, Borders::PERMIABLE);
 
-Compartment::Compartment(const repast::GridDimensions & dimensions,
-                         const std::string ) :
-  _dimensions(&dimensions),
-  _p_cellLayer(new CellLayer(dimensions)),
-  _diffuserLayers(),
-  mType(),
-  mProperties(),
-  mpLayer(NULL),
-  mpBorders(NULL),
-  mpLocalBorders(NULL)
-{}
+  mAdjacentCompartments[Borders::X][Borders::LOW] = INVALID;
+  mAdjacentCompartments[Borders::X][Borders::HIGH] = INVALID;
+  mAdjacentCompartments[Borders::Y][Borders::LOW] = mProperties.borderLowCompartment;
+  mAdjacentCompartments[Borders::Y][Borders::HIGH] = mProperties.borderHighCompartment;
+}
 
 Compartment::~Compartment()
 {
@@ -92,15 +86,173 @@ Compartment::~Compartment()
 
   while(!_diffuserLayers.empty()) 
     delete _diffuserLayers.back(), _diffuserLayers.pop_back();
-
-  delete _p_cellLayer;
 }
 
-CellLayer * Compartment::cellLayer() { return _p_cellLayer; }
+const repast::GridDimensions & Compartment::dimensions() const
+{
+  return mDimensions;
+}
+
+const repast::GridDimensions & Compartment::localDimensions() const
+{
+  return mpLayer->spaceDimensions();
+}
+
+const Borders * Compartment::borders() const
+{
+  return mpBorders;
+}
+
+const Compartment * Compartment::getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const
+{
+  return instance(mAdjacentCompartments[coordinate][side]);
+}
+
+Compartment::GridIterator Compartment::begin()
+{
+  return GridIterator(mpLayer->gridDimensions());
+}
+
+bool Compartment::moveTo(const repast::AgentId &id, const repast::Point< double > &pt)
+{
+  return moveTo(id, pt.coords());
+}
+
+bool Compartment::moveTo(const repast::AgentId &id, const std::vector< double > &pt)
+{
+  std::vector< Borders::BoundState > BoundState(2);
+
+  if (mpBorders->boundsCheck(pt, &BoundState))
+    {
+      return mpLayer->moveTo(id, pt);
+    }
+
+  // We are at the compartment boundaries;
+  size_t i = Borders::X;
+  std::vector<double> Out(2);
+
+  std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
+  std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
+  std::vector<double>::const_iterator itIn = pt.begin();
+  std::vector<double>::iterator itOut = Out.begin();
+
+  Compartment * pTarget = NULL;
+
+  for (; itState != endState; ++itState, ++itIn, ++itOut, ++i)
+    {
+      if (pTarget != NULL)
+        {
+          *itOut = *itIn;
+          continue;
+        }
+
+      switch (*itState)
+        {
+          case Borders::OUT_LOW:
+            if (mAdjacentCompartments[i][Borders::LOW] != INVALID)
+              {
+                pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
+                const repast::GridDimensions & Dimensions = pTarget->dimensions();
+                *itOut = Dimensions.origin(i) + Dimensions.extents(i) + *itIn - mDimensions.origin(i);
+              }
+            else
+              {
+                throw std::invalid_argument("No adjacent Compartment");
+              }
+
+            break;
+
+          case Borders::OUT_HIGH:
+            if (mAdjacentCompartments[i][Borders::HIGH] != INVALID)
+              {
+                pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
+                const repast::GridDimensions & Dimensions = pTarget->dimensions();
+                *itOut = Dimensions.origin(i) + *itIn - mDimensions.extents(i);
+              }
+            else
+              {
+                throw std::invalid_argument("No adjacent Compartment");
+              }
+
+            break;
+
+          case Borders::INBOUND:
+            *itOut = *itIn;
+            break;
+        }
+    }
+
+  if (pTarget != NULL)
+    {
+      Agent * pAgent = mpLayer->getAgent(id);
+      return pTarget->addAgent(pAgent, Out) && removeAgent(pAgent);
+    }
+
+  return true;
+}
+
+bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
+{
+  static double fullCircle = 2 * M_PI; // in radians
+  double angle = fullCircle * mUniform.next();
+  double radius = maxSpeed * mUniform.next();
+
+  std::vector< double > Location(2);
+
+  mpLayer->getLocation(id, Location);
+  Location[0] += radius * cos(angle);
+  Location[1] += radius * sin(angle);
+
+  return moveTo(id, Location);
+}
+
+bool Compartment::addAgent(Agent * agent, const std::vector< double > & pt)
+{
+  return mpLayer->addAgent(agent, pt);
+}
+
+bool Compartment::addAgentToRandomLocation(Agent * agent)
+{
+  return mpLayer->addAgentToRandomLocation(agent);
+}
+
+void Compartment::removeAgent(Agent * pAgent)
+{
+  mpLayer->removeAgent(pAgent);
+}
+
+void Compartment::getNeighbors(const repast::Point< int > &pt,
+                               unsigned int range,
+                               std::vector< Agent * > &out)
+{
+  mpLayer->getNeighbors(pt, range, out);
+}
+
+void Compartment::getNeighbors(const repast::Point< int > &pt,
+                               unsigned int range,
+                               const typename Agent::Type & type,
+                               std::vector< Agent * > &out)
+{
+  mpLayer->getNeighbors(pt, range, type, out);
+}
+
+void Compartment::getAgents(const repast::Point< int > &pt,
+                            std::vector< Agent * > &out)
+{
+  mpLayer->getAgents(pt, out);
+}
+
+void Compartment::getAgents(const repast::Point< int > &pt,
+                            const typename Agent::Type & type,
+                            std::vector< Agent * > &out)
+{
+  mpLayer->getAgents(pt, type, out);
+}
+
 
 DiffuserLayer * Compartment::newDiffuserLayer()
 {
-  DiffuserLayer * p_layer = new DiffuserLayer(*_dimensions);
+  DiffuserLayer * p_layer = new DiffuserLayer(mDimensions);
   _diffuserLayers.push_back(p_layer);
   return p_layer;
 }
@@ -133,3 +285,46 @@ std::string Compartment::getName() const
 {
   return Names[mType];
 }
+
+Compartment::GridIterator::GridIterator():
+  mDimensions(),
+  mCurrent()
+{}
+
+Compartment::GridIterator::GridIterator(const repast::GridDimensions & dimensions):
+  mDimensions(dimensions),
+  mCurrent(dimensions.origin())
+{}
+
+Compartment::GridIterator::~GridIterator()
+{}
+
+bool Compartment::GridIterator::next()
+{
+  size_t i, imax = mDimensions.dimensionCount();
+
+  for (i = 0; i < mDimensions.dimensionCount(); ++i)
+    {
+      mCurrent[i]++;
+
+      if (mCurrent[i] < mDimensions.origin(i) + mDimensions.extents(i))
+        {
+          return true;
+        }
+
+      mCurrent[i] = round(mDimensions.origin(i));
+    }
+
+  return false;
+}
+
+const repast::Point< int > & Compartment::GridIterator::operator *()
+{
+  return mCurrent;
+}
+
+const repast::Point< int > & Compartment::GridIterator::operator ->()
+{
+  return mCurrent;
+}
+

@@ -42,11 +42,8 @@ public:
   void translate(const std::vector<double>& oldPos, std::vector<double>& newPos, const std::vector<double>& displacement) const;
   void translate(const std::vector<int>& oldPos, std::vector<int>& newPos, const std::vector<int>& displacement) const;
 
-  void setLowBorderType(const size_t & i, const Type & type);
-  const Type & getLowBorderType(const size_t & i) const;
-
-  void setHighBorderType(const size_t & i, const Type & type);
-  const Type & getHighBorderType(const size_t & i) const;
+  void setBorderType(const Coodinate &coordinate, const Side & side, const Type & type);
+  const Type & getBorderType(const Coodinate &coordinate, const Side & side) const;
 
 protected:
   size_t mDimension;

@@ -15,10 +15,10 @@ template <class Agent, class Package, class PackageProvider, class PackageReceiv
 class ICompartmentLayer
 { 
 public:
-  typedef ENISI::Borders Borders;
+  typedef repast::Borders Transformer;
   typedef repast::SimpleAdder< Agent > Adder;
-  typedef repast::SharedContinuousSpace<Agent, Borders, Adder> Space;
-  typedef repast::SharedDiscreteSpace<Agent, Borders, Adder> Grid;
+  typedef repast::SharedContinuousSpace<Agent, Transformer, Adder> Space;
+  typedef repast::SharedDiscreteSpace<Agent, Transformer, Adder> Grid;
   typedef repast::SharedContext< Agent > Context;
   typedef Agent AgentType;
 
@@ -31,9 +31,12 @@ public:
     _buffer(1),
     _p_space(NULL),
     _p_grid(NULL),
+    mSpaceDimensions(),
+    mGridDimensions(),
     _provider(&_context),
     _receiver(&_context),
-    _conversion(spaceDimension.dimensionCount())
+    _conversion(spaceDimension.dimensionCount()),
+    mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0))
   {
     determineProcessDimensions(gridDimension);
     //
@@ -42,6 +45,9 @@ public:
 
     _context.addProjection(_p_space);
     _context.addProjection(_p_grid);
+
+    mSpaceDimensions = _p_space->dimensions();
+    mGridDimensions = _p_grid->dimensions();
 
     std::vector< Space2Grid >::iterator itConversion = _conversion.begin();
     std::vector< Space2Grid >::iterator endConversion = _conversion.end();
@@ -68,69 +74,139 @@ public:
   {
     int worldSize = repast::RepastProcess::instance()->worldSize();
 
-    int nx;
-    int nxMin;
-    int nxMax;
+    int n;
+    int nMin;
+    int nMax;
 
-    size_t coordinate = Borders::X;
+    size_t i = Borders::X;
 
     if (dimension.dimensionCount() > 2)
       {
-        nx = (int) pow(worldSize * dimension.extents(coordinate) * dimension.extents(coordinate) / (dimension.extents(coordinate + 1) * dimension.extents(coordinate + 2)), 1.0/3.0);
+        n = (int) pow(worldSize * dimension.extents(i) * dimension.extents(i) / (dimension.extents(i + 1) * dimension.extents(i + 2)), 1.0/3.0);
 
-        nxMax = nx;
-        while (worldSize % nxMax > worldSize % (nxMax + 1)) nxMax++;
+        nMax = n;
+        while (worldSize % nMax > worldSize % (nMax + 1)) nMax++;
 
-        nxMin = nx;
-        while (worldSize % nxMin > worldSize % (nxMin - 1)) nxMin--;
+        nMin = n;
+        while (worldSize % nMin > worldSize % (nMin - 1)) nMin--;
 
-        nx = (nx - nxMin < nxMax -nx) ? nxMin : nxMax;
+        n = (n - nMin < nMax -n) ? nMin : nMax;
 
-        _processDims[coordinate] = nx;
-        worldSize /= nx;
-        coordinate++;
+        _processDims[i] = n;
+        worldSize /= n;
+        i++;
       }
 
     if (dimension.dimensionCount() > 1)
       {
-        nx = (int) sqrt(worldSize * dimension.extents(coordinate) / dimension.extents(coordinate + 1));
+        n = (int) sqrt(worldSize * dimension.extents(i) / dimension.extents(i + 1));
 
-        nxMax = nx;
-        while (worldSize % nxMax > worldSize % (nxMax + 1)) nxMax++;
+        nMax = n;
+        while (worldSize % nMax > worldSize % (nMax + 1)) nMax++;
 
-        nxMin = nx;
-        while (worldSize % nxMin > worldSize % (nxMin - 1)) nxMin--;
+        nMin = n;
+        while (worldSize % nMin > worldSize % (nMin - 1)) nMin--;
 
-        nx = (nx - nxMin < nxMax -nx) ? nxMin : nxMax;
+        n = (n - nMin < nMax -n) ? nMin : nMax;
 
-        _processDims[coordinate] = nx;
-        worldSize /= nx;
-        coordinate++;
+        _processDims[i] = n;
+        worldSize /= n;
+        i++;
       }
 
     if (dimension.dimensionCount() > 0)
       {
-        _processDims[coordinate] = worldSize;
+        _processDims[i] = worldSize;
       }
   }
 
-  void addAgentToRandomLocation(Agent * agent)
+  void getNeighbors(const repast::Point< int > &pt, unsigned int range, std::vector< Agent * > &out)
   {
-    _context.addAgent(agent);
+    if (range == 0)
+      {
+        getAgents(pt, out);
+      }
 
-    repast::Point<double> extents = _p_space->dimensions().extents();
-    repast::Point<double> origin = _p_space->dimensions().origin();
+    repast::Moore2DGridQuery< Agent > moore2DQuery(_p_grid);
+    moore2DQuery.query(pt, range, true, out);
+  }
 
-    double xStart = origin.getX();
-    double yStart = origin.getY();
+  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const typename Agent::Type & type, std::vector< Agent * > &out)
+  {
+    out.clear();
+    std::vector< Agent * > Tmp;
+    getNeighbors(pt, range, Tmp);
 
-    double xEnd = origin.getX() + extents.getX();
-    double yEnd = origin.getY() + extents.getY();
+    typename std::vector< Agent * >::const_iterator it = Tmp.begin();
+    typename std::vector< Agent * >::const_iterator end = Tmp.end();
 
-    double xRand = repast::Random::instance()->createUniDoubleGenerator(xStart, xEnd).next();
-    double yRand = repast::Random::instance()->createUniDoubleGenerator(yStart, yEnd).next();
+    for (; it != end; ++it)
+      {
+        if ((*it)->getType() == type)
+          {
+            out.push_back(*it);
+          }
+      }
+  }
 
-    moveAgentTo(agent, repast::Point<double>(xRand, yRand));
+  void getAgents(const repast::Point< int > &pt, std::vector< Agent * > &out)
+  {
+    _p_grid->getObjectsAt(pt, out);
+  }
+
+  void getAgents(const repast::Point< int > &pt, const typename Agent::Type & type, std::vector< Agent * > &out)
+  {
+    out.clear();
+    std::vector< Agent * > Tmp;
+    _p_grid->getObjectsAt(pt, Tmp);
+
+    typename std::vector< Agent * >::const_iterator it = Tmp.begin();
+    typename std::vector< Agent * >::const_iterator end = Tmp.end();
+
+    for (; it != end; ++it)
+      {
+        if ((*it)->getType() == type)
+          {
+            out.push_back(*it);
+          }
+      }
+  }
+
+  Agent * getAgent(const repast::AgentId &id) const
+  {
+    return _context.getAgent(id);
+  }
+
+  bool moveTo(const repast::AgentId &id, const std::vector< double > & pt)
+  {
+    return _p_space->moveTo(id, pt) && _p_grid->moveTo(id, spaceToGrid(pt));
+  }
+
+  bool addAgent(Agent * agent, const std::vector< double > & pt)
+  {
+    Agent * pAgent = _context.addAgent(agent);
+    repast::AgentId Id = pAgent->getId();
+
+    return _p_space->moveTo(Id, pt) && _p_grid->moveTo(Id, spaceToGrid(pt));
+  }
+
+  bool addAgentToRandomLocation(Agent * agent)
+  {
+    std::vector< double > Location(2);
+    repast::Point<double> extents = mSpaceDimensions.extents();
+    repast::Point<double> origin = mSpaceDimensions.origin();
+
+    Location[Borders::X] = origin.getX() + extents.getX() * mUniform.next();
+    Location[Borders::Y] = origin.getY() + extents.getY() * mUniform.next();
+
+    return addAgent(agent, Location);
+  }
+
+  void removeAgent (Agent * pAgent)
+  {
+    _p_space->removeAgent(pAgent);
+    _p_grid->removeAgent(pAgent);
+    _context.removeAgent(pAgent);
   }
 
   repast::Point<int> spaceToGrid(const repast::Point<double> & space) const
@@ -148,18 +224,6 @@ public:
       }
 
     return Grid;
-  }
-
-  void moveAgentTo(const Agent *agent , const repast::Point<double> & pt)
-  {
-    _p_space->moveTo(agent, pt);
-    _p_grid->moveTo(agent, spaceToGrid(pt));
-  }
-
-  void removeAgent(Agent * p_agent)
-  {
-    _p_space->removeAgent(p_agent);
-    _p_grid->removeAgent(p_agent);
   }
 
   void getLocation(const repast::AgentId & id, std::vector<double> & loc) const
@@ -183,6 +247,7 @@ public:
     std::map<repast::AgentId, bool> seen;
 
     typename std::vector< Agent *>::iterator agentToPlay = agentsToPlay.begin();
+
     while (agentToPlay != agentsToPlay.end())
     {
       if ( (*agentToPlay)->classname() == neighborName )
@@ -198,9 +263,14 @@ public:
 
   }
 
-  const repast::GridDimensions dimensions() const
+  const repast::GridDimensions & spaceDimensions() const
   {
-    return _p_space->dimensions();
+    return mSpaceDimensions;
+  }
+
+  const repast::GridDimensions & gridDimensions() const
+  {
+    return mGridDimensions;
   }
 
   void requestAgents()
@@ -263,7 +333,7 @@ public:
     return agents;
   }
 
-  void addValueLayer(repast::DiscreteValueLayer<double, Borders> * p_vl)
+  void addValueLayer(repast::DiscreteValueLayer<double, Transformer> * p_vl)
   {
     _context.addValueLayer(p_vl);
   }
@@ -276,8 +346,11 @@ protected:
   const int _buffer;
   Space * _p_space;
   Grid  * _p_grid;
+  repast::GridDimensions mSpaceDimensions;
+  repast::GridDimensions mGridDimensions;
   PackageProvider _provider;
   PackageReceiver _receiver;
+  repast::DoubleUniformGenerator mUniform;
 
 private:
   std::vector< Space2Grid > _conversion;

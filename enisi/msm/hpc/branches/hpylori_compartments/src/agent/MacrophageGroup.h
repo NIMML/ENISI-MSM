@@ -1,24 +1,34 @@
-#ifndef ENISI_MSM_AGENT_MACROPHAGEGROUP_H
-#define ENISI_MSM_AGENT_MACROPHAGEGROUP_H
+#ifndef ENISI_MacrophageGroup
+#define ENISI_MacrophageGroup
 
-#include "AgentStates.h"
-#include "CoordMap.h"
+#include <string>
+#include <vector>
+
+#include "agent/AgentStates.h"
+#include "repast_hpc/Point.h"
 
 namespace ENISI
 {
 
-class MacrophageGroup : public CoordinateMap<MacrophageState::KEEP_AT_END>
+class Compartment;
+class Agent;
+
+class MacrophageGroup
 {
 public:
-  MacrophageGroup(const boost::uintmax_t, Compartment * pCompartment);
+  MacrophageGroup(Compartment * pCompartment, const size_t & count);
+
+  virtual ~MacrophageGroup();
+
   virtual void act();
-  virtual Color getColor() {return black;}
+
   virtual std::string classname() {return "MacrophageGroup";}
 
-  std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
-  getHPyloriNeighbors(const repast::Point<int> &);
 private:
-  void act(MacrophageState::State, const repast::Point<int> &);
+  void act(const repast::Point<int> &);
+  Compartment * mpCompartment;
 };
+
 } // namespace ENISI
-#endif
+
+#endif // ENISI_MacrophageGroup

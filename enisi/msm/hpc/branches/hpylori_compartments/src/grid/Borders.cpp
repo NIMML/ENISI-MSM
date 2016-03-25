@@ -200,7 +200,7 @@ void Borders::transform(const std::vector<int>& in, std::vector<int>& out) const
               break;
 
             case STICKY:
-              *itOut = *itOrigin - 1;
+              *itOut = *itOrigin;
               break;
 
             case PERMIABLE:
@@ -326,22 +326,31 @@ void Borders::translate(const std::vector<double>& in, std::vector<double>& out,
     }
 }
 
-void Borders::setLowBorderType(const size_t & i, const Borders::Type & type)
+void Borders::setBorderType(const Borders::Coodinate &coordinate, const Borders::Side & side, const Borders::Type & type)
 {
-  mBorderTypeLeft[i] = type;
+  switch (side)
+  {
+    case LOW:
+      mBorderTypeLeft[coordinate] = type;
+      break;
+
+    case HIGH:
+      mBorderTypeRight[coordinate] = type;
+      break;
+  }
 }
 
-const Borders::Type & Borders::getLowBorderType(const size_t & i) const
+const Borders::Type & Borders::getBorderType(const Borders::Coodinate &coordinate, const Borders::Side & side) const
 {
-  return mBorderTypeLeft[i];
+  switch (side)
+  {
+    case LOW:
+      return mBorderTypeLeft[coordinate];
+      break;
+
+    case HIGH:
+      return mBorderTypeRight[coordinate];
+      break;
+  }
 }
 
-void Borders::setHighBorderType(const size_t & i, const Borders::Type & type)
-{
-  mBorderTypeRight[i] = type;
-}
-
-const Borders::Type & Borders::getHighBorderType(const size_t & i) const
-{
-  return mBorderTypeRight[i];
-}
