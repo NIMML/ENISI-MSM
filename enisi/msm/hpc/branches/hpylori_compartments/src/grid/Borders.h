@@ -53,6 +53,22 @@ private:
   std::vector<Type> mBorderTypeRight;
 };
 
+class SimpleBorders  : public repast::Borders
+{
+  private:
+    SimpleBorders();
+
+  public:
+    SimpleBorders(repast::GridDimensions d);
+    virtual ~SimpleBorders();
+
+    void transform(const std::vector<int>& in, std::vector<int>& out) const;
+    void transform(const std::vector<double>& in, std::vector<double>& out) const;
+
+    void translate(const std::vector<double>& oldPos, std::vector<double>& newPos, const std::vector<double>& displacement) const;
+    void translate(const std::vector<int>& oldPos, std::vector<int>& newPos, const std::vector<int>& displacement) const;
+};
+
 } /* namespace ENISI */
 
 #endif /* GRID_BORDERS_H_ */

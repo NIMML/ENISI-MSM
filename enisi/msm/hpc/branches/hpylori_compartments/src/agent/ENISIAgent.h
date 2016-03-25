@@ -33,7 +33,7 @@ public:
 
   // virtual void act() = 0;
 
-  virtual ~Agent() {}
+  virtual ~Agent();
 
   /* Required Getters */
   virtual repast::AgentId & getId();

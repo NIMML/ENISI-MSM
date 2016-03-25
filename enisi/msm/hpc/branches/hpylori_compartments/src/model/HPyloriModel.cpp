@@ -3,6 +3,7 @@
 #include "compartment/CellLayer.h"
 #include "diffuser/ParallelDiffuser.h" 
 #include "compartment/Compartment.h"
+#include "agent/ENISIAgent.h"
 
 HPModel::~HPModel()
 {
@@ -78,28 +79,28 @@ void HPModel::requestAgents()
 
   /* For each process */
   for(int i = 0; i < worldSize; i++)
-  {                     
-    if(i != rank)// ... except this one
-    {                                      
-      /* Choose all agents */
-      std::vector<ENISI::CellLayer::AgentType*> agents =
-	ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectAllAgents();
+    {
+      if(i != rank)// ... except this one
+        {
+          /* Choose all agents */
+          std::vector< ENISI::Agent * > agents;
+          // agents =ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectAllAgents();
 
-      for(size_t j = 0; j < agents.size(); j++)
-      {
-	/* Transform each local agent's id into a matching non-local one */
-	repast::AgentId local = agents[j]->getId();
-	repast::AgentId other(local.id(), i, 0);
-	other.currentRank(i);
+          for(size_t j = 0; j < agents.size(); j++)
+            {
+              /* Transform each local agent's id into a matching non-local one */
+              repast::AgentId local = agents[j]->getId();
+              repast::AgentId other(local.id(), i, 0);
+              other.currentRank(i);
 
-	/* Add it to the agent request */
-	req.addRequest(other);
-      }
+              /* Add it to the agent request */
+              req.addRequest(other);
+            }
+        }
     }
-  }
 
-  ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->requestAgents();
-  ENISI::Compartment::instance(ENISI::Compartment::lumen)->requestDiffuserAgents();
+  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->requestAgents();
+  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->requestDiffuserAgents();
 }
 
 void HPModel::act()
@@ -111,17 +112,17 @@ void HPModel::act()
   if(repast::RepastProcess::instance()->rank() == startRank) 
     std::cout << " TICK " << runner.currentTick() << std::endl;
 
-  std::vector<ENISI::CellLayer::AgentType*> remoteAgents =
-    ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectRemoteAgents();
+  std::vector< ENISI::Agent * > remoteAgents;
+  // remoteAgents = ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectRemoteAgents();
 
-  std::vector<ENISI::CellLayer::AgentType*> localAgents =
-    ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectLocalAgents();
+  std::vector< ENISI::Agent * > localAgents;
+  // localAgents = ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectLocalAgents();
 
-  std::vector<ENISI::CellLayer::AgentType*>::iterator it = localAgents.begin();
+  std::vector< ENISI::Agent * >::iterator it = localAgents.begin();
 
   while(it != localAgents.end())
   {
-    (*it)->act();
+    // (*it)->act();
     it++;
   }
 
@@ -134,7 +135,7 @@ void HPModel::act()
 
 void HPModel::syncAgents()
 {
-  ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->synchronizeAgentStates();
+  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->synchronizeAgentStates();
 }
 
 void HPModel::diffuse() 
@@ -162,7 +163,7 @@ void HPModel::setUpValueLayer()
   bool dense = true;
 
   _p_valueLayer = new ValueLayer(name, _dimensions, dense);
-  ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->addValueLayer(_p_valueLayer);
+  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->addValueLayer(_p_valueLayer);
 }
 
 void HPModel::setUpCytokines()

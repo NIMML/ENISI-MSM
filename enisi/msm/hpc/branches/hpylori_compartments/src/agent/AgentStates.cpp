@@ -88,7 +88,7 @@ void CountStates(const int & types,
     {
       if (Types & 0x1)
         {
-          stateCounts.insert(std::make_pair(CurrentType, StateCount(StateSize(CurrentType), 0)));
+          stateCounts.insert(std::make_pair((Agent::Type) CurrentType, StateCount(StateSize((Agent::Type) CurrentType), 0)));
         }
 
       Types /= 2;
