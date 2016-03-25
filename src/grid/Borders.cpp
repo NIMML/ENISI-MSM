@@ -41,18 +41,18 @@ Borders::~Borders()
 
 int Borders::distanceFromBorder(const std::vector<int>& pt,
                                 const Borders::Coodinate &coordinate,
-                                const Borders::Side & side)
+                                const Borders::Side & side) const
 {
   int border = _dimensions.origin()[coordinate] + (side == LOW) ? 0 : _dimensions.extents()[coordinate];
-  return abs(border - pt[coordinate]);
+  return (side == LOW) ? pt[coordinate] - border : border - pt[coordinate];
 }
 
-double Borders::distanceFromBorder(const std::vector<double>& pt,
+double Borders::distanceFromBorder(const std::vector<double> & pt,
                                    const Borders::Coodinate & coordinate,
-                                   const Borders::Side & side)
+                                   const Borders::Side & side) const
 {
   double border = _dimensions.origin()[coordinate] + (side == LOW) ? 0 : _dimensions.extents()[coordinate];
-  return abs(border - pt[coordinate]);
+  return (side == LOW) ? pt[coordinate] - border : border - pt[coordinate];
 }
 
 bool Borders::boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * pBoundState) const

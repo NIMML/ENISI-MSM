@@ -60,6 +60,7 @@ public:
   const Compartment * getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const;
   GridIterator begin();
 
+  void getLocation(const repast::AgentId & id, std::vector<double> & Location) const;
   bool moveTo(const repast::AgentId &id, const repast::Point< double > &pt);
   bool moveTo(const repast::AgentId &id, const std::vector< double > &newLocation);
   bool moveRandom(const repast::AgentId &id, const double & maxSpeed);
@@ -68,15 +69,16 @@ public:
   void removeAgent (Agent * pAgent);
 
   void getNeighbors(const repast::Point< int > &pt, unsigned int range, std::vector< Agent * > &out);
-  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const typename Agent::Type & type, std::vector< Agent * > &out);
+  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const int & types, std::vector< Agent * > &out);
   void getAgents(const repast::Point< int > &pt, std::vector< Agent * > &out);
-  void getAgents(const repast::Point< int > &pt, const typename Agent::Type & type, std::vector< Agent * > &out);
+  void getAgents(const repast::Point< int > &pt, const int & types, std::vector< Agent * > &out);
 
   DiffuserLayer * newDiffuserLayer();
 
   void requestDiffuserAgents();
   void diffuse();
   void updateReferenceDiffuserGrid();
+  const Type & getType() const;
   std::string getName() const;
 
 private:

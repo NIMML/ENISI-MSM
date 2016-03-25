@@ -113,6 +113,11 @@ Compartment::GridIterator Compartment::begin()
   return GridIterator(mpLayer->gridDimensions());
 }
 
+void Compartment::getLocation(const repast::AgentId & id, std::vector<double> & Location) const
+{
+  mpLayer->getLocation(id, Location);
+}
+
 bool Compartment::moveTo(const repast::AgentId &id, const repast::Point< double > &pt)
 {
   return moveTo(id, pt.coords());
@@ -203,6 +208,37 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
   Location[0] += radius * cos(angle);
   Location[1] += radius * sin(angle);
 
+  std::vector< Borders::BoundState > BoundState(2);
+
+  if (!mpBorders->boundsCheck(Location, &BoundState))
+    {
+      // We are at the compartment boundaries;
+      // Since this is a random move we reflect at the compartment border
+
+      size_t i = Borders::X;
+
+      std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
+      std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
+      std::vector<double>::iterator itLocation = Location.begin();
+
+      for (; itState != endState; ++itState, ++itLocation, ++i)
+        {
+          switch (*itState)
+            {
+              case Borders::OUT_LOW:
+                *itLocation = mDimensions.origin(i) - mpBorders->distanceFromBorder(Location, i, Borders::LOW);
+                break;
+
+              case Borders::OUT_HIGH:
+                *itLocation = mDimensions.origin(i) + mDimensions.extents(i) - mpBorders->distanceFromBorder(Location, i, Borders::HIGH);
+                break;
+
+              case Borders::INBOUND:
+                break;
+            }
+        }
+    }
+
   return moveTo(id, Location);
 }
 
@@ -230,10 +266,10 @@ void Compartment::getNeighbors(const repast::Point< int > &pt,
 
 void Compartment::getNeighbors(const repast::Point< int > &pt,
                                unsigned int range,
-                               const typename Agent::Type & type,
+                               const int & types,
                                std::vector< Agent * > &out)
 {
-  mpLayer->getNeighbors(pt, range, type, out);
+  mpLayer->getNeighbors(pt, range, types, out);
 }
 
 void Compartment::getAgents(const repast::Point< int > &pt,
@@ -243,10 +279,10 @@ void Compartment::getAgents(const repast::Point< int > &pt,
 }
 
 void Compartment::getAgents(const repast::Point< int > &pt,
-                            const typename Agent::Type & type,
+                            const int & types,
                             std::vector< Agent * > &out)
 {
-  mpLayer->getAgents(pt, type, out);
+  mpLayer->getAgents(pt, types, out);
 }
 
 
@@ -279,6 +315,11 @@ void Compartment::updateReferenceDiffuserGrid()
   {
     _diffuserLayers[i]->updateReferenceDiffuserGrid();
   }
+}
+
+const Compartment::Type & Compartment::getType() const
+{
+  return mType;
 }
 
 std::string Compartment::getName() const

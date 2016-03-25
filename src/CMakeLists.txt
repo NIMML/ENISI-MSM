@@ -54,6 +54,19 @@ file(GLOB_RECURSE ALL_SRCS
     "*.cpp"
 )
 
+list(REMOVE_ITEM ALL_SRCS 
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/DendriticsTest.cpp" 
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/Bacteria.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/ENISIAgentTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentFactoryTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/Tcell.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/RepastHPCDemoAgentPackage.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellGroupTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentFactory.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/BacteriaTest.cpp"
+  )
+
 set(MAINS "main" "benchmark" "gmock" "test")
 foreach(f ${MAINS}) 
   list(REMOVE_ITEM ALL_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/${f}.cpp")

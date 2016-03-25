@@ -1,6 +1,8 @@
 #ifndef ENISI_MSM_AGENTFACTORY_H
 #define ENISI_MSM_AGENTFACTORY_H
 
+#include <string>
+
 class Agent;
 class CellGroup;
 class Compartment;

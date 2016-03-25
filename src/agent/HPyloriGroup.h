@@ -1,26 +1,27 @@
 #ifndef ENISI_MSM_AGENT_HPYLORIGROUP_H
 #define ENISI_MSM_AGENT_HPYLORIGROUP_H
 
-#include "AgentStates.h"
-#include "CoordMap.h"
+#include "agent/AgentStates.h"
+#include "repast_hpc/Point.h"
 
 namespace ENISI
 {
 
-class HPyloriGroup : public CoordinateMap<HPyloriState::KEEP_AT_END>
+class Compartment;
+class Agent;
+
+class HPyloriGroup
 {
 public:
-  HPyloriGroup(const boost::uintmax_t, Compartment * pCompartment);
+  HPyloriGroup(Compartment * pCompartment, const size_t & count);
   virtual void act();
-  virtual Color getColor() {return black;}
   virtual std::string classname() {return "HPyloriGroup";}
+
 private:
-  void act(HPyloriState::State, const repast::Point<int> &);
-  std::vector< const typename CoordinateMap< EpithelialCellState::KEEP_AT_END >::StateCount * >
-  getEpithelialCellNeighbors(const repast::Point<int> &);
-  std::vector< const typename CoordinateMap< TcellState::KEEP_AT_END >::StateCount * >
-  getTcellNeighbors(const repast::Point<int> &);
+  void act(const repast::Point<int> &);
+  Compartment * mpCompartment;
 };
-}
+
+} // namespace ENISI
 
 #endif
