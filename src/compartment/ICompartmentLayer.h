@@ -15,7 +15,7 @@ template <class Agent, class Package, class PackageProvider, class PackageReceiv
 class ICompartmentLayer
 { 
 public:
-  typedef repast::Borders Transformer;
+  typedef ENISI::SimpleBorders Transformer;
   typedef repast::SimpleAdder< Agent > Adder;
   typedef repast::SharedContinuousSpace<Agent, Transformer, Adder> Space;
   typedef repast::SharedDiscreteSpace<Agent, Transformer, Adder> Grid;
@@ -35,8 +35,8 @@ public:
     mGridDimensions(),
     _provider(&_context),
     _receiver(&_context),
-    _conversion(spaceDimension.dimensionCount()),
-    mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0))
+    mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0)),
+    _conversion(spaceDimension.dimensionCount())
   {
     determineProcessDimensions(gridDimension);
     //
@@ -172,7 +172,7 @@ public:
       }
   }
 
-  Agent * getAgent(const repast::AgentId &id) const
+  Agent * getAgent(const repast::AgentId &id)
   {
     return _context.getAgent(id);
   }

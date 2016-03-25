@@ -67,6 +67,17 @@ list(REMOVE_ITEM ALL_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/BacteriaTest.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/CellGroup.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/ImmuneCell.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/Dendritics.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/ImmuneCellTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/model/HPyloriModelTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelMultiCoreWithGroups.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/model/ModelBuilderTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelMultiCore.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelBase.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelSingleCore.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/test/CellGroupCompartmentMovementTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/test/CellGroupSyncTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/compartment/CompartmentTest.cpp"
   )
 
 set(MAINS "main" "benchmark" "gmock" "test")

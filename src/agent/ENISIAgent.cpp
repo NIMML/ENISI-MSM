@@ -14,7 +14,7 @@ Agent::Agent():
 {}
 
 Agent::Agent(const Agent::Type & type, const int & state) :
-  _state(0),
+  _state(state),
   id()
 {
   int rank = repast::RepastProcess::instance()->rank();

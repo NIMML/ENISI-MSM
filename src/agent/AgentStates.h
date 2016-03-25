@@ -63,8 +63,6 @@ public:
   static Agent::Type Type;
 };
 
-size_t StateSize(const Agent::Type & type);
-
 typedef std::vector< size_t > StateCount;
 
 typedef std::map< Agent::Type, StateCount > StateCounts;

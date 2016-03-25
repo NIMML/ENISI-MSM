@@ -301,6 +301,13 @@ void Borders::transform(const std::vector<double>& in, std::vector<double>& out)
 
 void Borders::translate(const std::vector<int>& in, std::vector<int>& out, const std::vector<int>& move) const
 {
+  assert(in.size() == move.size());
+
+  if (out.size() != in.size())
+    {
+      out.resize(in.size());
+    }
+
   std::vector<int>::const_iterator itIn = in.begin();
   std::vector<int>::const_iterator endIn = in.end();
   std::vector<int>::const_iterator itMove = move.begin();
@@ -315,6 +322,13 @@ void Borders::translate(const std::vector<int>& in, std::vector<int>& out, const
 
 void Borders::translate(const std::vector<double>& in, std::vector<double>& out, const std::vector<double>& move) const
 {
+  assert(in.size() == move.size());
+
+  if (out.size() != in.size())
+    {
+      out.resize(in.size());
+    }
+
   std::vector<double>::const_iterator itIn = in.begin();
   std::vector<double>::const_iterator endIn = in.end();
   std::vector<double>::const_iterator itMove = move.begin();
@@ -342,15 +356,75 @@ void Borders::setBorderType(const Borders::Coodinate &coordinate, const Borders:
 
 const Borders::Type & Borders::getBorderType(const Borders::Coodinate &coordinate, const Borders::Side & side) const
 {
+  const Type * pType;
+
   switch (side)
   {
     case LOW:
-      return mBorderTypeLeft[coordinate];
+      pType = &mBorderTypeLeft[coordinate];
       break;
 
     case HIGH:
-      return mBorderTypeRight[coordinate];
+      pType = &mBorderTypeRight[coordinate];
       break;
   }
+
+  return *pType;
 }
 
+SimpleBorders::SimpleBorders(repast::GridDimensions d):
+  repast::Borders(d)
+{}
+// virtual
+SimpleBorders::~SimpleBorders()
+{}
+
+void SimpleBorders::transform(const std::vector<int>& in, std::vector<int>& out) const
+{
+  out = in;
+}
+
+void SimpleBorders::transform(const std::vector<double>& in, std::vector<double>& out) const
+{
+  out = in;
+}
+
+void SimpleBorders::translate(const std::vector<double>& in, std::vector<double>& out, const std::vector<double>& move) const
+{
+  assert(in.size() == move.size());
+
+  if (out.size() != in.size())
+    {
+      out.resize(in.size());
+    }
+
+  std::vector<double>::const_iterator itIn = in.begin();
+  std::vector<double>::const_iterator endIn = in.end();
+  std::vector<double>::const_iterator itMove = move.begin();
+  std::vector<double>::iterator itOut = out.begin();
+
+  for (; itIn != endIn; ++itIn, ++itOut, ++itMove)
+    {
+      *itOut = *itIn + *itMove;
+    }
+}
+
+void SimpleBorders::translate(const std::vector<int>& in, std::vector<int>& out, const std::vector<int>& move) const
+{
+  assert(in.size() == move.size());
+
+  if (out.size() != in.size())
+    {
+      out.resize(in.size());
+    }
+
+  std::vector<int>::const_iterator itIn = in.begin();
+  std::vector<int>::const_iterator endIn = in.end();
+  std::vector<int>::const_iterator itMove = move.begin();
+  std::vector<int>::iterator itOut = out.begin();
+
+  for (; itIn != endIn; ++itIn, ++itOut, ++itMove)
+    {
+      *itOut = *itIn + *itMove;
+    }
+}

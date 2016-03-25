@@ -15,8 +15,9 @@ class Compartment
 public:
   class GridIterator
   {
-  public:
+  private:
     GridIterator();
+  public:
     GridIterator(const repast::GridDimensions & dimensions);
     ~GridIterator();
     bool next();
@@ -91,8 +92,8 @@ private:
   repast::GridDimensions mDimensions;
   SharedLayer * mpLayer;
   Borders * mpBorders;
-  Borders * mpLocalBorders;
-  std::vector< Type[2] > mAdjacentCompartments;
+  // Borders * mpLocalBorders;
+  std::vector< std::vector< Type > > mAdjacentCompartments;
   repast::DoubleUniformGenerator mUniform;
 
 }; /* end Compartment */

@@ -30,8 +30,8 @@ Compartment::Compartment(const Type & type):
   mDimensions(),
   mpLayer(NULL),
   mpBorders(NULL),
-  mpLocalBorders(NULL),
-  mAdjacentCompartments(2),
+  // mpLocalBorders(NULL),
+  mAdjacentCompartments(2, std::vector< Type >(2, INVALID)),
   mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0))
 {
   std::string Name = Names[mType];
@@ -56,8 +56,8 @@ Compartment::Compartment(const Type & type):
   std::vector< double > GridExtents(2);
   GridExtents[Borders::X] = mProperties.gridX;
   GridExtents[Borders::Y] = mProperties.gridY;
-  mDimensions(Origin, SpaceExtents);
 
+  mDimensions = repast::GridDimensions(Origin, SpaceExtents);
   repast::GridDimensions GridDimensions(Origin, GridExtents);
 
   mpLayer = new SharedLayer(Name, mDimensions, GridDimensions);
@@ -66,11 +66,11 @@ Compartment::Compartment(const Type & type):
   mpBorders->setBorderType(Borders::Y, Borders::LOW, mProperties.borderLowType);
   mpBorders->setBorderType(Borders::Y, Borders::HIGH, mProperties.borderHighType);
 
-  mpLocalBorders = new Borders(mpLayer->dimensions());
-  mpLocalBorders->setBorderType(Borders::X, Borders::LOW, Borders::PERMIABLE);
-  mpLocalBorders->setBorderType(Borders::X, Borders::HIGH, Borders::PERMIABLE);
-  mpLocalBorders->setBorderType(Borders::Y, Borders::LOW, Borders::PERMIABLE);
-  mpLocalBorders->setBorderType(Borders::Y, Borders::HIGH, Borders::PERMIABLE);
+  // mpLocalBorders = new Borders(mpLayer->dimensions());
+  // mpLocalBorders->setBorderType(Borders::X, Borders::LOW, Borders::PERMIABLE);
+  // mpLocalBorders->setBorderType(Borders::X, Borders::HIGH, Borders::PERMIABLE);
+  // mpLocalBorders->setBorderType(Borders::Y, Borders::LOW, Borders::PERMIABLE);
+  // mpLocalBorders->setBorderType(Borders::Y, Borders::HIGH, Borders::PERMIABLE);
 
   mAdjacentCompartments[Borders::X][Borders::LOW] = INVALID;
   mAdjacentCompartments[Borders::X][Borders::HIGH] = INVALID;
@@ -82,7 +82,7 @@ Compartment::~Compartment()
 {
   if (mpLayer != NULL) delete mpLayer;
   if (mpBorders != NULL) delete mpBorders;
-  if (mpLocalBorders != NULL) delete mpBorders;
+  // if (mpLocalBorders != NULL) delete mpBorders;
 
   while(!_diffuserLayers.empty()) 
     delete _diffuserLayers.back(), _diffuserLayers.pop_back();
@@ -187,13 +187,16 @@ bool Compartment::moveTo(const repast::AgentId &id, const std::vector< double > 
         }
     }
 
+  bool success = true;
+
   if (pTarget != NULL)
     {
       Agent * pAgent = mpLayer->getAgent(id);
-      return pTarget->addAgent(pAgent, Out) && removeAgent(pAgent);
+      success = pTarget->addAgent(pAgent, Out);
+      removeAgent(pAgent);
     }
 
-  return true;
+  return success;
 }
 
 bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
@@ -226,11 +229,11 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
           switch (*itState)
             {
               case Borders::OUT_LOW:
-                *itLocation = mDimensions.origin(i) - mpBorders->distanceFromBorder(Location, i, Borders::LOW);
+                *itLocation = mDimensions.origin(i) - mpBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::LOW);
                 break;
 
               case Borders::OUT_HIGH:
-                *itLocation = mDimensions.origin(i) + mDimensions.extents(i) - mpBorders->distanceFromBorder(Location, i, Borders::HIGH);
+                *itLocation = mDimensions.origin(i) + mDimensions.extents(i) - mpBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::HIGH);
                 break;
 
               case Borders::INBOUND:
@@ -327,14 +330,9 @@ std::string Compartment::getName() const
   return Names[mType];
 }
 
-Compartment::GridIterator::GridIterator():
-  mDimensions(),
-  mCurrent()
-{}
-
 Compartment::GridIterator::GridIterator(const repast::GridDimensions & dimensions):
   mDimensions(dimensions),
-  mCurrent(dimensions.origin())
+  mCurrent(floor(round(dimensions.origin(0))), floor(round(dimensions.origin(1))))
 {}
 
 Compartment::GridIterator::~GridIterator()
@@ -344,7 +342,7 @@ bool Compartment::GridIterator::next()
 {
   size_t i, imax = mDimensions.dimensionCount();
 
-  for (i = 0; i < mDimensions.dimensionCount(); ++i)
+  for (i = 0; i < imax; ++i)
     {
       mCurrent[i]++;
 
@@ -373,7 +371,7 @@ Compartment::GridIterator::operator bool()
 {
   size_t i, imax = mDimensions.dimensionCount();
 
-  for (i = 0; i < mDimensions.dimensionCount(); ++i)
+  for (i = 0; i < imax; ++i)
     {
       if (mCurrent[i] >= mDimensions.origin(i) + mDimensions.extents(i))
         {

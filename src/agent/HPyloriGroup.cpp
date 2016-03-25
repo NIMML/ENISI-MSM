@@ -58,8 +58,8 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
-              Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y) +
-              mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
+              1.01 * mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH) // Move accross the border
+              + Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y); // Move all the way through the epithelium
 
           mpCompartment->moveTo(pAgent->getId(), Location);
         }
