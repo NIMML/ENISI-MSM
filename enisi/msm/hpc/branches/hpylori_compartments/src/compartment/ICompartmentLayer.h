@@ -131,7 +131,7 @@ public:
     moore2DQuery.query(pt, range, true, out);
   }
 
-  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const typename Agent::Type & type, std::vector< Agent * > &out)
+  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const int & types, std::vector< Agent * > &out)
   {
     out.clear();
     std::vector< Agent * > Tmp;
@@ -142,7 +142,7 @@ public:
 
     for (; it != end; ++it)
       {
-        if ((*it)->getType() == type)
+        if ((*it)->getType() & types)
           {
             out.push_back(*it);
           }
@@ -154,7 +154,7 @@ public:
     _p_grid->getObjectsAt(pt, out);
   }
 
-  void getAgents(const repast::Point< int > &pt, const typename Agent::Type & type, std::vector< Agent * > &out)
+  void getAgents(const repast::Point< int > &pt, const int & types, std::vector< Agent * > &out)
   {
     out.clear();
     std::vector< Agent * > Tmp;
@@ -165,7 +165,7 @@ public:
 
     for (; it != end; ++it)
       {
-        if ((*it)->getType() == type)
+        if ((*it)->getType() & types)
           {
             out.push_back(*it);
           }

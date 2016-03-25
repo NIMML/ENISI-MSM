@@ -81,6 +81,21 @@ void CountStates(const int & types,
 {
   stateCounts.clear();
 
+  int Types = types;
+  int CurrentType = 1;
+
+  while (Types)
+    {
+      if (Types & 0x1)
+        {
+          stateCounts.insert(std::make_pair(CurrentType, StateCount(StateSize(CurrentType), 0)));
+        }
+
+      Types /= 2;
+      CurrentType *= 2;
+    }
+
+
   std::vector< Agent * >::const_iterator it = agents.begin();
   std::vector< Agent * >::const_iterator end = agents.end();
 
@@ -90,14 +105,7 @@ void CountStates(const int & types,
 
       if (Type & types)
         {
-          StateCounts::iterator found = stateCounts.find(Type);
-
-          if (found == stateCounts.end())
-            {
-              found = stateCounts.insert(std::make_pair(Type, std::vector< size_t >(StateSize(Type), 0)));
-            }
-
-          found->second[(*it)->getState()]++;
+          stateCounts[Type][(*it)->getState()]++;
         }
     }
 }

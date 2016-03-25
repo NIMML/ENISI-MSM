@@ -1,99 +1,67 @@
 #include "DendriticsGroup.h"
-#include "HPyloriGroup.h"
-#include "BacteriaGroup.h"
-#include "Cytokines.h"
+
+#include "agent/ENISIAgent.h"
+#include "compartment/Compartment.h"
+
+#include "agent/Cytokines.h"
 
 using namespace ENISI;
 
-DendriticsGroup::DendriticsGroup(const boost::uintmax_t dendriticsCount, Compartment * pCompartment) :
-  CoordinateMap(pCompartment)
+DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & count) :
+  mpCompartment(pCompartment)
 {
-  for (boost::uintmax_t i = 0; i < dendriticsCount; i++)
+  for (size_t i = 0; i < count; i++)
     {
-      const repast::GridDimensions * p_dimensions = getDimensions();
-
-      repast::Point<double> extents = p_dimensions->extents();
-      repast::Point<double> origin = p_dimensions->origin();
-
-      double xStart = origin.getX();
-      double yStart = origin.getY();
-
-      double xEnd = origin.getX() + extents.getX();
-      double yEnd = origin.getY() + extents.getY();
-
-      double xCoord = repast::Random::instance()
-                      ->createUniDoubleGenerator(xStart, xEnd).next();
-
-      double yCoord = repast::Random::instance()
-                      ->createUniDoubleGenerator(yStart, yEnd).next();
-
-      repast::Point<int> initialLoc(xCoord, yCoord);
-
-      std::vector<double> moveTo = randomMove(1, initialLoc);
-      repast::Point<int> newLoc(moveTo[0], moveTo[1]);
-
-      addCellAt(DendriticState::IMMATURE, newLoc);
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Dentritics, DendriticState::IMMATURE));
     }
 }
-
 void DendriticsGroup::act()
 {
-  coordMapConstIter end = coordMapEnd();
+  Compartment::GridIterator it = mpCompartment->begin();
 
-  for (coordMapConstIter it = coordMapBegin(); it != end; it++)
+  do
     {
-      repast::Point<int> loc = it->first;
-      StateCount stateCount = it->second;
-
-      for (unsigned int i = 0; i < DendriticState::KEEP_AT_END; ++i)
-        {
-          DendriticState::State state = static_cast<DendriticState::State>(i);
-
-          for (unsigned int j = 0; j < stateCount.state[i]; ++j)
-            {
-              act(state, loc);
-            }
-        }
+      act(*it);
     }
+  while (it.next());
 }
 
-void DendriticsGroup::act(
-  DendriticState::State state, const repast::Point<int> & loc)
+
+void DendriticsGroup::act(const repast::Point<int> & pt)
 {
-  if (state == DendriticState::DEAD) return;
+  std::vector< Agent * > Dentritics;
+  mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+  std::vector< Agent * >::iterator it = Dentritics.begin();
+  std::vector< Agent * >::iterator end = Dentritics.end();
 
-  /* get TolB neighbors */
-  const std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * >
-  neighborList = getBacteriaNeighbors(loc);
+  std::vector< Agent * > Bacteria;
+  // TODO CRITICAL Retrieve Bacteria in neighboring compartment if appropriate;
 
-  std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * >::const_iterator iter
-    = neighborList.begin();
+  StateCount BacteriaStateCount;
+  CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
 
-  /* get HPylori neighbors */
-  const std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
-  neighborList2 = getHPyloriNeighbors(loc);
+  std::vector< Agent * > HPylori;
+  // TODO CRITICAL Retrieve HPylori in neighboring compartment if appropriate;
 
-  std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >::const_iterator iter2
-    = neighborList2.begin();
+  StateCount HPyloriStateCount;
+  CountStates(Agent::HPylori, HPylori, HPyloriStateCount);
 
-  DendriticState::State newState = state;
-
-  while (iter != neighborList.end() && iter2 != neighborList2.end())
+  for (; it != end; ++it)
     {
-      const BacteriaGroup::StateCount * p_bacteriaStateCount = *iter;
+      Agent * pAgent = *it;
+      DendriticState::State state = (DendriticState::State) pAgent->getState();
+
+      if (state == DendriticState::DEAD) continue;
+
+      DendriticState::State newState = state;
 
       /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
        * tolegenic are all in lumen     */
-      unsigned int infectiousBacteriaCount
-        = p_bacteriaStateCount->state[BacteriaState::INFECTIOUS];
-      unsigned int tolegenicBacteriaCount
-        = p_bacteriaStateCount->state[BacteriaState::TOLEROGENIC];
-
-      const HPyloriGroup::StateCount * p_hpyloriStateCount = *iter2;
+      unsigned int infectiousBacteriaCount = BacteriaStateCount[BacteriaState::INFECTIOUS];
+      unsigned int tolegenicBacteriaCount = BacteriaStateCount[BacteriaState::TOLEROGENIC];
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
-      unsigned int liveHPyloriCount
-        = p_hpyloriStateCount->state[HPyloriState::NAIVE];
+      unsigned int liveHPyloriCount = HPyloriStateCount[HPyloriState::NAIVE];
 
       /* if no bacteria is around DC, then stays immature */
       if (infectiousBacteriaCount + liveHPyloriCount == 0 && state == DendriticState::IMMATURE)
@@ -133,68 +101,24 @@ void DendriticsGroup::act(
           newState = DendriticState::TOLEROGENIC;
         }
 
-      ++iter;
-      ++iter2;
-    }
-
-  if (newState == DendriticState::EFFECTOR)
-    {
-      ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-      cytoMap["IL6"].first->setValueAtCoord(70, loc);
-      cytoMap["IL12"].first->setValueAtCoord(70, loc);
-    }
-  else if (newState == DendriticState::TOLEROGENIC)
-    {
-      ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-      cytoMap["TGFb"].first->setValueAtCoord(70, loc);
-    }
-
-  std::vector<double> moveTo = randomMove(1, loc);
-  repast::Point<int> newLoc(moveTo[0], moveTo[1]);
-
-  delCellAt(state, loc);
-  addCellAt(newState, newLoc);
-}
-
-const std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * >
-DendriticsGroup::getBacteriaNeighbors(const repast::Point<int> & loc)
-{
-  std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * > allNeighbors;
-
-  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
-
-  for (size_t i = 0; i < agents.size(); ++i)
-    {
-      if (agents[i]->classname() == "BacteriaGroup")
+      if (newState == DendriticState::EFFECTOR)
         {
-          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
-           * agents only */
-          BacteriaGroup * p_bacteriaGroup = static_cast<BacteriaGroup *>(agents[i]);
-          allNeighbors.push_back(p_bacteriaGroup->getCellsAt(loc));
+          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
+          cytoMap["IL6"].first->setValueAtCoord(70, pt);
+          cytoMap["IL12"].first->setValueAtCoord(70, pt);
         }
-    }
-
-  return allNeighbors;
-}
-
-/*function to find all neighbors that are HPylori */
-const std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
-DendriticsGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
-{
-  std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * > allNeighbors;
-
-  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
-
-  for (size_t i = 0; i < agents.size(); ++i)
-    {
-      if (agents[i]->classname() == "HPyloriGroup")
+      else if (newState == DendriticState::TOLEROGENIC)
         {
-          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
-           * agents only */
-          HPyloriGroup * p_hpyloriGroup = static_cast<HPyloriGroup *>(agents[i]);
-          allNeighbors.push_back(p_hpyloriGroup->getCellsAt(loc));
+          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
+          cytoMap["TGFb"].first->setValueAtCoord(70, pt);
         }
-    }
 
-  return allNeighbors;
+      pAgent->setState(newState);
+
+      // TODO CRITICAL Determine the maximum speed
+      double MaxSpeed = 1.0;
+      mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
+    }
 }
+
+

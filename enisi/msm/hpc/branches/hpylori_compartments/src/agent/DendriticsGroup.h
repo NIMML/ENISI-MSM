@@ -1,31 +1,29 @@
 #ifndef ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
 #define ENISI_MSM_AGENT_DENDRITICS_COMPONENT_H
 
-#include "AgentStates.h"
-#include "CoordMap.h"
+#include "agent/AgentStates.h"
+#include "repast_hpc/Point.h"
 
 namespace ENISI
 {
 
-class DendriticsGroup: public CoordinateMap<DendriticState::KEEP_AT_END>
+class Compartment;
+class Agent;
+
+class DendriticsGroup
 {
 public:
 
-  DendriticsGroup(const boost::uintmax_t, Compartment * pCompartment);
+  DendriticsGroup(Compartment * pCompartment, const size_t & count);
 
   virtual void act();
 
-  virtual Color getColor() {return black;}
   virtual std::string classname() {return "DendriticsGroup";}
 
 private:
-  void act(DendriticState::State, const repast::Point<int> &);
-
-  const std::vector< const typename CoordinateMap<BacteriaState::KEEP_AT_END>::StateCount * >
-  getBacteriaNeighbors(const repast::Point<int> &);
-
-  const std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
-  getHPyloriNeighbors(const repast::Point<int> &);
+  void act(const repast::Point<int> &);
+  Compartment * mpCompartment;
 };
+
 } // namespace ENISI
 #endif

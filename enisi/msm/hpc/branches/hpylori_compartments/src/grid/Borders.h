@@ -30,8 +30,8 @@ public:
   Borders(repast::GridDimensions d);
   virtual ~Borders();
 
-  int distanceFromBorder(const std::vector<int>& pt, const Coodinate &coordinate, const Side & side);
-  double distanceFromBorder(const std::vector<double>& pt, const Coodinate & coordinate, const Side & side);
+  int distanceFromBorder(const std::vector<int>& pt, const Coodinate &coordinate, const Side & side) const;
+  double distanceFromBorder(const std::vector<double>& pt, const Coodinate & coordinate, const Side & side) const;
 
   bool boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * pBoundState = NULL) const;
   bool boundsCheck(const std::vector<double>& pt, std::vector<BoundState> * pBoundState = NULL) const;
