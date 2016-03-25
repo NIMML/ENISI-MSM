@@ -65,6 +65,8 @@ list(REMOVE_ITEM ALL_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellGroupTest.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentFactory.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/BacteriaTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/CellGroup.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/ImmuneCell.cpp"
   )
 
 set(MAINS "main" "benchmark" "gmock" "test")

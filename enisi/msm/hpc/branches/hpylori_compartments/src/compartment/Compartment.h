@@ -22,6 +22,7 @@ public:
     bool next();
     const repast::Point< int > & operator *();
     const repast::Point< int > & operator ->();
+    operator bool();
 
   private:
     repast::GridDimensions mDimensions;
@@ -79,9 +80,9 @@ public:
   void diffuse();
   void updateReferenceDiffuserGrid();
   const Type & getType() const;
-  std::string getName() const;
-
 private:
+
+  std::string getName() const;
 
   std::vector<DiffuserLayer *> _diffuserLayers;
 

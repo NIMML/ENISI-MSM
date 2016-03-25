@@ -1,31 +1,29 @@
 #ifndef ENISI_MSM_BACTERIA_COMPONENT_H
 #define ENISI_MSM_BACTERIA_COMPONENT_H
 
-#include "AgentStates.h"
-#include "CoordMap.h"
+#include "agent/AgentStates.h"
+#include "repast_hpc/Point.h"
 
 namespace ENISI
 {
 
-class BacteriaGroup: public CoordinateMap<BacteriaState::KEEP_AT_END>
+class Compartment;
+class Agent;
+
+class BacteriaGroup
 {
 public:
-  BacteriaGroup(const boost::uintmax_t, Compartment * pCompartment);
+  BacteriaGroup(Compartment * pCompartment, const size_t & count);
 
   virtual void act();
 
-  std::vector< const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * >
-  getTcellNeighbors(const repast::Point<int> &);
-
-  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >
-  getEpithelialCellNeighbors(const repast::Point<int> & loc);
-
-  virtual Color getColor() {return black;}
   virtual std::string classname() {return "BacteriaGroup";}
 
 private:
-  void act(BacteriaState::State, const repast::Point<int> &);
-  void init(const boost::uintmax_t);
+  void act(const repast::Point<int> &);
+  Compartment * mpCompartment;
 };
+
 } // namespace ENISI
+
 #endif

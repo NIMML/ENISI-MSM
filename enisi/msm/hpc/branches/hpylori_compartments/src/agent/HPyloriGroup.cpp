@@ -16,13 +16,10 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const size_t & count):
 
 void HPyloriGroup::act()
 {
-  Compartment::GridIterator it = mpCompartment->begin();
-
-  do
+  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }
-  while (it.next());
 }
 
 void HPyloriGroup::act(const repast::Point<int> & pt)
@@ -42,7 +39,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
   // TODO CRITICAL Retrieve epithelial cells in neighboring compartment if appropriate;
 
   StateCount EpithelialCellStateCount;
-  CountStates(Agent::Tcell, EpithelialCells, TcellStateCount);
+  CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
 
   for (; it != end; ++it)
     {

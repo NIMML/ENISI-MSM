@@ -1,178 +1,95 @@
 #include "BacteriaGroup.h"
-#include "TcellGroup.h"
-#include "EpithelialCellGroup.h"
+
+#include "agent/ENISIAgent.h"
+#include "compartment/Compartment.h"
 
 using namespace ENISI;
 
-BacteriaGroup::BacteriaGroup(const boost::uintmax_t bacteriaCount,
-                             Compartment * pCompartment) :
-  CoordinateMap(pCompartment)
+BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const size_t & count):
+  mpCompartment(pCompartment)
 {
-  init(bacteriaCount);
-}
-
-void BacteriaGroup::init(const boost::uintmax_t bacteriaCount)
-{
-  for (boost::uintmax_t i = 0; i < bacteriaCount; i++)
+  for (size_t i = 0; i < count; i++)
     {
-      BacteriaState::State state = BacteriaState::INFECTIOUS;
-
-      if (i >= bacteriaCount / 2)
-        {
-          state = BacteriaState::TOLEROGENIC;
-        }
-
-      const repast::GridDimensions * p_dimensions = getDimensions();
-      repast::Point<double> extents = p_dimensions->extents();
-      repast::Point<double> origin = p_dimensions->origin();
-
-      double xStart = origin.getX();
-      double yStart = origin.getY();
-
-      double xEnd = origin.getX() + extents.getX();
-      double yEnd = origin.getY() + extents.getY();
-
-      double xCoord = repast::Random::instance()->createUniDoubleGenerator(
-                        xStart, xEnd).next();
-
-      double yCoord = repast::Random::instance()->createUniDoubleGenerator(
-                        yStart, yEnd).next();
-
-      repast::Point<int> initialLoc(xCoord, yCoord);
-
-      addCellAt(state, initialLoc);
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Bacteria, BacteriaState::TOLEROGENIC));
     }
 }
 
 void BacteriaGroup::act()
 {
-  coordMapConstIter end = coordMapEnd();
-
-  for (coordMapConstIter it = coordMapBegin(); it != end; it++)
+  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
     {
-      repast::Point<int> loc = it->first;
-      StateCount stateCount = it->second;
-
-      for (unsigned int i = 0; i < BacteriaState::KEEP_AT_END; ++i)
-        {
-          BacteriaState::State state = static_cast<BacteriaState::State>(i);
-
-          for (unsigned int j = 0; j < stateCount.state[i]; ++j)
-            {
-              act(state, loc);
-            }
-        }
+      act(*it);
     }
 }
 
-void BacteriaGroup::act(BacteriaState::State state,
-                        const repast::Point<int> & loc)
+void BacteriaGroup::act(const repast::Point<int> & pt)
 {
-  if (state == BacteriaState::DEAD)
-    return;
+  std::vector< Agent * > Bacteria;
+  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
+  std::vector< Agent * >::iterator it = Bacteria.begin();
+  std::vector< Agent * >::iterator end = Bacteria.end();
 
-  const std::vector <
-  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * > neighborList =
-    getEpithelialCellNeighbors(loc);
+  std::vector< Agent * > Tcells;
+  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 
-  std::vector <
-  const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount * >::const_iterator iter =
-    neighborList.begin();
+  StateCount TcellStateCount;
+  CountStates(Agent::Tcell, Tcells, TcellStateCount);
 
-  const std::vector<const TcellGroup::StateCount *> neighborList2 =
-    getTcellNeighbors(loc);
+  std::vector< Agent * > EpithelialCells;
+  // TODO CRITICAL Retrieve epithelial cells in neighboring compartment if appropriate;
 
-  std::vector<const TcellGroup::StateCount *>::const_iterator iter2 =
-    neighborList2.begin();
+  StateCount EpithelialCellStateCount;
+  CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
 
-  BacteriaState::State newState = state;
 
-  while (iter != neighborList.end() && iter2 != neighborList2.end())
+  for (; it != end; ++it)
     {
+      Agent * pAgent = *it;
+      BacteriaState::State state = (BacteriaState::State) pAgent->getState();
+
+      if (state == BacteriaState::DEAD) continue;
+
+      BacteriaState::State newState = state;
+
       /*identify states of Epithelial Cells counted */
-      unsigned int damagedEpithelialCellCount = (*iter)->state[EpithelialCellState::DAMAGED];
+      unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
 
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
-      if (damagedEpithelialCellCount && mpCompartment->getName() == "Lumen")
+      if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
         {
-          std::vector< int > NewBacteriaLoc = loc.coords();
-          NewBacteriaLoc[1] += 2;
-          delCellAt(state, loc);
-          addCellAt(state, NewBacteriaLoc);
+          std::vector< double > Location;
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          Location[Borders::Y] +=
+              Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y) +
+              mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
+
+          mpCompartment->moveTo(pAgent->getId(), Location);
         }
 
-      const TcellGroup::StateCount * p_tcellCount = *iter2;
-
-      unsigned int th1Count = p_tcellCount->state[TcellState::TH1];
-      unsigned int th17Count = p_tcellCount->state[TcellState::TH17];
+       unsigned int th1Count = TcellStateCount[TcellState::TH1];
+      unsigned int th17Count = TcellStateCount[TcellState::TH17];
 
       /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
       if ((newState == BacteriaState::INFECTIOUS)
           && (damagedEpithelialCellCount || th1Count || th17Count))
         {
-          delCellAt(state, loc);
-          addCellAt(BacteriaState::DEAD, loc);
-          return;
+          mpCompartment->removeAgent(pAgent);
+          continue;
         }
 
-      ++iter;
-      ++iter2;
-    }
-
-  /* Bacteria become infectious when moved into Lamina Propria */
-  if (mpCompartment->getName() == "LaminaPropria")
-    {
-      newState = BacteriaState::INFECTIOUS;
-    }
-
-  /* TODO: Bacteria are removed when macrophage uptake/differentiate */
-
-  std::vector<double> moveTo = randomMove(1, loc);
-  repast::Point<int> newLoc(moveTo[0], moveTo[1]);
-
-  delCellAt(state, loc);
-  addCellAt(state, newLoc);
-}
-
-std::vector< const typename CoordinateMap< EpithelialCellState::KEEP_AT_END >::StateCount * >
-BacteriaGroup::getEpithelialCellNeighbors(const repast::Point< int > & loc)
-{
-  std::vector< const typename CoordinateMap<EpithelialCellState::KEEP_AT_END>::StateCount *> allNeighbors;
-
-  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
-
-  for (size_t i = 0; i < agents.size(); ++i)
-    {
-      if (agents[i]->classname() == "EpithelialCellGroup")
+      /* Bacteria become infectious when moved into Lamina Propria */
+      if (mpCompartment->getType() == Compartment::lamina_propria)
         {
-          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
-           * agents only */
-          EpithelialCellGroup * p_epithelialcellGroup = static_cast<EpithelialCellGroup *>(agents[i]);
-          allNeighbors.push_back(p_epithelialcellGroup->getCellsAt(loc));
+          newState = BacteriaState::INFECTIOUS;
         }
-    }
 
-  return allNeighbors;
+      /* TODO: Bacteria are removed when macrophage uptake/differentiate */
+
+      pAgent->setState(newState);
+
+      // TODO CRITICAL Determine the maximum speed
+      double MaxSpeed = 1.0;
+      mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
+    }
 }
 
-std::vector<const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount *> BacteriaGroup::getTcellNeighbors(
-  const repast::Point<int> & loc)
-{
-  std::vector <
-  const typename CoordinateMap<TcellState::KEEP_AT_END>::StateCount * > allNeighbors;
-
-  std::vector<Agent *> agents = layer()->selectAllAgents();
-
-  for (size_t i = 0; i < agents.size(); ++i)
-    {
-      if (agents[i]->classname() == "TcellGroup")
-        {
-          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
-           * agents only */
-          TcellGroup * p_tcellGroup = static_cast<TcellGroup *>(agents[i]);
-          allNeighbors.push_back(p_tcellGroup->getCellsAt(loc));
-        }
-    }
-
-  return allNeighbors;
-}

@@ -24,13 +24,10 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & coun
 
 void MacrophageGroup::act()
 {
-  Compartment::GridIterator it = mpCompartment->begin();
-
-  do
+  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }
-  while (it.next());
 }
 
 void MacrophageGroup::act(const repast::Point<int> & pt)
