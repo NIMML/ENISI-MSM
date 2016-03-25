@@ -1,15 +1,9 @@
 #ifndef ENISI_MSM_AGENTFACTORY_H
 #define ENISI_MSM_AGENTFACTORY_H
 
-#include "Tcell.h"
-#include "Bacteria.h"
-#include "Dendritics.h"
-
-#include "BacteriaGroup.h"
-#include "TcellGroup.h"
-#include "DendriticsGroup.h"
-
-#include "compartment/Compartment.h"
+class Agent;
+class CellGroup;
+class Compartment;
 
 namespace ENISI
 {
@@ -17,9 +11,7 @@ namespace ENISI
 class AgentFactory
 {
 public:
-  AgentFactory() {}
-
-  Agent * create(const std::string &, Compartment *);
+  static Agent * create(const std::string & name, Compartment * pCompartment);
 
 private:
 };
@@ -27,8 +19,7 @@ private:
 class AgentGroupFactory
 {
 public:
-  static CellGroup * create(
-    const std::string, Compartment *, const boost::uintmax_t = 0);
+  static CellGroup * create(const std::string & name, Compartment * pCompartment, const size_t & count = 0);
 };
 } // namespace ENISI
 #endif

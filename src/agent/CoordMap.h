@@ -2,7 +2,6 @@
 #define ENISI_MSM_AGENT_COORDMAP_H
 
 #include "compartment/Compartment.h"
-#include "compartment/CellLayer.h"
 #include "CellGroup.h"
 #include "repast_hpc/GridComponents.h" /* repast::StickyBorders */
 #include "grid/Borders.h"
@@ -27,23 +26,20 @@ public:
 
   CoordinateMap(Compartment * pCompartment) :
     CellGroup(pCompartment),
-    _p_layer(pCompartment->cellLayer()),
-    _dimensions(_p_layer->dimensions()),
-    _borders(_p_layer->dimensions()),
-    _coordMap(),
-    mLeftBorders(_p_layer->dimensions().dimensionCount()),
-    mRightBorders(_p_layer->dimensions().dimensionCount())
+    _dimensions(pCompartment->localDimensions()),
+    _borders(pCompartment->borders()),
+    _coordMap()
   {}
 
   bool addCellAt(int cellState, const repast::Point<int> & pt)
   {
     std::vector<int> vectorPt = pt.coords();
 
-    _borders.transform(vectorPt, vectorPt);
+    _borders->transform(vectorPt, vectorPt);
 
     std::vector< Borders::BoundState > State(_dimensions.dimensionCount());
 
-    if (_borders.boundsCheck(pt.coords(), &State))
+    if (_borders->boundsCheck(pt.coords(), &State))
       {
         _coordMap[pt].state[cellState]++;
         return true;
@@ -72,18 +68,6 @@ public:
     return _coordMap.end();
   }
 
-  void setLeftBorder(const size_t & i, const Borders::Type & type, CoordinateMap * p_border)
-  {
-    _borders.setLowBorderType(i, type);
-    mLeftBorders[i] = p_border;
-  }
-
-  void setRightBorder(const size_t & i, const Borders::Type & type, CoordinateMap * p_border)
-  {
-    _borders.setHighBorderType(i, type);
-    mRightBorders[i] = p_border;
-  }
-
   const repast::GridDimensions * getDimensions() const
   {
     return &_dimensions;
@@ -96,19 +80,18 @@ protected:
                             const repast::Point<int> & pt,
                             const std::vector< Borders::BoundState > & State)
   {
-    size_t i = 0;
+    size_t i = Borders::X;
     std::vector<int> Out(_dimensions.dimensionCount());
 
+#ifdef XXXX
     std::vector<Borders::BoundState>::const_iterator itState = State.begin();
     std::vector<Borders::BoundState>::const_iterator endState = State.end();
-    typename std::vector< CoordinateMap * >::iterator itLeftBorder = mLeftBorders.begin();
-    typename std::vector< CoordinateMap * >::iterator itRightBorder = mRightBorders.begin();
     std::vector<int>::const_iterator itIn = pt.begin();
     std::vector<int>::iterator itOut = Out.begin();
 
     CoordinateMap * pTarget = NULL;
 
-    for (; itState != endState; ++itState, ++itIn, ++itOut, ++itLeftBorder, ++itRightBorder, i++)
+    for (; itState != endState; ++itState, ++itIn, ++itOut, ++i)
       {
         if (pTarget != NULL)
           {
@@ -157,19 +140,15 @@ protected:
         return pTarget->addCellAt(cellState, Out);
       }
 
+#endif // XXXX
+
     return addCellAt(cellState, Out);
   }
 
-  CellLayer * layer() {return _p_layer;}
-
 private:
-  CellLayer * _p_layer;
   const repast::GridDimensions _dimensions;
-  Borders _borders;
+  const Borders  * _borders;
   CoordMap _coordMap;
-
-  std::vector< CoordinateMap * > mLeftBorders;
-  std::vector< CoordinateMap * > mRightBorders;
 };
 } // namespace ENISI
 #endif

@@ -1,5 +1,4 @@
 #include "CellGroup.h"
-#include "compartment/CellLayer.h"
 #include "compartment/Compartment.h"
 
 using namespace ENISI;

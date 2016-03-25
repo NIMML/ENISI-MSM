@@ -1,95 +1,74 @@
 #include "agent/MacrophageGroup.h"
-#include "agent/HPyloriGroup.h"
-#include "agent/Cytokines.h"
+
+#include "agent/ENISIAgent.h"
+#include "compartment/Compartment.h"
+
 #include "agent/MacrophageODE1.h"
-#include "agent/MacrophageODE2.h"
+#include "agent/Cytokines.h"
+
+// #include "agent/HPyloriGroup.h"
+// #include "agent/Cytokines.h"
+// #include "agent/MacrophageODE1.h"
+// #include "agent/MacrophageODE2.h"
 
 using namespace ENISI;
 
-MacrophageGroup::MacrophageGroup(const boost::uintmax_t macrophageCount,
-                                 Compartment * pCompartment) :
-  CoordinateMap(pCompartment)
+MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & count) :
+  mpCompartment(pCompartment)
 {
-  for (boost::uintmax_t i = 0; i < macrophageCount; i++)
+  for (size_t i = 0; i < count; i++)
     {
-      const repast::GridDimensions * p_dimensions = getDimensions();
-
-      repast::Point<double> extents = p_dimensions->extents();
-      repast::Point<double> origin = p_dimensions->origin();
-
-      double xStart = origin.getX();
-      double yStart = origin.getY();
-
-      double xEnd = origin.getX() + extents.getX();
-      double yEnd = origin.getY() + extents.getY();
-
-      double xCoord = repast::Random::instance()
-                      ->createUniDoubleGenerator(xStart, xEnd).next();
-
-      double yCoord = repast::Random::instance()
-                      ->createUniDoubleGenerator(yStart, yEnd).next();
-
-      repast::Point<int> initialLoc(xCoord, yCoord);
-
-      std::vector<double> moveTo = randomMove(1, initialLoc);
-      repast::Point<int> newLoc(moveTo[0], moveTo[1]);
-
-      addCellAt(MacrophageState::MONOCYTE, newLoc);
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Macrophage, MacrophageState::MONOCYTE));
     }
 }
 
 void MacrophageGroup::act()
 {
-  coordMapConstIter end = coordMapEnd();
+  Compartment::GridIterator it = mpCompartment->begin();
 
-  for (coordMapConstIter it = coordMapBegin(); it != end; it++)
+  do
     {
-      repast::Point<int> loc = it->first;
-      const StateCount count = it->second;
-
-      for (unsigned int i = 0; i < MacrophageState::KEEP_AT_END; ++i)
-        {
-          for (unsigned int j = 0; j < count.state[i]; ++j)
-            {
-              MacrophageState::State state = static_cast<MacrophageState::State>(i);
-              act(state, loc);
-            }
-        }
+      act(*it);
     }
+  while (it.next());
 }
 
-void MacrophageGroup::act(
-  MacrophageState::State state, const repast::Point<int> & loc __attribute__((unused)))
+void MacrophageGroup::act(const repast::Point<int> & pt)
 {
-  if (state == MacrophageState::DEAD) return;
+  std::vector< Agent * > Macrophages;
+  mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
+  std::vector< Agent * >::iterator it = Macrophages.begin();
+  std::vector< Agent * >::iterator end = Macrophages.end();
 
-  const std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >
-  neighborList = getHPyloriNeighbors(loc);
+  std::vector< Agent * > HPylori;
+  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
+  StateCount StateCount;
+  CountStates(Agent::HPylori, HPylori, StateCount);
 
-  std::vector< const typename CoordinateMap<HPyloriState::KEEP_AT_END>::StateCount * >::const_iterator iter
-    = neighborList.begin();
-
-  MacrophageState::State newState = state;
-  /* //If monocytes + hp //then new state -> m_reg
-  if (state == MacrophageState::MONOCYTE)
-  {
-    if (hPyloriCount || tolBCount) {newState = MacrophageState::REGULATORY;}
-  }
-  */
-  //If monocytes + TolB
-  //then new state -> m_reg-
-
-  while (iter != neighborList.end())
+  for (; it != end; ++it)
     {
-      const HPyloriGroup::StateCount * p_hpyloriStateCount = *iter;
+      Agent * pAgent = *it;
+      MacrophageState::State state = (MacrophageState::State) pAgent->getState();
+
+      if (state == MacrophageState::DEAD) continue;
+
+      MacrophageState::State newState = state;
+
+      /* //If monocytes + hp //then new state -> m_reg
+      if (state == MacrophageState::MONOCYTE)
+      {
+        if (hPyloriCount || tolBCount) {newState = MacrophageState::REGULATORY;}
+      }
+      */
+      //If monocytes + TolB
+      //then new state -> m_reg-
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
-      unsigned int liveHPyloriCount
-        = p_hpyloriStateCount->state[HPyloriState::NAIVE];
+      unsigned int liveHPyloriCount = StateCount[HPyloriState::NAIVE];
 
       /*get concentration of IFNg and IL10 for COPASI input*/
-      double IFNg = Cytokines::instance().get("IFNg", loc);
-      double IL10 = Cytokines::instance().get("IL10", loc);
+      double IFNg = Cytokines::instance().get("IFNg", pt);
+      double IL10 = Cytokines::instance().get("IL10", pt);
 
       /* if no bacteria is around DC, then stays immature */
       if (liveHPyloriCount && state == MacrophageState::MONOCYTE)
@@ -124,43 +103,20 @@ void MacrophageGroup::act(
       if (newState == MacrophageState::REGULATORY)
         {
           ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IL10"].first->setValueAtCoord(70, loc);
+          cytoMap["IL10"].first->setValueAtCoord(70, pt);
         }
       /* inflammatory macrophages produce IFNg */
       else if (newState == MacrophageState::INFLAMMATORY)
         {
           ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IFNg"].first->setValueAtCoord(70, loc);
+          cytoMap["IFNg"].first->setValueAtCoord(70, pt);
         }
 
-      ++iter;
+      pAgent->setState(newState);
+
+      // TODO CRITICAL Determine the maximum speed
+      double MaxSpeed = 1.0;
+      mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
-
-  std::vector<double> moveTo = randomMove(1, loc);
-  repast::Point<int> newLoc(moveTo[0], moveTo[1]);
-
-  delCellAt(state, loc);
-
-  /* TO DO: increase rate if counts of eDC and E_dam are high */
-  addCellAt(newState, newLoc);
 }
 
-std::vector< const typename CoordinateMap< HPyloriState::KEEP_AT_END >::StateCount * > MacrophageGroup::getHPyloriNeighbors(const repast::Point<int> & loc)
-{
-  std::vector< const typename CoordinateMap< HPyloriState::KEEP_AT_END >::StateCount * > allNeighbors;
-
-  std::vector<ENISI::Agent *> agents = layer()->selectAllAgents();
-
-  for (size_t i = 0; i < agents.size(); ++i)
-    {
-      if (agents[i]->classname() == "HPyloriGroup")
-        {
-          /* TODO: Remove this cast when cellLayer is refactored to take CellGroup
-           * agents only */
-          HPyloriGroup * p_hpyloriGroup = static_cast<HPyloriGroup *>(agents[i]);
-          allNeighbors.push_back(p_hpyloriGroup->getCellsAt(loc));
-        }
-    }
-
-  return allNeighbors;
-}

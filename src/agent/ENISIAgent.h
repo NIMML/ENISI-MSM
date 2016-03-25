@@ -1,57 +1,62 @@
 #ifndef ENISI_MSM_ENISIAGENT_H
 #define ENISI_MSM_ENISIAGENT_H
 
-#include <stdexcept>
 #include "repast_hpc/AgentId.h" //repast::Agent, repast::AgentId
 #include "repast_hpc/SharedContext.h"
-#include "repast_hpc/RepastProcess.h"
 
 //TODO reconcile TOLEROGENIC and TOLEROGENIC
 namespace ENISI
 {
 
-class AgentState
-{
-public:
-  enum State
-  {
-    DEAD, IMMATURE, EFFECTOR, INFECTIOUS, TOLEROGENIC,
-    NAIVE, TH1, TH17, TREG, Tr
-  };
-};
-
 class Agent: public repast::Agent
 {
-public:
-  typedef repast::SharedContext<Agent> Context;
-  enum Color {pink, red, blue, green, black, cyan };
-
+private:
   Agent();
 
-  virtual void act() = 0;
+public:
+  typedef repast::SharedContext< Agent > Context;
+
+  enum Type
+  {
+    Bacteria = 0x01,
+    Dentritics = 0x02,
+    EpithelialCell = 0x04,
+    HPylori = 0x08,
+    ImmuneCell = 0x10,
+    Macrophage = 0x20,
+    Tcell = 0x40
+  };
+
+  enum Color {pink, red, blue, green, black, cyan };
+
+  Agent(const Type & type, const int & state);
+
+  // virtual void act() = 0;
 
   virtual ~Agent() {}
 
   /* Required Getters */
-  virtual repast::AgentId& getId() {return id;}
-  virtual const repast::AgentId& getId() const {return id;}
-  virtual void setId(repast::AgentId i) {id = i;}
+  virtual repast::AgentId & getId();
+  virtual const repast::AgentId& getId() const;
+  virtual void setId(repast::AgentId i);
 
-  void setState(const AgentState::State & st) {_state = st;}
-  AgentState::State getState() const {return _state;}
+  Type getType() const;
 
-  virtual Color getColor() {return black;}
+  void setState(const int & st);
+  int getState() const;
 
   /* Used by AgentPackageReceiver to create/sync agents across processes
      Ensure the return string matches the corresponding code in AgentFactory */
-  virtual std::string classname() = 0;
+  virtual std::string classname();
 
 protected:
 
 private:
-  AgentState::State _state;
-
+  static const char * Names[];
   static int agentCount;
+
+  int _state;
+
   repast::AgentId id;
 };
 } // namespace ENISI
