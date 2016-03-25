@@ -2,6 +2,7 @@
 #include "MacrophageGroup.h"
 #include "DendriticsGroup.h"
 #include "EpithelialCellGroup.h"
+#include "Borders.h"
 
 using namespace ENISI;
 int p_rule18;/*Rule 19 parameter*/
@@ -249,6 +250,18 @@ void TcellGroup::act(TcellState::State state, const repast::Point<int> & loc)
               delCellAt(state, loc);/*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
               addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
             }
+          else if (state == TcellState::TH1 && (Borders::distanceFromBorders(loc,Borders::Y,Borders::LOW))< 2 //TODO - CRITICAL Determine this value
+                             && mpCompartment->getName() == "GLN" && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0)))
+                      {
+        	  	  	  	  delCellAt(state, loc);/*Rule 32 For movement of TH1 */ //TODO -CRITICAL Need a 'move' function
+        	  	  	  	  addCellAt(TcellState::NAIVE, loc+2);//TODO - CRITICAL modify
+                      }
+          else if (state == TcellState::iTREG && (Borders::distanceFromBorders(loc,Borders::Y,Borders::LOW))< 2 //TODO - CRITICAL Determine this value
+                                      && mpCompartment->getName() == "GLN" && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0)))
+                               {
+                 	  	  	  	  delCellAt(state, loc);/*Rule 33 For movement of TH1 */ //TODO -CRITICAL Need a 'move' function
+                 	  	  	  	  addCellAt(TcellState::NAIVE, loc+2);//TODO - CRTICAL modify
+                               }
         }
 
       //Added conditions for Rules 18 - 23 and 36-41
