@@ -17,13 +17,10 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & coun
 }
 void DendriticsGroup::act()
 {
-  Compartment::GridIterator it = mpCompartment->begin();
-
-  do
+  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }
-  while (it.next());
 }
 
 
@@ -72,7 +69,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  0.5 is arbitrary */
       else if (liveHPyloriCount > 0.5 * tolegenicBacteriaCount + 1
                && state == DendriticState::IMMATURE
-               && mpCompartment->getName() == "Epithelium")
+               && mpCompartment->getType() == Compartment::epithilium)
         {
           newState = DendriticState::EFFECTOR;
         }
@@ -80,7 +77,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  0.5 is arbitrary */
       else if (liveHPyloriCount <= 0.5 * tolegenicBacteriaCount + 1
                && state == DendriticState::IMMATURE
-               && mpCompartment->getName() == "Epithelium")
+               && mpCompartment->getType() == Compartment::epithilium)
         {
           newState = DendriticState::TOLEROGENIC;
         }
@@ -88,7 +85,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  1 is arbitrary */
       else if (liveHPyloriCount + tolegenicBacteriaCount > 1
                && state == DendriticState::IMMATURE
-               && mpCompartment->getName() == "LaminaPropria")
+               && mpCompartment->getType() == Compartment::lamina_propria)
         {
           newState = DendriticState::EFFECTOR;
         }
@@ -96,7 +93,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  1 is arbitrary */
       else if (liveHPyloriCount + tolegenicBacteriaCount <= 1
                && state == DendriticState::IMMATURE
-               && mpCompartment->getName() == "LaminaPropria")
+               && mpCompartment->getType() == Compartment::lamina_propria)
         {
           newState = DendriticState::TOLEROGENIC;
         }

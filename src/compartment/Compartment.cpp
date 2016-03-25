@@ -369,3 +369,18 @@ const repast::Point< int > & Compartment::GridIterator::operator ->()
   return mCurrent;
 }
 
+Compartment::GridIterator::operator bool()
+{
+  size_t i, imax = mDimensions.dimensionCount();
+
+  for (i = 0; i < mDimensions.dimensionCount(); ++i)
+    {
+      if (mCurrent[i] >= mDimensions.origin(i) + mDimensions.extents(i))
+        {
+          return false;
+        }
+    }
+
+  return true;
+}
+
