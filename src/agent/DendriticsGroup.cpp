@@ -66,7 +66,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           newState = DendriticState::IMMATURE;
         }
       /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
-       *  0.5 is arbitrary */
+       *  0.5 is arbitrary *Rule 2*/
       else if (liveHPyloriCount > 0.5 * tolegenicBacteriaCount + 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium)
@@ -82,7 +82,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           newState = DendriticState::TOLEROGENIC;
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
-       *  1 is arbitrary */
+       *  1 is arbitrary, Rule 48 */
       else if (liveHPyloriCount + tolegenicBacteriaCount > 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria)
@@ -90,7 +90,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           newState = DendriticState::EFFECTOR;
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
-       *  1 is arbitrary */
+       *  1 is arbitrary * Rule 17 and Rule 48*/
       else if (liveHPyloriCount + tolegenicBacteriaCount <= 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria)
@@ -98,13 +98,13 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           newState = DendriticState::TOLEROGENIC;
         }
 
-      if (newState == DendriticState::EFFECTOR)
+      if (newState == DendriticState::EFFECTOR) /*Rule 56*/
         {
           ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
           cytoMap["IL6"].first->setValueAtCoord(70, pt);
           cytoMap["IL12"].first->setValueAtCoord(70, pt);
         }
-      else if (newState == DendriticState::TOLEROGENIC)
+      else if (newState == DendriticState::TOLEROGENIC) /*Rule 57*/
         {
           ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
           cytoMap["TGFb"].first->setValueAtCoord(70, pt);

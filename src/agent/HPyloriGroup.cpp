@@ -52,7 +52,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       /*identify states of Epithelial Cells counted */
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
 
-      /* move HPylori across epithelial border if in contact with damaged Epithelial cell */
+      /* move HPylori across epithelial border if in contact with damaged Epithelial cell *Rule 3*/
       if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
         {
           std::vector< double > Location;
@@ -67,7 +67,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       unsigned int th1Count = TcellStateCount[TcellState::TH1];
       unsigned int th17Count = TcellStateCount[TcellState::TH17];
 
-      /* HPylori dies is nearby damaged epithelial cell, th1 or th17*/
+      /* HPylori dies is nearby damaged epithelial cell, th1 or th17* *Rule 5,6,7*/
       if (damagedEpithelialCellCount || th1Count || th17Count)
         {
           // newState = HPyloriState::DEAD;
