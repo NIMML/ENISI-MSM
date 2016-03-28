@@ -23,6 +23,8 @@ int p_rule37;/*Rule 37 parameter*/
 int p_rule39;/*Rule 39 parameter*/
 int p_rule40;/*Rule 40 parameter*/
 int p_rule41;/*Rule 41 parameter*/
+int p_rule53;/*Rule 53 parameter*/
+int p_rule55;/*Rule 55 parameter*/
 
 TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -125,33 +127,33 @@ void TcellGroup::act(const repast::Point<int> & pt)
             }
           else if ((IL10 > 0.5 * IFNg) && (macrophageregCount > 0)
                    && state == TcellState::NAIVE
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule31 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::Tr; /* Rule 31- The rule is if nT is in contact with regulatory macrophages, and if IL10> a* IFNg
            //then nT -> Tr (state transition). Here, 'a' is an arbitrary constant and has been hard coded to 0.5 */
             }
           else if ((th17Count > 0) && state == TcellState::TH17
-                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule36 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 36*/
             }
           else if ((itregCount > 0) && state == TcellState::TH17
-                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule35 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule35 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 35*/
             }
           else if ((th17Count > 0) && state == TcellState::iTREG
-                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule37 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule37 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 37*/
             }
           else if ((eDCCount > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule39 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule39 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH1; /*Rule 39*/
             }
           else if ((eDCCount > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               mpCompartment->removeAgent(pAgent); /*Rule 40* - nT can die when in contact with eDC in GLN*/
               continue;
@@ -160,39 +162,39 @@ void TcellGroup::act(const repast::Point<int> & pt)
               // addCellAt(TcellState::DEAD, loc);   /*Rule 40* - nT can 'proliferate' when in contact with nT in GLN */
             }
           else if ((itregCount > 0) && state == TcellState::iTREG
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule20 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 20*/
             }
           else if ((th17Count > 0) && state == TcellState::TH17
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule21 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule21 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 21*/
             }
           else if ((itregCount > 0) && state == TcellState::TH1
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule22 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule22 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 22*/
             }
           else if ((tDCCount > 0) && state == TcellState::TH17
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule23 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule23 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 23*/
             }
           else if ((damagedEpithelialCellCount > 0) && state == TcellState::iTREG
-                   && mpCompartment->getType() == Compartment::epithilium && (p_rule18 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::epithilium && (p_rule18 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 18*/
               /* CHECK : Here there should be a function for information regarding the Layer,
               for eg. This rule requires the state transition when iTREG is in contact with Edamaged at 'Epithelium and LaminaPropria' membrane*/
             }
           else if ((th1Count > 0) && state == TcellState::iTREG
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule19 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 19*/
             }
           else if ((eDCCount > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule41 > rand() % 1 + 0))
+                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule41> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               mpCompartment->removeAgent(pAgent); /*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
               continue;
@@ -202,7 +204,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           else if (state == TcellState::TH1
                    && (mpCompartment->borders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
-                   && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                   && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
@@ -212,13 +214,37 @@ void TcellGroup::act(const repast::Point<int> & pt)
           else if (state == TcellState::iTREG
                    && (mpCompartment->borders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
-                   && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                   && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 33*/
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
               Location[Borders::Y] -= 1.01 * mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
               mpCompartment->moveTo(pAgent->getId(), Location);
             }
+          else if ((eDCCount >0) && mpCompartment->getType() == Compartment::lamina_propria && (p_rule55 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
+        	  if (state == TcellState::iTREG)
+        	  {
+        	  newState = TcellState::TH17;
+        	  }
+        	  else if (state == TcellState::NAIVE)
+        	  {
+        		  if (p_rule55 > 0.5) //Arbitry - TODO CRITICAL determine value for p_rule55
+        		  {
+        			  newState = TcellState::TH17;
+        		  }
+        		  else if (p_rule55 > 0.4) //Arbitary TODO CRITICAL determine this value - Rule 55
+        		  {
+        			  newState = TcellState::TH1;
+        		  }
+        	   }
+
+          }
+          else if ((tDCCount>0) && mpCompartment ->getType() == Compartment::gastric_lymph_node && state == TcellState::NAIVE
+        		  && (p_rule53 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
+        	  newState = TcellState::iTREG; /*Rule 53*/
+          }
         }
 
         if (newState == TcellState::TH1) //Rule 29 If T cell state is TH1, then release IFNg

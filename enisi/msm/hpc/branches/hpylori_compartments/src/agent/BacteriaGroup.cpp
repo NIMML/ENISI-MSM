@@ -54,7 +54,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       /*identify states of Epithelial Cells counted */
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
 
-      /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
+      /* move Bacteria across epithelial border if in contact with damaged Epithelial cell -Rule 1*/
       if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
         {
           std::vector< double > Location;
