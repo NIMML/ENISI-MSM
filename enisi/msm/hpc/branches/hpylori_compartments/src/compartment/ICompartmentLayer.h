@@ -6,7 +6,7 @@
 #include "repast_hpc/Moore2DGridQuery.h"
 #include "agent/ENISIAgent.h"
 #include "agent/AgentStates.h"
-
+#include "agent/SharedValueLayer.h"
 #include "grid/Borders.h"
 
 namespace ENISI {
@@ -31,6 +31,7 @@ public:
     _buffer(1),
     _p_space(NULL),
     _p_grid(NULL),
+    mpSharedValues(NULL),
     mSpaceDimensions(),
     mGridDimensions(),
     _provider(&_context),
@@ -42,12 +43,16 @@ public:
     //
     _p_space = new Space(name +"-space", spaceDimension, _processDims, _buffer, _p_comm);
     _p_grid = new Grid(name +"-grid", gridDimension, _processDims, _buffer, _p_comm);
+    repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(_processDims[0], _processDims[1]));
+    mpSharedValues = new Grid(name +"-values", ProcessDimensions, _processDims, _buffer, _p_comm);
 
     _context.addProjection(_p_space);
     _context.addProjection(_p_grid);
+    _context.addProjection(mpSharedValues);
 
     mSpaceDimensions = _p_space->dimensions();
     mGridDimensions = _p_grid->dimensions();
+    mSharedValueDimensions = mpSharedValues->dimensions();
 
     std::vector< Space2Grid >::iterator itConversion = _conversion.begin();
     std::vector< Space2Grid >::iterator endConversion = _conversion.end();
@@ -333,6 +338,14 @@ public:
     return agents;
   }
 
+  bool addDiffuserValues(SharedValueLayer * pDiffuserValues)
+  {
+    Agent * pAgent = _context.addAgent(pDiffuserValues);
+    repast::AgentId Id = pAgent->getId();
+
+    return mpSharedValues->moveTo(Id, repast::Point< int >(mSharedValueDimensions.origin()[0], mSharedValueDimensions.origin()[1]));
+  }
+
   void addValueLayer(repast::DiscreteValueLayer<double, Transformer> * p_vl)
   {
     _context.addValueLayer(p_vl);
@@ -345,13 +358,14 @@ protected:
   std::vector<int> _processDims;
   const int _buffer;
   Space * _p_space;
-  Grid  * _p_grid;
+  Grid * _p_grid;
+  Grid * mpSharedValues;
   repast::GridDimensions mSpaceDimensions;
   repast::GridDimensions mGridDimensions;
+  repast::GridDimensions mSharedValueDimensions;
   PackageProvider _provider;
   PackageReceiver _receiver;
   repast::DoubleUniformGenerator mUniform;
-
 private:
   std::vector< Space2Grid > _conversion;
 };

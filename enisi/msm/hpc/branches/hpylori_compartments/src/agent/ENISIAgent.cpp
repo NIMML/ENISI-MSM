@@ -6,16 +6,16 @@ using namespace ENISI;
 // static
 int Agent::agentCount = 0;
 // static
-const char * Agent::Names[] = {"Bacteria", "Dentritics", "EpithelialCell", "HPylori", "ImmuneCell", "Macrophage", "Tcell"};
+const char * Agent::Names[] = {"Bacteria", "Dentritics", "EpithelialCell", "HPylori", "ImmuneCell", "Macrophage", "Tcell", "DiffuserValues"};
 
 Agent::Agent():
-  _state(0),
-  id()
+  id(),
+  _state(0)
 {}
 
 Agent::Agent(const Agent::Type & type, const int & state) :
-  _state(state),
-  id()
+  id(),
+  _state(state)
 {
   int rank = repast::RepastProcess::instance()->rank();
   id = repast::AgentId(agentCount++, rank, type, rank);
@@ -89,6 +89,10 @@ std::string Agent::classname()
 
     case Tcell:
       return Names[6];
+      break;
+
+    case DiffuserValues:
+      return Names[7];
       break;
   }
 

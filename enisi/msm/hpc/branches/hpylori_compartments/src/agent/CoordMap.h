@@ -26,8 +26,8 @@ public:
 
   CoordinateMap(Compartment * pCompartment) :
     CellGroup(pCompartment),
-    _dimensions(pCompartment->localDimensions()),
-    _borders(pCompartment->borders()),
+    _dimensions(pCompartment->localSpaceDimensions()),
+    _borders(pCompartment->spaceBorders()),
     _coordMap()
   {}
 

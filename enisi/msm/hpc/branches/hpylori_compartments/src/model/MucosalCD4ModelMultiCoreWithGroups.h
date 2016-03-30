@@ -3,7 +3,6 @@
 
 #include "MucosalCD4ModelMultiCore.h"
 #include "../agent/AgentGroupPackage.h"
-#include "../agent/Cytokines.h"
 #include "grid/Borders.h"
 
 class MucosalCD4ModelMultiCoreWithGroups 

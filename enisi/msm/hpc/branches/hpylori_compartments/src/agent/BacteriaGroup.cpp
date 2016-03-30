@@ -54,14 +54,14 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       /*identify states of Epithelial Cells counted */
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
 
-      /* move Bacteria across epithelial border if in contact with damaged Epithelial cell -Rule 1*/
+      /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
       if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
               Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y) +
-              mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
+              mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
 
           mpCompartment->moveTo(pAgent->getId(), Location);
         }

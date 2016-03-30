@@ -128,7 +128,6 @@ void HPModel::act()
 
   syncAgents();
   diffuse();
-  summation();
 
   return;
 }
@@ -168,58 +167,14 @@ void HPModel::setUpValueLayer()
 
 void HPModel::setUpCytokines()
 {
-  double evaporation = 0.98,
-	 diffusion = 0.6;
-  bool toroidal = false;
+  ENISI::Compartment * pCompartment = ENISI::Compartment::instance(ENISI::Compartment::lamina_propria);
 
-  ENISI::Cytokines::CytoMap & cytomap = ENISI::Cytokines::instance().map();
-
-  /* Yongguo used these values to make the model fit the data.
-   * 10000, 100, 1, 0, 0, 0
-   * They don't have any inherent meaning otherwise */
-
-  cytomap["IL6"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), 0.95, diffusion, toroidal), 10000);
-  _valueDiffusers.push_back(cytomap["IL6"].first);
-
-  cytomap["TGFb"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 100);
-  _valueDiffusers.push_back(cytomap["TGFb"].first);
-
-  cytomap["IL12"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 1);
-  _valueDiffusers.push_back(cytomap["IL12"].first);
-
-  cytomap["IL17"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 0);
-  _valueDiffusers.push_back(cytomap["IL17"].first);
-
-  cytomap["IL10"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 0);
-  _valueDiffusers.push_back(cytomap["IL10"].first);
-
-  cytomap["IFNg"] = std::make_pair(new ENISI::ParallelDiffuser(*ENISI::Compartment::instance(ENISI::Compartment::lumen), evaporation, diffusion, toroidal), 0);
-  _valueDiffusers.push_back(cytomap["IFNg"].first);
-
-  summation();
-}
-
-void HPModel::summation()
-{
-  ENISI::Cytokines::CytoMap & cytomap = ENISI::Cytokines::instance().map();
-
-  for (int x = 0; x < _width; ++x)
-    {
-      for (int y = 0; y < _height; ++y)
-        {
-          double value = 0.0;
-
-          for (ENISI::Cytokines::CytoMap::const_iterator it = cytomap.begin(); it != cytomap.end(); it++)
-            {
-              ENISI::Diffuser * cytokineValueLayer = it->second.first;
-              int multiplier = it->second.second;
-              int currentVal = cytokineValueLayer->getCoordValue(repast::Point<int>(x, y));
-              value += currentVal * multiplier;
-            }
-
-          _p_valueLayer->set(value, repast::Point<int>(x, y));
-        }
-    }
+  pCompartment->addCytokine("IL6");
+  pCompartment->addCytokine("TGFb");
+  pCompartment->addCytokine("IL12");
+  pCompartment->addCytokine("IL17");
+  pCompartment->addCytokine("IL10");
+  pCompartment->addCytokine("IFNg");
 }
 
 void HPModel::createAgentGroup(const std::string & agentName, const std::string & agentCountProperty)

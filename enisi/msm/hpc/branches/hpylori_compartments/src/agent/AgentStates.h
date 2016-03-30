@@ -8,6 +8,8 @@
 #ifndef AGENT_AGENTSTATES_H_
 #define AGENT_AGENTSTATES_H_
 
+#include <map>
+
 #include "ENISIAgent.h"
 
 namespace ENISI

@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "ValueLayer.h" /* should use local modified ValueLayer.h */
+#include "grid/ValueLayer.h" /* should use local modified ValueLayer.h */
 #include "repast_hpc/GridComponents.h" /* repast::StickyBorders */
 
 /* Test that the patched ValueLayer.h (originally part of repast, but copied

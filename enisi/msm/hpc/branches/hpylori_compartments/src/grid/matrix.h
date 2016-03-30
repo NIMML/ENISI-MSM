@@ -43,8 +43,8 @@ protected:
 	Point<int> _size;
 	int dCount;
 
-	int calcIndex(const Point<int>& index);
-	void boundsCheck(const Point<int>& index);
+	int calcIndex(const Point<int>& index) const;
+	void boundsCheck(const Point<int>& index) const;
 	void create();
 
 public:
@@ -61,6 +61,11 @@ public:
 	 * Gets the value at the specified index.
 	 */
 	virtual T& get(const Point<int>& index) = 0;
+
+  /**
+   * Gets the value at the specified index.
+   */
+  virtual const T& get(const Point<int>& index) const = 0;
 
 	/**
 	 * Sets the value at the specified index.
@@ -107,7 +112,7 @@ Matrix<T>::~Matrix() {
 }
 
 template<typename T>
-void Matrix<T>::boundsCheck(const Point<int>& index) {
+void Matrix<T>::boundsCheck(const Point<int>& index) const {
 	if ((int) index.dimensionCount() != dCount)
 		throw Repast_Error_47<Point<int> >(dCount, index.dimensionCount(), index); // Number of index dimensions != number of matrix dimensions
 	for (int i = 0; i < dCount; i++) {
@@ -117,7 +122,7 @@ void Matrix<T>::boundsCheck(const Point<int>& index) {
 }
 
 template<typename T>
-int Matrix<T>::calcIndex(const Point<int>& index) {
+int Matrix<T>::calcIndex(const Point<int>& index) const {
 	int vIndex = 0;
 	for (size_t i = 0; i < index.dimensionCount(); i++) {
 		vIndex = vIndex + index[i] * stride[i];
@@ -164,6 +169,11 @@ public:
 	 */
 	T& get(const Point<int>& index);
 
+  /**
+   * Gets the value at the specified index.
+   */
+  const T& get(const Point<int>& index) const;
+
 	/**
 	 * Sets the value at the specified index.
 	 */
@@ -209,6 +219,13 @@ T& DenseMatrix<T>::get(const Point<int>& index) {
 }
 
 template<typename T>
+const T& DenseMatrix<T>::get(const Point<int>& index) const {
+  Matrix<T>::boundsCheck(index);
+  int vIndex = Matrix<T>::calcIndex(index);
+  return values[vIndex];
+}
+
+template<typename T>
 void DenseMatrix<T>::set(const T& value, const Point<int>& index) {
 	Matrix<T>::boundsCheck(index);
 	int vIndex = Matrix<T>::calcIndex(index);
@@ -242,6 +259,11 @@ public:
 	 * Gets the value at the specified index.
 	 */
 	T& get(const Point<int>& index);
+
+  /**
+   * Gets the value at the specified index.
+   */
+  const T& get(const Point<int>& index) const;
 
 	/**
 	 * Sets the value at the specified index.
@@ -284,6 +306,21 @@ T& SparseMatrix<T>::get(const Point<int>& index) {
 	// and returns the entry or the existing entry
 	std::pair<map_iter, bool> res = map.insert(std::make_pair(vIndex, Matrix<T>::defValue));
 	return res.first->second;
+}
+
+template<typename T>
+const T& SparseMatrix<T>::get(const Point<int>& index) const {
+  Matrix<T>::boundsCheck(index);
+  int vIndex = Matrix<T>::calcIndex(index);
+
+  typename std::map<int, T>::const_iterator found = map.find(vIndex);
+
+  if (found != map.end())
+    {
+      return found->second;
+    }
+
+  return Matrix<T>::defValue;
 }
 
 template<typename T>
