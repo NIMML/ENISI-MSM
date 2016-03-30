@@ -2,9 +2,10 @@
 #define ENISI_MSM_H_PYLORI_MODEL_H
 
 #include <repast_hpc/Properties.h>
-#include "../ValueLayer.h"
+#include "repast_hpc/Schedule.h"
+
+#include "grid/ValueLayer.h"
 #include "agent/AgentGroupPackage.h"
-#include "agent/Cytokines.h"
 #include "grid/Borders.h"
 
 #include <boost/cstdint.hpp>
@@ -32,7 +33,6 @@ protected:
   void syncAgents();
 
   void diffuse();
-  void summation();
 
   void updateReferenceDiffuserGrid();
 
@@ -46,8 +46,6 @@ private:
   repast::GridDimensions _dimensions;
 
   ValueLayer * _p_valueLayer;
-
-  std::vector<ENISI::Diffuser *> _valueDiffusers;
 };
 
 boost::uintmax_t strToUIntMax(const std::string);

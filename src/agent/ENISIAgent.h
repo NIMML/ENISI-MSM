@@ -2,7 +2,6 @@
 #define ENISI_MSM_ENISIAGENT_H
 
 #include "repast_hpc/AgentId.h" //repast::Agent, repast::AgentId
-#include "repast_hpc/SharedContext.h"
 
 //TODO reconcile TOLEROGENIC and TOLEROGENIC
 namespace ENISI
@@ -14,8 +13,6 @@ private:
   Agent();
 
 public:
-  typedef repast::SharedContext< Agent > Context;
-
   enum Type
   {
     Bacteria = 0x01,
@@ -24,7 +21,8 @@ public:
     HPylori = 0x08,
     ImmuneCell = 0x10,
     Macrophage = 0x20,
-    Tcell = 0x40
+    Tcell = 0x40,
+    DiffuserValues = 0x80
   };
 
   enum Color {pink, red, blue, green, black, cyan };
@@ -54,11 +52,11 @@ protected:
 private:
   static const char * Names[];
   static int agentCount;
-
+  repast::AgentId id;
   int _state;
 
-  repast::AgentId id;
 };
+
 } // namespace ENISI
 
 #endif

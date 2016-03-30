@@ -18,11 +18,11 @@ class MacrophageGroup
 public:
   MacrophageGroup(Compartment * pCompartment, const size_t & count);
 
-  virtual ~MacrophageGroup();
+  ~MacrophageGroup();
 
-  virtual void act();
+  void act();
 
-  virtual std::string classname() {return "MacrophageGroup";}
+  std::string classname() {return "MacrophageGroup";}
 
 private:
   void act(const repast::Point<int> &);

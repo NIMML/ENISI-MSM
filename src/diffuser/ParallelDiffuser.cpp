@@ -9,8 +9,7 @@ ParallelDiffuser::~ParallelDiffuser()
   //delete _p_parallelDiffuser;
 }
 
-ParallelDiffuser::ParallelDiffuser(
-    ENISI::Compartment & compartment, double e, double d, bool t)
+ParallelDiffuser::ParallelDiffuser(ENISI::Compartment & compartment, double e, double d, bool t)
 : Diffuser(compartment.newDiffuserLayer(), e, d, t)
 {
   DiffuserLayer * p_layer = static_cast<DiffuserLayer *>(this->layer());

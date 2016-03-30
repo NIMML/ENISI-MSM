@@ -3,6 +3,8 @@
 
 #include "agent/ENISIAgent.h" 
 
+#include "repast_hpc/GridComponents.h"
+
 namespace ENISI {
 
 class DiffuserLayer;

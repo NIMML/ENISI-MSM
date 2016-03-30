@@ -3,12 +3,14 @@
 
 #include "ICompartmentLayer.h"
 #include "agent/ENISIAgent.h"
-#include "agent/AgentGroupPackage.h"
+#include "agent/AgentPackage.h"
 #include "repast_hpc/matrix.h"
 
 namespace ENISI {
 
 class DiffuserLayer;
+class Cytokine;
+class SharedValueLayer;
 
 class Compartment
 {
@@ -19,20 +21,22 @@ public:
     GridIterator();
   public:
     GridIterator(const repast::GridDimensions & dimensions);
+    GridIterator(const repast::Point< int > & origin, repast::Point< int > & extents);
     ~GridIterator();
-    bool next();
+    bool next(const size_t coodinate = 0);
     const repast::Point< int > & operator *();
-    const repast::Point< int > & operator ->();
+    const repast::Point< int > * operator ->();
     operator bool();
 
   private:
-    repast::GridDimensions mDimensions;
+    repast::Point< int > mOrigin;
+    repast::Point< int > mExtents;
     repast::Point< int > mCurrent;
   };
 private:
   static Compartment* INSTANCES[];
 
-  typedef ICompartmentLayer< Agent, AgentGroupPackage, AgentGroupPackageProvider, AgentGroupPackageReceiver > SharedLayer;
+  typedef ICompartmentLayer< Agent, AgentPackage, AgentPackageProvider, AgentPackageReceiver > SharedLayer;
 
 public:
   static const char* Names[];
@@ -57,8 +61,10 @@ public:
   ~Compartment();
 
   const repast::GridDimensions & dimensions() const;
-  const repast::GridDimensions & localDimensions() const;
-  const Borders * borders() const;
+  const repast::GridDimensions & localSpaceDimensions() const;
+  const repast::GridDimensions & localGridDimensions() const;
+  const Borders * spaceBorders() const;
+  const Borders * gridBorders() const;
   const Compartment * getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const;
   GridIterator begin();
 
@@ -74,6 +80,16 @@ public:
   void getNeighbors(const repast::Point< int > &pt, unsigned int range, const int & types, std::vector< Agent * > &out);
   void getAgents(const repast::Point< int > &pt, std::vector< Agent * > &out);
   void getAgents(const repast::Point< int > &pt, const int & types, std::vector< Agent * > &out);
+
+  size_t addCytokine(const std::string & name);
+  const std::vector< Cytokine * > & getCytokines() const;
+  const Cytokine * getCytokine(const std::string & name) const;
+  double & cytokineValue(const std::string & name, const repast::Point< int > & location);
+
+  void initializeDiffuserData();
+  std::vector< double > & operator[](const repast::Point< int > & location);
+  const std::vector< double > & operator[](const repast::Point< int > & location) const;
+  const std::vector< double > & operator[](const repast::Point< double > & location) const;
 
   DiffuserLayer * newDiffuserLayer();
 
@@ -91,11 +107,16 @@ private:
   sProperties mProperties;
   repast::GridDimensions mDimensions;
   SharedLayer * mpLayer;
-  Borders * mpBorders;
+  Borders * mpSpaceBorders;
+  Borders * mpGridBorders;
   // Borders * mpLocalBorders;
   std::vector< std::vector< Type > > mAdjacentCompartments;
   repast::DoubleUniformGenerator mUniform;
 
+  std::map< std::string, size_t > mCytokineMap;
+  std::vector< Cytokine * > mCytokines;
+
+  SharedValueLayer * mpDiffuserValues;
 }; /* end Compartment */
 
 }

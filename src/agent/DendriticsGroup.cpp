@@ -3,8 +3,6 @@
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
 
-#include "agent/Cytokines.h"
-
 using namespace ENISI;
 
 DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & count) :
@@ -100,14 +98,12 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       if (newState == DendriticState::EFFECTOR) /*Rule 56*/
         {
-          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IL6"].first->setValueAtCoord(70, pt);
-          cytoMap["IL12"].first->setValueAtCoord(70, pt);
+          mpCompartment->cytokineValue("IL6", pt) = 70;
+          mpCompartment->cytokineValue("IL12", pt) = 70;
         }
       else if (newState == DendriticState::TOLEROGENIC) /*Rule 57*/
         {
-          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["TGFb"].first->setValueAtCoord(70, pt);
+          mpCompartment->cytokineValue("TGFb", pt) = 70;
         }
 
       pAgent->setState(newState);

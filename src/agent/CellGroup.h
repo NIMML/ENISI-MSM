@@ -1,7 +1,12 @@
 #ifndef ENISI_MSM_AGENT_CELLGROUP_H
 #define ENISI_MSM_AGENT_CELLGROUP_H
 
+#include <map>
+
 #include "agent/ENISIAgent.h"
+
+#include "repast_hpc/Point.h"
+#include "repast_hpc/GridComponents.h"
 
 namespace ENISI
 {

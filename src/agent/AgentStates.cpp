@@ -52,14 +52,18 @@ size_t StateSize(const Agent::Type & type)
     case Agent::Tcell:
       return TcellState::KEEP_AT_END;
       break;
+
+    case Agent::DiffuserValues:
+      return 0;
+      break;
   }
 
   return 0;
 }
 
-void CountStates(const Agent::Type & type,
-                 std::vector< Agent * > agents,
-                 StateCount & stateCount)
+void ENISI::CountStates(const Agent::Type & type,
+                        std::vector< Agent * > agents,
+                        StateCount & stateCount)
 {
   stateCount = StateCount(StateSize(type), 0);
 
@@ -75,9 +79,9 @@ void CountStates(const Agent::Type & type,
     }
 }
 
-void CountStates(const int & types,
-                 std::vector< Agent * > agents,
-                 StateCounts & stateCounts)
+void ENISI::CountStates(const int & types,
+                        std::vector< Agent * > agents,
+                        StateCounts & stateCounts)
 {
   stateCounts.clear();
 

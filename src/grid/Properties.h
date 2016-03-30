@@ -8,6 +8,8 @@
 #ifndef ENISI_Properties
 #define ENISI_Properties
 
+#include <sstream>
+
 #include "repast_hpc/Properties.h"
 
 namespace ENISI

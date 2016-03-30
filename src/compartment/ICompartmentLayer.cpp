@@ -9,9 +9,3 @@ template class ICompartmentLayer<
   AgentGroupPackage, 
   AgentGroupPackageProvider, 
   AgentGroupPackageReceiver>;
-
-template class ICompartmentLayer<
-    Diffuser, 
-    DiffuserPackage, 
-    DiffuserPackageProvider, 
-    DiffuserPackageReceiver>;

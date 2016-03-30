@@ -2,8 +2,6 @@
 
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
-#include "agent/Cytokines.h"
-
 using namespace ENISI;
 
 EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const size_t & count):
@@ -90,9 +88,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       if (newState == EpithelialCellState::DAMAGED)
         {
-          Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IL6"].first->setValueAtCoord(70, pt);
-          cytoMap["IL12"].first->setValueAtCoord(70, pt);
+          mpCompartment->cytokineValue("IL6", pt) = 70;
+          mpCompartment->cytokineValue("IL12", pt) = 70;
         }
 
       pAgent->setState(newState);

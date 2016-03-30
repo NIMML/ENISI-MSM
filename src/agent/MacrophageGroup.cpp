@@ -4,12 +4,6 @@
 #include "compartment/Compartment.h"
 
 #include "agent/MacrophageODE1.h"
-#include "agent/Cytokines.h"
-
-// #include "agent/HPyloriGroup.h"
-// #include "agent/Cytokines.h"
-// #include "agent/MacrophageODE1.h"
-// #include "agent/MacrophageODE2.h"
 
 using namespace ENISI;
 
@@ -64,8 +58,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       unsigned int liveHPyloriCount = StateCount[HPyloriState::NAIVE];
 
       /*get concentration of IFNg and IL10 for COPASI input*/
-      double IFNg = Cytokines::instance().get("IFNg", pt);
-      double IL10 = Cytokines::instance().get("IL10", pt);
+      double IFNg = mpCompartment->cytokineValue("IFNg", pt);
+      double IL10 = mpCompartment->cytokineValue("IL10", pt);
 
       /* if no bacteria is around DC, then stays immature */
       if (liveHPyloriCount && state == MacrophageState::MONOCYTE)
@@ -99,14 +93,12 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       /* regulatory macrophages produce IL10 */
       if (newState == MacrophageState::REGULATORY)
         {
-          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IL10"].first->setValueAtCoord(70, pt);
+          mpCompartment->cytokineValue("IL10", pt) = 70;
         }
       /* inflammatory macrophages produce IFNg */
       else if (newState == MacrophageState::INFLAMMATORY)
         {
-          ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IFNg"].first->setValueAtCoord(70, pt);
+          mpCompartment->cytokineValue("IFNg", pt) = 70;
         }
 
       pAgent->setState(newState);

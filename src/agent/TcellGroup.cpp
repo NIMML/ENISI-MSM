@@ -3,7 +3,6 @@
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
 
-#include "agent/Cytokines.h"
 #include "agent/TcellODE.h"
 #include "grid/Borders.h"
 
@@ -77,9 +76,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
         continue;
 
       TcellState::State newState = state;
-      double IL6 = Cytokines::instance().get("IL6", pt);
-      double TGFb = Cytokines::instance().get("TGFb", pt);
-      double IL12 = Cytokines::instance().get("IL12", pt);
+      double IL6 = mpCompartment->cytokineValue("IL6", pt);
+      double TGFb = mpCompartment->cytokineValue("TGFb", pt);
+      double IL12 = mpCompartment->cytokineValue("IL12", pt);
 
       unsigned int macrophageregCount = MacrophageStateCount[MacrophageState::REGULATORY];
 
@@ -108,10 +107,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
           double IL10 = odeModel.getConcentration("IL10");
 
           /* get output cytokines */
-          Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-          cytoMap["IFNg"].first->setValueAtCoord(IFNg, pt);
-          cytoMap["IL17"].first->setValueAtCoord(IL17, pt);
-          cytoMap["IL10"].first->setValueAtCoord(IL10, pt);
+          mpCompartment->cytokineValue("IFNg", pt) = 70;
+          mpCompartment->cytokineValue("IL17", pt) = 70;
+          mpCompartment->cytokineValue("IL10", pt) = 70;
 
           if (IL17 > 0.5)
             {
@@ -202,23 +200,23 @@ void TcellGroup::act(const repast::Point<int> & pt)
               // addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
             }
           else if (state == TcellState::TH1
-                   && (mpCompartment->borders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
+                   && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
                    && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
-              Location[Borders::Y] -= 1.01 * mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
+              Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
               mpCompartment->moveTo(pAgent->getId(), Location);
             }
           else if (state == TcellState::iTREG
-                   && (mpCompartment->borders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
+                   && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
                    && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 33*/
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
-              Location[Borders::Y] -= 1.01 * mpCompartment->borders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
+              Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
               mpCompartment->moveTo(pAgent->getId(), Location);
             }
           else if ((eDCCount >0) && mpCompartment->getType() == Compartment::lamina_propria && (p_rule55 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -249,13 +247,11 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
         if (newState == TcellState::TH1) //Rule 29 If T cell state is TH1, then release IFNg
           {
-            ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-            cytoMap["IFNg"].first->setValueAtCoord(2, pt); // arbitrary value for IFNg
+            mpCompartment->cytokineValue("IFNg", pt) = 2; // arbitrary value for IFNg
           }
         else if (newState == TcellState::Tr || TcellState::iTREG)   //Rule 30, If T cell state is Tr then release IL10 [or iTREG]
           {
-            ENISI::Cytokines::CytoMap & cytoMap = Cytokines::instance().map();
-            cytoMap["IL10"].first->setValueAtCoord(3, pt); //arbitrary value for IL10
+            mpCompartment->cytokineValue("IL10", pt) = 3; //arbitrary value for IL10
           }
 
         pAgent->setState(newState);
