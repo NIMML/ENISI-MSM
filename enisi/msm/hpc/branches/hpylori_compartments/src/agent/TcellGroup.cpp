@@ -19,6 +19,7 @@ int p_rule33;/*Rule 33 parameter*/
 int p_rule35;/*Rule 35 parameter*/
 int p_rule36;/*Rule 36 parameter*/
 int p_rule37;/*Rule 37 parameter*/
+int p_rule38;/*Rule 38 parameter*
 int p_rule39;/*Rule 39 parameter*/
 int p_rule40;/*Rule 40 parameter*/
 int p_rule41;/*Rule 41 parameter*/
@@ -130,7 +131,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
               newState = TcellState::Tr; /* Rule 31- The rule is if nT is in contact with regulatory macrophages, and if IL10> a* IFNg
            //then nT -> Tr (state transition). Here, 'a' is an arbitrary constant and has been hard coded to 0.5 */
             }
-          else if ((th17Count > 0) && state == TcellState::TH17
+          else if ((tDCCount > 0) && state == TcellState::TH17
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 36*/
@@ -199,7 +200,13 @@ void TcellGroup::act(const repast::Point<int> & pt)
               // TODO CRITICAL Proliferation can always happen it is not condition dependent
               // addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
             }
-          else if (state == TcellState::TH1
+          else if ((th1Count > 0) && state == TcellState::iTREG
+                  && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule38 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
+        	  newState = TcellState::TH17;/*Rule 38*/ /*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
+          }
+          }
+        	  else if (state == TcellState::TH1
                    && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
                    && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
