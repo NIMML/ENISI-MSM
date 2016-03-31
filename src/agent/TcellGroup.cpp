@@ -7,7 +7,7 @@
 #include "grid/Borders.h"
 
 using namespace ENISI;
-int p_rule18;/*Rule 19 parameter*/
+int p_rule18;/*Rule 18 parameter*/
 int p_rule19;/*Rule 19 parameter*/
 int p_rule20;/*Rule 20 parameter*/
 int p_rule21;/*Rule 21 parameter*/
