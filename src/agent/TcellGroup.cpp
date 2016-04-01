@@ -13,6 +13,9 @@ int p_rule20;/*Rule 20 parameter*/
 int p_rule21;/*Rule 21 parameter*/
 int p_rule22;/*Rule 22 parameter*/
 int p_rule23;/*Rule 23 parameter*/
+int p_rule24;/*Rule 24 parameter*/
+int p_rule26;/*Rule 26 parameter*/
+int p_rule27;/*Rule 27 parameter*/
 int p_rule31;/*Rule 31 parameter*/
 int p_rule32;/*Rule 32 parameter*/
 int p_rule33;/*Rule 33 parameter*/
@@ -25,6 +28,8 @@ int p_rule40;/*Rule 40 parameter*/
 int p_rule41;/*Rule 41 parameter*/
 int p_rule53;/*Rule 53 parameter*/
 int p_rule55;/*Rule 55 parameter*/
+int p_rule55a;/*Rule 55a parameter*/
+int p_rule55b;/*Rule 55b parameter*/
 
 TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -114,7 +119,8 @@ void TcellGroup::act(const repast::Point<int> & pt)
           mpCompartment->cytokineValue("IFNg", pt) = 70;
           mpCompartment->cytokineValue("IL17", pt) = 70;
           mpCompartment->cytokineValue("IL10", pt) = 70;
-
+if (state != TcellState::Tr)
+{
           if (IL17 > 0.5)
             {
               newState = TcellState::TH17;
@@ -127,6 +133,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
             {
               newState = TcellState::iTREG;
             }
+}/*Rule 58*/
           else if ((IL10 > 0.5 * IFNg) && (macrophageregCount > 0)
                    && state == TcellState::NAIVE
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -236,11 +243,11 @@ void TcellGroup::act(const repast::Point<int> & pt)
         	  }
         	  else if (state == TcellState::NAIVE)
         	  {
-        		  if (p_rule55 > 0.5) //Arbitry - TODO CRITICAL determine value for p_rule55
+        		  if (p_rule55a > 0.5) //Arbitary - TODO CRITICAL determine value for p_rule55
         		  {
         			  newState = TcellState::TH17;
         		  }
-        		  else if (p_rule55 > 0.4) //Arbitary TODO CRITICAL determine this value - Rule 55
+        		  else if (p_rule55b > 0.4) //Arbitary TODO CRITICAL determine this value - Rule 55b
         		  {
         			  newState = TcellState::TH1;
         		  }
@@ -252,6 +259,24 @@ void TcellGroup::act(const repast::Point<int> & pt)
           {
         	  newState = TcellState::iTREG; /*Rule 53*/
           }
+          else if (state == TcellState::TH1 && mpCompartment ->getType() == Compartment::lamina_propria
+        		  && (p_rule27 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
+        	  mpCompartment->removeAgent(pAgent); /*Rule 27*- Th1 can die in LP*/
+        	                continue;
+          }
+          else if (state == TcellState::TH17 && mpCompartment ->getType() == Compartment::lamina_propria
+                  		  && (p_rule24 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                    {
+                  	  mpCompartment->removeAgent(pAgent); /*Rule 24*- TH17 can die in LP*/
+                  	                continue;
+                    }
+          else if (state == TcellState::iTREG && mpCompartment ->getType() == Compartment::lamina_propria
+                  		  && (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                    {
+                  	  mpCompartment->removeAgent(pAgent); /*Rule 26*- iTREG can die in LP*/
+                  	                continue;
+                    }
         }
 
         if (newState == TcellState::TH1) //Rule 29 If T cell state is TH1, then release IFNg
