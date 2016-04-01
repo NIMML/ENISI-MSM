@@ -37,3 +37,30 @@ gastric_lymph_node.grid.y = 5
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
 
+#Parameter rules
+p_rule18 = 
+p_rule19 =
+p_rule20 =
+p_rule21 =
+p_rule22 =
+p_rule23 =
+p_rule24 =
+p_rule26 = 
+p_rule27 = 
+p_rule29 = 
+p_rule30 = 
+p_rule36 =
+p_rule37 =
+p_rule38 =  
+p_rule39 = 
+p_rule40 =
+p_rule41 = 
+p_rule53 = 
+p_rule55 =
+p_rule55a = 
+p_rule55b =
+neardistance_border = 2 /*Arbitary*/
+a = 0.5 /*Arbitarty*/ /*Mentioned in Rule 31*/
+
+
+
