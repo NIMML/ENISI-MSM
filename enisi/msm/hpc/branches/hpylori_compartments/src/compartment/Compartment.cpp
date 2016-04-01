@@ -26,7 +26,6 @@ Compartment* Compartment::instance(const Compartment::Type & type)
 }
 
 Compartment::Compartment(const Type & type):
-  _diffuserLayers(),
   mType(type),
   mProperties(),
   mDimensions(),
@@ -42,8 +41,12 @@ Compartment::Compartment(const Type & type):
 
   Properties::getValue(Name + ".space.x", mProperties.spaceX);
   Properties::getValue(Name + ".space.y", mProperties.spaceY);
-  Properties::getValue(Name + ".grid.x", mProperties.gridX);
-  Properties::getValue(Name + ".grid.y", mProperties.gridY);
+  Properties::getValue("grid.size", mProperties.gridSize);
+
+  mProperties.gridX = ceil(mProperties.spaceX / mProperties.gridSize);
+  mProperties.spaceX = mProperties.gridX * mProperties.gridSize;
+  mProperties.gridY = ceil(mProperties.spaceY / mProperties.gridSize);
+  mProperties.spaceY = mProperties.gridY * mProperties.gridSize;
 
   std::string borderLow = Properties::getValue(Name + ".border.y.low");
   mProperties.borderLowCompartment = Properties::toEnum(borderLow, Names, INVALID);
@@ -90,9 +93,6 @@ Compartment::~Compartment()
   if (mpLayer != NULL) delete mpLayer;
   if (mpSpaceBorders != NULL) delete mpSpaceBorders;
   if (mpGridBorders != NULL) delete mpGridBorders;
-
-  while(!_diffuserLayers.empty()) 
-    delete _diffuserLayers.back(), _diffuserLayers.pop_back();
 }
 
 const repast::GridDimensions & Compartment::dimensions() const
@@ -125,9 +125,9 @@ const Compartment * Compartment::getAdjacentCompartment(const Borders::Coodinate
   return instance(mAdjacentCompartments[coordinate][side]);
 }
 
-Compartment::GridIterator Compartment::begin()
+Iterator Compartment::begin()
 {
-  return GridIterator(mpLayer->gridDimensions());
+  return Iterator(mpLayer->gridDimensions());
 }
 
 void Compartment::getLocation(const repast::AgentId & id, std::vector<double> & Location) const
@@ -311,7 +311,7 @@ size_t Compartment::addCytokine(const std::string & name)
 
   pCytokine->setIndex(mCytokines.size());
   mCytokines.push_back(pCytokine);
-  mCytokineMap.insert(std::make_pair(pCytokine->getName(), pCytokine->getIndex()));
+  mCytokineMap.insert(std::make_pair(name, pCytokine->getIndex()));
 
   return pCytokine->getIndex();
 }
@@ -357,7 +357,7 @@ void Compartment::initializeDiffuserData()
           *itInitialValue = (*it)->getInitialValue();
         }
 
-      for (GridIterator itGrid = begin(); itGrid; itGrid.next())
+      for (Iterator itGrid = begin(); itGrid; itGrid.next())
         {
           mpDiffuserValues->operator[](*itGrid) = InitialValues;
         }
@@ -379,35 +379,14 @@ const std::vector< double > & Compartment::operator[](const repast::Point< doubl
   return operator[](mpLayer->spaceToGrid(location));
 }
 
-DiffuserLayer * Compartment::newDiffuserLayer()
+void Compartment::synchronizeCells()
 {
-  DiffuserLayer * p_layer = new DiffuserLayer(mDimensions);
-  _diffuserLayers.push_back(p_layer);
-  return p_layer;
+  mpLayer->synchronizeCells();
 }
 
-void Compartment::requestDiffuserAgents()
+void Compartment::synchronizeDiffuser()
 {
-  for (size_t i = 0; i < _diffuserLayers.size(); ++i)
-  {
-    _diffuserLayers[i]->requestAgents();
-  }
-}
-
-void Compartment::diffuse()
-{
-  for (size_t i = 0; i < _diffuserLayers.size(); i++)
-  {
-    _diffuserLayers[i]->diffuse();
-  }
-}
-
-void Compartment::updateReferenceDiffuserGrid()
-{
-  for (size_t i = 0; i < _diffuserLayers.size(); i++)
-  {
-    _diffuserLayers[i]->updateReferenceDiffuserGrid();
-  }
+  mpLayer->synchronizeDiffuser();
 }
 
 const Compartment::Type & Compartment::getType() const
@@ -415,75 +394,20 @@ const Compartment::Type & Compartment::getType() const
   return mType;
 }
 
+size_t Compartment::localCount(const size_t & globalCount)
+{
+  size_t rank = repast::RepastProcess::instance()->rank();
+  size_t worldSize = repast::RepastProcess::instance()->worldSize();
+
+  size_t LocalCount = globalCount / worldSize;
+
+  if (rank < globalCount - LocalCount * worldSize) LocalCount++;
+
+  return LocalCount;
+}
+
 std::string Compartment::getName() const
 {
   return Names[mType];
-}
-
-Compartment::GridIterator::GridIterator(const repast::GridDimensions & dimensions):
-  mOrigin(dimensions.dimensionCount(), 0),
-  mExtents(dimensions.dimensionCount(), 0),
-  mCurrent(dimensions.dimensionCount(), 0)
-{
-  for (size_t i = 0; i < dimensions.dimensionCount(); ++i)
-    {
-      mOrigin[i] = floor(dimensions.origin(i));
-      mExtents[i] = floor(dimensions.extents(i));
-    }
-
-  mCurrent = mOrigin;
-}
-
-Compartment::GridIterator::GridIterator(const repast::Point< int > & origin, repast::Point< int > & extents):
-  mOrigin(origin),
-  mExtents(extents),
-  mCurrent(origin)
-{}
-
-Compartment::GridIterator::~GridIterator()
-{}
-
-bool Compartment::GridIterator::next(const size_t coodinate)
-{
-  size_t i, imax = mOrigin.dimensionCount();
-
-  for (i = coodinate; i < imax; ++i)
-    {
-      mCurrent[i]++;
-
-      if (mCurrent[i] < mOrigin[i] + mExtents[i])
-        {
-          return true;
-        }
-
-      mCurrent[i] = round(mOrigin[i]);
-    }
-
-  return false;
-}
-
-const repast::Point< int > & Compartment::GridIterator::operator *()
-{
-  return mCurrent;
-}
-
-const repast::Point< int > * Compartment::GridIterator::operator ->()
-{
-  return &mCurrent;
-}
-
-Compartment::GridIterator::operator bool()
-{
-  size_t i, imax = mOrigin.dimensionCount();
-
-  for (i = 0; i < imax; ++i)
-    {
-      if (mCurrent[i] >= mOrigin[i] + mExtents[i])
-        {
-          return false;
-        }
-    }
-
-  return true;
 }
 

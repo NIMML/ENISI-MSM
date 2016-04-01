@@ -51,7 +51,7 @@ DiffuserImpl::DiffuserImpl(Compartment * pCompartment) :
 
 void DiffuserImpl::computeVals1D(const double & deltaT)
 {
-  Compartment::GridIterator itPoint(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itPoint(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
 
   std::vector< double > * pOldValueE = &mpCurrentValues->operator [](*itPoint);
   itPoint.next();
@@ -96,7 +96,7 @@ void DiffuserImpl::computeVals1D(const double & deltaT)
 
 void DiffuserImpl::computeVals2D(const double & deltaT)
 {
-  Compartment::GridIterator itNorth(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itNorth(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
 
   std::vector< double > * pOldValueNE = &mpCurrentValues->operator [](*itNorth);
   itNorth.next();
@@ -104,7 +104,7 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
   itNorth.next();
   std::vector< double > * pOldValueNW = &mpCurrentValues->operator [](*itNorth);
 
-  Compartment::GridIterator itPoint(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itPoint(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
   itPoint.next(1); // Move 1 row down
 
   std::vector< double > * pOldValueE = &mpCurrentValues->operator [](*itPoint);
@@ -114,7 +114,7 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
   itPoint.next();
   std::vector< double > * pOldValueW = &mpCurrentValues->operator [](*itPoint);
 
-  Compartment::GridIterator itSouth(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itSouth(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
   itSouth.next(1); itSouth.next(1); // Move 2 rows down
 
   std::vector< double > * pOldValueSE = &mpCurrentValues->operator [](*itSouth);
@@ -229,8 +229,8 @@ void DiffuserImpl::diffuse(const double & deltaT)
   double DeltaT = deltaT/steps;
 
   // Copy the value layer into the local matrix
-  Compartment::GridIterator itValue(mOrigin, mExtents);
-  Compartment::GridIterator itLocal(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itValue(mOrigin, mExtents);
+  Iterator itLocal(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
 
   for (;itValue; itValue.next(), itLocal.next())
     {
@@ -245,8 +245,8 @@ void DiffuserImpl::diffuse(const double & deltaT)
     }
 
   // Copy local matrix into value layer
-  itValue = Compartment::GridIterator (mOrigin, mExtents);
-  itLocal = Compartment::GridIterator (repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  itValue = Iterator (mOrigin, mExtents);
+  itLocal = Iterator (repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
 
   for (;itValue; itValue.next(), itLocal.next())
     {

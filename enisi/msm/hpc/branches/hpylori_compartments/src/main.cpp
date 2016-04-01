@@ -17,28 +17,31 @@ int main(int argc, char** argv)
 
   repast::RepastProcess::init(configFile, &world);
 
-  std::string debugWaitString = props.getProperty("debug.wait");
-  bool debugwait = 0;
-  if (! debugWaitString.empty()) debugwait = repast::strToInt(debugWaitString);
+  int debugwait = 0;
+  if (!ENISI::Properties::getValue("debug.wait", debugwait)) debugwait = 0;
 
   if(debugwait)
-  {
-    int rank = repast::RepastProcess::instance()->rank() ;
-
-    if (rank == 0) 
     {
-      std::cout << "Waiting for GDB to connect\n";
-      std::cout << "After connecting, run the following commands:\n";
-      std::cout << "(gdb) set debugwait = 0\n";
-      std::cout << "(gdb) continue\n";
-      std::cout << "\nConnect to GDB on the PIDs listed below\n";
-    }
+      int rank = repast::RepastProcess::instance()->rank() ;
 
-    printf("RANK %d PID %d\n", rank, getpid());
-  }
+      if (rank == 0)
+        {
+          std::cout << "Waiting for GDB to connect\n";
+          std::cout << "After connecting, run the following commands:\n";
+          std::cout << "(gdb) set debugwait = 0\n";
+          std::cout << "(gdb) continue\n";
+          std::cout << "\nConnect to GDB on the PIDs listed below\n";
+        }
+      else
+        {
+          debugwait = 1;
+        }
+
+      printf("RANK %d PID %d\n", rank, getpid());
+    }
   while (debugwait) ;
 
-  HPModel model(&props);
+  ENISI::HPModel model;
 
   /*
   repast::ScheduleRunner& runner = 

@@ -1,37 +1,90 @@
 #include "HPyloriModel.h"
-#include "agent/AgentFactory.h"
-#include "compartment/CellLayer.h"
-#include "diffuser/ParallelDiffuser.h" 
+
+#include "grid/Properties.h"
+
 #include "compartment/Compartment.h"
-#include "agent/ENISIAgent.h"
+
+#include "agent/BacteriaGroup.h"
+#include "agent/DendriticsGroup.h"
+#include "agent/EpithelialCellGroup.h"
+#include "agent/HPyloriGroup.h"
+
+using namespace ENISI;
 
 HPModel::~HPModel()
 {
-  /* Context deals with these pointers automatically in its destructor */
-  /* Don't delete them unless you want a segmentation fault */
-  //delete _p_valueLayer;
+  if (mp_lumen != NULL) delete mp_lumen;
+  if (mp_epithilium != NULL) delete mp_epithilium;
+  if (mp_lamina_propria != NULL) delete mp_lamina_propria;
+  if (mp_gastric_lymph_node != NULL) delete mp_gastric_lymph_node;
 }
 
-HPModel::HPModel(const repast::Properties * p_props) 
-  : _p_props(p_props),
-    _height(repast::strToInt(_p_props->getProperty("grid.height"))), 
-    _width(repast::strToInt(_p_props->getProperty("grid.width"))),
-    _dimensions(
-      repast::Point<double>(0, 0), repast::Point<double>(_width, _height)
-    )
+HPModel::HPModel():
+  mp_lumen(NULL),
+  mp_epithilium(NULL),
+  mp_lamina_propria(NULL),
+  mp_gastric_lymph_node(NULL)
 { 
-  ENISI::Compartment::instance(ENISI::Compartment::lumen);
-  // setUpValueLayer();
-
-  // setUpCytokines();
-
-  // createAgentGroup("Bacteria", "bacteria.count");
-  // createAgentGroup("Tcell", "tcell.count");
-  // createAgentGroup("Dendritics", "dendritic.count");
+  initialize_lumen();
+  initialize_epithilium();
+  initialize_lamina_propria();
+  initialize_gastric_lymph_node();
 }
+
+void HPModel::initialize_lumen()
+{
+  mp_lumen = ENISI::Compartment::instance(ENISI::Compartment::lumen);
+
+  size_t count;
+
+  if (!Properties::getValue("lumen.HPylori.count", count)) count = 0;
+  new HPyloriGroup(mp_lumen, count);
+
+  if (!Properties::getValue("lumen.Bacteria.count", count)) count = 0;
+  new BacteriaGroup(mp_lumen, count);
+
+  mp_lumen->synchronizeCells();
+}
+
+void HPModel::initialize_epithilium()
+{
+  mp_epithilium = ENISI::Compartment::instance(ENISI::Compartment::epithilium);
+
+  size_t count;
+
+  if (!Properties::getValue("epithilium.EpithelialCell.count", count)) count = 0;
+  new EpithelialCellGroup(mp_epithilium, count);
+
+  if (!Properties::getValue("epithilium.Dendritics.count", count)) count = 0;
+  new DendriticsGroup(mp_epithilium, count);
+
+  mp_epithilium->synchronizeCells();
+}
+
+void HPModel::initialize_lamina_propria()
+{
+  mp_lamina_propria = ENISI::Compartment::instance(ENISI::Compartment::lamina_propria);
+
+  mp_lamina_propria->addCytokine("IL6");
+  mp_lamina_propria->addCytokine("TGFb");
+  mp_lamina_propria->addCytokine("IL12");
+  mp_lamina_propria->addCytokine("IL17");
+  mp_lamina_propria->addCytokine("IL10");
+  mp_lamina_propria->addCytokine("IFNg");
+
+  mp_lamina_propria->synchronizeDiffuser();
+}
+
+void HPModel::initialize_gastric_lymph_node()
+{
+  mp_gastric_lymph_node = ENISI::Compartment::instance(ENISI::Compartment::gastric_lymph_node);
+
+}
+
 
 void HPModel::initSchedule(repast::ScheduleRunner & runner) 
 {
+  /*
   runner.scheduleEvent(1, repast::Schedule::FunctorPtr(
     new repast::MethodFunctor<HPModel> (
       this, &HPModel::requestAgents)));
@@ -52,16 +105,17 @@ void HPModel::initSchedule(repast::ScheduleRunner & runner)
     )
   );
 
-
   runner.scheduleEndEvent(
     repast::Schedule::FunctorPtr(
       new repast::MethodFunctor<HPModel> (
       	this, &HPModel::recordResults)
     )
   );
+  */
 
-  /*Schedule will repeat infinitely without a stop*/
-  int stopAt = repast::strToInt(_p_props->getProperty("stop.at"));
+  /* Schedule will repeat infinitely without a stop */
+  int stopAt = 1;
+  Properties::getValue("stop.at", stopAt);
   runner.scheduleStop(stopAt); 
 
   return;
@@ -139,30 +193,11 @@ void HPModel::syncAgents()
 
 void HPModel::diffuse() 
 {
-  ENISI::Compartment::instance(ENISI::Compartment::lumen)->diffuse();
-/*  for (size_t i = 0; i < _valueDiffusers.size(); ++i) */
-  //{
-    //_valueDiffusers[i]->diffuse();
-  /*}*/
-}
-
-void HPModel::updateReferenceDiffuserGrid()
-{
-  ENISI::Compartment::instance(ENISI::Compartment::lumen)->updateReferenceDiffuserGrid();
 }
 
 void HPModel::recordResults()
 {
   return;
-}
-
-void HPModel::setUpValueLayer()
-{
-  std::string name = "Summation";
-  bool dense = true;
-
-  _p_valueLayer = new ValueLayer(name, _dimensions, dense);
-  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->addValueLayer(_p_valueLayer);
 }
 
 void HPModel::setUpCytokines()
@@ -175,40 +210,4 @@ void HPModel::setUpCytokines()
   pCompartment->addCytokine("IL17");
   pCompartment->addCytokine("IL10");
   pCompartment->addCytokine("IFNg");
-}
-
-void HPModel::createAgentGroup(const std::string & agentName, const std::string & agentCountProperty)
-{
-  boost::uintmax_t count = 
-    strToUIntMax(_p_props->getProperty(agentCountProperty));
-
-  int worldSize = repast::RepastProcess::instance()->worldSize();
-
-  boost::uintmax_t countPerProcess = count / worldSize;
-  boost::uintmax_t remainder = count % worldSize;
-
-  /* Deal with uneven agent division by adding 1 to agent count up to the
-     total remainder */
-  unsigned int rank = repast::RepastProcess::instance()->rank();
-  if ( remainder && (remainder > rank) ) countPerProcess++;
-
-  ENISI::AgentGroupFactory::create(
-    agentName + "Group", ENISI::Compartment::instance(ENISI::Compartment::lumen), countPerProcess
-  );
-}
-
-boost::uintmax_t strToUIntMax(const std::string val)
-{
-  boost::uintmax_t i;
-
-  std::istringstream stream(val);
-
-  if ( ! (stream >> i) )
-  {
-    std::string err = 
-      "String '" + val + "' cannot be converted to boost::uintmax_t";
-    throw std::invalid_argument(err);
-  }
-
-  return i;
 }

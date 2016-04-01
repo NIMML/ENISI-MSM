@@ -10,7 +10,9 @@ using namespace ENISI;
 MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & count) :
   mpCompartment(pCompartment)
 {
-  for (size_t i = 0; i < count; i++)
+  size_t LocalCount = mpCompartment->localCount(count);
+
+  for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Macrophage, MacrophageState::MONOCYTE));
     }
@@ -18,7 +20,7 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & coun
 
 void MacrophageGroup::act()
 {
-  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
+  for (Iterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }

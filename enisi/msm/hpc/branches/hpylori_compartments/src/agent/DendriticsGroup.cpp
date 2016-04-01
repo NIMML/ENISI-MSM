@@ -8,14 +8,17 @@ using namespace ENISI;
 DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & count) :
   mpCompartment(pCompartment)
 {
-  for (size_t i = 0; i < count; i++)
+  size_t LocalCount = mpCompartment->localCount(count);
+
+  for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Dentritics, DendriticState::IMMATURE));
     }
 }
+
 void DendriticsGroup::act()
 {
-  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
+  for (Iterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }

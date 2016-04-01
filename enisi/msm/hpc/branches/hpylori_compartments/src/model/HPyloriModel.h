@@ -4,29 +4,26 @@
 #include <repast_hpc/Properties.h>
 #include "repast_hpc/Schedule.h"
 
-#include "grid/ValueLayer.h"
-#include "agent/AgentGroupPackage.h"
-#include "grid/Borders.h"
+namespace ENISI
+{
 
-#include <boost/cstdint.hpp>
+class Compartment;
 
 class HPModel
 { 
 public:
-  typedef ENISI::Borders Borders;
-  typedef repast::DiscreteValueLayer<double, Borders> ValueLayer;
-
-
-  HPModel(const repast::Properties *);
+  HPModel();
   ~HPModel();
 
   void initSchedule(repast::ScheduleRunner &); 
 
 protected:
-  void setUpValueLayer();
-  void setUpCytokines();
+  void initialize_lumen();
+  void initialize_epithilium();
+  void initialize_lamina_propria();
+  void initialize_gastric_lymph_node();
 
-  void createAgentGroup(const std::string & num, const std::string & grp);
+  void setUpCytokines();
 
   void requestAgents();
   void act();
@@ -37,17 +34,14 @@ protected:
   void updateReferenceDiffuserGrid();
 
   void recordResults();
+
 private:
-  const repast::Properties * _p_props;
-
-  const int _height;
-  const int _width;
-
-  repast::GridDimensions _dimensions;
-
-  ValueLayer * _p_valueLayer;
+  Compartment * mp_lumen;
+  Compartment * mp_epithilium;
+  Compartment * mp_lamina_propria;
+  Compartment * mp_gastric_lymph_node;
 };
 
-boost::uintmax_t strToUIntMax(const std::string);
+} // namespace ENISI
 
 #endif

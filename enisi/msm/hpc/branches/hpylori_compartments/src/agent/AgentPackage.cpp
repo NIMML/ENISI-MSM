@@ -5,6 +5,16 @@
 /* Serializable Agent Package Data */
 using namespace ENISI;
 
+AgentPackage::AgentPackage() :
+  id(),
+  rank(),
+  type(),
+  currentRank(),
+  state(),
+  origin(repast::Point< int >(0, 0)),
+  bufferValues(repast::Point< int >(0, 0))
+{}
+
 // For serialization
 AgentPackage::AgentPackage(int _id,
                            int _rank,

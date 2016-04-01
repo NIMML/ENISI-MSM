@@ -12,8 +12,6 @@ class Agent;
 /* Serializable Agent Package */
 struct AgentPackage
 {
-private:
-  AgentPackage(); // For serialization
 
 public:
   int    id;
@@ -25,6 +23,7 @@ public:
   SparseMatrix< std::vector< double > > bufferValues;
 
   /* Constructors */
+  AgentPackage();
 
   AgentPackage(int _id,
                int _rank,

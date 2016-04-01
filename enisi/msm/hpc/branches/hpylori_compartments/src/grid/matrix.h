@@ -270,6 +270,8 @@ public:
 	 */
 	void set(const T& value, const Point<int>& index);
 
+  template<class Archive>
+  void serialize(Archive &ar, unsigned int version);
 };
 
 template<typename T>
@@ -330,7 +332,14 @@ void SparseMatrix<T>::set(const T& value, const Point<int>& index) {
 	map[vIndex] = value;
 }
 
-
+template<typename T> template< class Archive>
+void SparseMatrix<T>::serialize(Archive &ar, unsigned int version)
+{
+  ar & Matrix<T>::defValue;
+  ar & Matrix<T>::_size;
+  ar & map;
 }
+
+} // namespace ENISI
 
 #endif /* ENISI_MATRIX_H_ */

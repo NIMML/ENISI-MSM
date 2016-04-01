@@ -8,7 +8,9 @@ using namespace ENISI;
 HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
 {
-  for (size_t i = 0; i < count; i++)
+  size_t LocalCount = mpCompartment->localCount(count);
+
+  for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::HPylori, HPyloriState::NAIVE));
     }
@@ -16,7 +18,7 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const size_t & count):
 
 void HPyloriGroup::act()
 {
-  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
+  for (Iterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }
