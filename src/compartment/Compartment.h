@@ -5,6 +5,7 @@
 #include "agent/ENISIAgent.h"
 #include "agent/AgentPackage.h"
 #include "repast_hpc/matrix.h"
+#include "grid/Iterator.h"
 
 namespace ENISI {
 
@@ -14,25 +15,6 @@ class SharedValueLayer;
 
 class Compartment
 {
-public:
-  class GridIterator
-  {
-  private:
-    GridIterator();
-  public:
-    GridIterator(const repast::GridDimensions & dimensions);
-    GridIterator(const repast::Point< int > & origin, repast::Point< int > & extents);
-    ~GridIterator();
-    bool next(const size_t coodinate = 0);
-    const repast::Point< int > & operator *();
-    const repast::Point< int > * operator ->();
-    operator bool();
-
-  private:
-    repast::Point< int > mOrigin;
-    repast::Point< int > mExtents;
-    repast::Point< int > mCurrent;
-  };
 private:
   static Compartment* INSTANCES[];
 
@@ -46,6 +28,7 @@ public:
   {
     double spaceX;
     double spaceY;
+    double gridSize;
     double gridX;
     double gridY;
     Type borderLowCompartment;
@@ -66,7 +49,7 @@ public:
   const Borders * spaceBorders() const;
   const Borders * gridBorders() const;
   const Compartment * getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const;
-  GridIterator begin();
+  Iterator begin();
 
   void getLocation(const repast::AgentId & id, std::vector<double> & Location) const;
   bool moveTo(const repast::AgentId &id, const repast::Point< double > &pt);
@@ -91,25 +74,24 @@ public:
   const std::vector< double > & operator[](const repast::Point< int > & location) const;
   const std::vector< double > & operator[](const repast::Point< double > & location) const;
 
-  DiffuserLayer * newDiffuserLayer();
+  void synchronizeCells();
+  void synchronizeDiffuser();
 
-  void requestDiffuserAgents();
-  void diffuse();
-  void updateReferenceDiffuserGrid();
   const Type & getType() const;
+  size_t localCount(const size_t & globalCount);
+
 private:
 
   std::string getName() const;
 
-  std::vector<DiffuserLayer *> _diffuserLayers;
-
   Type mType;
+
   sProperties mProperties;
   repast::GridDimensions mDimensions;
   SharedLayer * mpLayer;
   Borders * mpSpaceBorders;
   Borders * mpGridBorders;
-  // Borders * mpLocalBorders;
+
   std::vector< std::vector< Type > > mAdjacentCompartments;
   repast::DoubleUniformGenerator mUniform;
 

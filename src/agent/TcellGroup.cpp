@@ -19,7 +19,7 @@ int p_rule33;/*Rule 33 parameter*/
 int p_rule35;/*Rule 35 parameter*/
 int p_rule36;/*Rule 36 parameter*/
 int p_rule37;/*Rule 37 parameter*/
-int p_rule38;/*Rule 38 parameter*
+int p_rule38;/*Rule 38 parameter*/
 int p_rule39;/*Rule 39 parameter*/
 int p_rule40;/*Rule 40 parameter*/
 int p_rule41;/*Rule 41 parameter*/
@@ -29,7 +29,9 @@ int p_rule55;/*Rule 55 parameter*/
 TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
 {
-  for (size_t i = 0; i < count; i++)
+  size_t LocalCount = mpCompartment->localCount(count);
+
+  for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::NAIVE));
     }
@@ -37,7 +39,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
 
 void TcellGroup::act()
 {
-  for (Compartment::GridIterator it = mpCompartment->begin(); it; it.next())
+  for (Iterator it = mpCompartment->begin(); it; it.next())
     {
       act(*it);
     }
@@ -77,6 +79,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
         continue;
 
       TcellState::State newState = state;
+
       double IL6 = mpCompartment->cytokineValue("IL6", pt);
       double TGFb = mpCompartment->cytokineValue("TGFb", pt);
       double IL12 = mpCompartment->cytokineValue("IL12", pt);
@@ -202,11 +205,10 @@ void TcellGroup::act(const repast::Point<int> & pt)
             }
           else if ((th1Count > 0) && state == TcellState::iTREG
                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule38 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-          {
-        	  newState = TcellState::TH17;/*Rule 38*/ /*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
-          }
-          }
-        	  else if (state == TcellState::TH1
+            {
+              newState = TcellState::TH17;/*Rule 38*/ /*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
+            }
+          else if (state == TcellState::TH1
                    && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
                    && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/

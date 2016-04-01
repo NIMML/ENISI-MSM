@@ -45,6 +45,8 @@ public:
   void setBorderType(const Coodinate &coordinate, const Side & side, const Type & type);
   const Type & getBorderType(const Coodinate &coordinate, const Side & side) const;
 
+  bool isPeriodic() const;
+
 protected:
   size_t mDimension;
 
@@ -55,10 +57,9 @@ private:
 
 class SimpleBorders  : public repast::Borders
 {
-  private:
+  public:
     SimpleBorders();
 
-  public:
     SimpleBorders(repast::GridDimensions d);
     virtual ~SimpleBorders();
 
@@ -67,6 +68,8 @@ class SimpleBorders  : public repast::Borders
 
     void translate(const std::vector<double>& oldPos, std::vector<double>& newPos, const std::vector<double>& displacement) const;
     void translate(const std::vector<int>& oldPos, std::vector<int>& newPos, const std::vector<int>& displacement) const;
+
+    bool isPeriodic() const;
 };
 
 } /* namespace ENISI */

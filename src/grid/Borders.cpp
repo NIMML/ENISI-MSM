@@ -372,6 +372,15 @@ const Borders::Type & Borders::getBorderType(const Borders::Coodinate &coordinat
   return *pType;
 }
 
+bool Borders::isPeriodic() const
+{
+  return true;
+}
+
+SimpleBorders::SimpleBorders():
+  repast::Borders(repast::GridDimensions())
+{}
+
 SimpleBorders::SimpleBorders(repast::GridDimensions d):
   repast::Borders(d)
 {}
@@ -427,4 +436,9 @@ void SimpleBorders::translate(const std::vector<int>& in, std::vector<int>& out,
     {
       *itOut = *itIn + *itMove;
     }
+}
+
+bool SimpleBorders::isPeriodic() const
+{
+  return true;
 }
