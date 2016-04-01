@@ -5,6 +5,12 @@
 
 using namespace ENISI;
 
+int p_rule3;
+int p_rule4a;
+int p_rule4b;
+int p_rule5;
+int p_HPyloriDeath;
+
 HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
 {
@@ -55,7 +61,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
 
       /* move HPylori across epithelial border if in contact with damaged Epithelial cell *Rule 3*/
-      if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
+      if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
@@ -70,12 +76,26 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       unsigned int th17Count = TcellStateCount[TcellState::TH17];
 
       /* HPylori dies is nearby damaged epithelial cell, th1 or th17* *Rule 5,6,7*/
-      if (damagedEpithelialCellCount || th1Count || th17Count)
+      if ((damagedEpithelialCellCount || th1Count || th17Count) && (p_rule5 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())))
         {
           // newState = HPyloriState::DEAD;
           mpCompartment->removeAgent(pAgent);
         }
-
+      if ((p_HPyloriDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                  {
+                    mpCompartment->removeAgent(pAgent);
+                    continue;
+                  }
+      if (mpCompartment->getType() == Compartment::lamina_propria && (p_rule4a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                        {
+    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
+                          continue;
+                        }
+      if (mpCompartment->getType() == Compartment::lumen && (p_rule4b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                        {
+    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
+                          continue;
+                        }
       /* TODO: H Pylori are removed when macrophage uptake/differentiate */
 
       // TODO CRITICAL Determine the maximum speed

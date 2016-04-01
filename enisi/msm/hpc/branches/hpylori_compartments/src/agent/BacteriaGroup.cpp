@@ -5,6 +5,12 @@
 
 using namespace ENISI;
 
+int p_BacteriaKill;
+int p_BacteriaDeath;
+int p_BacteriaLPProl;
+int p_BacteriaLumProl;
+int p_rule1;
+
 BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
 {
@@ -57,7 +63,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
 
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
-      if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen)
+      if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen && (p_rule1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
@@ -73,7 +79,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
       /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
       if ((newState == BacteriaState::INFECTIOUS)
-          && (damagedEpithelialCellCount || th1Count || th17Count))
+          && (damagedEpithelialCellCount || th1Count || th17Count) && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->removeAgent(pAgent);
           continue;
@@ -84,6 +90,22 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
         {
           newState = BacteriaState::INFECTIOUS;
         }
+
+      if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                  {
+                    mpCompartment->removeAgent(pAgent);
+                    continue;
+                  }
+      if (mpCompartment->getType() == Compartment::lamina_propria && (p_BacteriaLPProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                        {
+    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
+                          continue;
+                        }
+      if (mpCompartment->getType() == Compartment::lumen && (p_BacteriaLumProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                        {
+    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
+                          continue;
+                        }
 
       /* TODO: Bacteria are removed when macrophage uptake/differentiate */
 
