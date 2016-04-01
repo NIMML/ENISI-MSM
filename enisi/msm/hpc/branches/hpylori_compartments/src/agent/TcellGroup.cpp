@@ -30,6 +30,7 @@ int p_rule53;/*Rule 53 parameter*/
 int p_rule55;/*Rule 55 parameter*/
 int p_rule55a;/*Rule 55a parameter*/
 int p_rule55b;/*Rule 55b parameter*/
+int neardistance_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
 TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -216,7 +217,7 @@ if (state != TcellState::Tr)
               newState = TcellState::TH17;/*Rule 38*/ /*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
             }
           else if (state == TcellState::TH1
-                   && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
+                   && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords() , Borders::Y, Borders::LOW)) < neardistance_border //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
                    && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
             {
@@ -226,7 +227,7 @@ if (state != TcellState::Tr)
               mpCompartment->moveTo(pAgent->getId(), Location);
             }
           else if (state == TcellState::iTREG
-                   && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < 2 //TODO - CRITICAL Determine this value
+                   && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < neardistance_border //TODO - CRITICAL Determine this value
                    && mpCompartment->getType() == Compartment::gastric_lymph_node
                    && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 33*/
             {
