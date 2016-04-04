@@ -18,7 +18,7 @@ class Compartment
 private:
   static Compartment* INSTANCES[];
 
-  typedef ICompartmentLayer< Agent, AgentPackage, AgentPackageProvider, AgentPackageReceiver > SharedLayer;
+  typedef ICompartmentLayer< Agent, AgentPackage, AgentPackageExchange > SharedLayer;
 
 public:
   static const char* Names[];

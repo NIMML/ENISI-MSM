@@ -32,6 +32,8 @@ void BacteriaGroup::act()
 
 void BacteriaGroup::act(const repast::Point<int> & pt)
 {
+  std::vector< double > Location(2, 0);
+
   std::vector< Agent * > Bacteria;
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
   std::vector< Agent * >::iterator it = Bacteria.begin();
@@ -74,7 +76,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           mpCompartment->moveTo(pAgent->getId(), Location);
         }
 
-       unsigned int th1Count = TcellStateCount[TcellState::TH1];
+      unsigned int th1Count = TcellStateCount[TcellState::TH1];
       unsigned int th17Count = TcellStateCount[TcellState::TH17];
 
       /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
@@ -92,20 +94,22 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
         }
 
       if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                  {
-                    mpCompartment->removeAgent(pAgent);
-                    continue;
-                  }
+        {
+          mpCompartment->removeAgent(pAgent);
+          continue;
+        }
+
       if (mpCompartment->getType() == Compartment::lamina_propria && (p_BacteriaLPProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                        {
-    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
-                          continue;
-                        }
+        {
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
+        }
+
       if (mpCompartment->getType() == Compartment::lumen && (p_BacteriaLumProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                        {
-    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
-                          continue;
-                        }
+        {
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
+        }
 
       /* TODO: Bacteria are removed when macrophage uptake/differentiate */
 

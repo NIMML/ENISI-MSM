@@ -15,6 +15,9 @@ int p_rule34;
 int p_rule51a;
 int p_rule51b;
 int p_rule52;
+double p_iDCEpitheliumDistance;
+double p_iDCLPDistance;
+double p_mDCGLNDistance;
 
 DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & count) :
   mpCompartment(pCompartment)
@@ -38,10 +41,15 @@ void DendriticsGroup::act()
 
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
+  std::vector< double > Location(2, 0);
+
   std::vector< Agent * > Dentritics;
   mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
   std::vector< Agent * >::iterator it = Dentritics.begin();
   std::vector< Agent * >::iterator end = Dentritics.end();
+
+  StateCount DendriticsStateCount;
+  CountStates(Agent::Dentritics, Dentritics, DendriticsStateCount);
 
   std::vector< Agent * > Bacteria;
   // TODO CRITICAL Retrieve Bacteria in neighboring compartment if appropriate;
@@ -83,12 +91,12 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
       unsigned int liveHPyloriCount = HPyloriStateCount[HPyloriState::NAIVE];
-      unsigned int eDendriticsCount = DendriticsStateCount[DendriticsState::EFFECTOR];
+      unsigned int eDendriticsCount = DendriticsStateCount[DendriticState::EFFECTOR];
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
       unsigned int itregCount = TcellStateCount[TcellState::iTREG];
 
       if (state == DendriticState::IMMATURE
-               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCEpitheliumDistance //TODO - CRITICAL Determine this value
+               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCEpitheliumDistance // TODO - CRITICAL Determine this value
                && mpCompartment->getType() == Compartment::lamina_propria
                && (p_rule51a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
@@ -100,7 +108,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       if (state == DendriticState::IMMATURE
                && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCLPDistance //TODO - CRITICAL Determine this value
-               && mpCompartment->getType() == Compartment::epithelium
+               && mpCompartment->getType() == Compartment::epithilium
                && (p_rule51b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           std::vector< double > Location;
@@ -165,7 +173,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       else if (liveHPyloriCount + tolegenicBacteriaCount <= 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
-			   && (p_rule17b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())))
+			   && (p_rule17b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::TOLEROGENIC;
         }
@@ -183,19 +191,19 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       if (state == DendriticState::IMMATURE
           && (damagedEpithelialCellCount || eDendriticsCount) && (p_rule15 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
-    	  addCellAt(pAgent->getId(), Location);
-    	                            continue;
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
         }
       if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-      	  	  	  {
-                          mpCompartment->removeAgent(pAgent);
-                          continue;
-                        }
+        {
+          mpCompartment->removeAgent(pAgent);
+          continue;
+        }
       if (state == DendriticState::EFFECTOR && itregCount && (p_rule34 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                        {
-    	  	  	  	  	  mpCompartment->removeAgent(pAgent);
-    	                  continue;
-                        }
+        {
+          mpCompartment->removeAgent(pAgent);
+          continue;
+        }
 
       pAgent->setState(newState);
 

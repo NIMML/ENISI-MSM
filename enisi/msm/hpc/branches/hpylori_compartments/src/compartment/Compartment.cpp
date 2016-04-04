@@ -1,5 +1,4 @@
 #include "Compartment.h"
-#include "compartment/DiffuserLayer.h"
 #include "grid/Properties.h"
 #include "agent/Cytokine.h"
 #include "agent/SharedValueLayer.h"
@@ -15,14 +14,14 @@ Compartment* Compartment::INSTANCES[] = {NULL, NULL, NULL, NULL};
 // static
 Compartment* Compartment::instance(const Compartment::Type & type)
 {
-  Compartment *pInstance = INSTANCES[type];
+  Compartment **pInstance = &INSTANCES[type];
 
-  if (pInstance == NULL)
+  if (*pInstance == NULL)
     {
-      pInstance = new Compartment(type);
+      *pInstance = new Compartment(type);
     }
 
-  return pInstance;
+  return *pInstance;
 }
 
 Compartment::Compartment(const Type & type):
@@ -362,6 +361,8 @@ void Compartment::initializeDiffuserData()
           mpDiffuserValues->operator[](*itGrid) = InitialValues;
         }
     }
+
+  synchronizeDiffuser();
 }
 
 std::vector< double > & Compartment::operator[](const repast::Point< int > & location)
@@ -387,6 +388,15 @@ void Compartment::synchronizeCells()
 void Compartment::synchronizeDiffuser()
 {
   mpLayer->synchronizeDiffuser();
+
+  // We loop through all non local agents an update the local diffuser values.
+  SharedLayer::Context::const_state_aware_iterator it = mpLayer->getValueContext().begin(SharedLayer::Context::NON_LOCAL);
+  SharedLayer::Context::const_state_aware_iterator end = mpLayer->getValueContext().end(SharedLayer::Context::NON_LOCAL);
+
+  for (; it != end; ++it)
+    {
+      mpDiffuserValues->updateBufferValues(*static_cast< SharedValueLayer * >(&**it));
+    }
 }
 
 const Compartment::Type & Compartment::getType() const

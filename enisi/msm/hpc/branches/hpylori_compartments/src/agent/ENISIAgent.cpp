@@ -13,6 +13,11 @@ Agent::Agent():
   _state(0)
 {}
 
+Agent::Agent(const int & id, const int & startProc, const int & agentType, const int & currentProc, const int & state):
+  id(id, startProc, agentType, currentProc),
+  _state(state)
+{}
+
 Agent::Agent(const Agent::Type & type, const int & state) :
   id(),
   _state(state)

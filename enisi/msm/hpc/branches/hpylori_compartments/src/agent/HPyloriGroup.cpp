@@ -32,6 +32,8 @@ void HPyloriGroup::act()
 
 void HPyloriGroup::act(const repast::Point<int> & pt)
 {
+  std::vector< double > Location(2, 0);
+
   std::vector< Agent * > HPylori;
   mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
   std::vector< Agent * >::iterator it = HPylori.begin();
@@ -76,26 +78,30 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       unsigned int th17Count = TcellStateCount[TcellState::TH17];
 
       /* HPylori dies is nearby damaged epithelial cell, th1 or th17* *Rule 5,6,7*/
-      if ((damagedEpithelialCellCount || th1Count || th17Count) && (p_rule5 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())))
+      if ((damagedEpithelialCellCount || th1Count || th17Count) &&
+          (p_rule5 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           // newState = HPyloriState::DEAD;
           mpCompartment->removeAgent(pAgent);
         }
       if ((p_HPyloriDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                  {
-                    mpCompartment->removeAgent(pAgent);
-                    continue;
-                  }
+        {
+          mpCompartment->removeAgent(pAgent);
+          continue;
+        }
+
       if (mpCompartment->getType() == Compartment::lamina_propria && (p_rule4a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                        {
-    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
-                          continue;
-                        }
+        {
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
+        }
+
       if (mpCompartment->getType() == Compartment::lumen && (p_rule4b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                        {
-    	  	  	  	  	  addCellAt(pAgent->getId(), Location);
-                          continue;
-                        }
+        {
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
+        }
+
       /* TODO: H Pylori are removed when macrophage uptake/differentiate */
 
       // TODO CRITICAL Determine the maximum speed

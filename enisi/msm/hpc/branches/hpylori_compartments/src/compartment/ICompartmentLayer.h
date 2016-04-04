@@ -12,7 +12,7 @@
 
 namespace ENISI {
 
-template <class Agent, class Package, class PackageProvider, class PackageReceiver>
+template <class Agent, class Package, class PackageExchange>
 class ICompartmentLayer
 { 
 public:
@@ -36,10 +36,8 @@ public:
     mpSharedValues(NULL),
     mSpaceDimensions(),
     mGridDimensions(),
-    mpCellProvider(&mCellContext),
-    mpCellReceiver(&mCellContext),
-    mpDiffuserProvider(&mDiffuserContext),
-    mpDiffuserReceiver(&mDiffuserContext),
+    mpCellExchange(&mCellContext),
+    mpDiffuserExchange(&mDiffuserContext),
     mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0)),
     mSpace2Grid(spaceDimension.dimensionCount()),
     mpGridTopology(NULL),
@@ -340,28 +338,38 @@ public:
       }
     }
 
-    repast::RepastProcess::instance()->requestAgents<Agent, Package, PackageProvider, PackageReceiver>(mCellContext, req, mpCellProvider, mpCellReceiver, mpCellReceiver);
+    repast::RepastProcess::instance()->requestAgents<Agent, Package, PackageExchange, PackageExchange>(mCellContext, req, mpCellExchange, mpCellExchange, mpCellExchange);
   }
 
 
   void synchronizeCellStates()
   {
-    repast::RepastProcess::instance()->synchronizeAgentStates<Agent, Package, PackageProvider, PackageReceiver>(mCellContext, mpCellProvider, mpCellReceiver);
+    repast::RepastProcess::instance()->synchronizeAgentStates<Agent, Package, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange);
   }
 
   void synchronizeDiffuserStates()
   {
-    repast::RepastProcess::instance()->synchronizeAgentStates<Agent, Package, PackageProvider, PackageReceiver>(mDiffuserContext, mpDiffuserProvider, mpDiffuserReceiver);
+    repast::RepastProcess::instance()->synchronizeAgentStates<Agent, Package, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange);
   }
 
   void synchronizeCells()
   {
-    repast::RepastProcess::instance()->synchronizeProjectionInfo<Agent, Package, PackageProvider, PackageReceiver, PackageReceiver>(mCellContext, mpCellProvider, mpCellReceiver, mpCellReceiver);
+    repast::RepastProcess::instance()->synchronizeProjectionInfo<Agent, Package, PackageExchange, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
   }
 
   void synchronizeDiffuser()
   {
-    repast::RepastProcess::instance()->synchronizeProjectionInfo<Agent, Package, PackageProvider, PackageReceiver, PackageReceiver>(mDiffuserContext, mpDiffuserProvider, mpDiffuserReceiver, mpDiffuserReceiver);
+    repast::RepastProcess::instance()->synchronizeProjectionInfo<Agent, Package, PackageExchange, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange, mpDiffuserExchange);
+  }
+
+  Context & getCellContext()
+  {
+    return mCellContext;
+  }
+
+  Context & getValueContext()
+  {
+    return mDiffuserContext;
   }
 
   std::vector< Agent * > selectAllAgents()
@@ -405,10 +413,8 @@ private:
   repast::GridDimensions mSpaceDimensions;
   repast::GridDimensions mGridDimensions;
   repast::GridDimensions mSharedValueDimensions;
-  PackageProvider mpCellProvider;
-  PackageReceiver mpCellReceiver;
-  PackageProvider mpDiffuserProvider;
-  PackageReceiver mpDiffuserReceiver;
+  PackageExchange mpCellExchange;
+  PackageExchange mpDiffuserExchange;
   repast::DoubleUniformGenerator mUniform;
   std::vector< Space2Grid > mSpace2Grid;
   repast::CartTopology * mpGridTopology;
