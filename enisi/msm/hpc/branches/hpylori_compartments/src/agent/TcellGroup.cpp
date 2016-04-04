@@ -17,6 +17,7 @@ int p_rule24;/*Rule 24 parameter*/
 int p_rule26;/*Rule 26 parameter*/
 int p_rule27;/*Rule 27 parameter*/
 int p_rule31;/*Rule 31 parameter*/
+int p_rule_31a;/*Rule 31a parameter*/
 int p_rule32;/*Rule 32 parameter*/
 int p_rule33;/*Rule 33 parameter*/
 int p_rule35;/*Rule 35 parameter*/
@@ -135,12 +136,12 @@ if (state != TcellState::Tr)
               newState = TcellState::iTREG;
             }
 }/*Rule 58*/
-          else if ((IL10 > 0.5 * IFNg) && (macrophageregCount > 0)
+          else if ((IL10 > p_rule31a * IFNg) && (macrophageregCount > 0)
                    && state == TcellState::NAIVE
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::Tr; /* Rule 31- The rule is if nT is in contact with regulatory macrophages, and if IL10> a* IFNg
-           //then nT -> Tr (state transition). Here, 'a' is an arbitrary constant and has been hard coded to 0.5 */
+           //then nT -> Tr (state transition)*/
             }
           else if ((tDCCount > 0) && state == TcellState::TH17
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -171,7 +172,7 @@ if (state != TcellState::Tr)
               // TODO CRITICAL Proliferation can always happen it is not condition dependent
               // addCellAt(TcellState::DEAD, loc);   /*Rule 40* - nT can 'proliferate' when in contact with nT in GLN */
             }
-          else if ((itregCount > 0) && state == TcellState::iTREG
+          else if ((eDCCount > 0) && state == TcellState::iTREG
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 20*/
