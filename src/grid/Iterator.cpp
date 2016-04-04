@@ -45,7 +45,10 @@ bool Iterator::next(const size_t coodinate)
           return true;
         }
 
-      mCurrent[i] = round(mOrigin[i]);
+      if (i != imax - 1)
+        {
+          mCurrent[i] = round(mOrigin[i]);
+        }
     }
 
   return false;
@@ -63,15 +66,7 @@ const repast::Point< int > * Iterator::operator ->()
 
 Iterator::operator bool()
 {
-  size_t i, imax = mOrigin.dimensionCount();
+  size_t i = mOrigin.dimensionCount() - 1;
 
-  for (i = 0; i < imax; ++i)
-    {
-      if (mCurrent[i] >= mOrigin[i] + mExtents[i])
-        {
-          return false;
-        }
-    }
-
-  return true;
+  return mCurrent[i] < mOrigin[i] + mExtents[i];
 }

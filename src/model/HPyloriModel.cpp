@@ -25,10 +25,10 @@ HPModel::HPModel():
   mp_lamina_propria(NULL),
   mp_gastric_lymph_node(NULL)
 { 
-  initialize_lumen();
-  initialize_epithilium();
+  // initialize_lumen();
+  // initialize_epithilium();
   initialize_lamina_propria();
-  initialize_gastric_lymph_node();
+  // initialize_gastric_lymph_node();
 }
 
 void HPModel::initialize_lumen()
@@ -72,7 +72,7 @@ void HPModel::initialize_lamina_propria()
   mp_lamina_propria->addCytokine("IL10");
   mp_lamina_propria->addCytokine("IFNg");
 
-  mp_lamina_propria->synchronizeDiffuser();
+  mp_lamina_propria->initializeDiffuserData();
 }
 
 void HPModel::initialize_gastric_lymph_node()

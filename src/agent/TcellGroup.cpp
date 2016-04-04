@@ -17,7 +17,7 @@ int p_rule24;/*Rule 24 parameter*/
 int p_rule26;/*Rule 26 parameter*/
 int p_rule27;/*Rule 27 parameter*/
 int p_rule31;/*Rule 31 parameter*/
-int p_rule_31a;/*Rule 31a parameter*/
+int p_rule31a;/*Rule 31a parameter*/
 int p_rule32;/*Rule 32 parameter*/
 int p_rule33;/*Rule 33 parameter*/
 int p_rule35;/*Rule 35 parameter*/

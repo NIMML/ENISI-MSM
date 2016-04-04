@@ -34,10 +34,14 @@ void MacrophageGroup::act()
 
 void MacrophageGroup::act(const repast::Point<int> & pt)
 {
+  std::vector< double > Location(2, 0);
+
   std::vector< Agent * > Macrophages;
   mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
   std::vector< Agent * >::iterator it = Macrophages.begin();
   std::vector< Agent * >::iterator end = Macrophages.end();
+  StateCount MacrophageStateCount;
+  CountStates(Agent::Macrophage, Macrophages, MacrophageStateCount);
 
   std::vector< Agent * > Bacteria;
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
@@ -46,8 +50,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   std::vector< Agent * > HPylori;
   mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
-  StateCount StateCount;
-  CountStates(Agent::HPylori, HPylori, StateCount);
+  StateCount HPyloriStateCount;
+  CountStates(Agent::HPylori, HPylori, HPyloriStateCount);
 
   std::vector< Agent * > EpithelialCells;
   // TODO CRITICAL Retrieve epithelial cells in neighboring compartment if appropriate;
@@ -71,12 +75,12 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
       unsigned int liveHPyloriCount = HPyloriStateCount[HPyloriState::NAIVE];
-      unsigned int eDendriticsCount = DendriticsStateCount[DendriticsState::EFFECTOR];
+      unsigned int eDendriticsCount = DentriticsStateCount[DendriticState::EFFECTOR];
       unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
       unsigned int macrophageregCount = MacrophageStateCount[MacrophageState::REGULATORY];
       unsigned int macrophageinfCount = MacrophageStateCount[MacrophageState::INFLAMMATORY];
       unsigned int infectiousBacteriaCount = BacteriaStateCount[BacteriaState::INFECTIOUS];
-      unsigned int tolegenicBacteriaCount = BacteriaStateCount[BacteriaState::TOLEROGENIC];
+      // unsigned int tolegenicBacteriaCount = BacteriaStateCount[BacteriaState::TOLEROGENIC];
 
       /*get concentration of IFNg and IL10 for COPASI input*/
       double IFNg = mpCompartment->cytokineValue("IFNg", pt);
@@ -98,22 +102,32 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
           double Mreg = odeModel.getConcentration("Mreg");
 
           /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
-          if (Mreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          if (Mreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               newState = MacrophageState::REGULATORY;
-              std::vector< Agent * > HPylori;
-              mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
-              mpCompartment->removeAgent(HPylori);
+
+              // TODO CRITICAL Does this always consume an HPylori
+              if (HPylori.size())
+                {
+                  mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+                  HPylori.pop_back();
+                }
+
               continue;
             }
 
           /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
-            else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               newState = MacrophageState::INFLAMMATORY;
-              std::vector< Agent * > HPylori;
-              mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
-              mpCompartment->removeAgent(HPylori);
+
+              // TODO CRITICAL Does this always consume an HPylori
+              if (HPylori.size())
+                {
+                  mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+                  HPylori.pop_back();
+                }
+
               continue;
             }
         }
@@ -132,19 +146,24 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       if (state == MacrophageState::MONOCYTE
           && (damagedEpithelialCellCount || eDendriticsCount) && (p_rule13 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
-    	  addCellAt(pAgent->getId(), Location);
-    	                            continue;
+          mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
         }
-      if (state == MacrophageState::REGULATORY && macrophageinfCount && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-      	  	  	  {
-                          mpCompartment->removeAgent(pAgent);
-                          continue;
-                        }
-      if (state == MacrophageState::INFLAMMATORY && macrophageregCount && (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-                        {
-    	  	  	  	  	  mpCompartment->removeAgent(pAgent);
-    	                  continue;
-                        }
+
+      if (state == MacrophageState::REGULATORY && macrophageinfCount &&
+          (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {
+          mpCompartment->removeAgent(pAgent);
+          continue;
+        }
+
+      if (state == MacrophageState::INFLAMMATORY && macrophageregCount &&
+          (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {
+          mpCompartment->removeAgent(pAgent);
+          continue;
+        }
+
       pAgent->setState(newState);
 
       // TODO CRITICAL Determine the maximum speed

@@ -34,7 +34,7 @@ int main(int argc, char** argv)
         }
       else
         {
-          debugwait = 1;
+          debugwait = 0;
         }
 
       printf("RANK %d PID %d\n", rank, getpid());

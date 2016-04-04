@@ -1,6 +1,7 @@
 #include "AgentPackage.h"
-
 #include "ENISIAgent.h"
+
+#include "repast_hpc/RepastProcess.h"
 
 /* Serializable Agent Package Data */
 using namespace ENISI;
@@ -12,7 +13,7 @@ AgentPackage::AgentPackage() :
   currentRank(),
   state(),
   origin(repast::Point< int >(0, 0)),
-  bufferValues(repast::Point< int >(0, 0))
+  bufferValues()
 {}
 
 // For serialization
@@ -27,7 +28,7 @@ AgentPackage::AgentPackage(int _id,
   currentRank(_currentRank),
   state(),
   origin(repast::Point< int >(0, 0)),
-  bufferValues(repast::Point< int >(0, 0))
+  bufferValues()
 {
   state = pAgent->getState();
 
@@ -37,11 +38,11 @@ AgentPackage::AgentPackage(int _id,
     }
 }
 
-AgentPackageProvider::AgentPackageProvider(repast::SharedContext< Agent > * pContext) :
+AgentPackageExchange::AgentPackageExchange(repast::SharedContext< Agent > * pContext) :
   mpContext(pContext)
 {}
 
-void AgentPackageProvider::providePackage(Agent * pAgent, std::vector< AgentPackage > & out)
+void AgentPackageExchange::providePackage(Agent * pAgent, std::vector< AgentPackage > & out)
 {
   repast::AgentId id = pAgent->getId();
 
@@ -50,7 +51,7 @@ void AgentPackageProvider::providePackage(Agent * pAgent, std::vector< AgentPack
   out.push_back(package);
 }
 
-void AgentPackageProvider::provideContent(repast::AgentRequest req,
+void AgentPackageExchange::provideContent(repast::AgentRequest req,
                                           std::vector< AgentPackage > & out)
 {
   std::vector< repast::AgentId >::const_iterator it = req.requestedAgents().begin();
@@ -69,30 +70,25 @@ void AgentPackageProvider::provideContent(repast::AgentRequest req,
     }
 }
 
-AgentPackageReceiver::AgentPackageReceiver(repast::SharedContext< Agent > * pContext):
-  mpContext(pContext)
-{}
-
-Agent * AgentPackageReceiver::createAgent(AgentPackage package)
+Agent * AgentPackageExchange::createAgent(AgentPackage package)
 {
   Agent * pAgent = NULL;
 
+  // std::cout << repast::RepastProcess::instance()->rank() << ": " << package.id << ", " << package.rank << ", " << package.type << ", " << package.currentRank << ", " << package.state << std::endl;
+
   if ((Agent::Type) package.type != Agent::DiffuserValues)
     {
-      pAgent = new Agent((Agent::Type) package.type, package.state);
+      pAgent = new Agent(package.id, package.rank, package.type, package.currentRank, package.state);
     }
   else
     {
-      size_t Size = package.bufferValues[repast::Point< int >(0, 0)].size();
-      pAgent = new SharedValueLayer((Agent::Type) package.type, package.state, Size);
+      pAgent = new SharedValueLayer(package.id, package.rank, package.type, package.currentRank, package.state, package.origin, package.bufferValues);
     }
-
-  pAgent->setId(repast::AgentId(package.id, package.rank, package.type, package.currentRank));
 
   return pAgent;
 }
 
-void AgentPackageReceiver::updateAgent(AgentPackage package)
+void AgentPackageExchange::updateAgent(AgentPackage package)
 {
   repast::AgentId id(package.id, package.rank, package.type, package.currentRank);
   Agent * pAgent = mpContext->getAgent(id);

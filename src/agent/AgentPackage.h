@@ -20,7 +20,7 @@ public:
   int    currentRank;
   int    state;
   repast::Point< int > origin;
-  SparseMatrix< std::vector< double > > bufferValues;
+  SharedValueLayer::BufferValues bufferValues;
 
   /* Constructors */
   AgentPackage();
@@ -50,31 +50,18 @@ public:
 };
 
 /* Agent Package Provider */
-class AgentPackageProvider
+class AgentPackageExchange
 {
 
 private:
   repast::SharedContext< Agent > * mpContext;
 
 public:
-
-  AgentPackageProvider(repast::SharedContext< Agent > * pContext);
+  AgentPackageExchange(repast::SharedContext< Agent > * pContext);
 
   void providePackage(Agent * agent, std::vector< AgentPackage > & out);
 
   void provideContent(repast::AgentRequest req, std::vector< AgentPackage > & out);
-};
-
-/* Agent Package Receiver */
-class AgentPackageReceiver
-{
-
-private:
-  repast::SharedContext< Agent > * mpContext;
-
-public:
-
-  AgentPackageReceiver(repast::SharedContext< Agent > * pContext);
 
   Agent * createAgent(AgentPackage package);
 

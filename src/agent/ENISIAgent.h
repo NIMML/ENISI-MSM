@@ -28,7 +28,7 @@ public:
   enum Color {pink, red, blue, green, black, cyan };
 
   Agent(const Type & type, const int & state);
-
+  Agent(const int & id, const int & startProc, const int & agentType, const int & currentProc, const int & state);
   // virtual void act() = 0;
 
   virtual ~Agent();
