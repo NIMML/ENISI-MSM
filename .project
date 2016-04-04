@@ -8,4 +8,11 @@
 	</buildSpec>
 	<natures>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>modelfiles/MregDiff.cps</name>
+			<type>1</type>
+			<location>C:/Users/Andrew/Downloads/MregDiff.cps</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -7,7 +7,7 @@ MacrophageODE1* MacrophageODE1::instance = NULL;
 
 MacrophageODE1::MacrophageODE1() : DEBUG(false)
 {
-  std::string modelFileName("./modelfiles/MSM_CD4.cps");
+  std::string modelFileName("./modelfiles/MregDiff.cps");
 
   // create a new datamodel
   dataModel = COPASI::loadDataModel(modelFileName);
