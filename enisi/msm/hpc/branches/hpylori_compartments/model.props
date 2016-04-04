@@ -38,29 +38,33 @@ gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
 
 #Parameter rules
-p_rule18 = 
-p_rule19 =
-p_rule20 =
-p_rule21 =
-p_rule22 =
-p_rule23 =
-p_rule24 =
-p_rule26 = 
-p_rule27 = 
-p_rule29 = 
-p_rule30 = 
-p_rule36 =
-p_rule37 =
-p_rule38 =  
-p_rule39 = 
+#### From COPASI ####
+p_rule18 = 0.000184914 l^2/#*d
+p_rule19 = 7.92589e-5 l^2/#*d
+p_rule20 = 0.000743054 l^2/#*d
+p_rule21 = 0.263435 l^2/#*d
+p_rule22 = 0.040876 l/#*d
+p_rule23 = 0.040876 l/#*d
+p_rule24 = 4.28394 l/d
+p_rule26 = 0.00324418 l/d
+p_rule27 = 53.8055 l/d
+p_rule29 = 5.07025 l/d
+p_rule30 = 0.024 l/#*d
+p_rule31 = 0.247568 l/d
+p_rule31a = 1e-6 l/#
+p_rule32 = 12.7624 l/d
+p_rule33 = 0.280925 l/d
+p_rule35 = 5e-8 l/#*d
+p_rule36 = 5e-8 l/#*d
+p_rule37 = 9.15403e-8 l/#*d
+p_rule38 = 3.3573e-6 l/#*d
+p_rule39 = 3.62196e-5 l^2/#*d
 p_rule40 =
 p_rule41 = 
-p_rule53 = 
-p_rule55 =
-p_rule55a = 
-p_rule55b =
+p_rule53 = 1.51011e-6 l/#*d
+p_rule55a = 5.9817e-6 l^2/#*d
+p_rule55b = 3.6219e-5 l^2/#*d
 neardistance_border = 2 /*Arbitary*/
-a = 0.5 /*Arbitarty*/ /*Mentioned in Rule 31*/
 
 
 
