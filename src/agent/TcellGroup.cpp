@@ -28,7 +28,6 @@ int p_rule39;/*Rule 39 parameter*/
 int p_rule40;/*Rule 40 parameter*/
 int p_rule41;/*Rule 41 parameter*/
 int p_rule53;/*Rule 53 parameter*/
-int p_rule55;/*Rule 55 parameter*/
 int p_rule55a;/*Rule 55a parameter*/
 int p_rule55b;/*Rule 55b parameter*/
 int neardistance_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
@@ -237,7 +236,7 @@ if (state != TcellState::Tr)
               Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
               mpCompartment->moveTo(pAgent->getId(), Location);
             }
-          else if ((eDCCount >0) && mpCompartment->getType() == Compartment::lamina_propria && (p_rule55 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          else if ((eDCCount >0) && mpCompartment->getType() == Compartment::lamina_propria)
           {
         	  if (state == TcellState::iTREG)
         	  {
@@ -245,11 +244,11 @@ if (state != TcellState::Tr)
         	  }
         	  else if (state == TcellState::NAIVE)
         	  {
-        		  if (p_rule55a > 0.5) //Arbitary - TODO CRITICAL determine value for p_rule55
+        		  if (p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) /*Rule 55a*/
         		  {
         			  newState = TcellState::TH17;
         		  }
-        		  else if (p_rule55b > 0.4) //Arbitary TODO CRITICAL determine this value - Rule 55b
+        		  else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) /* Rule 55b*/
         		  {
         			  newState = TcellState::TH1;
         		  }
