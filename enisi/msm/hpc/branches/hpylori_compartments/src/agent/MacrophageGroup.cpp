@@ -90,6 +90,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       if ((liveHPyloriCount|| infectiousBacteriaCount) && state == MacrophageState::MONOCYTE && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           /* set initial concentrations */
+    	  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
           MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
           odeModel.setInitialConcentration("IFNg", IFNg);
           odeModel.setInitialConcentration("IL10", IL10);
@@ -102,6 +103,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
           double Mreg = odeModel.getConcentration("Mreg");
 
           /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
+          /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
           if (Mreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               newState = MacrophageState::REGULATORY;
