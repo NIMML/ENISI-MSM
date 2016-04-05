@@ -64,7 +64,37 @@ p_rule41 =
 p_rule53 = 1.51011e-6 l/#*d
 p_rule55a = 5.9817e-6 l^2/#*d
 p_rule55b = 3.6219e-5 l^2/#*d
-neardistance_border = 2 /*Arbitary*/
+p_BacteriaKill = 0.1 l^2/(#*d)
+p_BacteriaDeath = 6.8e-7 1/(#*d)
+p_BacteriaLPProl = 62843 #/(l*d)
+p_BacteriaLumProl = 87598 #/(l*d)
+p_rule1 = 0.1 l^2/(#^2*d)
+p_rule3 = 1.7375e-7 l^2/(#^2*d)
+p_rule4a = 58731.9 #/(l*d)
+p_rule4b = 100550 #/(l*d)
+p_rule5 = 8.1057e-9 l^2/(#*d)
+p_HPyloriDeath = 5.55e-7 l/(#*d)
+p_rule17a = 1e-8 l^2/(#^2*d)
+p_rule17b = 1.83621-8 l^2/(#^2*d)
+p_rule48a = 5.8055e-10 l^2/(#*d)
+p_rule48b = 7.86086e-9 l^2/(#*d)
+p_DCDeath = 0.01 l/(#*d)
+p_rule15 = 0.1 l/(d)
+p_rule34 = 4.39e-7 l^2/(#^2*d)
+p_rule51a = 0.1 l/d
+p_rule51b = 0.1 l/d
+p_rule52 = 0.01 l/d
+p_rule42 = 1.2702e-8 l/(#*d)
+p_MinfDiff = 0.3 l/(#*d)
+p_rule13 = 68855.3 #/d
+p_rule28a = 2.1e-8 l/(#*d)
+p_rule28b = 7.5e-9 l/(#*d)
+
+#### Arbitrary ####
+p_iDCEpitheliumDistance = 2 
+p_iDCLPDistance = 2 
+p_mDCGLNDistance = 2 
+neardistance_border = 2 
 
 
 
