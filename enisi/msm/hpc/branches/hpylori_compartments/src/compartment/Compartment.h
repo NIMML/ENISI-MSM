@@ -1,7 +1,6 @@
 #ifndef ENISI_MSM_COMPARTMENT_H
 #define ENISI_MSM_COMPARTMENT_H
 
-#include "ICompartmentLayer.h"
 #include "agent/ENISIAgent.h"
 #include "agent/AgentPackage.h"
 #include "repast_hpc/matrix.h"
@@ -12,6 +11,8 @@ namespace ENISI {
 class DiffuserLayer;
 class Cytokine;
 class SharedValueLayer;
+
+template <class T, class Package, class PackageExchange> class ICompartmentLayer;
 
 class Compartment
 {
@@ -51,9 +52,12 @@ public:
   const Compartment * getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const;
   Iterator begin();
 
+  repast::Point< double > gridToSpace(const repast::Point< int > & grid) const;
+  repast::Point<int> spaceToGrid(const repast::Point<double> & space) const;
+
   void getLocation(const repast::AgentId & id, std::vector<double> & Location) const;
-  bool moveTo(const repast::AgentId &id, const repast::Point< double > &pt);
-  bool moveTo(const repast::AgentId &id, const std::vector< double > &newLocation);
+  bool moveTo(const repast::AgentId &id, repast::Point< double > &pt);
+  bool moveTo(const repast::AgentId &id, std::vector< double > &newLocation);
   bool moveRandom(const repast::AgentId &id, const double & maxSpeed);
   bool addAgent(Agent * agent, const std::vector< double > & pt);
   bool addAgentToRandomLocation(Agent * agent);
@@ -63,6 +67,8 @@ public:
   void getNeighbors(const repast::Point< int > &pt, unsigned int range, const int & types, std::vector< Agent * > &out);
   void getAgents(const repast::Point< int > &pt, std::vector< Agent * > &out);
   void getAgents(const repast::Point< int > &pt, const int & types, std::vector< Agent * > &out);
+  void getAgents(const repast::Point< int > &pt, const int & xOffset, const int & yOffset, std::vector< Agent * > &out);
+  void getAgents(const repast::Point< int > &pt, const int & xOffset, const int & yOffset, const int & types, std::vector< Agent * > &out);
 
   size_t addCytokine(const std::string & name);
   const std::vector< Cytokine * > & getCytokines() const;
@@ -78,9 +84,20 @@ public:
   void synchronizeDiffuser();
 
   const Type & getType() const;
+
   size_t localCount(const size_t & globalCount);
+  size_t getRank(const repast::Point< double > & location) const;
+  size_t getRank(const repast::Point< int > & location) const;
+  void getBorderAgentsToPush(std::map< int, std::set< repast::AgentId > > & agentsToPush);
 
 private:
+  void getBorderAgentsToPush(const Borders::Coodinate &coordinate,
+                             const Borders::Side & side,
+                             std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  Compartment * transform(std::vector< double > & pt) const;
+  Compartment * transform(std::vector< int > & pt) const;
+
 
   std::string getName() const;
 
@@ -99,6 +116,7 @@ private:
   std::vector< Cytokine * > mCytokines;
 
   SharedValueLayer * mpDiffuserValues;
+
 }; /* end Compartment */
 
 }

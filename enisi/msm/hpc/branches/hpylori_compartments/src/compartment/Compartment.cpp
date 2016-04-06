@@ -1,7 +1,9 @@
-#include "Compartment.h"
+#include "compartment/Compartment.h"
+#include "ICompartmentLayer.h"
 #include "grid/Properties.h"
 #include "agent/Cytokine.h"
 #include "agent/SharedValueLayer.h"
+#include "Projection.h"
 
 using namespace ENISI;
 
@@ -80,6 +82,8 @@ Compartment::Compartment(const Type & type):
   mAdjacentCompartments[Borders::X][Borders::HIGH] = INVALID;
   mAdjacentCompartments[Borders::Y][Borders::LOW] = mProperties.borderLowCompartment;
   mAdjacentCompartments[Borders::Y][Borders::HIGH] = mProperties.borderHighCompartment;
+
+  mpLayer->addCompartment(this);
 }
 
 Compartment::~Compartment()
@@ -129,41 +133,72 @@ Iterator Compartment::begin()
   return Iterator(mpLayer->gridDimensions());
 }
 
+repast::Point< double > Compartment::gridToSpace(const repast::Point< int > & grid) const
+{
+  return mpLayer->gridToSpace(grid);
+}
+
+repast::Point<int> Compartment::spaceToGrid(const repast::Point<double> & space) const
+{
+  return mpLayer->spaceToGrid(space);
+}
+
 void Compartment::getLocation(const repast::AgentId & id, std::vector<double> & Location) const
 {
   mpLayer->getLocation(id, Location);
 }
 
-bool Compartment::moveTo(const repast::AgentId &id, const repast::Point< double > &pt)
+bool Compartment::moveTo(const repast::AgentId &id, repast::Point< double > &pt)
 {
   return moveTo(id, pt.coords());
 }
 
-bool Compartment::moveTo(const repast::AgentId &id, const std::vector< double > &pt)
+bool Compartment::moveTo(const repast::AgentId &id, std::vector< double > &pt)
 {
-  std::vector< Borders::BoundState > BoundState(2);
+  // We need to transform the point possibly to the coordinates of the adjacent compartment.
+  Compartment * pTarget = transform(pt);
 
-  if (mpSpaceBorders->boundsCheck(pt, &BoundState))
+  if (pTarget == this)
     {
       return mpLayer->moveTo(id, pt);
     }
 
+  bool success = false;
+
+  if (pTarget != NULL)
+    {
+      Agent * pAgent = mpLayer->getAgent(id);
+      success = pTarget->addAgent(pAgent, pt);
+      removeAgent(pAgent);
+    }
+
+  return success;
+}
+
+Compartment * Compartment::transform(std::vector< double > & pt) const
+{
+  mpSpaceBorders->transform(pt);
+
+  std::vector< Borders::BoundState > BoundState(2);
+
+  if (mpSpaceBorders->boundsCheck(pt, &BoundState))
+    {
+      return const_cast< Compartment * >(this);
+    }
+
   // We are at the compartment boundaries;
   size_t i = Borders::X;
-  std::vector<double> Out(2);
 
   std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
   std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
-  std::vector<double>::const_iterator itIn = pt.begin();
-  std::vector<double>::iterator itOut = Out.begin();
+  std::vector<double>::iterator itIn = pt.begin();
 
   Compartment * pTarget = NULL;
 
-  for (; itState != endState; ++itState, ++itIn, ++itOut, ++i)
+  for (; itState != endState; ++itState, ++itIn, ++i)
     {
       if (pTarget != NULL)
         {
-          *itOut = *itIn;
           continue;
         }
 
@@ -174,7 +209,7 @@ bool Compartment::moveTo(const repast::AgentId &id, const std::vector< double > 
               {
                 pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
                 const repast::GridDimensions & Dimensions = pTarget->dimensions();
-                *itOut = Dimensions.origin(i) + Dimensions.extents(i) + *itIn - mDimensions.origin(i);
+                *itIn += Dimensions.origin(i) + Dimensions.extents(i) - mDimensions.origin(i);
               }
             else
               {
@@ -188,7 +223,7 @@ bool Compartment::moveTo(const repast::AgentId &id, const std::vector< double > 
               {
                 pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
                 const repast::GridDimensions & Dimensions = pTarget->dimensions();
-                *itOut = Dimensions.origin(i) + *itIn - mDimensions.extents(i);
+                *itIn += Dimensions.origin(i) - mDimensions.extents(i);
               }
             else
               {
@@ -198,21 +233,76 @@ bool Compartment::moveTo(const repast::AgentId &id, const std::vector< double > 
             break;
 
           case Borders::INBOUND:
-            *itOut = *itIn;
             break;
         }
     }
 
-  bool success = true;
+  return pTarget;
+}
 
-  if (pTarget != NULL)
+Compartment * Compartment::transform(std::vector< int > & pt) const
+{
+  mpGridBorders->transform(pt);
+
+  std::vector< Borders::BoundState > BoundState(2);
+
+  if (mpGridBorders->boundsCheck(pt, &BoundState))
     {
-      Agent * pAgent = mpLayer->getAgent(id);
-      success = pTarget->addAgent(pAgent, Out);
-      removeAgent(pAgent);
+      return const_cast< Compartment * >(this);
     }
 
-  return success;
+  // We are at the compartment boundaries;
+  size_t i = Borders::X;
+
+  std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
+  std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
+  std::vector< int >::iterator itIn = pt.begin();
+
+  Compartment * pTarget = NULL;
+
+  for (; itState != endState; ++itState, ++itIn, ++i)
+    {
+      if (pTarget != NULL)
+        {
+          continue;
+        }
+
+      switch (*itState)
+        {
+          case Borders::OUT_LOW:
+            if (mAdjacentCompartments[i][Borders::LOW] != INVALID)
+              {
+                pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
+                const repast::GridDimensions & Dimensions = pTarget->dimensions();
+                *itIn += Dimensions.origin(i) + Dimensions.extents(i) - mDimensions.origin(i);
+              }
+            else
+              {
+                throw std::invalid_argument("No adjacent Compartment");
+              }
+
+            break;
+
+          case Borders::OUT_HIGH:
+            if (mAdjacentCompartments[i][Borders::HIGH] != INVALID)
+              {
+                pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
+                const repast::GridDimensions & Dimensions = pTarget->dimensions();
+                *itIn += Dimensions.origin(i) - mDimensions.extents(i);
+              }
+            else
+              {
+                throw std::invalid_argument("No adjacent Compartment");
+              }
+
+            break;
+
+          case Borders::INBOUND:
+            break;
+        }
+    }
+
+  return pTarget;
 }
 
 bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
@@ -226,6 +316,8 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
   mpLayer->getLocation(id, Location);
   Location[0] += radius * cos(angle);
   Location[1] += radius * sin(angle);
+
+  mpSpaceBorders->transform(Location);
 
   std::vector< Borders::BoundState > BoundState(2);
 
@@ -258,7 +350,7 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
         }
     }
 
-  return moveTo(id, Location);
+  return mpLayer->moveTo(id, Location);
 }
 
 bool Compartment::addAgent(Agent * agent, const std::vector< double > & pt)
@@ -302,6 +394,47 @@ void Compartment::getAgents(const repast::Point< int > &pt,
                             std::vector< Agent * > &out)
 {
   mpLayer->getAgents(pt, types, out);
+}
+
+void Compartment::getAgents(const repast::Point< int > &pt, const int & xOffset, const int & yOffset, std::vector< Agent * > &out)
+{
+  std::vector< int > Location = pt.coords();
+  Location[Borders::X] += xOffset;
+  Location[Borders::Y] += yOffset;
+
+  Compartment * pTarget = transform(Location);
+
+  if (pTarget == this)
+    {
+      mpLayer->getAgents(pt, out);
+    }
+  else if (pTarget != NULL)
+    {
+      pTarget->getAgents(pt, out);
+    }
+
+  return ;
+}
+
+void Compartment::getAgents(const repast::Point< int > &pt, const int & xOffset, const int & yOffset, const int & types, std::vector< Agent * > &out)
+{
+  std::vector< int > Location = pt.coords();
+  Location[Borders::X] += xOffset;
+  Location[Borders::Y] += yOffset;
+
+  Compartment * pTarget = transform(Location);
+
+  if (pTarget == this)
+    {
+      mpLayer->getAgents(pt, types, out);
+    }
+  else if (pTarget != NULL)
+    {
+      pTarget->getAgents(pt, types, out);
+    }
+
+  return ;
+
 }
 
 size_t Compartment::addCytokine(const std::string & name)
@@ -385,6 +518,95 @@ void Compartment::synchronizeCells()
   mpLayer->synchronizeCells();
 }
 
+void Compartment::getBorderAgentsToPush(std::map< int, std::set< repast::AgentId > > & agentsToPush)
+{
+  std::vector< Borders::Coodinate > Coordinates;
+  std::vector< Borders::Side > Sides;
+
+  repast::Point< double > Out = localGridDimensions().origin();
+
+  if (mAdjacentCompartments[Borders::X][Borders::LOW] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::LOW)) < 0.5)
+    {
+      Coordinates.push_back(Borders::X);
+      Sides.push_back(Borders::LOW);
+    }
+
+  if (mAdjacentCompartments[Borders::Y][Borders::LOW] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::LOW)) < 0.5)
+    {
+      Coordinates.push_back(Borders::Y);
+      Sides.push_back(Borders::LOW);
+    }
+
+  Out.add(localGridDimensions().extents());
+
+  if (mAdjacentCompartments[Borders::X][Borders::HIGH] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::HIGH)) < 0.5)
+    {
+      Coordinates.push_back(Borders::X);
+      Sides.push_back(Borders::HIGH);
+    }
+
+  if (mAdjacentCompartments[Borders::Y][Borders::HIGH] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::HIGH)) < 0.5)
+    {
+      Coordinates.push_back(Borders::Y);
+      Sides.push_back(Borders::HIGH);
+    }
+
+  std::vector< Borders::Coodinate >::const_iterator it = Coordinates.begin();
+  std::vector< Borders::Coodinate >::const_iterator end = Coordinates.end();
+  std::vector< Borders::Side >::const_iterator itSide = Sides.begin();
+
+  for (; it != end; ++it, ++itSide)
+    {
+      // Add all local agent Ids which are near the border to be pushed;
+      getBorderAgentsToPush(*it, *itSide, agentsToPush);
+    }
+}
+
+void Compartment::getBorderAgentsToPush(const Borders::Coodinate & coordinate,
+                                        const Borders::Side & side,
+                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
+{
+  Borders::Coodinate OtherCordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
+
+  int xOffset = (coordinate == Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
+  int yOffset = (coordinate == Borders::Y) ? 0 : (side == Borders::HIGH) ? +1 : -1;
+
+  Iterator itPoint(localGridDimensions());
+  if (side == Borders::HIGH)
+    {
+      for (int i = 0, imax = localGridDimensions().extents(coordinate); i < imax; ++i)
+        {
+          itPoint.next(OtherCordinate);
+        }
+    }
+
+  for (; itPoint; itPoint.next(coordinate))
+    {
+      int TargetRank = mpLayer->getRank(*itPoint, xOffset, yOffset);
+      std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(TargetRank);
+
+      if (found == agentsToPush.end())
+        {
+          found = agentsToPush.insert(std::make_pair(TargetRank, std::set< repast::AgentId >())).first;
+        }
+
+      std::vector< Agent * > out;
+      mpLayer->getAgents(*itPoint, out);
+
+      std::vector< Agent * >::const_iterator it = out.begin();
+      std::vector< Agent * >::const_iterator end = out.end();
+
+      for (; it != end; ++it)
+        {
+          found->second.insert((*it)->getId());
+        }
+    }
+}
+
 void Compartment::synchronizeDiffuser()
 {
   mpLayer->synchronizeDiffuser();
@@ -414,6 +636,64 @@ size_t Compartment::localCount(const size_t & globalCount)
   if (rank < globalCount - LocalCount * worldSize) LocalCount++;
 
   return LocalCount;
+}
+
+size_t Compartment::getRank(const repast::Point< double > & location) const
+{
+  return getRank(mpLayer->spaceToGrid(location));
+}
+
+size_t Compartment::getRank(const repast::Point< int > & location) const
+{
+  std::vector< Borders::BoundState > BoundState(mDimensions.dimensionCount());
+
+  if (mpGridBorders->boundsCheck(location.coords(), &BoundState))
+    {
+      mpLayer->getRank(location, 0, 0);
+    }
+
+  repast::Point< int > Location(location);
+
+  std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
+  std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
+
+  Compartment * pTarget = NULL;
+
+  for (size_t i = 0; itState != endState && pTarget == NULL; ++itState, ++i)
+    {
+      switch (*itState)
+        {
+          case Borders::OUT_LOW:
+
+            if (mAdjacentCompartments[i][Borders::LOW] != INVALID)
+              {
+                pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
+                Location[i] += pTarget->dimensions().origin(i) + pTarget->dimensions().extents(i) - mDimensions.origin(i);
+              }
+
+            break;
+
+          case Borders::OUT_HIGH:
+
+            if (mAdjacentCompartments[i][Borders::HIGH] != INVALID)
+              {
+                pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
+                Location[i] += pTarget->dimensions().origin(i) - (mDimensions.origin(i) + mDimensions.extents(i));
+             }
+
+            break;
+
+          case Borders::INBOUND:
+            break;
+        }
+    }
+
+  if (pTarget != NULL)
+    {
+      return pTarget->getRank(Location);
+    }
+
+  return INVALID;
 }
 
 std::string Compartment::getName() const

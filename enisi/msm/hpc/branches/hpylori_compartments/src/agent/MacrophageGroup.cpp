@@ -104,33 +104,23 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
           /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
           /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
-          if (Mreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+          if (Mreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() &&
+              HPylori.size())
             {
               newState = MacrophageState::REGULATORY;
 
-              // TODO CRITICAL Does this always consume an HPylori
-              if (HPylori.size())
-                {
-                  mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
-                  HPylori.pop_back();
-                }
-
-              continue;
+              mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+              HPylori.pop_back();
             }
-
           /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
-          else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+          else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() &&
+                   HPylori.size())
             {
               newState = MacrophageState::INFLAMMATORY;
 
               // TODO CRITICAL Does this always consume an HPylori
-              if (HPylori.size())
-                {
-                  mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
-                  HPylori.pop_back();
-                }
-
-              continue;
+              mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+              HPylori.pop_back();
             }
         }
 
