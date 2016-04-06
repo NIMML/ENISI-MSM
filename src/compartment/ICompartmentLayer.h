@@ -9,6 +9,7 @@
 #include "agent/AgentStates.h"
 #include "agent/SharedValueLayer.h"
 #include "grid/Borders.h"
+#include "Projection.h"
 
 namespace ENISI {
 
@@ -19,7 +20,7 @@ public:
   typedef ENISI::SimpleBorders Transformer;
   typedef repast::SimpleAdder< Agent > Adder;
   typedef repast::SharedContinuousSpace<Agent, Transformer, Adder> Space;
-  typedef repast::SharedDiscreteSpace<Agent, Transformer, Adder> Grid;
+  typedef ENISI::Projection<Agent, Transformer, Adder> Grid;
   typedef repast::SharedContext< Agent > Context;
   typedef Agent AgentType;
 
@@ -45,8 +46,8 @@ public:
   {
     determineProcessDimensions(gridDimension);
     //
-    mpSpace = new Space(name +"-space", spaceDimension, mProcessDimensions, mBufferSize, mpCommunicator);
-    mpGrid = new Grid(name +"-grid", gridDimension, mProcessDimensions, mBufferSize, mpCommunicator);
+    mpSpace = new Space(name + "-space", spaceDimension, mProcessDimensions, 0, mpCommunicator);
+    mpGrid = new Grid(name + "-grid", gridDimension, mProcessDimensions, mBufferSize, mpCommunicator);
     mpGridTopology = new repast::CartTopology(mProcessDimensions, gridDimension.origin().coords(), gridDimension.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
 
     repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(mProcessDimensions[0], mProcessDimensions[1]));
@@ -262,6 +263,23 @@ public:
     return Grid;
   }
 
+  repast::Point< double > gridToSpace(const repast::Point< int > & grid) const
+  {
+    std::vector< double > Space(mpSpace->dimensions().dimensionCount(), 0);
+
+    std::vector< int >::const_iterator itGrid = grid.coords().begin();
+    std::vector< int >::const_iterator endGrid = grid.coords().end();
+    std::vector< Space2Grid >::const_iterator itConversion = mSpace2Grid.begin();
+    std::vector< double >::iterator itSpace = Space.begin();
+
+    for (; itGrid != endGrid; ++itGrid, ++itConversion, ++itSpace)
+      {
+        *itSpace = itConversion->space + (*itGrid - itConversion->grid) / itConversion->scale;
+      }
+
+    return Space;
+  }
+
   void getLocation(const repast::AgentId & id, std::vector<double> & loc) const
   {
     mpSpace->getLocation(id, loc);
@@ -309,6 +327,11 @@ public:
     return mGridDimensions;
   }
 
+  void requestAgents(repast::AgentRequest & request)
+  {
+    repast::RepastProcess::instance()->requestAgents<Agent, Package, PackageExchange, PackageExchange>(mCellContext, request, mpCellExchange, mpCellExchange, mpCellExchange);
+  }
+
   void requestAgents()
   {
     int worldSize = repast::RepastProcess::instance()->worldSize();
@@ -338,7 +361,7 @@ public:
       }
     }
 
-    repast::RepastProcess::instance()->requestAgents<Agent, Package, PackageExchange, PackageExchange>(mCellContext, req, mpCellExchange, mpCellExchange, mpCellExchange);
+    requestAgents(req);
   }
 
 
@@ -372,6 +395,18 @@ public:
     return mDiffuserContext;
   }
 
+  size_t getRank(const repast::Point< double > & location, const double & xOffset, const double & yOffset) const
+  {
+    return getRank(spaceToGrid(location), round(xOffset), round(xOffset));
+  }
+
+  size_t getRank(const repast::Point< int > & location, const int & xOffset, const int & yOffset) const
+  {
+    size_t Rank = mpGridTopology->getRank(location.coords(), xOffset, yOffset);
+
+    return Rank;
+  }
+
   std::vector< Agent * > selectAllAgents()
   {
     std::vector< Agent * > agents;
@@ -399,6 +434,12 @@ public:
     repast::AgentId Id = pAgent->getId();
 
     return mpSharedValues->moveTo(Id, repast::Point< int >(mSharedValueDimensions.origin()[0], mSharedValueDimensions.origin()[1]));
+  }
+
+  void addCompartment(Compartment * pCompartment)
+  {
+    mpGrid->addCompartment(pCompartment);
+    mpSharedValues->addCompartment(pCompartment);
   }
 
 private:

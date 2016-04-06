@@ -39,6 +39,9 @@ public:
   void transform(const std::vector<int>& in, std::vector<int>& out) const;
   void transform(const std::vector<double>& in, std::vector<double>& out) const;
 
+  void transform(std::vector<int>& pt) const;
+  void transform(std::vector<double>& pt) const;
+
   void translate(const std::vector<double>& oldPos, std::vector<double>& newPos, const std::vector<double>& displacement) const;
   void translate(const std::vector<int>& oldPos, std::vector<int>& newPos, const std::vector<int>& displacement) const;
 
@@ -51,8 +54,7 @@ protected:
   size_t mDimension;
 
 private:
-  std::vector<Type> mBorderTypeLeft;
-  std::vector<Type> mBorderTypeRight;
+  std::vector< std::vector< Type > > mBorderType;
 };
 
 class SimpleBorders  : public repast::Borders

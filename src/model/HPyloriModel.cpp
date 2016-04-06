@@ -1,3 +1,5 @@
+#include "repast_hpc/RepastProcess.h"
+
 #include "HPyloriModel.h"
 
 #include "grid/Properties.h"
@@ -25,10 +27,10 @@ HPModel::HPModel():
   mp_lamina_propria(NULL),
   mp_gastric_lymph_node(NULL)
 { 
-  // initialize_lumen();
-  // initialize_epithilium();
+  initialize_lumen();
+  initialize_epithilium();
   initialize_lamina_propria();
-  // initialize_gastric_lymph_node();
+  initialize_gastric_lymph_node();
 }
 
 void HPModel::initialize_lumen()

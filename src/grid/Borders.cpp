@@ -15,25 +15,8 @@ const char* Borders::TypeNames[] = {"REFLECT", "WRAP", "STICKY", "PERMIABLE", NU
 Borders::Borders(repast::GridDimensions d):
   repast::Borders(d),
   mDimension(d.dimensionCount()),
-  mBorderTypeLeft(d.dimensionCount()),
-  mBorderTypeRight(d.dimensionCount())
-{
-  std::vector<Type>::iterator it = mBorderTypeLeft.begin();
-  std::vector<Type>::iterator end = mBorderTypeLeft.end();
-
-  for (; it != end; ++it)
-    {
-      *it = WRAP;
-    }
-
-  it = mBorderTypeRight.begin();
-  end = mBorderTypeRight.end();
-
-  for (; it != end; ++it)
-    {
-      *it = WRAP;
-    }
-}
+  mBorderType(d.dimensionCount(), std::vector< Type >(2, WRAP))
+{}
 
 // virtual
 Borders::~Borders()
@@ -43,6 +26,8 @@ int Borders::distanceFromBorder(const std::vector<int>& pt,
                                 const Borders::Coodinate &coordinate,
                                 const Borders::Side & side) const
 {
+  if (mBorderType[coordinate][side] == WRAP) return std::numeric_limits< int >::infinity();
+
   int border = _dimensions.origin()[coordinate] + (side == LOW) ? 0 : _dimensions.extents()[coordinate];
   return (side == LOW) ? pt[coordinate] - border : border - pt[coordinate];
 }
@@ -51,6 +36,8 @@ double Borders::distanceFromBorder(const std::vector<double> & pt,
                                    const Borders::Coodinate & coordinate,
                                    const Borders::Side & side) const
 {
+  if (mBorderType[coordinate][side] == WRAP) return std::numeric_limits< double >::infinity();
+
   double border = _dimensions.origin()[coordinate] + (side == LOW) ? 0 : _dimensions.extents()[coordinate];
   return (side == LOW) ? pt[coordinate] - border : border - pt[coordinate];
 }
@@ -75,18 +62,19 @@ bool Borders::boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * 
       endState = State.end();
     }
 
-  std::vector<Type>::const_iterator itTypeLeft = mBorderTypeLeft.begin();
-  std::vector<Type>::const_iterator itTypeRight = mBorderTypeRight.begin();
+  std::vector< std::vector< Type > >::const_iterator itType = mBorderType.begin();
 
   std::vector<double>::const_iterator itOrigin = _dimensions.origin().begin();
   std::vector<double>::const_iterator itExtend = _dimensions.extents().begin();
 
   std::vector<int>::const_iterator itPt = pt.begin();
 
-  for (; itState != endState; ++itState, ++itTypeLeft, ++itTypeRight, ++itOrigin, ++itExtend)
+  for (; itState != endState; ++itState, ++itType, ++itOrigin, ++itExtend)
     {
+      const std::vector< Type > & Type = *itType;
+
       if (*itPt < *itOrigin)
-        if (*itTypeLeft == PERMIABLE || *itTypeLeft == STICKY)
+        if (Type[LOW] == PERMIABLE || Type[LOW] == STICKY)
           {
             *itState = OUT_LOW;
             inBounds = false;
@@ -96,7 +84,7 @@ bool Borders::boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * 
             *itState = INBOUND;
           }
       else if (*itPt >= *itOrigin + *itExtend)
-        if (*itTypeRight == PERMIABLE || *itTypeLeft == STICKY)
+        if (Type[HIGH] == PERMIABLE || Type[HIGH] == STICKY)
           {
             *itState = OUT_HIGH;
             inBounds = false;
@@ -134,18 +122,19 @@ bool Borders::boundsCheck(const std::vector<double>& pt, std::vector<BoundState>
       endState = State.end();
     }
 
-  std::vector<Type>::const_iterator itTypeLeft = mBorderTypeLeft.begin();
-  std::vector<Type>::const_iterator itTypeRight = mBorderTypeRight.begin();
+  std::vector< std::vector< Type > >::const_iterator itType = mBorderType.begin();
 
   std::vector<double>::const_iterator itOrigin = _dimensions.origin().begin();
   std::vector<double>::const_iterator itExtend = _dimensions.extents().begin();
 
   std::vector<double>::const_iterator itPt = pt.begin();
 
-  for (; itState != endState; ++itState, ++itTypeLeft, ++itTypeRight, ++itOrigin, ++itExtend)
+  for (; itState != endState; ++itState, ++itType, ++itOrigin, ++itExtend)
     {
+      const std::vector< Type > & Type = *itType;
+
       if (*itPt < *itOrigin)
-        if (*itTypeLeft == PERMIABLE || *itTypeLeft == STICKY)
+        if (Type[LOW] != WRAP)
           {
             *itState = OUT_LOW;
             inBounds = false;
@@ -155,7 +144,7 @@ bool Borders::boundsCheck(const std::vector<double>& pt, std::vector<BoundState>
             *itState = INBOUND;
           }
       else if (*itPt >= *itOrigin + *itExtend)
-        if (*itTypeRight == PERMIABLE || *itTypeLeft == STICKY)
+        if (Type[HIGH] != WRAP)
           {
             *itState = OUT_HIGH;
             inBounds = false;
@@ -175,8 +164,7 @@ bool Borders::boundsCheck(const std::vector<double>& pt, std::vector<BoundState>
 
 void Borders::transform(const std::vector<int>& in, std::vector<int>& out) const
 {
-  std::vector<Type>::const_iterator itTypeLeft = mBorderTypeLeft.begin();
-  std::vector<Type>::const_iterator itTypeRight = mBorderTypeRight.begin();
+  std::vector< std::vector< Type > >::const_iterator itType = mBorderType.begin();
 
   std::vector<double>::const_iterator itOrigin = _dimensions.origin().begin();
   std::vector<double>::const_iterator itExtend = _dimensions.extents().begin();
@@ -185,11 +173,13 @@ void Borders::transform(const std::vector<int>& in, std::vector<int>& out) const
   std::vector<int>::const_iterator endIn = in.end();
   std::vector<int>::iterator itOut = out.begin();
 
-  for (; itIn != endIn; ++itIn, ++itOut, ++itTypeLeft, ++itTypeRight, ++itOrigin, ++itExtend)
+  for (; itIn != endIn; ++itIn, ++itOut, ++itType, ++itOrigin, ++itExtend)
     {
+      const std::vector< Type > & Type = *itType;
+
       if (*itIn < *itOrigin)
         {
-          switch (*itTypeLeft)
+          switch (Type[LOW])
           {
             case REFLECT:
               *itOut = *itOrigin + *itOrigin - *itIn;
@@ -210,7 +200,7 @@ void Borders::transform(const std::vector<int>& in, std::vector<int>& out) const
         }
       else if (*itIn >= *itOrigin + *itExtend)
         {
-          switch (*itTypeRight)
+          switch (Type[HIGH])
           {
             case REFLECT:
               *itOut = *itOrigin + *itOrigin + *itExtend + *itExtend - *itIn;
@@ -238,8 +228,7 @@ void Borders::transform(const std::vector<int>& in, std::vector<int>& out) const
 
 void Borders::transform(const std::vector<double>& in, std::vector<double>& out) const
 {
-  std::vector<Type>::const_iterator itTypeLeft = mBorderTypeLeft.begin();
-  std::vector<Type>::const_iterator itTypeRight = mBorderTypeRight.begin();
+  std::vector< std::vector< Type > >::const_iterator itType = mBorderType.begin();
 
   std::vector<double>::const_iterator itOrigin = _dimensions.origin().begin();
   std::vector<double>::const_iterator itExtend = _dimensions.extents().begin();
@@ -248,11 +237,13 @@ void Borders::transform(const std::vector<double>& in, std::vector<double>& out)
   std::vector<double>::const_iterator endIn = in.end();
   std::vector<double>::iterator itOut = out.begin();
 
-  for (; itIn != endIn; ++itIn, ++itOut, ++itTypeLeft, ++itTypeRight, ++itOrigin, ++itExtend)
+  for (; itIn != endIn; ++itIn, ++itOut, ++itType, ++itOrigin, ++itExtend)
     {
+      const std::vector< Type > & Type = *itType;
+
       if (*itIn < *itOrigin)
         {
-          switch (*itTypeLeft)
+          switch (Type[LOW])
           {
             case REFLECT:
               *itOut = *itOrigin + *itOrigin - *itIn;
@@ -263,7 +254,7 @@ void Borders::transform(const std::vector<double>& in, std::vector<double>& out)
               break;
 
             case STICKY:
-              *itOut = *itOrigin -1;
+              *itOut = *itOrigin;
               break;
 
             case PERMIABLE:
@@ -273,7 +264,7 @@ void Borders::transform(const std::vector<double>& in, std::vector<double>& out)
         }
       else if (*itIn >= *itOrigin + *itExtend)
         {
-          switch (*itTypeRight)
+          switch (Type[HIGH])
           {
             case REFLECT:
               *itOut = *itOrigin + *itOrigin + *itExtend + *itExtend - *itIn;
@@ -298,6 +289,122 @@ void Borders::transform(const std::vector<double>& in, std::vector<double>& out)
         }
     }
 }
+
+void Borders::transform(std::vector<int>& pt) const
+{
+  std::vector< std::vector< Type > >::const_iterator itType = mBorderType.begin();
+
+  std::vector<double>::const_iterator itOrigin = _dimensions.origin().begin();
+  std::vector<double>::const_iterator itExtend = _dimensions.extents().begin();
+
+  std::vector<int>::iterator it = pt.begin();
+  std::vector<int>::iterator end = pt.end();
+
+  for (; it != end; ++it, ++itType, ++itOrigin, ++itExtend)
+    {
+      const std::vector< Type > & Type = *itType;
+
+      if (*it < *itOrigin)
+        {
+          switch (Type[LOW])
+          {
+            case REFLECT:
+              *it = *itOrigin + *itOrigin - *it;
+              break;
+
+            case WRAP:
+              *it += *itExtend;
+              break;
+
+            case STICKY:
+              *it = *itOrigin;
+              break;
+
+            case PERMIABLE:
+              break;
+          }
+        }
+      else if (*it >= *itOrigin + *itExtend)
+        {
+          switch (Type[HIGH])
+          {
+            case REFLECT:
+              *it = *itOrigin + *itOrigin + *itExtend + *itExtend - *it;
+              break;
+
+            case WRAP:
+              *it -= *itExtend;
+              break;
+
+            case STICKY:
+              *it = *itOrigin + *itExtend;
+              break;
+
+            case PERMIABLE:
+              break;
+          }
+        }
+    }
+}
+
+void Borders::transform(std::vector<double>& pt) const
+{
+  std::vector< std::vector< Type > >::const_iterator itType = mBorderType.begin();
+
+  std::vector<double>::const_iterator itOrigin = _dimensions.origin().begin();
+  std::vector<double>::const_iterator itExtend = _dimensions.extents().begin();
+
+  std::vector<double>::iterator it = pt.begin();
+  std::vector<double>::iterator end = pt.end();
+
+  for (; it != end; ++it, ++itType, ++itOrigin, ++itExtend)
+    {
+      const std::vector< Type > & Type = *itType;
+
+      if (*it < *itOrigin)
+        {
+          switch (Type[LOW])
+          {
+            case REFLECT:
+              *it = *itOrigin + *itOrigin - *it;
+              break;
+
+            case WRAP:
+              *it += *itExtend;
+              break;
+
+            case STICKY:
+              *it = *itOrigin;
+              break;
+
+            case PERMIABLE:
+              break;
+          }
+        }
+      else if (*it >= *itOrigin + *itExtend)
+        {
+          switch (Type[HIGH])
+          {
+            case REFLECT:
+              *it = *itOrigin + *itOrigin + *itExtend + *itExtend - *it;
+              break;
+
+            case WRAP:
+              *it -= *itExtend;
+              break;
+
+            case STICKY:
+              *it = *itOrigin + *itExtend;
+              break;
+
+            case PERMIABLE:
+              break;
+          }
+        }
+    }
+}
+
+
 
 void Borders::translate(const std::vector<int>& in, std::vector<int>& out, const std::vector<int>& move) const
 {
@@ -342,34 +449,12 @@ void Borders::translate(const std::vector<double>& in, std::vector<double>& out,
 
 void Borders::setBorderType(const Borders::Coodinate &coordinate, const Borders::Side & side, const Borders::Type & type)
 {
-  switch (side)
-  {
-    case LOW:
-      mBorderTypeLeft[coordinate] = type;
-      break;
-
-    case HIGH:
-      mBorderTypeRight[coordinate] = type;
-      break;
-  }
+  mBorderType[coordinate][side] = type;
 }
 
 const Borders::Type & Borders::getBorderType(const Borders::Coodinate &coordinate, const Borders::Side & side) const
 {
-  const Type * pType;
-
-  switch (side)
-  {
-    case LOW:
-      pType = &mBorderTypeLeft[coordinate];
-      break;
-
-    case HIGH:
-      pType = &mBorderTypeRight[coordinate];
-      break;
-  }
-
-  return *pType;
+  return mBorderType[coordinate][side];
 }
 
 bool Borders::isPeriodic() const
