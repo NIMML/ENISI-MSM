@@ -46,28 +46,21 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   CountStates(Agent::Tcell, Tcells, TcellStateCount);
 
   std::vector< Agent * > EpithelialCells;
+  StateCount EpithelialCellStateCount;
 
-  // We only request information when we are at the border
+  // We only request information if we are at the border
   if (mpCompartment->getType() == Compartment::lumen &&
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
     {
-      Compartment * pEpithelium = Compartment::instance(Compartment::epithilium);
-      repast::Point< double > Epithelium(mpCompartment->gridToSpace(repast::Point< int >(pt[0], pt[1] + 1)));
-      pEpithelium->getAgents(pEpithelium->spaceToGrid(Epithelium), Agent::EpithelialCell, EpithelialCells);
+      mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
+      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
     }
   else if (mpCompartment->getType() == Compartment::lamina_propria &&
            mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
-      Compartment * pEpithelium = Compartment::instance(Compartment::epithilium);
-      repast::Point< double > Epithelium(mpCompartment->gridToSpace(repast::Point< int >(pt[0], pt[1] - 1)));
-      pEpithelium->getAgents(pEpithelium->spaceToGrid(Epithelium), Agent::EpithelialCell, EpithelialCells);
+      mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
     }
-
-  // TODO CRITICAL Retrieve epithelial cells in neighboring compartment if appropriate;
-
-  StateCount EpithelialCellStateCount;
-  CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
-
 
   for (; it != end; ++it)
     {
