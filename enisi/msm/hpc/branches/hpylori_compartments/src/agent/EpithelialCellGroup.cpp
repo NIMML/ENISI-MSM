@@ -31,17 +31,27 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * >::iterator it = EpithelialCells.begin();
   std::vector< Agent * >::iterator end = EpithelialCells.end();
 
+  // We only request information if we are at the border
   std::vector< Agent * > Bacteria;
-  // TODO CRITICAL Retrieve Bacteria cells in neighboring compartment if appropriate;
-
   StateCount BacteriaStateCount;
-  CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
 
   std::vector< Agent * > Tcells;
-  // TODO CRITICAL Retrieve Tcells in neighboring compartment if appropriate;
-
   StateCount TcellsCellStateCount;
-  CountStates(Agent::Tcell, Tcells, TcellsCellStateCount);
+
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
+    {
+      mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
+      CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+
+      mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
+      CountStates(Agent::Tcell, Tcells, TcellsCellStateCount);
+    }
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
+    {
+      mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
+      CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+    }
+
 
   for (; it != end; ++it)
     {

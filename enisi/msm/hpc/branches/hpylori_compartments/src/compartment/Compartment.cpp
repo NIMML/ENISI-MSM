@@ -276,10 +276,6 @@ Compartment * Compartment::transform(std::vector< int > & pt) const
                 const repast::GridDimensions & Dimensions = pTarget->dimensions();
                 *itIn += Dimensions.origin(i) + Dimensions.extents(i) - mDimensions.origin(i);
               }
-            else
-              {
-                throw std::invalid_argument("No adjacent Compartment");
-              }
 
             break;
 
@@ -289,10 +285,6 @@ Compartment * Compartment::transform(std::vector< int > & pt) const
                 pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
                 const repast::GridDimensions & Dimensions = pTarget->dimensions();
                 *itIn += Dimensions.origin(i) - mDimensions.extents(i);
-              }
-            else
-              {
-                throw std::invalid_argument("No adjacent Compartment");
               }
 
             break;

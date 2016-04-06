@@ -71,10 +71,16 @@ void TcellGroup::act(const repast::Point<int> & pt)
   StateCount DentriticsStateCount;
   CountStates(Agent::Dentritics, Dentritics, DentriticsStateCount);
 
+  // We only request information if we are at the border
   std::vector< Agent * > EpithelialCells;
-  // TODO CRITICAL Retrieve epithelial cells in neighboring compartment if appropriate;
   StateCount EpithelialCellStateCount;
-  CountStates(Agent::Dentritics, EpithelialCells, EpithelialCellStateCount);
+
+  if (mpCompartment->getType() == Compartment::lamina_propria &&
+           mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
+    {
+      mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+    }
 
   for (; it != end; ++it)
     {

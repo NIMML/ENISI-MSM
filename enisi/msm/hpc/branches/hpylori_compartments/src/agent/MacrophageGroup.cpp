@@ -49,15 +49,17 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
 
   std::vector< Agent * > HPylori;
-  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
   StateCount HPyloriStateCount;
   CountStates(Agent::HPylori, HPylori, HPyloriStateCount);
 
   std::vector< Agent * > EpithelialCells;
-  // TODO CRITICAL Retrieve epithelial cells in neighboring compartment if appropriate;
-
   StateCount EpithelialCellStateCount;
-  CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1)
+    {
+      mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+    }
 
   std::vector< Agent * > Dentritics;
   mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
