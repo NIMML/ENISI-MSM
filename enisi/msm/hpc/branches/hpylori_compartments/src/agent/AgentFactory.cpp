@@ -20,7 +20,7 @@ Agent * AgentFactory::create(const std::string & agentType,
       p_agent = new Dendritics(p_cmp->cellLayer());
     }
 
-  else {throw std::invalid_argument("Unknown agent type: " + agentType);}
+  else {throw std::runtime_error("Unknown agent type: " + agentType);}
 
   p_cmp->cellLayer()->addAgentToRandomLocation(p_agent);
 
@@ -48,7 +48,7 @@ CellGroup * AgentGroupFactory::create(const std::string agentType,
       p_agent = new DendriticsGroup(agentCount, p_compartment);
     }
 
-  else {throw std::invalid_argument("Unknown agent type: " + agentType);}
+  else {throw std::runtime_error("Unknown agent type: " + agentType);}
 
   p_compartment->cellLayer()->addAgentToRandomLocation(p_agent);
 

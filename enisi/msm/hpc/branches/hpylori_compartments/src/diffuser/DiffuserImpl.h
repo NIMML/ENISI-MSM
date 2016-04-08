@@ -12,6 +12,7 @@ namespace ENISI {
 
 class Cytokine;
 class Compartment;
+class SharedValueLayer;
 
 class DiffuserImpl 
 {
@@ -47,11 +48,12 @@ private:
   const std::vector< Cytokine * > & mCytokines;
   double mDeltaT;
 
-  repast::Point< int > mOrigin;
-  repast::Point< int > mExtents;
+  repast::Point< int > mShape;
 
   DenseMatrix< std::vector< double > > * mpNewValues;
   DenseMatrix< std::vector< double > > * mpCurrentValues;
+
+  SharedValueLayer * mpDiffuserData;
 };
 
 } // namespace ENISI

@@ -48,49 +48,49 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * >::iterator it = Dentritics.begin();
   std::vector< Agent * >::iterator end = Dentritics.end();
 
-  StateCount DendriticsStateCount;
-  CountStates(Agent::Dentritics, Dentritics, DendriticsStateCount);
+  Concentration DendriticsConcentration;
+  concentrations(Agent::Dentritics, Dentritics, DendriticsConcentration);
 
   // We only request information if we are at the border
   std::vector< Agent * > Bacteria;
-  StateCount BacteriaStateCount;
+  Concentration BacteriaConcentration;
   std::vector< Agent * > HPylori;
-  StateCount HPyloriStateCount;
+  Concentration HPyloriConcentration;
 
   if (mpCompartment->getType() == Compartment::epithilium)
     {
       if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
         {
           mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
-          CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+          concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
-          CountStates(Agent::HPylori, HPylori, HPyloriStateCount);
+          concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
         }
       else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
         {
           mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
-          CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+          concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
-          CountStates(Agent::HPylori, HPylori, HPyloriStateCount);
+          concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
         }
     }
 
   std::vector< Agent * > Tcells;
-  StateCount TcellStateCount;
+  Concentration TcellConcentration;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-  CountStates(Agent::Tcell, Tcells, TcellStateCount);
+  concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
   // We only request information if we are at the border
   std::vector< Agent * > EpithelialCells;
-  StateCount EpithelialCellStateCount;
+  Concentration EpithelialCellConcentration;
 
   if (mpCompartment->getType() == Compartment::lamina_propria &&
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
 
   for (; it != end; ++it)
@@ -104,14 +104,14 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
        * tolegenic are all in lumen     */
-      unsigned int infectiousBacteriaCount = BacteriaStateCount[BacteriaState::INFECTIOUS];
-      unsigned int tolegenicBacteriaCount = BacteriaStateCount[BacteriaState::TOLEROGENIC];
+      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+      double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
-      unsigned int liveHPyloriCount = HPyloriStateCount[HPyloriState::NAIVE];
-      unsigned int eDendriticsCount = DendriticsStateCount[DendriticState::EFFECTOR];
-      unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
-      unsigned int itregCount = TcellStateCount[TcellState::iTREG];
+      double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+      double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
+      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+      double itregConcentration = TcellConcentration[TcellState::iTREG];
 
       if (state == DendriticState::IMMATURE
           && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCEpitheliumDistance // TODO - CRITICAL Determine this value
@@ -147,13 +147,13 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
 
       /* if no bacteria is around DC, then stays immature */
-      if (infectiousBacteriaCount + liveHPyloriCount == 0 && state == DendriticState::IMMATURE)
+      if (infectiousBacteriaConcentration + liveHPyloriConcentration == 0 && state == DendriticState::IMMATURE)
         {
           newState = DendriticState::IMMATURE;
         }
       /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
        *  0.5 is arbitrary *Rule 2*/
-      else if (liveHPyloriCount > 0.5 * tolegenicBacteriaCount + 1
+      else if (liveHPyloriConcentration > 0.5 * tolegenicBacteriaConcentration + 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium
 			   && (p_rule48a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -166,7 +166,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
       /*if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
        *  0.5 is arbitrary */
-      else if (liveHPyloriCount <= 0.5 * tolegenicBacteriaCount + 1
+      else if (liveHPyloriConcentration <= 0.5 * tolegenicBacteriaConcentration + 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium
 			   && (p_rule48b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -179,7 +179,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
        *  1 is arbitrary, Rule 48 */
-      else if (liveHPyloriCount + tolegenicBacteriaCount > 1
+      else if (liveHPyloriConcentration + tolegenicBacteriaConcentration > 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
 			   && (p_rule17a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -188,7 +188,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
        *  1 is arbitrary * Rule 17 and Rule 48*/
-      else if (liveHPyloriCount + tolegenicBacteriaCount <= 1
+      else if (liveHPyloriConcentration + tolegenicBacteriaConcentration <= 1
                && state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
 			   && (p_rule17b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -207,7 +207,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
 
       if (state == DendriticState::IMMATURE
-          && (damagedEpithelialCellCount || eDendriticsCount)
+          && (damagedEpithelialCellConcentration || eDendriticsConcentration)
           && (p_rule15 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->getLocation(pAgent->getId(), Location);
@@ -220,7 +220,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           continue;
         }
 
-      if (state == DendriticState::EFFECTOR && itregCount
+      if (state == DendriticState::EFFECTOR && itregConcentration
           && (p_rule34 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->removeAgent(pAgent);

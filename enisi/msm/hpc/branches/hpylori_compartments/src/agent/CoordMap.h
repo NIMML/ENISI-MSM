@@ -13,16 +13,16 @@ template <size_t N>
 class CoordinateMap : public CellGroup
 {
 public:
-  struct StateCount
+  struct Concentration
   {
     unsigned int state[N];
 
-    StateCount() :
+    Concentration() :
       state()
     {}
   };
 
-  typedef std::map<repast::Point<int>, StateCount > CoordMap;
+  typedef std::map<repast::Point<int>, Concentration > CoordMap;
 
   CoordinateMap(Compartment * pCompartment) :
     CellGroup(pCompartment),
@@ -53,7 +53,7 @@ public:
     _coordMap[pt].state[cell]--;
   }
 
-  const StateCount * getCellsAt(const repast::Point<int> pt)
+  const Concentration * getCellsAt(const repast::Point<int> pt)
   {
     return &_coordMap[pt];
   }
@@ -110,7 +110,7 @@ protected:
                 }
               else
                 {
-                  throw std::invalid_argument("No adjacent Compartment");
+                  throw std::runtime_error("No adjacent Compartment");
                 }
 
               break;
@@ -124,7 +124,7 @@ protected:
                 }
               else
                 {
-                  throw std::invalid_argument("No adjacent Compartment");
+                  throw std::runtime_error("No adjacent Compartment");
                 }
 
               break;

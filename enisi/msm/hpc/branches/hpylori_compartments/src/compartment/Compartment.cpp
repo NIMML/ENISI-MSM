@@ -1,5 +1,7 @@
 #include "compartment/Compartment.h"
+
 #include "ICompartmentLayer.h"
+
 #include "grid/Properties.h"
 #include "agent/Cytokine.h"
 #include "agent/SharedValueLayer.h"
@@ -133,12 +135,12 @@ Iterator Compartment::begin()
   return Iterator(mpLayer->gridDimensions());
 }
 
-repast::Point< double > Compartment::gridToSpace(const repast::Point< int > & grid) const
+std::vector< double > Compartment::gridToSpace(const std::vector< int > & grid) const
 {
   return mpLayer->gridToSpace(grid);
 }
 
-repast::Point<int> Compartment::spaceToGrid(const repast::Point<double> & space) const
+std::vector< int > Compartment::spaceToGrid(const std::vector< double > & space) const
 {
   return mpLayer->spaceToGrid(space);
 }
@@ -155,7 +157,7 @@ bool Compartment::moveTo(const repast::AgentId &id, repast::Point< double > &pt)
 
 bool Compartment::moveTo(const repast::AgentId &id, std::vector< double > &pt)
 {
-  // We need to transform the point possibly to the coordinates of the adjacent compartment.
+  // We need to transform the point possibly to the coordinates of an adjacent compartment.
   Compartment * pTarget = transform(pt);
 
   if (pTarget == this)
@@ -195,13 +197,8 @@ Compartment * Compartment::transform(std::vector< double > & pt) const
 
   Compartment * pTarget = NULL;
 
-  for (; itState != endState; ++itState, ++itIn, ++i)
+  for (; itState != endState && pTarget == NULL; ++itState, ++itIn, ++i)
     {
-      if (pTarget != NULL)
-        {
-          continue;
-        }
-
       switch (*itState)
         {
           case Borders::OUT_LOW:
@@ -210,10 +207,6 @@ Compartment * Compartment::transform(std::vector< double > & pt) const
                 pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
                 const repast::GridDimensions & Dimensions = pTarget->dimensions();
                 *itIn += Dimensions.origin(i) + Dimensions.extents(i) - mDimensions.origin(i);
-              }
-            else
-              {
-                throw std::invalid_argument("No adjacent Compartment");
               }
 
             break;
@@ -224,10 +217,6 @@ Compartment * Compartment::transform(std::vector< double > & pt) const
                 pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
                 const repast::GridDimensions & Dimensions = pTarget->dimensions();
                 *itIn += Dimensions.origin(i) - mDimensions.extents(i);
-              }
-            else
-              {
-                throw std::invalid_argument("No adjacent Compartment");
               }
 
             break;
@@ -457,9 +446,63 @@ const std::vector< Cytokine * > & Compartment::getCytokines() const
   return mCytokines;
 }
 
-double & Compartment::cytokineValue(const std::string & name, const repast::Point< int > & location)
+std::vector< double > & Compartment::cytokineValues(const repast::Point< int > & pt)
 {
-  return mpDiffuserValues->operator[](location)[mCytokineMap[name]];
+  if (this->localGridDimensions().contains(pt))
+    {
+      return mpDiffuserValues->operator[](pt);
+    }
+
+  // We loop through all non local agents and check whether they contain the value
+  SharedLayer::Context::const_state_aware_iterator it = mpLayer->getValueContext().begin(SharedLayer::Context::NON_LOCAL);
+  SharedLayer::Context::const_state_aware_iterator end = mpLayer->getValueContext().end(SharedLayer::Context::NON_LOCAL);
+
+  std::vector< double > * pFound = NULL;
+
+  for (; it != end && pFound == NULL; ++it)
+    {
+      pFound = static_cast< SharedValueLayer * >(&**it)->tryLocation(pt);
+    }
+
+  if (pFound != NULL)
+    {
+      return *pFound;
+    }
+
+  throw std::runtime_error("cytokine value not found");
+
+  static std::vector< double > NaN(mCytokines.size(), std::numeric_limits< double >::quiet_NaN());
+  return NaN;
+}
+
+double & Compartment::cytokineValue(const std::string & name, const repast::Point< int > & pt)
+{
+  std::vector< int > Location = pt.coords();
+
+  Compartment * pTarget = transform(Location);
+
+  if (pTarget == this)
+    {
+      return cytokineValues(Location)[mCytokineMap[name]];
+    }
+  else if (pTarget != NULL)
+    {
+      return pTarget->cytokineValue(name, Location);
+    }
+
+  throw std::runtime_error("cytokine value not found");
+
+  static double NaN = std::numeric_limits< double >::quiet_NaN();
+  return NaN;
+}
+
+double & Compartment::cytokineValue(const std::string & name, const repast::Point< int > & pt, const int & xOffset, const int & yOffset)
+{
+  std::vector< int > Location = pt.coords();
+  Location[Borders::X] += xOffset;
+  Location[Borders::Y] += yOffset;
+
+  return cytokineValue(name, Location);
 }
 
 void Compartment::initializeDiffuserData()
@@ -490,6 +533,12 @@ void Compartment::initializeDiffuserData()
   synchronizeDiffuser();
 }
 
+SharedValueLayer * Compartment::getDiffuserData()
+{
+  return mpDiffuserValues;
+}
+
+/*
 std::vector< double > & Compartment::operator[](const repast::Point< int > & location)
 {
   return mpDiffuserValues->operator[](location);
@@ -502,15 +551,17 @@ const std::vector< double > & Compartment::operator[](const repast::Point< int >
 
 const std::vector< double > & Compartment::operator[](const repast::Point< double > & location) const
 {
-  return operator[](mpLayer->spaceToGrid(location));
+  return operator[](mpLayer->spaceToGrid(location.coords()));
 }
+*/
 
 void Compartment::synchronizeCells()
 {
   mpLayer->synchronizeCells();
 }
 
-void Compartment::getBorderAgentsToPush(std::map< int, std::set< repast::AgentId > > & agentsToPush)
+void Compartment::getBorderCellsToPush(std::set<repast::AgentId> & /* agentsToTest */,
+                                       std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
   std::vector< Borders::Coodinate > Coordinates;
   std::vector< Borders::Side > Sides;
@@ -554,18 +605,18 @@ void Compartment::getBorderAgentsToPush(std::map< int, std::set< repast::AgentId
   for (; it != end; ++it, ++itSide)
     {
       // Add all local agent Ids which are near the border to be pushed;
-      getBorderAgentsToPush(*it, *itSide, agentsToPush);
+      getBorderCellsToPush(*it, *itSide, agentsToPush);
     }
 }
 
-void Compartment::getBorderAgentsToPush(const Borders::Coodinate & coordinate,
-                                        const Borders::Side & side,
-                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
+void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
+                                       const Borders::Side & side,
+                                       std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
   Borders::Coodinate OtherCordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
 
-  int xOffset = (coordinate == Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
-  int yOffset = (coordinate == Borders::Y) ? 0 : (side == Borders::HIGH) ? +1 : -1;
+  int xOffset = (coordinate != Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
+  int yOffset = (coordinate != Borders::Y) ? 0 : (side == Borders::HIGH) ? +1 : -1;
 
   Iterator itPoint(localGridDimensions());
   if (side == Borders::HIGH)
@@ -578,7 +629,7 @@ void Compartment::getBorderAgentsToPush(const Borders::Coodinate & coordinate,
 
   for (; itPoint; itPoint.next(coordinate))
     {
-      int TargetRank = mpLayer->getRank(*itPoint, xOffset, yOffset);
+      int TargetRank = mpLayer->getRank(itPoint->coords(), xOffset, yOffset);
       std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(TargetRank);
 
       if (found == agentsToPush.end())
@@ -599,6 +650,99 @@ void Compartment::getBorderAgentsToPush(const Borders::Coodinate & coordinate,
     }
 }
 
+void Compartment::getBorderValuesToPush(std::set<repast::AgentId> & /* agentsToTest */,
+                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
+{
+  std::vector< Borders::Coodinate > Coordinates;
+  std::vector< Borders::Side > Sides;
+
+  repast::Point< double > Out = localGridDimensions().origin();
+
+  if (mAdjacentCompartments[Borders::X][Borders::LOW] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::LOW)) < 0.5)
+    {
+      Coordinates.push_back(Borders::X);
+      Sides.push_back(Borders::LOW);
+    }
+
+  if (mAdjacentCompartments[Borders::Y][Borders::LOW] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::LOW)) < 0.5)
+    {
+      Coordinates.push_back(Borders::Y);
+      Sides.push_back(Borders::LOW);
+    }
+
+  Out.add(localGridDimensions().extents());
+
+  if (mAdjacentCompartments[Borders::X][Borders::HIGH] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::HIGH)) < 0.5)
+    {
+      Coordinates.push_back(Borders::X);
+      Sides.push_back(Borders::HIGH);
+    }
+
+  if (mAdjacentCompartments[Borders::Y][Borders::HIGH] != INVALID &&
+      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::HIGH)) < 0.5)
+    {
+      Coordinates.push_back(Borders::Y);
+      Sides.push_back(Borders::HIGH);
+    }
+
+  std::vector< Borders::Coodinate >::const_iterator it = Coordinates.begin();
+  std::vector< Borders::Coodinate >::const_iterator end = Coordinates.end();
+  std::vector< Borders::Side >::const_iterator itSide = Sides.begin();
+
+  for (; it != end; ++it, ++itSide)
+    {
+      // Add all local agent Ids which are near the border to be pushed;
+      getBorderValuesToPush(*it, *itSide, agentsToPush);
+    }
+}
+
+void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
+                                        const Borders::Side & side,
+                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
+{
+  Borders::Coodinate OtherCordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
+
+  int xOffset = (coordinate != Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
+  int yOffset = (coordinate != Borders::Y) ? 0 : (side == Borders::HIGH) ? +1 : -1;
+
+  Iterator itPoint(localGridDimensions());
+
+  if (side == Borders::HIGH)
+    {
+      for (int i = 0, imax = localGridDimensions().extents(coordinate); i < imax; ++i)
+        {
+          itPoint.next(OtherCordinate);
+        }
+    }
+
+  std::set< int > Targets;
+
+  for (; itPoint; itPoint.next(coordinate))
+    {
+      Targets.insert(mpLayer->getRank(itPoint->coords(), xOffset, yOffset));
+    }
+
+  repast::AgentId Id = mpDiffuserValues->getId();
+
+  std::set< int >::const_iterator itTarget = Targets.begin();
+  std::set< int >::const_iterator endTarget = Targets.end();
+
+  for (; itTarget != endTarget; ++itTarget)
+    {
+      std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(*itTarget);
+
+      if (found == agentsToPush.end())
+        {
+          found = agentsToPush.insert(std::make_pair(*itTarget, std::set< repast::AgentId >())).first;
+        }
+
+      found->second.insert(Id);
+    }
+}
+
 void Compartment::synchronizeDiffuser()
 {
   mpLayer->synchronizeDiffuser();
@@ -609,7 +753,8 @@ void Compartment::synchronizeDiffuser()
 
   for (; it != end; ++it)
     {
-      mpDiffuserValues->updateBufferValues(*static_cast< SharedValueLayer * >(&**it));
+      mpDiffuserValues->updateBufferValues(*static_cast< SharedValueLayer * >(&**it),
+                                           *mpGridBorders);
     }
 }
 
@@ -630,62 +775,31 @@ size_t Compartment::localCount(const size_t & globalCount)
   return LocalCount;
 }
 
-size_t Compartment::getRank(const repast::Point< double > & location) const
+size_t Compartment::getRank(const std::vector< int > & location) const
 {
-  return getRank(mpLayer->spaceToGrid(location));
+  std::vector< int > Location = location;
+
+  Compartment * pTarget = transform(Location);
+
+  if (pTarget == this)
+    {
+      return mpLayer->getRank(Location, 0, 0);
+    }
+  else if (pTarget != NULL)
+    {
+      pTarget->getRank(Location);
+    }
+
+  return (size_t) INVALID;
 }
 
-size_t Compartment::getRank(const repast::Point< int > & location) const
+size_t Compartment::getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const
 {
-  std::vector< Borders::BoundState > BoundState(mDimensions.dimensionCount());
+  std::vector< int > Location = location;
+  Location[Borders::X] += xOffset;
+  Location[Borders::Y] += yOffset;
 
-  if (mpGridBorders->boundsCheck(location.coords(), &BoundState))
-    {
-      mpLayer->getRank(location, 0, 0);
-    }
-
-  repast::Point< int > Location(location);
-
-  std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
-  std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
-
-  Compartment * pTarget = NULL;
-
-  for (size_t i = 0; itState != endState && pTarget == NULL; ++itState, ++i)
-    {
-      switch (*itState)
-        {
-          case Borders::OUT_LOW:
-
-            if (mAdjacentCompartments[i][Borders::LOW] != INVALID)
-              {
-                pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
-                Location[i] += pTarget->dimensions().origin(i) + pTarget->dimensions().extents(i) - mDimensions.origin(i);
-              }
-
-            break;
-
-          case Borders::OUT_HIGH:
-
-            if (mAdjacentCompartments[i][Borders::HIGH] != INVALID)
-              {
-                pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
-                Location[i] += pTarget->dimensions().origin(i) - (mDimensions.origin(i) + mDimensions.extents(i));
-             }
-
-            break;
-
-          case Borders::INBOUND:
-            break;
-        }
-    }
-
-  if (pTarget != NULL)
-    {
-      return pTarget->getRank(Location);
-    }
-
-  return INVALID;
+  return getRank(Location);
 }
 
 std::string Compartment::getName() const

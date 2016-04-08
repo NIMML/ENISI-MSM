@@ -53,11 +53,11 @@ void ACellGroupCompartmentMovement::assertTH17inLumenNotEpithelium()
   _assertTH17inLumenNotEpitheliumCalled = true;
 
   _p_lumenTcells->addCellAt(ENISI::TcellState::TH17, repast::Point<int>(5,5));
-  const ENISI::TcellGroup::StateCount
+  const ENISI::TcellGroup::Concentration
 		lumenTcellCount = _p_lumenTcells->countByState();
   ASSERT_THAT(lumenTcellCount.state[ENISI::TcellState::TH17], Eq(1));
 
-  const ENISI::TcellGroup::StateCount
+  const ENISI::TcellGroup::Concentration
 		epitheliumTcellCount = _epitheliumTcells->countByState();
   ASSERT_THAT(epitheliumTcellCount.state[ENISI::TcellState::TH17], Eq(0));
 }
@@ -75,11 +75,11 @@ void ACellGroupCompartmentMovement::assertTH17inEpitheliumNotLumen()
 {
   _assertTH17inEpitheliumNotLumenCalled = true;
 
-  const ENISI::TcellGroup::StateCount
+  const ENISI::TcellGroup::Concentration
 		lumenTcellCount = _p_lumenTcells->countByState();
   ASSERT_THAT(lumenTcellCount.state[ENISI::TcellState::TH17], Eq(0));
 
-  const ENISI::TcellGroup::StateCount
+  const ENISI::TcellGroup::Concentration
 		epitheliumTcellCount = _epitheliumTcells->countByState();
   ASSERT_THAT(epitheliumTcellCount.state[ENISI::TcellState::TH17], Eq(1));
 }

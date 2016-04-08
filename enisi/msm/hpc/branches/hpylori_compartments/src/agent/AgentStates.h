@@ -14,15 +14,6 @@
 
 namespace ENISI
 {
-
-class Space2Grid
-{
-public:
-  double grid;
-  double space;
-  double scale;
-};
-
 class TcellState
 {
 public:
@@ -65,13 +56,17 @@ public:
   static Agent::Type Type;
 };
 
-typedef std::vector< size_t > StateCount;
+typedef std::vector< double > Concentration;
+typedef std::map< Agent::Type, Concentration > Concentrations;
+void concentrations(const Agent::Type & type, std::vector< Agent * > agents, Concentration & concentration);
+void concentrations(const int & types, std::vector< Agent * > agents, Concentrations & concentrations);
 
-typedef std::map< Agent::Type, StateCount > StateCounts;
+typedef std::vector< size_t > Number;
+typedef std::map< Agent::Type, Number > Numbers;
+void numbers(const Agent::Type & type, std::vector< Agent * > agents, Number & number);
+void numbers(const int & types, std::vector< Agent * > agents, Numbers & numbers);
 
-void CountStates(const Agent::Type & type, std::vector< Agent * > agents, StateCount & stateCount);
-void CountStates(const int & types, std::vector< Agent * > agents, StateCounts & stateCounts);
-
+void init();
 } // namespace ENISI
 
 #endif /* AGENT_AGENTSTATES_H_ */

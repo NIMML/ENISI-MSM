@@ -33,23 +33,23 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
   // We only request information if we are at the border
   std::vector< Agent * > Bacteria;
-  StateCount BacteriaStateCount;
+  Concentration BacteriaConcentration;
 
   std::vector< Agent * > Tcells;
-  StateCount TcellsCellStateCount;
+  Concentration TcellsCellConcentration;
 
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
-      CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+      concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
-      CountStates(Agent::Tcell, Tcells, TcellsCellStateCount);
+      concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
     }
   else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
-      CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+      concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
     }
 
 
@@ -62,29 +62,29 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       EpithelialCellState::State newState = state;
 
-      unsigned int infectiousBacteriaCount = BacteriaStateCount[BacteriaState::INFECTIOUS];
-      unsigned int tolegenicBacteriaCount = BacteriaStateCount[BacteriaState::TOLEROGENIC];
+      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+      double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
       //Rules 9 and 10
-      unsigned int th17Count = TcellsCellStateCount[TcellState::TH17]; //Rule 10 when Th17 is in contact
-      unsigned int th1Count = TcellsCellStateCount[TcellState::TH1]; //RUle 9 when Th1 is in contact
+      double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
+      double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
 
-      if (infectiousBacteriaCount && state == EpithelialCellState::HEALTHY)
+      if (infectiousBacteriaConcentration && state == EpithelialCellState::HEALTHY)
         {
           newState = EpithelialCellState::DAMAGED;
         }
-      else if (tolegenicBacteriaCount && state == EpithelialCellState::HEALTHY)
+      else if (tolegenicBacteriaConcentration && state == EpithelialCellState::HEALTHY)
         {
           newState = EpithelialCellState::HEALTHY;
         }
-      else if (th17Count && state == EpithelialCellState::HEALTHY
+      else if (th17Concentration && state == EpithelialCellState::HEALTHY
                && mpCompartment->getType() == Compartment::lamina_propria) // TODO CRITICAL This will never be true
         {
           newState = EpithelialCellState::DAMAGED; /*Rule 10*/
           /* CHECK : Here there should be a function for information regarding the Layer,
           for eg. This rule requires the state transition when TH17 in LaminaPropria is in contact with E at 'Epithelium and LaminaPropria' membrane*/
         }
-      else if (th1Count && state == EpithelialCellState::HEALTHY
+      else if (th1Concentration && state == EpithelialCellState::HEALTHY
                && mpCompartment->getType() == Compartment::lamina_propria) // TODO CRITICAL This will never be true
         {
           newState = EpithelialCellState::DAMAGED; /*Rule 9*/

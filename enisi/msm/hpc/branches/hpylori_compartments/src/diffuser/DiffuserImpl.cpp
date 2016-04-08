@@ -18,40 +18,34 @@ DiffuserImpl::DiffuserImpl(Compartment * pCompartment) :
   mpCompartment(pCompartment),
   mCytokines(pCompartment->getCytokines()),
   mDeltaT(1.0),
-  mOrigin(std::vector< int >(mpCompartment->dimensions().dimensionCount(), 0)),
-  mExtents(std::vector< int >(mpCompartment->dimensions().dimensionCount(), 0)),
+  mShape(std::vector< int >(mpCompartment->dimensions().dimensionCount(), 2)),
   mpNewValues(NULL),
-  mpCurrentValues(NULL)
+  mpCurrentValues(NULL),
+  mpDiffuserData(mpCompartment->getDiffuserData())
 {
+  mShape = mpDiffuserData->getLocalValues()->shape();
+
+  mpCurrentValues = mpDiffuserData->getLocalValues();
+  mpNewValues = new DenseMatrix< std::vector< double > >(mShape, std::vector< double >(pCompartment->getCytokines().size(), 0.0));
+
   // Calculate the maximal time step (mDeltaT)
   std::vector< Cytokine * >::const_iterator it = mCytokines.begin();
   std::vector< Cytokine * >::const_iterator end = mCytokines.end();
 
   for (; it != end; ++it)
     {
-      double tmp = 1.0/((*it)->getDegradation() + 2.0 * (*it)->getDiffusion() * mOrigin.dimensionCount());
+      double tmp = 1.0/((*it)->getDegradation() + 2.0 * (*it)->getDiffusion() * mShape.dimensionCount());
 
       if (tmp < mDeltaT)
         {
           mDeltaT = tmp;
         }
     }
-
-  const repast::GridDimensions & LocalCompartmentDimensions = mpCompartment->localGridDimensions();
-
-  for (size_t i = 0; i < mOrigin.dimensionCount(); ++i)
-    {
-      mOrigin[i] = floor(LocalCompartmentDimensions.origin(i));
-      mExtents[i] = floor(LocalCompartmentDimensions.extents(i));
-    }
-
-  mpNewValues = new DenseMatrix< std::vector< double > >(mExtents, std::vector< double >(pCompartment->getCytokines().size(), 0.0));
-  mpCurrentValues = new DenseMatrix< std::vector< double > >(mExtents, std::vector< double >(pCompartment->getCytokines().size(), 0.0));
 }
 
 void DiffuserImpl::computeVals1D(const double & deltaT)
 {
-  Iterator itPoint(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itPoint(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
 
   std::vector< double > * pOldValueE = &mpCurrentValues->operator [](*itPoint);
   itPoint.next();
@@ -96,7 +90,7 @@ void DiffuserImpl::computeVals1D(const double & deltaT)
 
 void DiffuserImpl::computeVals2D(const double & deltaT)
 {
-  Iterator itNorth(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itNorth(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
 
   std::vector< double > * pOldValueNE = &mpCurrentValues->operator [](*itNorth);
   itNorth.next();
@@ -104,7 +98,7 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
   itNorth.next();
   std::vector< double > * pOldValueNW = &mpCurrentValues->operator [](*itNorth);
 
-  Iterator itPoint(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itPoint(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
   itPoint.next(1); // Move 1 row down
 
   std::vector< double > * pOldValueE = &mpCurrentValues->operator [](*itPoint);
@@ -114,7 +108,7 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
   itPoint.next();
   std::vector< double > * pOldValueW = &mpCurrentValues->operator [](*itPoint);
 
-  Iterator itSouth(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
+  Iterator itSouth(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
   itSouth.next(1); itSouth.next(1); // Move 2 rows down
 
   std::vector< double > * pOldValueSE = &mpCurrentValues->operator [](*itSouth);
@@ -207,7 +201,7 @@ void DiffuserImpl::computeVals3D(const double & /* deltaT */)
  */
 void DiffuserImpl::computeVals(const double & deltaT)
 {
-  switch (mOrigin.dimensionCount())
+  switch (mShape.dimensionCount())
   {
     case 1:
       computeVals1D(deltaT);
@@ -228,14 +222,8 @@ void DiffuserImpl::diffuse(const double & deltaT)
   size_t steps = ceil(deltaT/mDeltaT);
   double DeltaT = deltaT/steps;
 
-  // Copy the value layer into the local matrix
-  Iterator itValue(mOrigin, mExtents);
-  Iterator itLocal(repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
 
-  for (;itValue; itValue.next(), itLocal.next())
-    {
-      mpCurrentValues->operator [](*itLocal) = mpCompartment->operator [](*itValue);
-    }
+  // Copy the value layer into the local matrix
 
   // Do integration steps to reach deltaT
   for (size_t s = 0; s < steps; ++s)
@@ -244,13 +232,9 @@ void DiffuserImpl::diffuse(const double & deltaT)
       computeVals(DeltaT);
     }
 
-  // Copy local matrix into value layer
-  itValue = Iterator (mOrigin, mExtents);
-  itLocal = Iterator (repast::Point< int >(std::vector< int >(mOrigin.dimensionCount(), 0)), mExtents);
-
-  for (;itValue; itValue.next(), itLocal.next())
+  if (mpCurrentValues != mpDiffuserData->getLocalValues())
     {
-      mpCompartment->operator [](*itValue) = mpCurrentValues->operator [](*itLocal);
+      *mpDiffuserData->getLocalValues() = *mpCurrentValues;
     }
 }
 

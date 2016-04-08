@@ -13,16 +13,25 @@
 
 namespace ENISI {
 
-template <class Agent, class Package, class PackageExchange>
+template <class AgentType, class Package, class PackageExchange>
 class ICompartmentLayer
 { 
+private:
+  struct Space2Grid
+    {
+      double grid;
+      double space;
+      double scale;
+    };
+
+
 public:
   typedef ENISI::SimpleBorders Transformer;
-  typedef repast::SimpleAdder< Agent > Adder;
-  typedef repast::SharedContinuousSpace<Agent, Transformer, Adder> Space;
-  typedef ENISI::Projection<Agent, Transformer, Adder> Grid;
-  typedef repast::SharedContext< Agent > Context;
-  typedef Agent AgentType;
+  typedef repast::SimpleAdder< AgentType > Adder;
+  typedef repast::SharedContinuousSpace<AgentType, Transformer, Adder> Space;
+  typedef ENISI::Projection<AgentType, Transformer, Adder> Grid;
+  typedef repast::SharedContext< AgentType > Context;
+//  typedef Agent AgentType;
 
   ICompartmentLayer(const std::string & name,
                     const repast::GridDimensions & spaceDimension,
@@ -62,8 +71,8 @@ public:
     mGridDimensions = mpGrid->dimensions();
     mSharedValueDimensions = mpSharedValues->dimensions();
 
-    std::vector< Space2Grid >::iterator itConversion = mSpace2Grid.begin();
-    std::vector< Space2Grid >::iterator endConversion = mSpace2Grid.end();
+    typename std::vector< Space2Grid >::iterator itConversion = mSpace2Grid.begin();
+    typename std::vector< Space2Grid >::iterator endConversion = mSpace2Grid.end();
 
     std::vector< double >::const_iterator itGridOrigin = gridDimension.origin().begin();
     std::vector< double >::const_iterator itGridExtents = gridDimension.extents().begin();
@@ -157,25 +166,25 @@ public:
 
   }
 
-  void getNeighbors(const repast::Point< int > &pt, unsigned int range, std::vector< Agent * > &out)
+  void getNeighbors(const repast::Point< int > &pt, unsigned int range, std::vector< AgentType * > &out)
   {
     if (range == 0)
       {
         getAgents(pt, out);
       }
 
-    repast::Moore2DGridQuery< Agent > moore2DQuery(mpGrid);
+    repast::Moore2DGridQuery< AgentType > moore2DQuery(mpGrid);
     moore2DQuery.query(pt, range, true, out);
   }
 
-  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const int & types, std::vector< Agent * > &out)
+  void getNeighbors(const repast::Point< int > &pt, unsigned int range, const int & types, std::vector< AgentType * > &out)
   {
     out.clear();
-    std::vector< Agent * > Tmp;
+    std::vector< AgentType * > Tmp;
     getNeighbors(pt, range, Tmp);
 
-    typename std::vector< Agent * >::const_iterator it = Tmp.begin();
-    typename std::vector< Agent * >::const_iterator end = Tmp.end();
+    typename std::vector< AgentType * >::const_iterator it = Tmp.begin();
+    typename std::vector< AgentType * >::const_iterator end = Tmp.end();
 
     for (; it != end; ++it)
       {
@@ -186,19 +195,19 @@ public:
       }
   }
 
-  void getAgents(const repast::Point< int > &pt, std::vector< Agent * > &out)
+  void getAgents(const repast::Point< int > &pt, std::vector< AgentType * > &out)
   {
     mpGrid->getObjectsAt(pt, out);
   }
 
-  void getAgents(const repast::Point< int > &pt, const int & types, std::vector< Agent * > &out)
+  void getAgents(const repast::Point< int > &pt, const int & types, std::vector< AgentType * > &out)
   {
     out.clear();
-    std::vector< Agent * > Tmp;
+    std::vector< AgentType * > Tmp;
     mpGrid->getObjectsAt(pt, Tmp);
 
-    typename std::vector< Agent * >::const_iterator it = Tmp.begin();
-    typename std::vector< Agent * >::const_iterator end = Tmp.end();
+    typename std::vector< AgentType * >::const_iterator it = Tmp.begin();
+    typename std::vector< AgentType * >::const_iterator end = Tmp.end();
 
     for (; it != end; ++it)
       {
@@ -209,7 +218,7 @@ public:
       }
   }
 
-  Agent * getAgent(const repast::AgentId &id)
+  AgentType * getAgent(const repast::AgentId &id)
   {
     return mCellContext.getAgent(id);
   }
@@ -219,15 +228,15 @@ public:
     return mpSpace->moveTo(id, pt) && mpGrid->moveTo(id, spaceToGrid(pt));
   }
 
-  bool addAgent(Agent * agent, const std::vector< double > & pt)
+  bool addAgent(AgentType * agent, const std::vector< double > & pt)
   {
-    Agent * pAgent = mCellContext.addAgent(agent);
+    AgentType * pAgent = mCellContext.addAgent(agent);
     repast::AgentId Id = pAgent->getId();
 
     return mpSpace->moveTo(Id, pt) && mpGrid->moveTo(Id, spaceToGrid(pt));
   }
 
-  bool addAgentToRandomLocation(Agent * agent)
+  bool addAgentToRandomLocation(AgentType * agent)
   {
     std::vector< double > Location(2);
     repast::Point<double> extents = mSpaceDimensions.extents();
@@ -239,20 +248,20 @@ public:
     return addAgent(agent, Location);
   }
 
-  void removeAgent (Agent * pAgent)
+  void removeAgent (AgentType * pAgent)
   {
     mpSpace->removeAgent(pAgent);
     mpGrid->removeAgent(pAgent);
     mCellContext.removeAgent(pAgent);
   }
 
-  repast::Point<int> spaceToGrid(const repast::Point<double> & space) const
+  std::vector< int > spaceToGrid(const std::vector< double > & space) const
   {
     std::vector< int > Grid(mpSpace->dimensions().dimensionCount(), 0);
 
-    std::vector< double >::const_iterator itSpace = space.coords().begin();
-    std::vector< double >::const_iterator endSpace = space.coords().end();
-    std::vector< Space2Grid >::const_iterator itConversion = mSpace2Grid.begin();
+    std::vector< double >::const_iterator itSpace = space.begin();
+    std::vector< double >::const_iterator endSpace = space.end();
+    typename std::vector< Space2Grid >::const_iterator itConversion = mSpace2Grid.begin();
     std::vector< int >::iterator itGrid = Grid.begin();
 
     for (; itSpace != endSpace; ++itSpace, ++itConversion, ++itGrid)
@@ -263,13 +272,13 @@ public:
     return Grid;
   }
 
-  repast::Point< double > gridToSpace(const repast::Point< int > & grid) const
+  std::vector< double > gridToSpace(const std::vector< int > & grid) const
   {
     std::vector< double > Space(mpSpace->dimensions().dimensionCount(), 0);
 
-    std::vector< int >::const_iterator itGrid = grid.coords().begin();
-    std::vector< int >::const_iterator endGrid = grid.coords().end();
-    std::vector< Space2Grid >::const_iterator itConversion = mSpace2Grid.begin();
+    std::vector< int >::const_iterator itGrid = grid.begin();
+    std::vector< int >::const_iterator endGrid = grid.end();
+    typename std::vector< Space2Grid >::const_iterator itConversion = mSpace2Grid.begin();
     std::vector< double >::iterator itSpace = Space.begin();
 
     for (; itGrid != endGrid; ++itGrid, ++itConversion, ++itSpace)
@@ -285,22 +294,22 @@ public:
     mpSpace->getLocation(id, loc);
   }
 
-  std::vector< Agent * > getNeighborsAt(const std::string neighborName, const repast::Point<int> & pt) const
+  std::vector< AgentType * > getNeighborsAt(const std::string neighborName, const repast::Point<int> & pt) const
   {
-    std::vector< Agent *> agentsToPlay;
+    std::vector< AgentType *> agentsToPlay;
 
-    repast::Moore2DGridQuery< Agent > moore2DQuery(mpGrid);
+    repast::Moore2DGridQuery< AgentType > moore2DQuery(mpGrid);
     int range = 0;
     bool includeCenter = true;
     moore2DQuery.query(pt, range, includeCenter, agentsToPlay);
 
-    std::vector< Agent * > matchingNeighbors;
+    std::vector< AgentType * > matchingNeighbors;
 
     /* Pulling agents across processes can result in duplicates. Check to make
     sure we aren't returning any */
     std::map<repast::AgentId, bool> seen;
 
-    typename std::vector< Agent *>::iterator agentToPlay = agentsToPlay.begin();
+    typename std::vector< AgentType *>::iterator agentToPlay = agentsToPlay.begin();
 
     while (agentToPlay != agentsToPlay.end())
     {
@@ -329,7 +338,7 @@ public:
 
   void requestAgents(repast::AgentRequest & request)
   {
-    repast::RepastProcess::instance()->requestAgents<Agent, Package, PackageExchange, PackageExchange>(mCellContext, request, mpCellExchange, mpCellExchange, mpCellExchange);
+    repast::RepastProcess::instance()->requestAgents<AgentType, Package, PackageExchange, PackageExchange>(mCellContext, request, mpCellExchange, mpCellExchange, mpCellExchange);
   }
 
   void requestAgents()
@@ -344,7 +353,7 @@ public:
     {
       if(i != rank)// ... except this one
       {
-        std::vector< Agent * > agents;
+        std::vector< AgentType * > agents;
         /* Choose all agents */
         mCellContext.selectAgents(agents);
 
@@ -364,25 +373,24 @@ public:
     requestAgents(req);
   }
 
-
   void synchronizeCellStates()
   {
-    repast::RepastProcess::instance()->synchronizeAgentStates<Agent, Package, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange);
+    repast::RepastProcess::instance()->synchronizeAgentStates<AgentType, Package, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange);
   }
 
   void synchronizeDiffuserStates()
   {
-    repast::RepastProcess::instance()->synchronizeAgentStates<Agent, Package, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange);
+    repast::RepastProcess::instance()->synchronizeAgentStates<AgentType, Package, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange);
   }
 
   void synchronizeCells()
   {
-    repast::RepastProcess::instance()->synchronizeProjectionInfo<Agent, Package, PackageExchange, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
+    repast::RepastProcess::instance()->synchronizeProjectionInfo<AgentType, Package, PackageExchange, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
   }
 
   void synchronizeDiffuser()
   {
-    repast::RepastProcess::instance()->synchronizeProjectionInfo<Agent, Package, PackageExchange, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange, mpDiffuserExchange);
+    repast::RepastProcess::instance()->synchronizeProjectionInfo<AgentType, Package, PackageExchange, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange, mpDiffuserExchange);
   }
 
   Context & getCellContext()
@@ -395,42 +403,42 @@ public:
     return mDiffuserContext;
   }
 
-  size_t getRank(const repast::Point< double > & location, const double & xOffset, const double & yOffset) const
+  size_t getRank(const std::vector< double > & location, const double & xOffset, const double & yOffset) const
   {
     return getRank(spaceToGrid(location), round(xOffset), round(xOffset));
   }
 
-  size_t getRank(const repast::Point< int > & location, const int & xOffset, const int & yOffset) const
+  size_t getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const
   {
-    size_t Rank = mpGridTopology->getRank(location.coords(), xOffset, yOffset);
+    size_t Rank = mpGridTopology->getRank(location, xOffset, yOffset);
 
     return Rank;
   }
 
-  std::vector< Agent * > selectAllAgents()
+  std::vector< AgentType * > selectAllAgents()
   {
-    std::vector< Agent * > agents;
+    std::vector< AgentType * > agents;
     mCellContext.selectAgents(agents);
     return agents;
   }
 
-  std::vector< Agent * > selectLocalAgents()
+  std::vector< AgentType * > selectLocalAgents()
   {
-    std::vector< Agent * > agents;
+    std::vector< AgentType * > agents;
     mCellContext.selectAgents(Context::LOCAL, agents);
     return agents;
   }
 
-  std::vector< Agent * > selectRemoteAgents()
+  std::vector< AgentType * > selectRemoteAgents()
   {
-    std::vector< Agent * > agents;
+    std::vector< AgentType * > agents;
     mCellContext.selectAgents(Context::NON_LOCAL, agents);
     return agents;
   }
 
   bool addDiffuserValues(SharedValueLayer * pDiffuserValues)
   {
-    Agent * pAgent = mDiffuserContext.addAgent(pDiffuserValues);
+    AgentType * pAgent = mDiffuserContext.addAgent(pDiffuserValues);
     repast::AgentId Id = pAgent->getId();
 
     return mpSharedValues->moveTo(Id, repast::Point< int >(mSharedValueDimensions.origin()[0], mSharedValueDimensions.origin()[1]));
@@ -438,14 +446,13 @@ public:
 
   void addCompartment(Compartment * pCompartment)
   {
-    mpGrid->addCompartment(pCompartment);
-    mpSharedValues->addCompartment(pCompartment);
+    mpGrid->setFunctor(new Functor< Compartment >(pCompartment, &Compartment::getBorderCellsToPush));
   }
 
 private:
   boost::mpi::communicator * mpCommunicator;
-  repast::SharedContext< Agent > mCellContext;
-  repast::SharedContext< Agent > mDiffuserContext;
+  repast::SharedContext< AgentType > mCellContext;
+  repast::SharedContext< AgentType > mDiffuserContext;
   std::vector<int> mProcessDimensions;
   const int mBufferSize;
   Space * mpSpace;

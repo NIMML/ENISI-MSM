@@ -1,6 +1,17 @@
 #include "AgentStates.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
+
+double number2Concentration = 1.0;
+
+void ENISI::init()
+{
+  Properties::getValue("grid.size", number2Concentration);
+
+  // 2 dimensional
+  number2Concentration *= number2Concentration;
+}
 
 // static
 Agent::Type BacteriaState::Type = Agent::Bacteria;
@@ -16,7 +27,6 @@ Agent::Type HPyloriState::Type = Agent::HPylori;
 
 // static
 Agent::Type MacrophageState::Type = Agent::Macrophage;
-
 
 // static
 Agent::Type TcellState::Type = Agent::Tcell;
@@ -61,11 +71,10 @@ size_t StateSize(const Agent::Type & type)
   return 0;
 }
 
-void ENISI::CountStates(const Agent::Type & type,
-                        std::vector< Agent * > agents,
-                        StateCount & stateCount)
+
+void ENISI::numbers(const Agent::Type & type, std::vector< Agent * > agents, Number & number)
 {
-  stateCount = StateCount(StateSize(type), 0);
+  number = Number(StateSize(type), 0);
 
   std::vector< Agent * >::const_iterator it = agents.begin();
   std::vector< Agent * >::const_iterator end = agents.end();
@@ -74,16 +83,30 @@ void ENISI::CountStates(const Agent::Type & type,
     {
       if ((*it)->getType() == type)
         {
-          stateCount[(*it)->getState()]++;
+          number[(*it)->getState()]++;
         }
     }
 }
 
-void ENISI::CountStates(const int & types,
-                        std::vector< Agent * > agents,
-                        StateCounts & stateCounts)
+void ENISI::concentrations(const Agent::Type & type, std::vector< Agent * > agents, Concentration & concentration)
 {
-  stateCounts.clear();
+  Number number;
+  numbers(type, agents, number);
+  concentration.resize(number.size());
+
+  Concentration::iterator it = concentration.begin();
+  Concentration::iterator end = concentration.end();
+  Number::const_iterator itNumber = number.begin();
+
+  for (; it != end; ++it, ++itNumber)
+    {
+      *it = *itNumber * number2Concentration;
+    }
+}
+
+void ENISI::numbers(const int & types, std::vector< Agent * > agents, Numbers & numbers)
+{
+  numbers.clear();
 
   int Types = types;
   int CurrentType = 1;
@@ -92,7 +115,7 @@ void ENISI::CountStates(const int & types,
     {
       if (Types & 0x1)
         {
-          stateCounts.insert(std::make_pair((Agent::Type) CurrentType, StateCount(StateSize((Agent::Type) CurrentType), 0)));
+          numbers.insert(std::make_pair((Agent::Type) CurrentType, Number(StateSize((Agent::Type) CurrentType), 0)));
         }
 
       Types /= 2;
@@ -109,7 +132,32 @@ void ENISI::CountStates(const int & types,
 
       if (Type & types)
         {
-          stateCounts[Type][(*it)->getState()]++;
+          numbers[Type][(*it)->getState()]++;
+        }
+    }
+}
+
+void ENISI::concentrations(const int & types, std::vector< Agent * > agents, Concentrations & concentrations)
+{
+  concentrations.clear();
+
+  Numbers Numbers;
+  numbers(types, agents, Numbers);
+
+  Numbers::const_iterator itNumbers = Numbers.begin();
+  Numbers::const_iterator endNumbers = Numbers.end();
+
+  for (; itNumbers != endNumbers; ++itNumbers)
+    {
+      Concentration & C = concentrations.insert(std::make_pair(itNumbers->first, Concentration(itNumbers->second.size(), 0))).first->second;
+
+      Concentration::iterator it = C.begin();
+      Concentration::iterator end = C.end();
+      Number::const_iterator itNumber = itNumbers->second.begin();
+
+      for (; it != end; ++it, ++itNumber)
+        {
+          *it = *itNumber * number2Concentration;
         }
     }
 }

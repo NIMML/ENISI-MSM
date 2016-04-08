@@ -62,7 +62,7 @@ Dendritics::Color Dendritics::getColor()
         break;
 
       default:
-        throw std::invalid_argument("invalid getState() when getting Dendritics color");
+        throw std::runtime_error("invalid getState() when getting Dendritics color");
     }
 
   return color;
