@@ -10,16 +10,64 @@
 
 #include "repast_hpc/SharedDiscreteSpace.h"
 
-#include "compartment/Compartment.h"
-
 namespace ENISI
 {
+class FunctorInterface
+{
+public:
+  typedef void (*Type)(std::set< repast::AgentId > & agentsToTest,
+                       std::map< int, std::set<repast::AgentId > > & agentsToPush);
+
+  virtual ~FunctorInterface() {};
+
+  virtual void operator()(std::set< repast::AgentId > & agentsToTest,
+                          std::map< int, std::set<repast::AgentId > > & agentsToPush) = 0;
+};
+
+template <class Callee>
+class Functor : public FunctorInterface
+{
+private:
+  /**
+   * The pointer to the instance of the caller
+   */
+  Callee * mpInstance;   // pointer to object
+  void (Callee::*mMethod)(std::set< repast::AgentId > & agentsToTest,
+                          std::map< int, std::set<repast::AgentId > > & agentsToPush);
+private:
+  Functor():
+    FunctorInterface(),
+    mpInstance(NULL),
+    mMethod(NULL)
+  {}
+
+public:
+  Functor(Callee * pInstance,
+          void (Callee::*method)(std::set< repast::AgentId > & agentsToTest,
+                                 std::map< int, std::set<repast::AgentId > > & agentsToPush)):
+    FunctorInterface(),
+    mpInstance(pInstance),
+    mMethod(method)
+  {}
+
+  virtual ~Functor() {}
+
+  // override operator "()"
+  virtual void operator()(std::set< repast::AgentId > & agentsToTest,
+                          std::map< int, std::set<repast::AgentId > > & agentsToPush)
+  {
+    // execute member function
+    (*mpInstance.*mMethod)(agentsToTest, agentsToPush);
+  }
+};
 
 template<typename AgentType, typename GPTransformer, typename Adder>
 class Projection: public repast::SharedDiscreteSpace< AgentType, GPTransformer, Adder >
 {
+  public:
+
   private:
-    Compartment * mpCompartment;
+    FunctorInterface * mpFunctor;
 
   protected:
 
@@ -36,11 +84,13 @@ class Projection: public repast::SharedDiscreteSpace< AgentType, GPTransformer, 
                int buffer,
                boost::mpi::communicator* world) :
       repast::SharedDiscreteSpace< AgentType, GPTransformer, Adder >(name, gridDims, processDims, buffer, world),
-      mpCompartment(NULL)
+      mpFunctor(NULL)
     {}
 
     virtual ~Projection()
-    {}
+    {
+      if (mpFunctor != NULL) delete mpFunctor;
+    }
 
 
     /**
@@ -49,22 +99,21 @@ class Projection: public repast::SharedDiscreteSpace< AgentType, GPTransformer, 
      * must push local agents that are vertices to master edges where the other vertex is non-
      * local. The results are returned per-process in the agentsToPush map.
      */
-    virtual void getAgentsToPush(std::set<repast::AgentId>& agentsToTest,
-                                 std::map<int, std::set<repast::AgentId> >& agentsToPush)
+    virtual void getAgentsToPush(std::set<repast::AgentId> & agentsToTest,
+                                 std::map<int, std::set<repast::AgentId> > & agentsToPush)
     {
-      if (mpCompartment != NULL)
+      if (mpFunctor != NULL)
         {
-          mpCompartment->getBorderAgentsToPush(agentsToPush);
+          (*mpFunctor)(agentsToTest, agentsToPush);
         }
 
       repast::SharedDiscreteSpace< AgentType, GPTransformer, Adder >::getAgentsToPush(agentsToTest, agentsToPush);
     }
 
-    void addCompartment(Compartment * pCompartment)
+    void setFunctor(FunctorInterface * pFunctor)
     {
-      mpCompartment = pCompartment;
+      mpFunctor = pFunctor;
     }
-
 };
 
 } /* namespace ENISI */

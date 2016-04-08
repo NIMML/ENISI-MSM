@@ -19,8 +19,6 @@
 namespace ENISI
 {
 
-class Compartment;
-
 class SharedValueLayer : public Agent
 {
 private:
@@ -47,12 +45,15 @@ public:
   void setBufferValues(const repast::Point< int > & origin,
                        const BufferValues & bufferValues);
 
-  void updateBufferValues(const SharedValueLayer & neighbor);
+  void updateBufferValues(const SharedValueLayer & neighbor,
+                          const Borders & globalBorders);
+
+  LocalValues * getLocalValues();
 
   std::vector< double > & operator[](const repast::Point< int > location);
+  std::vector< double > * tryLocation(const repast::Point< int > location);
 
 protected:
-  Compartment * mpCompartment;
   size_t mValueSize;
   repast::Point< int > mOrigin;
   repast::Point< int > mShape;

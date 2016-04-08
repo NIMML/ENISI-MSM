@@ -3,7 +3,6 @@
 
 #include "agent/ENISIAgent.h"
 #include "agent/AgentPackage.h"
-#include "repast_hpc/matrix.h"
 #include "grid/Iterator.h"
 
 namespace ENISI {
@@ -52,8 +51,8 @@ public:
   const Compartment * getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const;
   Iterator begin();
 
-  repast::Point< double > gridToSpace(const repast::Point< int > & grid) const;
-  repast::Point<int> spaceToGrid(const repast::Point<double> & space) const;
+  std::vector< double > gridToSpace(const std::vector< int > & grid) const;
+  std::vector<int> spaceToGrid(const std::vector<double> & space) const;
 
   void getLocation(const repast::AgentId & id, std::vector<double> & Location) const;
   bool moveTo(const repast::AgentId &id, repast::Point< double > &pt);
@@ -73,12 +72,19 @@ public:
   size_t addCytokine(const std::string & name);
   const std::vector< Cytokine * > & getCytokines() const;
   const Cytokine * getCytokine(const std::string & name) const;
-  double & cytokineValue(const std::string & name, const repast::Point< int > & location);
+
+  double & cytokineValue(const std::string & name, const repast::Point< int > & pt);
+  double & cytokineValue(const std::string & name, const repast::Point< int > & pt, const int & xOffset, const int & yOffset);
+  std::vector< double > & cytokineValues(const repast::Point< int > & pt);
 
   void initializeDiffuserData();
+  SharedValueLayer * getDiffuserData();
+
+  /*
   std::vector< double > & operator[](const repast::Point< int > & location);
   const std::vector< double > & operator[](const repast::Point< int > & location) const;
   const std::vector< double > & operator[](const repast::Point< double > & location) const;
+  */
 
   void synchronizeCells();
   void synchronizeDiffuser();
@@ -86,12 +92,22 @@ public:
   const Type & getType() const;
 
   size_t localCount(const size_t & globalCount);
-  size_t getRank(const repast::Point< double > & location) const;
-  size_t getRank(const repast::Point< int > & location) const;
-  void getBorderAgentsToPush(std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  size_t getRank(const std::vector< int > & location) const;
+  size_t getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const;
+
+  void getBorderCellsToPush(std::set<repast::AgentId>& agentsToTest,
+                            std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  void getBorderValuesToPush(std::set<repast::AgentId>& agentsToTest,
+                             std::map< int, std::set< repast::AgentId > > & agentsToPush);
 
 private:
-  void getBorderAgentsToPush(const Borders::Coodinate &coordinate,
+  void getBorderCellsToPush(const Borders::Coodinate &coordinate,
+                            const Borders::Side & side,
+                             std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  void getBorderValuesToPush(const Borders::Coodinate &coordinate,
                              const Borders::Side & side,
                              std::map< int, std::set< repast::AgentId > > & agentsToPush);
 

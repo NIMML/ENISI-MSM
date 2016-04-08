@@ -40,31 +40,31 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
   std::vector< Agent * >::iterator it = Macrophages.begin();
   std::vector< Agent * >::iterator end = Macrophages.end();
-  StateCount MacrophageStateCount;
-  CountStates(Agent::Macrophage, Macrophages, MacrophageStateCount);
+  Concentration MacrophageConcentration;
+  concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
   std::vector< Agent * > Bacteria;
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
-  StateCount BacteriaStateCount;
-  CountStates(Agent::Bacteria, Bacteria, BacteriaStateCount);
+  Concentration BacteriaConcentration;
+  concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 
   std::vector< Agent * > HPylori;
-  StateCount HPyloriStateCount;
-  CountStates(Agent::HPylori, HPylori, HPyloriStateCount);
+  Concentration HPyloriConcentration;
+  concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
 
   std::vector< Agent * > EpithelialCells;
-  StateCount EpithelialCellStateCount;
+  Concentration EpithelialCellConcentration;
 
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
 
   std::vector< Agent * > Dentritics;
   mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-  StateCount DentriticsStateCount;
-  CountStates(Agent::Dentritics, Dentritics, DentriticsStateCount);
+  Concentration DentriticsConcentration;
+  concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 
   for (; it != end; ++it)
     {
@@ -76,20 +76,20 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       MacrophageState::State newState = state;
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
-      unsigned int liveHPyloriCount = HPyloriStateCount[HPyloriState::NAIVE];
-      unsigned int eDendriticsCount = DentriticsStateCount[DendriticState::EFFECTOR];
-      unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
-      unsigned int macrophageregCount = MacrophageStateCount[MacrophageState::REGULATORY];
-      unsigned int macrophageinfCount = MacrophageStateCount[MacrophageState::INFLAMMATORY];
-      unsigned int infectiousBacteriaCount = BacteriaStateCount[BacteriaState::INFECTIOUS];
-      // unsigned int tolegenicBacteriaCount = BacteriaStateCount[BacteriaState::TOLEROGENIC];
+      double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+      double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
+      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+      double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
+      double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
+      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+      // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
       /*get concentration of IFNg and IL10 for COPASI input*/
       double IFNg = mpCompartment->cytokineValue("IFNg", pt);
       double IL10 = mpCompartment->cytokineValue("IL10", pt);
 
       /* if no bacteria is around macrophage, then stays immature */
-      if ((liveHPyloriCount|| infectiousBacteriaCount) && state == MacrophageState::MONOCYTE && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if ((liveHPyloriConcentration|| infectiousBacteriaConcentration) && state == MacrophageState::MONOCYTE && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           /* set initial concentrations */
     	  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
@@ -138,20 +138,20 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
         }
 
       if (state == MacrophageState::MONOCYTE
-          && (damagedEpithelialCellCount || eDendriticsCount) && (p_rule13 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          && (damagedEpithelialCellConcentration || eDendriticsConcentration) && (p_rule13 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
         }
 
-      if (state == MacrophageState::REGULATORY && macrophageinfCount &&
+      if (state == MacrophageState::REGULATORY && macrophageinfConcentration &&
           (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->removeAgent(pAgent);
           continue;
         }
 
-      if (state == MacrophageState::INFLAMMATORY && macrophageregCount &&
+      if (state == MacrophageState::INFLAMMATORY && macrophageregConcentration &&
           (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->removeAgent(pAgent);

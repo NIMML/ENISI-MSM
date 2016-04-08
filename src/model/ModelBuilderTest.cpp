@@ -42,13 +42,13 @@ TEST_F(AModel, KillsInfectiousBacteriaGroupActingNearTH17Group)
   p_bacteria->addCellAt(ENISI::BacteriaState::INFECTIOUS, pt);
   p_tcell->addCellAt(ENISI::TcellState::TH17, pt);
 
-  const ENISI::BacteriaGroup::StateCount * p_countBefore = p_bacteria->getCellsAt(pt);
+  const ENISI::BacteriaGroup::Concentration * p_countBefore = p_bacteria->getCellsAt(pt);
   ASSERT_THAT(p_countBefore->state[ENISI::BacteriaState::INFECTIOUS], Eq(1));
   ASSERT_THAT(p_countBefore->state[ENISI::BacteriaState::DEAD], Eq(0));
 
   p_bacteria->act();
 
-  const ENISI::BacteriaGroup::StateCount * p_countAfter = p_bacteria->getCellsAt(pt);
+  const ENISI::BacteriaGroup::Concentration * p_countAfter = p_bacteria->getCellsAt(pt);
   ASSERT_THAT(p_countAfter->state[ENISI::BacteriaState::INFECTIOUS], Eq(0));
   ASSERT_THAT(p_countAfter->state[ENISI::BacteriaState::DEAD], Eq(1));
 }

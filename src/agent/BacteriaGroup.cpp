@@ -42,24 +42,24 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > Tcells;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 
-  StateCount TcellStateCount;
-  CountStates(Agent::Tcell, Tcells, TcellStateCount);
+  Concentration TcellConcentration;
+  concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
   std::vector< Agent * > EpithelialCells;
-  StateCount EpithelialCellStateCount;
+  Concentration EpithelialCellConcentration;
 
   // We only request information if we are at the border
   if (mpCompartment->getType() == Compartment::lumen &&
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
   else if (mpCompartment->getType() == Compartment::lamina_propria &&
            mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
 
   for (; it != end; ++it)
@@ -72,10 +72,10 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       BacteriaState::State newState = state;
 
       /*identify states of Epithelial Cells counted */
-      unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];
+      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
 
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
-      if (damagedEpithelialCellCount && mpCompartment->getType() == Compartment::lumen && (p_rule1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if (damagedEpithelialCellConcentration && mpCompartment->getType() == Compartment::lumen && (p_rule1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
@@ -86,12 +86,12 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           mpCompartment->moveTo(pAgent->getId(), Location);
         }
 
-      unsigned int th1Count = TcellStateCount[TcellState::TH1];
-      unsigned int th17Count = TcellStateCount[TcellState::TH17];
+      double th1Concentration = TcellConcentration[TcellState::TH1];
+      double th17Concentration = TcellConcentration[TcellState::TH17];
 
       /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
       if ((newState == BacteriaState::INFECTIOUS)
-          && (damagedEpithelialCellCount || th1Count || th17Count) && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          && (damagedEpithelialCellConcentration || th1Concentration || th17Concentration) && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->removeAgent(pAgent);
           continue;

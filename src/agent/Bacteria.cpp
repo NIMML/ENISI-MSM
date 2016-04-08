@@ -19,7 +19,7 @@ Bacteria::Color Bacteria::getColor()
         break;
 
       default:
-        throw std::invalid_argument("invalid state when getting Bacteria color");
+        throw std::runtime_error("invalid state when getting Bacteria color");
     }
 
   return color;

@@ -58,28 +58,28 @@ void TcellGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * >::iterator it = Tcells.begin();
   std::vector< Agent * >::iterator end = Tcells.end();
 
-  StateCount TcellStateCount;
-  CountStates(Agent::Tcell, Tcells, TcellStateCount);
+  Concentration TcellConcentration;
+  concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
   std::vector< Agent * > Macrophages;
   mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
-  StateCount MacrophageStateCount;
-  CountStates(Agent::Macrophage, Macrophages, MacrophageStateCount);
+  Concentration MacrophageConcentration;
+  concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
   std::vector< Agent * > Dentritics;
   mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-  StateCount DentriticsStateCount;
-  CountStates(Agent::Dentritics, Dentritics, DentriticsStateCount);
+  Concentration DentriticsConcentration;
+  concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 
   // We only request information if we are at the border
   std::vector< Agent * > EpithelialCells;
-  StateCount EpithelialCellStateCount;
+  Concentration EpithelialCellConcentration;
 
   if (mpCompartment->getType() == Compartment::lamina_propria &&
            mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      CountStates(Agent::EpithelialCell, EpithelialCells, EpithelialCellStateCount);
+      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
 
   for (; it != end; ++it)
@@ -96,16 +96,16 @@ void TcellGroup::act(const repast::Point<int> & pt)
       double TGFb = mpCompartment->cytokineValue("TGFb", pt);
       double IL12 = mpCompartment->cytokineValue("IL12", pt);
 
-      unsigned int macrophageregCount = MacrophageStateCount[MacrophageState::REGULATORY];
+      double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 
-      unsigned int th17Count = TcellStateCount[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
-      unsigned int itregCount = TcellStateCount[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
-      unsigned int th1Count = TcellStateCount[TcellState::TH1];
+      double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
+      double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
+      double th1Concentration = TcellConcentration[TcellState::TH1];
 
-      unsigned int eDCCount = DentriticsStateCount[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
-      unsigned int tDCCount = DentriticsStateCount[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
+      double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
+      double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 
-      unsigned int damagedEpithelialCellCount = EpithelialCellStateCount[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellCount
+      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
 
       if (IL6 + TGFb + IL12 > 1.0)
         {
@@ -141,34 +141,34 @@ if (state != TcellState::Tr)
               newState = TcellState::iTREG;
             }
 }/*Rule 58*/
-          else if ((IL10 > p_rule31a * IFNg) && (macrophageregCount > 0)
+          else if ((IL10 > p_rule31a * IFNg) && (macrophageregConcentration > 0)
                    && state == TcellState::NAIVE
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::Tr; /* Rule 31- The rule is if nT is in contact with regulatory macrophages, and if IL10> a* IFNg
            //then nT -> Tr (state transition)*/
             }
-          else if ((tDCCount > 0) && state == TcellState::TH17
+          else if ((tDCConcentration > 0) && state == TcellState::TH17
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 36*/
             }
-          else if ((itregCount > 0) && state == TcellState::TH17
+          else if ((itregConcentration > 0) && state == TcellState::TH17
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule35 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 35*/
             }
-          else if ((th17Count > 0) && state == TcellState::iTREG
+          else if ((th17Concentration > 0) && state == TcellState::iTREG
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule37 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 37*/
             }
-          else if ((eDCCount > 0) && state == TcellState::NAIVE
+          else if ((eDCConcentration > 0) && state == TcellState::NAIVE
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule39 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH1; /*Rule 39*/
             }
-          else if ((eDCCount > 0) && state == TcellState::NAIVE
+          else if ((eDCConcentration > 0) && state == TcellState::NAIVE
                    && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               mpCompartment->removeAgent(pAgent); /*Rule 40* - nT can die when in contact with eDC in GLN*/
@@ -177,39 +177,39 @@ if (state != TcellState::Tr)
               // TODO CRITICAL Proliferation can always happen it is not condition dependent
               // addCellAt(TcellState::DEAD, loc);   /*Rule 40* - nT can 'proliferate' when in contact with nT in GLN */
             }
-          else if ((eDCCount > 0) && state == TcellState::iTREG
+          else if ((eDCConcentration > 0) && state == TcellState::iTREG
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 20*/
             }
-          else if ((th17Count > 0) && state == TcellState::TH17
+          else if ((th17Concentration > 0) && state == TcellState::TH17
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule21 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 21*/
             }
-          else if ((itregCount > 0) && state == TcellState::TH1
+          else if ((itregConcentration > 0) && state == TcellState::TH1
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule22 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 22*/
             }
-          else if ((tDCCount > 0) && state == TcellState::TH17
+          else if ((tDCConcentration > 0) && state == TcellState::TH17
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule23 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::iTREG; /*Rule 23*/
             }
-          else if ((damagedEpithelialCellCount > 0) && state == TcellState::iTREG
+          else if ((damagedEpithelialCellConcentration > 0) && state == TcellState::iTREG
                    && mpCompartment->getType() == Compartment::epithilium && (p_rule18 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 18*/
               /* CHECK : Here there should be a function for information regarding the Layer,
               for eg. This rule requires the state transition when iTREG is in contact with Edamaged at 'Epithelium and LaminaPropria' membrane*/
             }
-          else if ((th1Count > 0) && state == TcellState::iTREG
+          else if ((th1Concentration > 0) && state == TcellState::iTREG
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17; /*Rule 19*/
             }
-          else if ((eDCCount > 0) && state == TcellState::NAIVE
+          else if ((eDCConcentration > 0) && state == TcellState::NAIVE
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule41> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               mpCompartment->removeAgent(pAgent); /*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
@@ -217,7 +217,7 @@ if (state != TcellState::Tr)
               // TODO CRITICAL Proliferation can always happen it is not condition dependent
               // addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
             }
-          else if ((th1Count > 0) && state == TcellState::iTREG
+          else if ((th1Concentration > 0) && state == TcellState::iTREG
                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule38 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               newState = TcellState::TH17;/*Rule 38*/ /*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
@@ -242,7 +242,7 @@ if (state != TcellState::Tr)
               Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
               mpCompartment->moveTo(pAgent->getId(), Location);
             }
-          else if ((eDCCount >0) && mpCompartment->getType() == Compartment::lamina_propria)
+          else if ((eDCConcentration >0) && mpCompartment->getType() == Compartment::lamina_propria)
           {
         	  if (state == TcellState::iTREG)
         	  {
@@ -261,7 +261,7 @@ if (state != TcellState::Tr)
         	   }
 
           }
-          else if ((tDCCount>0) && mpCompartment ->getType() == Compartment::gastric_lymph_node && state == TcellState::NAIVE
+          else if ((tDCConcentration>0) && mpCompartment ->getType() == Compartment::gastric_lymph_node && state == TcellState::NAIVE
         		  && (p_rule53 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
           {
         	  newState = TcellState::iTREG; /*Rule 53*/

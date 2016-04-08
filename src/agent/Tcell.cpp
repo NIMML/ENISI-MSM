@@ -38,7 +38,7 @@ Tcell::Color Tcell::getColor()
         break;
 
       default:
-        throw std::invalid_argument("invalid state when getting Tcell color");
+        throw std::runtime_error("invalid state when getting Tcell color");
     }
 
   return color;

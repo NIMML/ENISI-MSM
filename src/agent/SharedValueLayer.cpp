@@ -15,21 +15,18 @@ using namespace ENISI;
 
 SharedValueLayer::SharedValueLayer(const Type & type, const int & state, const size_t & valueSize):
   Agent(type, state),
-  mpCompartment(Compartment::instance((Compartment::Type) state)),
   mValueSize(valueSize),
   mOrigin(0, 0),
   mShape(0, 0),
   mpLocalValues(NULL),
   mBufferValues()
 {
-  assert (mpCompartment != NULL);
+  const repast::GridDimensions & GridDimensions = Compartment::instance((Compartment::Type) state)->localGridDimensions();
 
-  const repast::GridDimensions & LocalCompartmentDimensions = mpCompartment->localGridDimensions();
-
-  mOrigin[0] = round(LocalCompartmentDimensions.origin(0));
-  mOrigin[1] = round(LocalCompartmentDimensions.origin(1));
-  mShape[0] = round(LocalCompartmentDimensions.extents(0));
-  mShape[1] = round(LocalCompartmentDimensions.extents(1));
+  mOrigin[0] = round(GridDimensions.origin(0));
+  mOrigin[1] = round(GridDimensions.origin(1));
+  mShape[0] = round(GridDimensions.extents(0));
+  mShape[1] = round(GridDimensions.extents(1));
 
   mpLocalValues = new LocalValues(repast::Point< int >(mShape[0] + 2, mShape[1] + 2),
                                   std::vector< double >(mValueSize, std::numeric_limits< double >::quiet_NaN()));
@@ -38,27 +35,53 @@ SharedValueLayer::SharedValueLayer(const Type & type, const int & state, const s
 SharedValueLayer::SharedValueLayer(const int & id, const int & startProc, const int & agentType, const int & currentProc, const int & state,
                                    const repast::Point< int > & origin, const SharedValueLayer::BufferValues & bufferValues):
   Agent(id, startProc, agentType, currentProc, state),
-  mpCompartment(Compartment::instance((Compartment::Type) state)),
   mValueSize(bufferValues.find(std::vector< int>(2, 0))->second.size()),
   mOrigin(origin),
   mShape(0, 0),
   mpLocalValues(NULL),
   mBufferValues(bufferValues)
 {
-  assert (mpCompartment != NULL);
+  const repast::GridDimensions & GridDimensions = Compartment::instance((Compartment::Type) state)->localGridDimensions();
 
-  const repast::GridDimensions & LocalCompartmentDimensions = mpCompartment->localGridDimensions();
-
-  mShape[0] = round(LocalCompartmentDimensions.extents(0));
-  mShape[1] = round(LocalCompartmentDimensions.extents(1));
+  mShape[0] = round(GridDimensions.extents(0));
+  mShape[1] = round(GridDimensions.extents(1));
 }
 
 SharedValueLayer::~SharedValueLayer()
-{}
+{
+  if (mpLocalValues != NULL) delete mpLocalValues;
+}
 
 std::vector< double > & SharedValueLayer::operator[](const repast::Point< int > location)
 {
-  return mpLocalValues->operator[](repast::Point< int >(location[0] - mOrigin[0] + 1, location[1] - mOrigin[1] + 1));
+
+  if (mpLocalValues != NULL)
+    {
+      return mpLocalValues->operator[](repast::Point< int >(location[0] - mOrigin[0] + 1, location[1] - mOrigin[1] + 1));
+    }
+
+  throw std::runtime_error("cytokine value not found");
+
+  static std::vector< double > NaN(mShape.dimensionCount(), std::numeric_limits< double >::quiet_NaN());
+  return NaN;
+}
+
+std::vector< double > * SharedValueLayer::tryLocation(const repast::Point< int > location)
+{
+
+  BufferValues::iterator found = mBufferValues.find(repast::Point< int >(location[0] - mOrigin[0] + 1, location[1] - mOrigin[1] + 1).coords());
+
+  if (found != mBufferValues.end())
+    {
+      return &found->second;
+    }
+
+  return NULL;
+}
+
+SharedValueLayer::LocalValues * SharedValueLayer::getLocalValues()
+{
+  return mpLocalValues;
 }
 
 void SharedValueLayer::getBufferValues(repast::Point< int > & origin,
@@ -104,18 +127,18 @@ void SharedValueLayer::getBufferValues(repast::Point< int > & origin,
     }
 }
 
-void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor)
+void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
+                                          const Borders & globalBorders)
 {
   const repast::Point< int > & origin = neighbor.mOrigin;
   const BufferValues & bufferValues = neighbor.mBufferValues;
 
   std::vector<Borders::BoundState> BoundState(2, Borders::INBOUND);
-  const Borders * pGlobalBorders = mpCompartment->gridBorders();
 
   std::vector< int > OutLow(2, 0);
   std::vector< int > OutHigh(2, 0);
-  pGlobalBorders->transform(repast::Point< int >(mOrigin[0] - mShape[0], mOrigin[1] - mShape[1]).coords(), OutLow);
-  pGlobalBorders->transform(repast::Point< int >(mOrigin[0] + mShape[0], mOrigin[1] + mShape[1]).coords(), OutHigh);
+  globalBorders.transform(repast::Point< int >(mOrigin[0] - mShape[0], mOrigin[1] - mShape[1]).coords(), OutLow);
+  globalBorders.transform(repast::Point< int >(mOrigin[0] + mShape[0], mOrigin[1] + mShape[1]).coords(), OutHigh);
 
   for (int i = 0; i < 2; i++)
     {
