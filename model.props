@@ -39,6 +39,12 @@ gastric_lymph_node.border.y.high = REFLECT
 
 #Parameter rules
 #### From COPASI ####
+int p_rule10a =  2.5e-10 l^2/#*d
+int p_rule10b =  2.5e-9 l^2/#*d
+int p_EpiCellDeath = 0.05/d
+int p_EpiProliferation = 400/d
+int p_rule12 = 5e-8 l^2/#*d
+
 p_rule18 = 0.000184914 l^2/#*d
 p_rule19 = 7.92589e-5 l^2/#*d
 p_rule20 = 0.000743054 l^2/#*d
@@ -59,7 +65,7 @@ p_rule36 = 5e-8 l/#*d
 p_rule37 = 9.15403e-8 l/#*d
 p_rule38 = 3.3573e-6 l/#*d
 p_rule39 = 3.62196e-5 l^2/#*d
-p_rule40 =
+p_rule40 = 0.909 ## Check
 p_rule41 = 
 p_rule53 = 1.51011e-6 l/#*d
 p_rule55a = 5.9817e-6 l^2/#*d
