@@ -171,7 +171,7 @@ if (state != TcellState::Tr)
           else if (mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
         	  mpCompartment->getLocation(pAgent->getId(), Location);
-        	  mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+        	  mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);/*Rule 40*/
               // TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
             }
           else if ((eDCConcentration > 0) && state == TcellState::iTREG
