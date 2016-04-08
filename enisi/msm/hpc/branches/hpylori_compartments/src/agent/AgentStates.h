@@ -66,6 +66,8 @@ typedef std::map< Agent::Type, Number > Numbers;
 void numbers(const Agent::Type & type, std::vector< Agent * > agents, Number & number);
 void numbers(const int & types, std::vector< Agent * > agents, Numbers & numbers);
 
+extern double Threshold;
+
 void init();
 } // namespace ENISI
 
