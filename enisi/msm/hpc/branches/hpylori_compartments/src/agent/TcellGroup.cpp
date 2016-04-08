@@ -168,14 +168,11 @@ if (state != TcellState::Tr)
             {
               newState = TcellState::TH1; /*Rule 39*/
             }
-          else if ((eDCConcentration > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          else if (mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
-              mpCompartment->removeAgent(pAgent); /*Rule 40* - nT can die when in contact with eDC in GLN*/
-              continue;
-
-              // TODO CRITICAL Proliferation can always happen it is not condition dependent
-              // addCellAt(TcellState::DEAD, loc);   /*Rule 40* - nT can 'proliferate' when in contact with nT in GLN */
+        	  mpCompartment->getLocation(pAgent->getId(), Location);
+        	  mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+              // TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
             }
           else if ((eDCConcentration > 0) && state == TcellState::iTREG
                    && mpCompartment->getType() == Compartment::lamina_propria && (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -209,12 +206,11 @@ if (state != TcellState::Tr)
             {
               newState = TcellState::TH17; /*Rule 19*/
             }
-          else if ((eDCConcentration > 0) && state == TcellState::NAIVE
-                   && mpCompartment->getType() == Compartment::lamina_propria && (p_rule41> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          else if (mpCompartment->getType() == Compartment::lamina_propria && (p_rule41> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
-              mpCompartment->removeAgent(pAgent); /*Rule 41* - nT can die when in contact with eDC in Lamina Propria*/
-              continue;
-              // TODO CRITICAL Proliferation can always happen it is not condition dependent
+        	  mpCompartment->getLocation(pAgent->getId(), Location);
+        	  mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+              // TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
               // addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
             }
           else if ((th1Concentration > 0) && state == TcellState::iTREG
