@@ -3,14 +3,17 @@
 
 using namespace ENISI;
 
+double ENISI::Threshold = 1.0;
 double number2Concentration = 1.0;
 
 void ENISI::init()
 {
-  Properties::getValue("grid.size", number2Concentration);
+  double GridSize;
+  Properties::getValue("grid.size", GridSize);
 
   // 2 dimensional
-  number2Concentration *= number2Concentration;
+  Threshold = GridSize * GridSize;
+  number2Concentration = 1.0 / Threshold;
 }
 
 // static
