@@ -41,7 +41,7 @@ public:
 
   Compartment(const Type & type);
 
-  ~Compartment();
+  virtual ~Compartment();
 
   const repast::GridDimensions & dimensions() const;
   const repast::GridDimensions & localSpaceDimensions() const;
@@ -80,12 +80,6 @@ public:
   void initializeDiffuserData();
   SharedValueLayer * getDiffuserData();
 
-  /*
-  std::vector< double > & operator[](const repast::Point< int > & location);
-  const std::vector< double > & operator[](const repast::Point< int > & location) const;
-  const std::vector< double > & operator[](const repast::Point< double > & location) const;
-  */
-
   void synchronizeCells();
   void synchronizeDiffuser();
 
@@ -96,11 +90,15 @@ public:
   size_t getRank(const std::vector< int > & location) const;
   size_t getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const;
 
+  virtual void write(std::ostream & o, const std::string & separator, Compartment * pCompartment = NULL);
+
   void getBorderCellsToPush(std::set<repast::AgentId>& agentsToTest,
                             std::map< int, std::set< repast::AgentId > > & agentsToPush);
 
   void getBorderValuesToPush(std::set<repast::AgentId>& agentsToTest,
                              std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  std::string getName() const;
 
 private:
   void getBorderCellsToPush(const Borders::Coodinate &coordinate,
@@ -114,8 +112,6 @@ private:
   Compartment * transform(std::vector< double > & pt) const;
   Compartment * transform(std::vector< int > & pt) const;
 
-
-  std::string getName() const;
 
   Type mType;
 

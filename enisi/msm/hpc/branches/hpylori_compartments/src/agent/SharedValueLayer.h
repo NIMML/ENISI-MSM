@@ -39,6 +39,8 @@ public:
 
   virtual ~SharedValueLayer();
 
+  virtual void write(std::ostream & o, const std::string & separator, Compartment * pCompartment = NULL);
+
   void getBufferValues(repast::Point< int > & origin,
                        BufferValues & bufferValues) const;
 

@@ -17,35 +17,61 @@ namespace ENISI
 
 class Properties: public repast::Properties
 {
+public:
+  enum Type {
+    config,
+    run,
+    model
+  };
+
 private:
-  static repast::Properties * pInstance;
+  static std::map< Type, Properties * > INSTANCES;
+
 
   Properties();
 
 public:
-  Properties(const std::string& file, int argc, char** argv, boost::mpi::communicator* comm = 0, int maxPropFileSize = MAX_PROP_FILE_SIZE);
+  Properties(const Type & type,
+             const std::string& file,
+             int argc, char** argv,
+             boost::mpi::communicator* comm = 0,
+             int maxPropFileSize = MAX_PROP_FILE_SIZE);
 
   virtual ~Properties();
 
-  static const repast::Properties * instance();
+  static const Properties * instance(const Type & type);
 
-  static std::string getValue(const std::string & name);
+  std::string getValue(const std::string & name) const;
 
   template < class CType >
-  static bool getValue(const std::string & name, CType & value)
+  bool getValue(const std::string & key, CType & value) const
   {
-    value = std::numeric_limits<CType>::quiet_NaN();
+    value = CType();
+    std::string Key = key;
 
-    if (pInstance == NULL) return false;
+    bool found = false;
 
-    std::istringstream in;
+    while (true)
+      {
+        std::string Value = getProperty(Key);
 
-    in.imbue(std::locale::classic());
-    in.str(pInstance->getProperty(name));
+        if (Value.empty() || Value == Key)
+          {
+            break;
+          }
 
-    in >> value;
+        found = true;
 
-    return !isnan(value);
+        std::istringstream in;
+        in.imbue(std::locale::classic());
+        in.str(Value);
+        in >> value;
+
+        // Check if the Value is the key of another property.
+        Key = Value;
+      }
+
+    return found;
   }
 
   template <class CType>

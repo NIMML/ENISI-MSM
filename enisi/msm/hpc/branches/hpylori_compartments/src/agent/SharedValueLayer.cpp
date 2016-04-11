@@ -10,6 +10,7 @@
 #include "SharedValueLayer.h"
 
 #include "compartment/Compartment.h"
+#include "Cytokine.h"
 
 using namespace ENISI;
 
@@ -50,6 +51,44 @@ SharedValueLayer::SharedValueLayer(const int & id, const int & startProc, const 
 SharedValueLayer::~SharedValueLayer()
 {
   if (mpLocalValues != NULL) delete mpLocalValues;
+}
+
+// virtual
+void SharedValueLayer::write(std::ostream & o, const std::string & separator, Compartment * pCompartment)
+{
+  const repast::GridDimensions Dimensions = pCompartment->localSpaceDimensions();
+  double delta = Dimensions.extents(0) / mShape[0];
+
+  std::vector< Cytokine * >::const_iterator itCytokine = pCompartment->getCytokines().begin();
+  std::vector< Cytokine * >::const_iterator endCytokine = pCompartment->getCytokines().end();
+
+  for (size_t k = 0; itCytokine != endCytokine; ++itCytokine, ++k)
+    {
+      o << (*itCytokine)->getName() << std::endl;
+
+      for (size_t i = 0, imax = mShape[0]; i < imax; ++i)
+        {
+          o << separator << Dimensions.origin(0) + i * delta;
+        }
+
+      o << std::endl;
+
+      Iterator itPoint(repast::Point< int >(1, 1), mShape);
+
+      for (size_t j = 0, jmax = mShape[1]; j < jmax; ++j)
+        {
+          o << Dimensions.origin(0) + j * delta;
+
+          for (size_t i = 0, imax = mShape[0]; i < imax; ++i, itPoint.next())
+            {
+              o << separator << mpLocalValues->operator[](*itPoint)[k];
+            }
+
+          o << std::endl;
+        }
+
+      o << std::endl;
+    }
 }
 
 std::vector< double > & SharedValueLayer::operator[](const repast::Point< int > location)

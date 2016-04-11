@@ -44,8 +44,8 @@ public:
     mpSpace(NULL),
     mpGrid(NULL),
     mpSharedValues(NULL),
-    mSpaceDimensions(),
-    mGridDimensions(),
+    mLocalSpaceDimensions(),
+    mLocalGridDimensions(),
     mpCellExchange(&mCellContext),
     mpDiffuserExchange(&mDiffuserContext),
     mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0)),
@@ -67,9 +67,9 @@ public:
     mCellContext.addProjection(mpGrid);
     mDiffuserContext.addProjection(mpSharedValues);
 
-    mSpaceDimensions = mpSpace->dimensions();
-    mGridDimensions = mpGrid->dimensions();
-    mSharedValueDimensions = mpSharedValues->dimensions();
+    mLocalSpaceDimensions = mpSpace->dimensions();
+    mLocalGridDimensions = mpGrid->dimensions();
+    mLocalSharedValueDimensions = mpSharedValues->dimensions();
 
     typename std::vector< Space2Grid >::iterator itConversion = mSpace2Grid.begin();
     typename std::vector< Space2Grid >::iterator endConversion = mSpace2Grid.end();
@@ -239,8 +239,8 @@ public:
   bool addAgentToRandomLocation(AgentType * agent)
   {
     std::vector< double > Location(2);
-    repast::Point<double> extents = mSpaceDimensions.extents();
-    repast::Point<double> origin = mSpaceDimensions.origin();
+    const repast::Point<double> & origin = mLocalSpaceDimensions.origin();
+    const repast::Point<double> & extents = mLocalSpaceDimensions.extents();
 
     Location[Borders::X] = origin.getX() + extents.getX() * mUniform.next();
     Location[Borders::Y] = origin.getY() + extents.getY() * mUniform.next();
@@ -326,14 +326,14 @@ public:
 
   }
 
-  const repast::GridDimensions & spaceDimensions() const
+  const repast::GridDimensions & localSpaceDimensions() const
   {
-    return mSpaceDimensions;
+    return mLocalSpaceDimensions;
   }
 
-  const repast::GridDimensions & gridDimensions() const
+  const repast::GridDimensions & localGridDimensions() const
   {
-    return mGridDimensions;
+    return mLocalGridDimensions;
   }
 
   void requestAgents(repast::AgentRequest & request)
@@ -441,7 +441,7 @@ public:
     AgentType * pAgent = mDiffuserContext.addAgent(pDiffuserValues);
     repast::AgentId Id = pAgent->getId();
 
-    return mpSharedValues->moveTo(Id, repast::Point< int >(mSharedValueDimensions.origin()[0], mSharedValueDimensions.origin()[1]));
+    return mpSharedValues->moveTo(Id, repast::Point< int >(mLocalSharedValueDimensions.origin()[0], mLocalSharedValueDimensions.origin()[1]));
   }
 
   void addCompartment(Compartment * pCompartment)
@@ -458,9 +458,9 @@ private:
   Space * mpSpace;
   Grid * mpGrid;
   Grid * mpSharedValues;
-  repast::GridDimensions mSpaceDimensions;
-  repast::GridDimensions mGridDimensions;
-  repast::GridDimensions mSharedValueDimensions;
+  repast::GridDimensions mLocalSpaceDimensions;
+  repast::GridDimensions mLocalGridDimensions;
+  repast::GridDimensions mLocalSharedValueDimensions;
   PackageExchange mpCellExchange;
   PackageExchange mpDiffuserExchange;
   repast::DoubleUniformGenerator mUniform;

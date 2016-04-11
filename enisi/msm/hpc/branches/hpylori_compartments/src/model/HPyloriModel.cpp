@@ -11,6 +11,8 @@
 #include "agent/EpithelialCellGroup.h"
 #include "agent/HPyloriGroup.h"
 
+#include "DataWriter/LocalFile.h"
+
 using namespace ENISI;
 
 HPModel::~HPModel()
@@ -25,12 +27,16 @@ HPModel::HPModel():
   mp_lumen(NULL),
   mp_epithilium(NULL),
   mp_lamina_propria(NULL),
-  mp_gastric_lymph_node(NULL)
+  mp_gastric_lymph_node(NULL),
+  mpProperties(Properties::instance(Properties::model))
 { 
+  ENISI::init();
+
   initialize_lumen();
   initialize_epithilium();
   initialize_lamina_propria();
   initialize_gastric_lymph_node();
+
 }
 
 void HPModel::initialize_lumen()
@@ -39,13 +45,14 @@ void HPModel::initialize_lumen()
 
   size_t count;
 
-  if (!Properties::getValue("lumen.HPylori.count", count)) count = 0;
+  if (!mpProperties->getValue("lumen.HPylori.count", count)) count = 0;
   new HPyloriGroup(mp_lumen, count);
 
-  if (!Properties::getValue("lumen.Bacteria.count", count)) count = 0;
+  if (!mpProperties->getValue("lumen.Bacteria.count", count)) count = 0;
   new BacteriaGroup(mp_lumen, count);
 
   mp_lumen->synchronizeCells();
+  mp_lumen->write(LocalFile::instance(mp_lumen->getName())->stream(), "\t", mp_lumen);
 }
 
 void HPModel::initialize_epithilium()
@@ -54,13 +61,14 @@ void HPModel::initialize_epithilium()
 
   size_t count;
 
-  if (!Properties::getValue("epithilium.EpithelialCell.count", count)) count = 0;
+  if (!mpProperties->getValue("epithilium.EpithelialCell.count", count)) count = 0;
   new EpithelialCellGroup(mp_epithilium, count);
 
-  if (!Properties::getValue("epithilium.Dendritics.count", count)) count = 0;
+  if (!mpProperties->getValue("epithilium.Dendritics.count", count)) count = 0;
   new DendriticsGroup(mp_epithilium, count);
 
   mp_epithilium->synchronizeCells();
+  mp_epithilium->write(LocalFile::instance(mp_epithilium->getName())->stream(), "\t", mp_epithilium);
 }
 
 void HPModel::initialize_lamina_propria()
@@ -75,12 +83,14 @@ void HPModel::initialize_lamina_propria()
   mp_lamina_propria->addCytokine("IFNg");
 
   mp_lamina_propria->initializeDiffuserData();
+  mp_lamina_propria->write(LocalFile::instance(mp_lamina_propria->getName())->stream(), "\t", mp_lamina_propria);
 }
 
 void HPModel::initialize_gastric_lymph_node()
 {
   mp_gastric_lymph_node = ENISI::Compartment::instance(ENISI::Compartment::gastric_lymph_node);
 
+  mp_gastric_lymph_node->write(LocalFile::instance(mp_gastric_lymph_node->getName())->stream(), "\t", mp_gastric_lymph_node);
 }
 
 
@@ -117,7 +127,7 @@ void HPModel::initSchedule(repast::ScheduleRunner & runner)
 
   /* Schedule will repeat infinitely without a stop */
   int stopAt = 1;
-  Properties::getValue("stop.at", stopAt);
+  Properties::instance(Properties::run)->getValue("stop.at", stopAt);
   runner.scheduleStop(stopAt); 
 
   return;

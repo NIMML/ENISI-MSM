@@ -1,9 +1,10 @@
 #include "EpithelialCellGroup.h"
 
 #include "grid/Borders.h"
-#include "DiffuserImpl.h"
 #include "compartment/Compartment.h"
+
 using namespace ENISI;
+
 int p_EpiCellDeath;//Rule 11
 int p_EpiProliferation;//Rule 8
 int p_rule10a;
@@ -33,6 +34,8 @@ void EpithelialCellGroup::act()
 
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
 {
+  std::vector<double> Location(2, 0.0);
+
   std::vector< Agent * > EpithelialCells;
   mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
   std::vector< Agent * >::iterator it = EpithelialCells.begin();
@@ -45,6 +48,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > Tcells;
   Concentration TcellsCellConcentration;
 
+  double IL10 = 0.0;
+
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
@@ -52,16 +57,13 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
+
+      IL10 = mpCompartment->cytokineValue("IL10", pt, 0, 1);
     }
   else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
       concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
-    }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
-    {
-      mpCompartment->getAgents(pt, 0, -1, Agent::DiffuserValues,IL10);
-      concentrations(Agent::DiffuserValues, IL10, IL10Concentration);
     }
 
   for (; it != end; ++it)
@@ -96,20 +98,23 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           for eg. This rule requires the state transition when TH17 in LaminaPropria is in contact with E at 'Epithelium and LaminaPropria' membrane*/
         }
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-              {
-                mpCompartment->removeAgent(pAgent);/*Rule 11*/
-                continue;
-              }
-      if (mpCompartment->getType() == Compartment::epithilium && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-             {
-               mpCompartment->getLocation(pAgent->getId(), Location);/*Rule 8*/
-               mpCompartment->addAgent(new Agent(Agent::EpithelialCell, pAgent->getState()), Location);
-             }
-      else if (mpCompartment->getType() == Compartment::epithilium && state == EpithelialCellState::DAMAGED
-    		  && IL10Concentration > ENISI::Threshold && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-      {
-    	  newState = EpithelialCellState::HEALTHY;/* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
-      }
+        {
+          mpCompartment->removeAgent(pAgent);/*Rule 11*/
+          continue;
+        }
+      if (mpCompartment->getType() == Compartment::epithilium
+          && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {
+          mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
+          mpCompartment->addAgent(new Agent(Agent::EpithelialCell, pAgent->getState()), Location);
+        }
+      else if (mpCompartment->getType() == Compartment::epithilium
+               && state == EpithelialCellState::DAMAGED
+               && IL10 > ENISI::Threshold
+               && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {
+          newState = EpithelialCellState::HEALTHY;/* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
+        }
 
       //else if (mpCompartment->getType() == Compartment::epithilium) // TODO CRITICAL This will always be true -FIXED
         //{

@@ -9,7 +9,7 @@ double number2Concentration = 1.0;
 void ENISI::init()
 {
   double GridSize;
-  Properties::getValue("grid.size", GridSize);
+  Properties::instance(Properties::run)->getValue("grid.size", GridSize);
 
   // 2 dimensional
   Threshold = GridSize * GridSize;

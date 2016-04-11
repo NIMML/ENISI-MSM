@@ -12,40 +12,59 @@
 using namespace ENISI;
 
 // static
-repast::Properties * Properties::pInstance;
+std::map< Properties::Type, Properties * > Properties::INSTANCES;
 
 // static
-const repast::Properties * Properties::instance()
+const Properties * Properties::instance(const Properties::Type & type)
 {
-  return pInstance;
-}
+  std::map< Type, Properties * >::iterator found = INSTANCES.find(type);
 
-// static
-std::string Properties::getValue(const std::string & name)
-{
-  if (pInstance == NULL) return "";
+  if (found == INSTANCES.end())
+    {
+      throw std::runtime_error("Unknown property: " + (char) type);
+    }
 
-  return pInstance->getProperty(name);
+  return found->second;
 }
 
 Properties::Properties():
   repast::Properties()
 {}
 
-Properties::Properties(const std::string & file, int argc, char** argv, boost::mpi::communicator* comm, int maxPropFileSize):
-  repast::Properties(file, argc, argv, comm, maxPropFileSize)
+Properties::Properties(const Type & type,
+                       const std::string & name,
+                       int argc, char** argv,
+                       boost::mpi::communicator* comm,
+                       int maxPropFileSize):
+  repast::Properties(name, argc, argv, comm, maxPropFileSize)
 {
-  if (pInstance == NULL)
+  std::map< Type, Properties * >::iterator found = INSTANCES.find(type);
+
+  if (found != INSTANCES.end())
     {
-      pInstance = this;
+      throw std::runtime_error("Property already exist: " + (char) type);
     }
+
+  INSTANCES.insert(std::make_pair(type, this));
 }
 
 Properties::~Properties()
 {
-  if (pInstance == this)
+  std::map< Type, Properties * >::iterator it = INSTANCES.begin();
+  std::map< Type, Properties * >::iterator end = INSTANCES.end();
+
+  for (; it != end; ++it)
     {
-      pInstance = NULL;
+      if (it->second == this)
+        {
+          INSTANCES.erase(it);
+          break;
+        }
     }
+}
+
+std::string Properties::getValue(const std::string & name) const
+{
+  return getProperty(name);
 }
 

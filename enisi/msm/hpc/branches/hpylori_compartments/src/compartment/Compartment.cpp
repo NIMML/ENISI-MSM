@@ -41,23 +41,24 @@ Compartment::Compartment(const Type & type):
   mpDiffuserValues(NULL)
 {
   std::string Name = Names[mType];
+  const Properties * pProperties = Properties::instance(Properties::model);
 
-  Properties::getValue(Name + ".space.x", mProperties.spaceX);
-  Properties::getValue(Name + ".space.y", mProperties.spaceY);
-  Properties::getValue("grid.size", mProperties.gridSize);
+  pProperties->getValue(Name + ".space.x", mProperties.spaceX);
+  pProperties->getValue(Name + ".space.y", mProperties.spaceY);
+  Properties::instance(Properties::run)->getValue("grid.size", mProperties.gridSize);
 
   mProperties.gridX = ceil(mProperties.spaceX / mProperties.gridSize);
   mProperties.spaceX = mProperties.gridX * mProperties.gridSize;
   mProperties.gridY = ceil(mProperties.spaceY / mProperties.gridSize);
   mProperties.spaceY = mProperties.gridY * mProperties.gridSize;
 
-  std::string borderLow = Properties::getValue(Name + ".border.y.low");
-  mProperties.borderLowCompartment = Properties::toEnum(borderLow, Names, INVALID);
-  mProperties.borderLowType = Properties::toEnum(borderLow, Borders::TypeNames, Borders::PERMIABLE);
+  std::string borderLow = pProperties->getValue(Name + ".border.y.low");
+  mProperties.borderLowCompartment = pProperties->toEnum(borderLow, Names, INVALID);
+  mProperties.borderLowType = pProperties->toEnum(borderLow, Borders::TypeNames, Borders::PERMIABLE);
 
-  std::string borderHigh = Properties::getValue(Name + ".border.y.high");
-  mProperties.borderHighCompartment = Properties::toEnum(borderHigh, Names, INVALID);
-  mProperties.borderHighType = Properties::toEnum(borderHigh, Borders::TypeNames, Borders::PERMIABLE);
+  std::string borderHigh = pProperties->getValue(Name + ".border.y.high");
+  mProperties.borderHighCompartment = pProperties->toEnum(borderHigh, Names, INVALID);
+  mProperties.borderHighType = pProperties->toEnum(borderHigh, Borders::TypeNames, Borders::PERMIABLE);
 
   std::vector< double > Origin(2, 0);
   std::vector< double > SpaceExtents(2);
@@ -88,6 +89,7 @@ Compartment::Compartment(const Type & type):
   mpLayer->addCompartment(this);
 }
 
+// virtual
 Compartment::~Compartment()
 {
   if (INSTANCES[mType] == this)
@@ -107,12 +109,12 @@ const repast::GridDimensions & Compartment::dimensions() const
 
 const repast::GridDimensions & Compartment::localSpaceDimensions() const
 {
-  return mpLayer->spaceDimensions();
+  return mpLayer->localSpaceDimensions();
 }
 
 const repast::GridDimensions & Compartment::localGridDimensions() const
 {
-  return mpLayer->gridDimensions();
+  return mpLayer->localGridDimensions();
 }
 
 const Borders * Compartment::spaceBorders() const
@@ -132,7 +134,7 @@ const Compartment * Compartment::getAdjacentCompartment(const Borders::Coodinate
 
 Iterator Compartment::begin()
 {
-  return Iterator(mpLayer->gridDimensions());
+  return Iterator(mpLayer->localGridDimensions());
 }
 
 std::vector< double > Compartment::gridToSpace(const std::vector< int > & grid) const
@@ -560,6 +562,61 @@ void Compartment::synchronizeCells()
   mpLayer->synchronizeCells();
 }
 
+// virtual
+void Compartment::write(std::ostream & o, const std::string & separator, Compartment * /* pCompartment */)
+{
+  o << getName() << std::endl;
+
+
+  // We loop through all local agents an write them out.
+  SharedLayer::Context::const_state_aware_iterator it = mpLayer->getCellContext().begin(SharedLayer::Context::LOCAL);
+  SharedLayer::Context::const_state_aware_iterator end = mpLayer->getCellContext().end(SharedLayer::Context::LOCAL);
+
+  if (it != end)
+    {
+      for (size_t i = 0; i < 10; ++i)
+        {
+          if (i)
+            {
+              o << "\t";
+            }
+
+          o << "X\tY\tname\tstate";
+        }
+
+      o << std::endl;
+    }
+
+  std::vector< double > Location;
+  for (size_t i = 0; it != end; ++it, ++i)
+    {
+      Agent & Agent = **it;
+      mpLayer->getLocation(Agent.getId(), Location);
+      o << Location[0] << separator << Location[1] << separator;
+      Agent.write(o, separator, this);
+
+      // 10 agents per line
+      if ((i % 10) == 9)
+        {
+          o << std::endl;
+        }
+      else
+        {
+          o << separator;
+        }
+    }
+
+  if (mpDiffuserValues != NULL)
+    {
+      o << std::endl;
+
+      mpDiffuserValues->write(o, separator, this);
+    }
+
+  o << std::endl;
+  o << std::endl;
+}
+
 void Compartment::getBorderCellsToPush(std::set<repast::AgentId> & /* agentsToTest */,
                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
@@ -747,7 +804,7 @@ void Compartment::synchronizeDiffuser()
 {
   mpLayer->synchronizeDiffuser();
 
-  // We loop through all non local agents an update the local diffuser values.
+  // We loop through all non local agents and update the local diffuser border values.
   SharedLayer::Context::const_state_aware_iterator it = mpLayer->getValueContext().begin(SharedLayer::Context::NON_LOCAL);
   SharedLayer::Context::const_state_aware_iterator end = mpLayer->getValueContext().end(SharedLayer::Context::NON_LOCAL);
 

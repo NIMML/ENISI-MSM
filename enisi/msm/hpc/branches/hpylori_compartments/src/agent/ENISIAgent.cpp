@@ -64,6 +64,12 @@ int Agent::getState() const
 }
 
 // virtual
+void Agent::write(std::ostream & o, const std::string & separator, Compartment * /* pCompartment */)
+{
+  o << classname() << separator << _state;
+}
+
+// virtual
 std::string Agent::classname()
 {
   switch (id.agentType())

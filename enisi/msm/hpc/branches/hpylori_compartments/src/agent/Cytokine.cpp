@@ -10,9 +10,11 @@ Cytokine::Cytokine(const std::string & name):
   mDegradation(0.0),
   mIndex((size_t) -1)
 {
-  Properties::getValue(mName + ".initialValue", mInitialValue);
-  Properties::getValue(mName + ".diffusion", mDiffusion);
-  Properties::getValue(mName + ".degradation", mDegradation);
+  const Properties * pProperties = Properties::instance(Properties::model);
+
+  pProperties->getValue(mName + ".initialValue", mInitialValue);
+  pProperties->getValue(mName + ".diffusion", mDiffusion);
+  pProperties->getValue(mName + ".degradation", mDegradation);
 }
 
 
