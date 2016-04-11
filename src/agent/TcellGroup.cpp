@@ -53,6 +53,8 @@ void TcellGroup::act()
 
 void TcellGroup::act(const repast::Point<int> & pt)
 {
+  std::vector< double > Location(2, 0.0);
+
   std::vector< Agent * > Tcells;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   std::vector< Agent * >::iterator it = Tcells.begin();
@@ -168,10 +170,11 @@ if (state != TcellState::Tr)
             {
               newState = TcellState::TH1; /*Rule 39*/
             }
-          else if (mpCompartment->getType() == Compartment::gastric_lymph_node && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          else if (mpCompartment->getType() == Compartment::gastric_lymph_node
+                   && (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
-        	  mpCompartment->getLocation(pAgent->getId(), Location);
-        	  mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);/*Rule 40*/
+              mpCompartment->getLocation(pAgent->getId(), Location);
+              mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
               // TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
             }
           else if ((eDCConcentration > 0) && state == TcellState::iTREG

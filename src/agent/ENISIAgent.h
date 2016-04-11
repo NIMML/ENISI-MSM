@@ -7,6 +7,8 @@
 namespace ENISI
 {
 
+class Compartment;
+
 class Agent: public repast::Agent
 {
 private:
@@ -47,6 +49,7 @@ public:
      Ensure the return string matches the corresponding code in AgentFactory */
   virtual std::string classname();
 
+  virtual void write(std::ostream & o, const std::string & separator, Compartment * pCompartment = NULL);
 protected:
 
 private:

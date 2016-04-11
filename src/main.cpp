@@ -5,20 +5,37 @@
 #include "repast_hpc/RepastProcess.h"
 #include "grid/Properties.h"
 
+// #define DEBUG_WAIT
+
 int main(int argc, char** argv)
 {
+  int debugwait = 0;
+
+#ifdef DEBUG_WAIT
+  debugwait = 1;
+
+  if(debugwait)
+    {
+      printf("PID %d\n", getpid());
+    }
+  while (debugwait) ;
+#endif
+
   boost::mpi::environment env(argc, argv);
   boost::mpi::communicator world;
 
   std::string configFile = argv[1];
-  std::string propsFile  = argv[2];
+  std::string runFile  = argv[2];
+  std::string modelFile  = argv[3];
 
-  ENISI::Properties props(propsFile, argc, argv, &world);
-
+  ENISI::Properties ConfigProperties(ENISI::Properties::config, configFile, argc, argv, &world);
   repast::RepastProcess::init(configFile, &world);
 
-  int debugwait = 0;
-  if (!ENISI::Properties::getValue("debug.wait", debugwait)) debugwait = 0;
+  ENISI::Properties RunProperties(ENISI::Properties::run, runFile, argc, argv, &world);
+
+#ifndef DEBUG_WAIT
+  if (!RunProperties.getValue("debug.wait", debugwait)) debugwait = 0;
+#endif
 
   if(debugwait)
     {
@@ -40,6 +57,8 @@ int main(int argc, char** argv)
       printf("RANK %d PID %d\n", rank, getpid());
     }
   while (debugwait) ;
+
+  ENISI::Properties ModelProperties(ENISI::Properties::model, modelFile, argc, argv, &world);
 
   ENISI::HPModel model;
 

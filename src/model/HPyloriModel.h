@@ -8,6 +8,7 @@ namespace ENISI
 {
 
 class Compartment;
+class Properties;
 
 class HPModel
 { 
@@ -40,6 +41,7 @@ private:
   Compartment * mp_epithilium;
   Compartment * mp_lamina_propria;
   Compartment * mp_gastric_lymph_node;
+  const Properties * mpProperties;
 };
 
 } // namespace ENISI
