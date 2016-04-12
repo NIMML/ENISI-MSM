@@ -71,8 +71,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       Agent * pAgent = *it;
       MacrophageState::State state = (MacrophageState::State) pAgent->getState();
 
-      if (state == MacrophageState::DEAD) continue;
-
       MacrophageState::State newState = state;
 
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
@@ -89,7 +87,10 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       double IL10 = mpCompartment->cytokineValue("IL10", pt);
 
       /* if no bacteria is around macrophage, then stays immature */
-      if ((liveHPyloriConcentration|| infectiousBacteriaConcentration) && state == MacrophageState::MONOCYTE && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if ((liveHPyloriConcentration > ENISI::Threshold
+    	   || infectiousBacteriaConcentration > ENISI::Threshold)
+    	  && state == MacrophageState::MONOCYTE
+		  && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           /* set initial concentrations */
     	  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
@@ -126,15 +127,16 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
             }
         }
 
+      // TODO We should use the production fo the ODE model
       /* regulatory macrophages produce IL10 */
       if (newState == MacrophageState::REGULATORY)
         {
-          mpCompartment->cytokineValue("IL10", pt) = 70;
+          mpCompartment->cytokineValue("IL10", pt) += 70;
         }
       /* inflammatory macrophages produce IFNg */
       if (newState == MacrophageState::INFLAMMATORY)
         {
-          mpCompartment->cytokineValue("IFNg", pt) = 70;
+          mpCompartment->cytokineValue("IFNg", pt) += 70;
         }
 
       if (state == MacrophageState::MONOCYTE

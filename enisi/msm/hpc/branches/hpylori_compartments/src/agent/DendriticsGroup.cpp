@@ -98,8 +98,6 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       Agent * pAgent = *it;
       DendriticState::State state = (DendriticState::State) pAgent->getState();
 
-      if (state == DendriticState::DEAD) continue;
-
       DendriticState::State newState = state;
 
       /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
@@ -153,10 +151,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
       /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
        *  0.5 is arbitrary *Rule 2*/
-      else if (liveHPyloriConcentration > 0.5 * tolegenicBacteriaConcentration + 1
-               && state == DendriticState::IMMATURE
+      else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium
-			   && (p_rule48a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+			   && (tolegenicBacteriaConcentration  * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::EFFECTOR;
           std::vector< double > Location;
@@ -164,12 +161,11 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
         }
-      /*if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
-       *  0.5 is arbitrary */
-      else if (liveHPyloriConcentration <= 0.5 * tolegenicBacteriaConcentration + 1
-               && state == DendriticState::IMMATURE
+      /* if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
+       * 0.5 is arbitrary */
+      else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium
-			   && (p_rule48b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+			   && (liveHPyloriConcentration * p_rule48b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::TOLEROGENIC;
           std::vector< double > Location;
@@ -179,35 +175,35 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
        *  1 is arbitrary, Rule 48 */
-      else if (liveHPyloriConcentration + tolegenicBacteriaConcentration > 1
-               && state == DendriticState::IMMATURE
+      else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
-			   && (p_rule17a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+			   && (tolegenicBacteriaConcentration * p_rule17a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::EFFECTOR;
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
        *  1 is arbitrary * Rule 17 and Rule 48*/
-      else if (liveHPyloriConcentration + tolegenicBacteriaConcentration <= 1
-               && state == DendriticState::IMMATURE
+      else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
-			   && (p_rule17b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+			   && (liveHPyloriConcentration * p_rule17b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::TOLEROGENIC;
         }
 
+      // TODO We should use the production from the ODE model.
       if (newState == DendriticState::EFFECTOR) /*Rule 56*/
         {
-          mpCompartment->cytokineValue("IL6", pt) = 70;
-          mpCompartment->cytokineValue("IL12", pt) = 70;
+          mpCompartment->cytokineValue("IL6", pt) += 70;
+          mpCompartment->cytokineValue("IL12", pt) += 70;
         }
       else if (newState == DendriticState::TOLEROGENIC) /*Rule 57*/
         {
-          mpCompartment->cytokineValue("TGFb", pt) = 70;
+          mpCompartment->cytokineValue("TGFb", pt) += 70;
         }
 
       if (state == DendriticState::IMMATURE
-          && (damagedEpithelialCellConcentration || eDendriticsConcentration)
+          && (damagedEpithelialCellConcentration > ENISI::Threshold
+        	  || eDendriticsConcentration > ENISI::Threshold)
           && (p_rule15 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->getLocation(pAgent->getId(), Location);
