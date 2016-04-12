@@ -8,7 +8,7 @@ Cytokine::Cytokine(const std::string & name):
   mInitialValue(0.0),
   mDiffusion(0.0),
   mDegradation(0.0),
-  mIndex((size_t) -1)
+  mIndex((size_t) - 1)
 {
   const Properties * pProperties = Properties::instance(Properties::model);
 
@@ -16,7 +16,6 @@ Cytokine::Cytokine(const std::string & name):
   pProperties->getValue(mName + ".diffusion", mDiffusion);
   pProperties->getValue(mName + ".degradation", mDegradation);
 }
-
 
 Cytokine::~Cytokine()
 {}

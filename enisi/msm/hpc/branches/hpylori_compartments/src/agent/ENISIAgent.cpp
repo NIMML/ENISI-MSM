@@ -73,39 +73,39 @@ void Agent::write(std::ostream & o, const std::string & separator, Compartment *
 std::string Agent::classname()
 {
   switch (id.agentType())
-  {
-    case Bacteria:
-      return Names[0];
-      break;
+    {
+      case Bacteria:
+        return Names[0];
+        break;
 
-    case Dentritics:
-      return Names[1];
-      break;
+      case Dentritics:
+        return Names[1];
+        break;
 
-    case EpithelialCell:
-      return Names[2];
-      break;
+      case EpithelialCell:
+        return Names[2];
+        break;
 
-    case HPylori:
-      return Names[3];
-      break;
+      case HPylori:
+        return Names[3];
+        break;
 
-    case ImmuneCell:
-      return Names[4];
-      break;
+      case ImmuneCell:
+        return Names[4];
+        break;
 
-    case Macrophage:
-      return Names[5];
-      break;
+      case Macrophage:
+        return Names[5];
+        break;
 
-    case Tcell:
-      return Names[6];
-      break;
+      case Tcell:
+        return Names[6];
+        break;
 
-    case DiffuserValues:
-      return Names[7];
-      break;
-  }
+      case DiffuserValues:
+        return Names[7];
+        break;
+    }
 
   return "";
 }

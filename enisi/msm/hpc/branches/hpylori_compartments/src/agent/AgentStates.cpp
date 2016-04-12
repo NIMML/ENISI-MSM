@@ -37,43 +37,42 @@ Agent::Type TcellState::Type = Agent::Tcell;
 size_t StateSize(const Agent::Type & type)
 {
   switch (type)
-  {
-    case Agent::Bacteria:
-      return BacteriaState::KEEP_AT_END;
-      break;
+    {
+      case Agent::Bacteria:
+        return BacteriaState::KEEP_AT_END;
+        break;
 
-    case Agent::Dentritics:
-      return DendriticState::KEEP_AT_END;
-      break;
+      case Agent::Dentritics:
+        return DendriticState::KEEP_AT_END;
+        break;
 
-    case Agent::EpithelialCell:
-      return EpithelialCellState::KEEP_AT_END;
-      break;
+      case Agent::EpithelialCell:
+        return EpithelialCellState::KEEP_AT_END;
+        break;
 
-    case Agent::HPylori:
-      return HPyloriState::KEEP_AT_END;
-      break;
+      case Agent::HPylori:
+        return HPyloriState::KEEP_AT_END;
+        break;
 
-    case Agent::ImmuneCell:
-      return 0;
-      break;
+      case Agent::ImmuneCell:
+        return 0;
+        break;
 
-    case Agent::Macrophage:
-      return MacrophageState::KEEP_AT_END;
-      break;
+      case Agent::Macrophage:
+        return MacrophageState::KEEP_AT_END;
+        break;
 
-    case Agent::Tcell:
-      return TcellState::KEEP_AT_END;
-      break;
+      case Agent::Tcell:
+        return TcellState::KEEP_AT_END;
+        break;
 
-    case Agent::DiffuserValues:
-      return 0;
-      break;
-  }
+      case Agent::DiffuserValues:
+        return 0;
+        break;
+    }
 
   return 0;
 }
-
 
 void ENISI::numbers(const Agent::Type & type, std::vector< Agent * > agents, Number & number)
 {
@@ -125,7 +124,6 @@ void ENISI::numbers(const int & types, std::vector< Agent * > agents, Numbers & 
       CurrentType *= 2;
     }
 
-
   std::vector< Agent * >::const_iterator it = agents.begin();
   std::vector< Agent * >::const_iterator end = agents.end();
 
@@ -164,5 +162,3 @@ void ENISI::concentrations(const int & types, std::vector< Agent * > agents, Con
         }
     }
 }
-
-
