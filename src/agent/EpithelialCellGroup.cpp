@@ -82,7 +82,9 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
       double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
 
-      if (infectiousBacteriaConcentration && state == EpithelialCellState::HEALTHY && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if (infectiousBacteriaConcentration > ENISI::Threshold
+    	  && state == EpithelialCellState::HEALTHY
+		  && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = EpithelialCellState::DAMAGED;
         }
@@ -90,18 +92,20 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
         {
           newState = EpithelialCellState::HEALTHY;
         }
-      else if ((th17Concentration || th1Concentration) && state == EpithelialCellState::HEALTHY
+      else if ((th17Concentration > ENISI::Threshold
+    		    || th1Concentration)
+    		   && state == EpithelialCellState::HEALTHY
                && mpCompartment->getType() == Compartment::epithilium && (p_rule10b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) // TODO CRITICAL This will never be true-FIXED
         {
           newState = EpithelialCellState::DAMAGED; /*Rule 10*/
-          /* CHECK : Here there should be a function for information regarding the Layer,
-          for eg. This rule requires the state transition when TH17 in LaminaPropria is in contact with E at 'Epithelium and LaminaPropria' membrane*/
         }
+
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         {
-          mpCompartment->removeAgent(pAgent);/*Rule 11*/
+          mpCompartment->removeAgent(pAgent); /*Rule 11*/
           continue;
         }
+
       if (mpCompartment->getType() == Compartment::epithilium
           && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
@@ -116,16 +120,11 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           newState = EpithelialCellState::HEALTHY;/* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
         }
 
-      //else if (mpCompartment->getType() == Compartment::epithilium) // TODO CRITICAL This will always be true -FIXED
-        //{
-          // addCellAt(state, newLoc);/* Rule 8*/
-          //mpCompartment->removeAgent(pAgent); /*Rule 11*/
-        //}
-      //else if
       if (newState == EpithelialCellState::DAMAGED)
         {
-          mpCompartment->cytokineValue("IL6", pt) = 70;
-          mpCompartment->cytokineValue("IL12", pt) = 70;
+    	  // TODO We should use the production from the ODE model.
+          mpCompartment->cytokineValue("IL6", pt) += 70;
+          mpCompartment->cytokineValue("IL12", pt) += 70;
         }
 
       pAgent->setState(newState);

@@ -75,7 +75,9 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
 
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
-      if (damagedEpithelialCellConcentration && mpCompartment->getType() == Compartment::lumen && (p_rule1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if (damagedEpithelialCellConcentration > ENISI::Threshold
+          && mpCompartment->getType() == Compartment::lumen
+		  && (p_rule1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
@@ -84,6 +86,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
               mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
 
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
 
       double th1Concentration = TcellConcentration[TcellState::TH1];
@@ -91,7 +94,10 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
       /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
       if ((newState == BacteriaState::INFECTIOUS)
-          && (damagedEpithelialCellConcentration || th1Concentration || th17Concentration) && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          && (damagedEpithelialCellConcentration > ENISI::Threshold
+        	  || th1Concentration > ENISI::Threshold
+			  || th17Concentration> ENISI::Threshold)
+		  && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->removeAgent(pAgent);
           continue;
@@ -109,13 +115,15 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           continue;
         }
 
-      if (mpCompartment->getType() == Compartment::lamina_propria && (p_BacteriaLPProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if (mpCompartment->getType() == Compartment::lamina_propria
+    	  && (p_BacteriaLPProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
 
-      if (mpCompartment->getType() == Compartment::lumen && (p_BacteriaLumProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+      if (mpCompartment->getType() == Compartment::lumen &&
+          (p_BacteriaLumProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
