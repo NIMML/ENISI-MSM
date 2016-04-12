@@ -1,20 +1,22 @@
+space.x = 300 nm
+
 # compartments
-lumen.space.x = 300
-lumen.space.y = 100
+lumen.space.x = space.x
+lumen.space.y = 100 nm
 lumen.border.y.low = REFLECT
 lumen.border.y.high = epithilium
-lumen.Bacteria.count = 1000
-lumen.HPylori.count = 1000
+lumen.Bacteria.concentration = 1000
+lumen.HPylori.concentration = 1000
 
-epithilium.space.x = 300
-epithilium.space.y = 3
+epithilium.space.x = space.x
+epithilium.space.y = 3 nm
 epithilium.border.y.low = lumen
 epithilium.border.y.high = lamina_propria
-epithilium.EpithelialCell.count = 1000
-epithilium.Dendritics.count = 0
+epithilium.EpithelialCell.concentration = 1000
+epithilium.Dendritics.concentration = 0
 
-lamina_propria.space.x = 300
-lamina_propria.space.y = 100
+lamina_propria.space.x = space.x
+lamina_propria.space.y = 100 nm
 lamina_propria.border.y.low = epithilium
 lamina_propria.border.y.high = gastric_lymph_node
 
@@ -44,10 +46,19 @@ lamina_propria.IFNg.initialValue = 0
 lamina_propria.IFNg.diffusion = 0.6
 lamina_propria.IFNg.degradation = 0.02
 
-gastric_lymph_node.space.x = 300
+lamina_propria.dendritics.concentration = 
+lamina_propria.Tcell.concentration
+lamina_propria.Bacteria.concentration = 0
+lamina_propria.HPylori.concentration = 0
+lamina_propria.macrophages.concentration =
+
+#gastric_lymph_node
+gastric_lymph_node.space.x = space.x
 gastric_lymph_node.space.y = 100
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
+gastric_lymph_node.dendritics.concentration = 
+gastric_lymph_node.Tcell.concentration
 
 # Parameter rules
 #### From COPASI ####
