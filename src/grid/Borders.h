@@ -19,9 +19,9 @@ public:
   static const char* TypeNames[];
 
   enum Type { REFLECT, WRAP, STICKY, PERMIABLE};
-  enum BoundState { OUT_LOW = -1, INBOUND = 0, OUT_HIGH = 1};
+  enum BoundState { OUT_LOW = -1, INBOUND = 0, OUT_HIGH = 1, OUT_BOTH };
   enum Coodinate { X = 0, Y = 1, Z = 2 };
-  enum Side { LOW = 0, HIGH };
+  enum Side { LOW, HIGH };
 
 private:
   Borders();

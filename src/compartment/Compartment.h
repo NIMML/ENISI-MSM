@@ -43,6 +43,7 @@ public:
 
   virtual ~Compartment();
 
+
   const repast::GridDimensions & dimensions() const;
   const repast::GridDimensions & localSpaceDimensions() const;
   const repast::GridDimensions & localGridDimensions() const;
@@ -101,6 +102,7 @@ public:
   std::string getName() const;
 
 private:
+  void adjustForProcessDimensions();
   void getBorderCellsToPush(const Borders::Coodinate &coordinate,
                             const Borders::Side & side,
                              std::map< int, std::set< repast::AgentId > > & agentsToPush);
@@ -116,6 +118,7 @@ private:
   Type mType;
 
   sProperties mProperties;
+  std::vector<int> mProcessDimensions;
   repast::GridDimensions mDimensions;
   SharedLayer * mpLayer;
   Borders * mpSpaceBorders;

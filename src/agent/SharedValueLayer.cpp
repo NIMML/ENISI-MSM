@@ -12,6 +12,8 @@
 #include "compartment/Compartment.h"
 #include "Cytokine.h"
 
+#define DEBUG_SHARED
+
 using namespace ENISI;
 
 SharedValueLayer::SharedValueLayer(const Type & type, const int & state, const size_t & valueSize):
@@ -62,24 +64,32 @@ void SharedValueLayer::write(std::ostream & o, const std::string & separator, Co
   std::vector< Cytokine * >::const_iterator itCytokine = pCompartment->getCytokines().begin();
   std::vector< Cytokine * >::const_iterator endCytokine = pCompartment->getCytokines().end();
 
-  for (size_t k = 0; itCytokine != endCytokine; ++itCytokine, ++k)
+  for (int k = 0; itCytokine != endCytokine; ++itCytokine, ++k)
     {
+#ifdef DEBUG_SHARED
+      repast::Point< int > Origin(0, 0);
+      repast::Point< int > Shape(mShape[0] + 2, mShape[1] + 2);
+#else
+      repast::Point< int > Origin(1, 1);
+      repast::Point< int > Shape(mShape[0], mShape[1]);
+#endif
+
       o << (*itCytokine)->getName() << std::endl;
 
-      for (size_t i = 0, imax = mShape[0]; i < imax; ++i)
+      for (int i = Origin[0], imax = Shape[0]; i < imax; ++i)
         {
-          o << separator << Dimensions.origin(0) + i * delta;
+          o << separator << Dimensions.origin(0) + (i - 1) * delta;
         }
 
       o << std::endl;
 
-      Iterator itPoint(repast::Point< int >(1, 1), mShape);
+      Iterator itPoint(Origin, Shape);
 
-      for (size_t j = 0, jmax = mShape[1]; j < jmax; ++j)
+      for (int j = Origin[1], jmax = Shape[1]; j < jmax; ++j)
         {
-          o << Dimensions.origin(0) + j * delta;
+          o << Dimensions.origin(1) + (j - 1) * delta;
 
-          for (size_t i = 0, imax = mShape[0]; i < imax; ++i, itPoint.next())
+          for (int i = Origin[0], imax = Shape[0]; i < imax; ++i, itPoint.next())
             {
               o << separator << mpLocalValues->operator[](*itPoint)[k];
             }
@@ -172,7 +182,10 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
   const repast::Point< int > & origin = neighbor.mOrigin;
   const BufferValues & bufferValues = neighbor.mBufferValues;
 
+  // Currently only 2D
   std::vector<Borders::BoundState> BoundState(2, Borders::INBOUND);
+
+  // TODO CRITICAL The code below only checks for the low borders however it can also be the high neighbor or even both.
 
   std::vector< int > OutLow(2, 0);
   std::vector< int > OutHigh(2, 0);
@@ -185,13 +198,16 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
         {
           BoundState[i] = Borders::INBOUND;
         }
-      else if (origin[i] == mOrigin[i] - mShape[i] ||
-               origin[i] == OutLow[i])
+      else if (origin[i] == OutLow[i] &&
+               origin[i] == OutHigh[i])
+        {
+          BoundState[i] = Borders::OUT_BOTH;
+        }
+      else if (origin[i] == OutLow[i])
         {
           BoundState[i] = Borders::OUT_LOW;
         }
-      else if (origin[i] == mOrigin[i] + mShape[i] ||
-               origin[i] == OutHigh[i])
+      else if (origin[i] == OutHigh[i])
         {
           BoundState[i] = Borders::OUT_HIGH;
         }
@@ -205,59 +221,69 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
   repast::Point< int > LocalIndex(1, 1);
   std::vector< int > RemoteIndex(2, 0);
 
-  if (BoundState[0] == Borders::OUT_LOW)
+  if (BoundState[0] == Borders::OUT_LOW ||
+      BoundState[0] == Borders::OUT_BOTH)
     {
-      LocalIndex[0] -= 1;
-      RemoteIndex[0] += mShape[0] - 1;
+      LocalIndex[0] = 0;
+      RemoteIndex[0] = mShape[0] - 1;
 
-      if (BoundState[1] == Borders::OUT_LOW)
+      if (BoundState[1] == Borders::OUT_LOW ||
+          BoundState[1] == Borders::OUT_BOTH)
         {
-          LocalIndex[1] -= 1;
-          RemoteIndex[1] += mShape[1] - 1;
+          LocalIndex[1] = 0;
+          RemoteIndex[1] = mShape[1] - 1;
 
           mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
         }
-      else if (BoundState[1] == Borders::INBOUND)
+
+      if (BoundState[1] == Borders::INBOUND)
         {
-          // LocalIndex[1] = 1;
-          // RemoteIndex[1] = 0;
+          LocalIndex[1] = 1;
+          RemoteIndex[1] = 0;
 
           for (size_t i = 0, imax = mShape[1]; i < imax; ++i, LocalIndex[1]++, RemoteIndex[1]++)
             {
               mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
             }
         }
-      else if (BoundState[1] == Borders::OUT_HIGH)
+
+      if (BoundState[1] == Borders::OUT_HIGH ||
+          BoundState[1] == Borders::OUT_BOTH)
         {
-          LocalIndex[1] += mShape[1];
+          LocalIndex[1] = mShape[1] + 1;
           RemoteIndex[1] = 0;
 
           mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
         }
     }
-  else if (BoundState[0] == Borders::INBOUND)
-    {
-      // LocalIndex[0] = 1;
-      // RemoteIndex[0] = 0;
 
-      if (BoundState[1] == Borders::OUT_LOW)
+  if (BoundState[0] == Borders::INBOUND)
+    {
+      LocalIndex[0] = 1;
+      RemoteIndex[0] = 0;
+
+      if (BoundState[1] == Borders::OUT_LOW ||
+          BoundState[1] == Borders::OUT_BOTH)
         {
-          LocalIndex[1] -= 1;
-          RemoteIndex[1] += mShape[1] - 1;
+          LocalIndex[1] = 0;
+          RemoteIndex[1] = mShape[1] - 1;
 
           for (size_t i = 0, imax = mShape[0]; i < imax; ++i, LocalIndex[0]++, RemoteIndex[0]++)
             {
               mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
             }
         }
-      else if (BoundState[1] == Borders::INBOUND)
+
+      if (BoundState[1] == Borders::INBOUND)
         {
           // Local information is never changed
           return;
         }
-      else if (BoundState[1] == Borders::OUT_HIGH)
+
+      if (BoundState[1] == Borders::OUT_HIGH ||
+          BoundState[1] == Borders::OUT_BOTH)
         {
-          LocalIndex[1] += mShape[1];
+          LocalIndex[1] = mShape[1] + 1;
           RemoteIndex[1] = 0;
 
           for (size_t i = 0, imax = mShape[0]; i < imax; ++i, LocalIndex[0]++, RemoteIndex[0]++)
@@ -266,22 +292,25 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
             }
         }
     }
-  else if (BoundState[0] == Borders::OUT_HIGH)
+
+  if (BoundState[0] == Borders::OUT_HIGH ||
+      BoundState[0] == Borders::OUT_BOTH)
     {
-      LocalIndex[0] += mShape[0];
+      LocalIndex[0] = mShape[0] + 1;
       RemoteIndex[0] = 0;
 
-      if (BoundState[1] == Borders::OUT_LOW)
+      if (BoundState[1] == Borders::OUT_LOW ||
+          BoundState[1] == Borders::OUT_BOTH)
         {
-          LocalIndex[1] -= 1;
-          RemoteIndex[1] += mShape[1] - 1;
+          LocalIndex[1] = 0;
+          RemoteIndex[1] = mShape[1] - 1;
 
           mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
         }
       else if (BoundState[1] == Borders::INBOUND)
         {
-          // LocalIndex[1] = 1;
-          // RemoteIndex[1] = 0;
+          LocalIndex[1] = 1;
+          RemoteIndex[1] = 0;
 
           for (size_t i = 0, imax = mShape[1]; i < imax; ++i, LocalIndex[1]++, RemoteIndex[1]++)
             {
@@ -289,9 +318,10 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
             }
           return;
         }
-      else if (BoundState[1] == Borders::OUT_HIGH)
+      else if (BoundState[1] == Borders::OUT_HIGH ||
+               BoundState[1] == Borders::OUT_BOTH)
         {
-          LocalIndex[1] += mShape[1];
+          LocalIndex[1] = mShape[1] + 1;
           RemoteIndex[1] = 0;
 
           mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
