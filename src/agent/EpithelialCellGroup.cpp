@@ -11,7 +11,6 @@ int p_rule10a;
 int p_rule10b;
 int p_rule12;//Rule 12
 
-
 EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
 {
@@ -30,7 +29,6 @@ void EpithelialCellGroup::act()
       act(*it);
     }
 }
-
 
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
 {
@@ -83,8 +81,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
 
       if (infectiousBacteriaConcentration > ENISI::Threshold
-    	  && state == EpithelialCellState::HEALTHY
-		  && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          && state == EpithelialCellState::HEALTHY
+          && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = EpithelialCellState::DAMAGED;
         }
@@ -93,8 +91,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           newState = EpithelialCellState::HEALTHY;
         }
       else if ((th17Concentration > ENISI::Threshold
-    		    || th1Concentration)
-    		   && state == EpithelialCellState::HEALTHY
+                || th1Concentration)
+               && state == EpithelialCellState::HEALTHY
                && mpCompartment->getType() == Compartment::epithilium && (p_rule10b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) // TODO CRITICAL This will never be true-FIXED
         {
           newState = EpithelialCellState::DAMAGED; /*Rule 10*/
@@ -122,7 +120,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       if (newState == EpithelialCellState::DAMAGED)
         {
-    	  // TODO We should use the production from the ODE model.
+          // TODO We should use the production from the ODE model.
           mpCompartment->cytokineValue("IL6", pt) += 70;
           mpCompartment->cytokineValue("IL12", pt) += 70;
         }

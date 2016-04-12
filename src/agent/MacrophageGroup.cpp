@@ -88,12 +88,12 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
       /* if no bacteria is around macrophage, then stays immature */
       if ((liveHPyloriConcentration > ENISI::Threshold
-    	   || infectiousBacteriaConcentration > ENISI::Threshold)
-    	  && state == MacrophageState::MONOCYTE
-		  && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+           || infectiousBacteriaConcentration > ENISI::Threshold)
+          && state == MacrophageState::MONOCYTE
+          && (p_rule42 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           /* set initial concentrations */
-    	  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
+          /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
           MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
           odeModel.setInitialConcentration("IFNg", IFNg);
           odeModel.setInitialConcentration("IL10", IL10);
@@ -133,6 +133,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
         {
           mpCompartment->cytokineValue("IL10", pt) += 70;
         }
+
       /* inflammatory macrophages produce IFNg */
       if (newState == MacrophageState::INFLAMMATORY)
         {
@@ -167,4 +168,3 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
-

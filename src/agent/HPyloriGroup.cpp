@@ -79,8 +79,8 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
-              1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH) // Move accross the border
-              + Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y); // Move all the way through the epithelium
+            1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH) // Move accross the border
+            + Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y); // Move all the way through the epithelium
 
           mpCompartment->moveTo(pAgent->getId(), Location);
           continue;
@@ -91,8 +91,8 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
 
       /* HPylori dies is nearby damaged epithelial cell, th1 or th17* *Rule 5,6,7*/
       if ((damagedEpithelialCellConcentration > ENISI::Threshold
-    	   || th1Concentration > ENISI::Threshold
-		   || th17Concentration > ENISI::Threshold) &&
+           || th1Concentration > ENISI::Threshold
+           || th17Concentration > ENISI::Threshold) &&
           (p_rule5 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           // newState = HPyloriState::DEAD;
@@ -127,4 +127,3 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
-

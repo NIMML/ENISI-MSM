@@ -177,7 +177,7 @@ void SharedValueLayer::getBufferValues(repast::Point< int > & origin,
 }
 
 void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
-                                          const Borders & globalBorders)
+    const Borders & globalBorders)
 {
   const repast::Point< int > & origin = neighbor.mOrigin;
   const BufferValues & bufferValues = neighbor.mBufferValues;
@@ -316,6 +316,7 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
             {
               mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
             }
+
           return;
         }
       else if (BoundState[1] == Borders::OUT_HIGH ||
@@ -332,8 +333,7 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
 void SharedValueLayer::setBufferValues(const repast::Point< int > & origin,
                                        const BufferValues & bufferValues)
 {
-  assert (mOrigin == origin);
+  assert(mOrigin == origin);
 
   mBufferValues = bufferValues;
 }
-

@@ -38,7 +38,6 @@ void DendriticsGroup::act()
     }
 }
 
-
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0);
@@ -153,7 +152,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  0.5 is arbitrary *Rule 2*/
       else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium
-			   && (tolegenicBacteriaConcentration  * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+               && (tolegenicBacteriaConcentration  * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::EFFECTOR;
           std::vector< double > Location;
@@ -165,7 +164,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        * 0.5 is arbitrary */
       else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::epithilium
-			   && (liveHPyloriConcentration * p_rule48b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+               && (liveHPyloriConcentration * p_rule48b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::TOLEROGENIC;
           std::vector< double > Location;
@@ -177,7 +176,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  1 is arbitrary, Rule 48 */
       else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
-			   && (tolegenicBacteriaConcentration * p_rule17a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+               && (tolegenicBacteriaConcentration * p_rule17a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::EFFECTOR;
         }
@@ -185,7 +184,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  1 is arbitrary * Rule 17 and Rule 48*/
       else if (state == DendriticState::IMMATURE
                && mpCompartment->getType() == Compartment::lamina_propria
-			   && (liveHPyloriConcentration * p_rule17b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+               && (liveHPyloriConcentration * p_rule17b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           newState = DendriticState::TOLEROGENIC;
         }
@@ -203,7 +202,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       if (state == DendriticState::IMMATURE
           && (damagedEpithelialCellConcentration > ENISI::Threshold
-        	  || eDendriticsConcentration > ENISI::Threshold)
+              || eDendriticsConcentration > ENISI::Threshold)
           && (p_rule15 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
           mpCompartment->getLocation(pAgent->getId(), Location);
@@ -230,5 +229,3 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
-
-
