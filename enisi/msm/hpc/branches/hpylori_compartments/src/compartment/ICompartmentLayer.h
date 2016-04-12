@@ -34,12 +34,12 @@ public:
 //  typedef Agent AgentType;
 
   ICompartmentLayer(const std::string & name,
+                    const std::vector<int> & processDimensions,
                     const repast::GridDimensions & spaceDimension,
                     const repast::GridDimensions & gridDimension) :
     mpCommunicator(repast::RepastProcess::instance()->getCommunicator()),
     mCellContext(mpCommunicator),
     mDiffuserContext(mpCommunicator),
-    mProcessDimensions(spaceDimension.dimensionCount()),
     mBufferSize(1),
     mpSpace(NULL),
     mpGrid(NULL),
@@ -53,15 +53,13 @@ public:
     mpGridTopology(NULL),
     mpDiffuserTopology(NULL)
   {
-    determineProcessDimensions(gridDimension);
-    //
-    mpSpace = new Space(name + "-space", spaceDimension, mProcessDimensions, 0, mpCommunicator);
-    mpGrid = new Grid(name + "-grid", gridDimension, mProcessDimensions, mBufferSize, mpCommunicator);
-    mpGridTopology = new repast::CartTopology(mProcessDimensions, gridDimension.origin().coords(), gridDimension.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
+    mpSpace = new Space(name + "-space", spaceDimension, processDimensions, 0, mpCommunicator);
+    mpGrid = new Grid(name + "-grid", gridDimension, processDimensions, mBufferSize, mpCommunicator);
+    mpGridTopology = new repast::CartTopology(processDimensions, gridDimension.origin().coords(), gridDimension.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
 
-    repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(mProcessDimensions[0], mProcessDimensions[1]));
-    mpSharedValues = new Grid(name +"-values", ProcessDimensions, mProcessDimensions, mBufferSize, mpCommunicator);
-    mpDiffuserTopology = new repast::CartTopology(mProcessDimensions, ProcessDimensions.origin().coords(), ProcessDimensions.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
+    repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(processDimensions[0], processDimensions[1]));
+    mpSharedValues = new Grid(name +"-values", ProcessDimensions, processDimensions, mBufferSize, mpCommunicator);
+    mpDiffuserTopology = new repast::CartTopology(processDimensions, ProcessDimensions.origin().coords(), ProcessDimensions.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
 
     mCellContext.addProjection(mpSpace);
     mCellContext.addProjection(mpGrid);
@@ -91,80 +89,6 @@ public:
 
   virtual ~ICompartmentLayer()
   {}
-
-  void determineProcessDimensions(const repast::GridDimensions & dimension)
-  {
-    std::vector< double > Dimension = dimension.extents().coords();
-    
-    int worldSize = repast::RepastProcess::instance()->worldSize();
-
-    int n;
-    int nMin;
-    int nMax;
-
-    size_t i = Borders::X;
-    bool swap2D = false;
-
-    // TODO 3D process dimensions are not supported in repast HPC at this point in time
-    if (Dimension.size() > 2)
-      {
-        // TODO Pick the smallest dimension and swap see 2D
-        n = (int) pow(worldSize * Dimension[i] * Dimension[i] / (Dimension[i + 1] * Dimension[i + 2]), 1.0/3.0);
-
-        nMax = n;
-        while (worldSize % nMax > worldSize % (nMax + 1)) nMax++;
-
-        nMin = n;
-        while (worldSize % nMin > worldSize % (nMin - 1)) nMin--;
-
-        n = (n - nMin < nMax -n) ? nMin : nMax;
-
-        mProcessDimensions[i] = n;
-        worldSize /= n;
-        i++;
-      }
-
-    if (Dimension.size() > 1)
-      {
-        if (Dimension[i + 1] < Dimension[i])
-          {
-            swap2D = true;
-            double tmp = Dimension[i];
-            Dimension[i] = Dimension[i +1];
-            Dimension[i + 1] = tmp;
-          }
-
-        n = ceil(sqrt(worldSize * Dimension[i] / Dimension[i + 1]));
-
-        nMax = n;
-        while (worldSize % nMax > worldSize % (nMax + 1))
-          nMax++;
-
-        nMin = n;
-        while (nMin > 1 && worldSize % nMin > worldSize % (nMin - 1))
-          nMin--;
-
-        n = (n - nMin < nMax -n) ? nMin : nMax;
-
-        mProcessDimensions[i] = n;
-        worldSize /= n;
-        i++;
-      }
-
-    if (Dimension.size() > 0)
-      {
-        mProcessDimensions[i] = worldSize;
-      }
-
-    if (swap2D)
-      {
-        double tmp = mProcessDimensions[i];
-        mProcessDimensions[i] = mProcessDimensions[i - 1];
-        mProcessDimensions[i - 1] = tmp;
-      }
-
-
-  }
 
   void getNeighbors(const repast::Point< int > &pt, unsigned int range, std::vector< AgentType * > &out)
   {
@@ -453,7 +377,6 @@ private:
   boost::mpi::communicator * mpCommunicator;
   repast::SharedContext< AgentType > mCellContext;
   repast::SharedContext< AgentType > mDiffuserContext;
-  std::vector<int> mProcessDimensions;
   const int mBufferSize;
   Space * mpSpace;
   Grid * mpGrid;

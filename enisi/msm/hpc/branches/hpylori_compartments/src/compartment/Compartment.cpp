@@ -7,6 +7,8 @@
 #include "agent/SharedValueLayer.h"
 #include "Projection.h"
 
+#define DEBUG_SHARED
+
 using namespace ENISI;
 
 // static
@@ -31,6 +33,7 @@ Compartment* Compartment::instance(const Compartment::Type & type)
 Compartment::Compartment(const Type & type):
   mType(type),
   mProperties(),
+  mProcessDimensions(2, 0),
   mDimensions(),
   mpLayer(NULL),
   mpSpaceBorders(NULL),
@@ -46,6 +49,8 @@ Compartment::Compartment(const Type & type):
   pProperties->getValue(Name + ".space.x", mProperties.spaceX);
   pProperties->getValue(Name + ".space.y", mProperties.spaceY);
   Properties::instance(Properties::run)->getValue("grid.size", mProperties.gridSize);
+
+  adjustForProcessDimensions();
 
   mProperties.gridX = ceil(mProperties.spaceX / mProperties.gridSize);
   mProperties.spaceX = mProperties.gridX * mProperties.gridSize;
@@ -71,7 +76,7 @@ Compartment::Compartment(const Type & type):
   mDimensions = repast::GridDimensions(Origin, SpaceExtents);
   repast::GridDimensions GridDimensions(Origin, GridExtents);
 
-  mpLayer = new SharedLayer(Name, mDimensions, GridDimensions);
+  mpLayer = new SharedLayer(Name, mProcessDimensions, mDimensions, GridDimensions);
 
   mpSpaceBorders = new Borders(mDimensions);
   mpSpaceBorders->setBorderType(Borders::Y, Borders::LOW, mProperties.borderLowType);
@@ -88,6 +93,82 @@ Compartment::Compartment(const Type & type):
 
   mpLayer->addCompartment(this);
 }
+
+void Compartment::adjustForProcessDimensions()
+{
+  std::vector< double > Dimension = repast::Point< double >(mProperties.spaceX, mProperties.spaceY).coords();
+
+  int worldSize = repast::RepastProcess::instance()->worldSize();
+
+  int n;
+  int nMin;
+  int nMax;
+
+  size_t i = Borders::X;
+  bool swap2D = false;
+
+  // TODO 3D process dimensions are not supported in repast HPC at this point in time
+  if (Dimension.size() > 2)
+    {
+      // TODO Pick the smallest dimension and swap see 2D
+      n = (int) pow(worldSize * Dimension[i] * Dimension[i] / (Dimension[i + 1] * Dimension[i + 2]), 1.0/3.0);
+
+      nMax = n;
+      while (worldSize % nMax > worldSize % (nMax + 1)) nMax++;
+
+      nMin = n;
+      while (worldSize % nMin > worldSize % (nMin - 1)) nMin--;
+
+      n = (n - nMin < nMax -n) ? nMin : nMax;
+
+      mProcessDimensions[i] = n;
+      worldSize /= n;
+      i++;
+    }
+
+  if (Dimension.size() > 1)
+    {
+      if (Dimension[i + 1] < Dimension[i])
+        {
+          swap2D = true;
+          double tmp = Dimension[i];
+          Dimension[i] = Dimension[i +1];
+          Dimension[i + 1] = tmp;
+        }
+
+      n = ceil(sqrt(worldSize * Dimension[i] / Dimension[i + 1]));
+
+      nMax = n;
+      while (worldSize % nMax > worldSize % (nMax + 1))
+        nMax++;
+
+      nMin = n;
+      while (nMin > 1 && worldSize % nMin > worldSize % (nMin - 1))
+        nMin--;
+
+      n = (n - nMin < nMax -n) ? nMin : nMax;
+
+      mProcessDimensions[i] = n;
+      worldSize /= n;
+      i++;
+    }
+
+  if (Dimension.size() > 0)
+    {
+      mProcessDimensions[i] = worldSize;
+    }
+
+  if (swap2D)
+    {
+      double tmp = mProcessDimensions[i];
+      mProcessDimensions[i] = mProcessDimensions[i - 1];
+      mProcessDimensions[i - 1] = tmp;
+    }
+
+  mProperties.spaceX = round(mProperties.spaceX / mProcessDimensions[0]) * mProcessDimensions[0];
+  mProperties.spaceY = round(mProperties.spaceY / mProcessDimensions[1]) * mProcessDimensions[1];
+}
+
 
 // virtual
 Compartment::~Compartment()
@@ -224,6 +305,7 @@ Compartment * Compartment::transform(std::vector< double > & pt) const
             break;
 
           case Borders::INBOUND:
+          case Borders::OUT_BOTH:
             break;
         }
     }
@@ -281,6 +363,7 @@ Compartment * Compartment::transform(std::vector< int > & pt) const
             break;
 
           case Borders::INBOUND:
+          case Borders::OUT_BOTH:
             break;
         }
     }
@@ -328,6 +411,7 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
                 break;
 
               case Borders::INBOUND:
+              case Borders::OUT_BOTH:
                 break;
             }
         }
@@ -369,14 +453,40 @@ void Compartment::getNeighbors(const repast::Point< int > &pt,
 void Compartment::getAgents(const repast::Point< int > &pt,
                             std::vector< Agent * > &out)
 {
-  mpLayer->getAgents(pt, out);
+  std::vector< int > Location = pt.coords();
+
+  Compartment * pTarget = transform(Location);
+
+  if (pTarget == this)
+    {
+      mpLayer->getAgents(Location, out);
+    }
+  else if (pTarget != NULL)
+    {
+      pTarget->getAgents(Location, out);
+    }
+
+  return ;
 }
 
 void Compartment::getAgents(const repast::Point< int > &pt,
                             const int & types,
                             std::vector< Agent * > &out)
 {
-  mpLayer->getAgents(pt, types, out);
+  std::vector< int > Location = pt.coords();
+
+  Compartment * pTarget = transform(Location);
+
+  if (pTarget == this)
+    {
+      mpLayer->getAgents(Location, types, out);
+    }
+  else if (pTarget != NULL)
+    {
+      pTarget->getAgents(Location, types, out);
+    }
+
+  return ;
 }
 
 void Compartment::getAgents(const repast::Point< int > &pt, const int & xOffset, const int & yOffset, std::vector< Agent * > &out)
@@ -385,16 +495,7 @@ void Compartment::getAgents(const repast::Point< int > &pt, const int & xOffset,
   Location[Borders::X] += xOffset;
   Location[Borders::Y] += yOffset;
 
-  Compartment * pTarget = transform(Location);
-
-  if (pTarget == this)
-    {
-      mpLayer->getAgents(pt, out);
-    }
-  else if (pTarget != NULL)
-    {
-      pTarget->getAgents(pt, out);
-    }
+  getAgents(Location, out);
 
   return ;
 }
@@ -405,19 +506,9 @@ void Compartment::getAgents(const repast::Point< int > &pt, const int & xOffset,
   Location[Borders::X] += xOffset;
   Location[Borders::Y] += yOffset;
 
-  Compartment * pTarget = transform(Location);
-
-  if (pTarget == this)
-    {
-      mpLayer->getAgents(pt, types, out);
-    }
-  else if (pTarget != NULL)
-    {
-      pTarget->getAgents(pt, types, out);
-    }
+  getAgents(Location, types, out);
 
   return ;
-
 }
 
 size_t Compartment::addCytokine(const std::string & name)
@@ -565,8 +656,7 @@ void Compartment::synchronizeCells()
 // virtual
 void Compartment::write(std::ostream & o, const std::string & separator, Compartment * /* pCompartment */)
 {
-  o << getName() << std::endl;
-
+  o << getName() << " " << mpLayer->localGridDimensions() << std::endl;
 
   // We loop through all local agents an write them out.
   SharedLayer::Context::const_state_aware_iterator it = mpLayer->getCellContext().begin(SharedLayer::Context::LOCAL);
@@ -605,6 +695,45 @@ void Compartment::write(std::ostream & o, const std::string & separator, Compart
           o << separator;
         }
     }
+
+#ifdef DEBUG_SHARED
+  // We loop through all local agents an write them out.
+  it = mpLayer->getCellContext().begin(SharedLayer::Context::NON_LOCAL);
+  end = mpLayer->getCellContext().end(SharedLayer::Context::NON_LOCAL);
+
+  if (it != end)
+    {
+      for (size_t i = 0; i < 10; ++i)
+        {
+          if (i)
+            {
+              o << "\t";
+            }
+
+          o << "X\tY\tname\tstate";
+        }
+
+      o << std::endl;
+    }
+
+  for (size_t i = 0; it != end; ++it, ++i)
+    {
+      Agent & Agent = **it;
+      mpLayer->getLocation(Agent.getId(), Location);
+      o << Location[0] << separator << Location[1] << separator;
+      Agent.write(o, separator, this);
+
+      // 10 agents per line
+      if ((i % 10) == 9)
+        {
+          o << std::endl;
+        }
+      else
+        {
+          o << separator;
+        }
+    }
+#endif
 
   if (mpDiffuserValues != NULL)
     {
