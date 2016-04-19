@@ -218,9 +218,20 @@ Iterator Compartment::begin()
   return Iterator(mpLayer->localGridDimensions());
 }
 
+double Compartment::gridToSpace(const Borders::Coodinate &coordinate, const int & grid) const
+{
+  return mpLayer->gridToSpace(coordinate, grid);
+}
+
 std::vector< double > Compartment::gridToSpace(const std::vector< int > & grid) const
 {
   return mpLayer->gridToSpace(grid);
+}
+
+
+int Compartment::spaceToGrid(const Borders::Coodinate &coordinate, const double & space) const
+{
+  return mpLayer->spaceToGrid(coordinate, space);
 }
 
 std::vector< int > Compartment::spaceToGrid(const std::vector< double > & space) const

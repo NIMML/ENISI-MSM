@@ -3,16 +3,16 @@
 
 using namespace ENISI;
 
-TcellODE* TcellODE::instance = NULL;
+TcellODE * TcellODE::instance = NULL;
 
 TcellODE::TcellODE() : DEBUG(false)
 {
   std::string modelFileName("./modelfiles/MSM_CD4.cps");
 
   // create a new datamodel
-  dataModel = COPASI::loadDataModel(modelFileName);
+  mpDataModel = COPASI::loadDataModel(modelFileName);
 
-  if (dataModel == NULL)
+  if (mpDataModel == NULL)
     {
       std::cerr << "Error while loading the model from file named \""
                 << modelFileName << "\"." << std::endl;
@@ -20,15 +20,15 @@ TcellODE::TcellODE() : DEBUG(false)
       std::exit(1);
     }
 
-  model = dataModel->getModel();
-  assert(model != NULL);
+  mpModel = mpDataModel->getModel();
+  assert(mpModel != NULL);
 
   if (DEBUG)
-    std::cout << "Model statistics for model \""
-              << model->getObjectName() << "\"." << std::endl;
+    std::cout << "Model statistics for mpModel \""
+              << mpModel->getObjectName() << "\"." << std::endl;
 
   // output number and names of all compartments
-  size_t i, iMax = model->getCompartments().size();
+  size_t i, iMax = mpModel->getCompartments().size();
 
   if (DEBUG)
     {
@@ -38,7 +38,7 @@ TcellODE::TcellODE() : DEBUG(false)
 
   for (i = 0; i < iMax; ++i)
     {
-      CCompartment* pCompartment = model->getCompartments()[i];
+      CCompartment* pCompartment = mpModel->getCompartments()[i];
       assert(pCompartment != NULL);
 
       if (DEBUG)
@@ -46,7 +46,7 @@ TcellODE::TcellODE() : DEBUG(false)
     }
 
   // output number and names of all metabolites
-  iMax = model->getMetabolites().size();
+  iMax = mpModel->getMetabolites().size();
 
   if (DEBUG)
     {
@@ -56,10 +56,11 @@ TcellODE::TcellODE() : DEBUG(false)
 
   for (i = 0; i < iMax; ++i)
     {
-      CMetab* metab = model->getMetabolites()[i];
+      CMetab* metab = mpModel->getMetabolites()[i];
       assert(metab != NULL);
 
-      nameMetabs[metab->getObjectName()] = metab;
+      // The object display name is guaranteed to be unique even in multi-compartment models
+      nameMetabs[metab->getObjectDisplayName()] = metab;
 
       if (DEBUG)
         std::cout << "\t" << metab->getObjectName() << "\t"
@@ -68,7 +69,7 @@ TcellODE::TcellODE() : DEBUG(false)
     }
 
   // output number and names of all reactions
-  iMax = model->getReactions().size();
+  iMax = mpModel->getReactions().size();
 
   if (DEBUG)
     {
@@ -78,7 +79,7 @@ TcellODE::TcellODE() : DEBUG(false)
 
   for (i = 0; i < iMax; ++i)
     {
-      CReaction* pReaction = model->getReactions()[i];
+      CReaction* pReaction = mpModel->getReactions()[i];
       assert(pReaction != NULL);
 
       if (DEBUG)
@@ -106,7 +107,7 @@ void TcellODE::setInitialConcentration(std::string name, double value)
 void TcellODE::setUpReport()
 {
   // create a report with the correct filename and all the species against time.
-  CReportDefinitionVector* reports = dataModel->getReportDefinitionList();
+  CReportDefinitionVector* reports = mpDataModel->getReportDefinitionList();
   // create a new report definition object
   report = reports->createReportDefinition("Report", "Output for timecourse");
   // set the task type for the report definition to timecourse
@@ -123,16 +124,16 @@ void TcellODE::setUpReport()
   ReportItemVector header = report->getHeaderAddr();
   ReportItemVector body = report->getBodyAddr();
 
-  body->push_back(CCopasiObjectName(model->getCN() + ",Reference=Time"));
+  body->push_back(CCopasiObjectName(mpModel->getCN() + ",Reference=Time"));
   body->push_back(CRegisteredObjectName(report->getSeparator().getCN()));
   header->push_back(CCopasiStaticString("time").getCN());
   header->push_back(report->getSeparator().getCN());
 
-  size_t i, iMax = model->getMetabolites().size();
+  size_t i, iMax = mpModel->getMetabolites().size();
 
   for (i = 0; i < iMax; ++i)
     {
-      CMetab* pMetab = model->getMetabolites()[i];
+      CMetab* pMetab = mpModel->getMetabolites()[i];
       assert(pMetab != NULL);
 
       // we don't want output for FIXED metabolites right now
@@ -175,7 +176,7 @@ void TcellODE::setUpReport()
 void TcellODE::setUpTask()
 {
   // get the task list
-  CCopasiVectorN< CCopasiTask > & TaskList = * dataModel->getTaskList();
+  CCopasiVectorN< CCopasiTask > & TaskList = * mpDataModel->getTaskList();
 
   // get the trajectory task object
   trajectoryTask = dynamic_cast<CTrajectoryTask*>(TaskList["Time-Course"]);
@@ -197,37 +198,37 @@ void TcellODE::setUpTask()
   trajectoryTask->setMethodType(CCopasiMethod::deterministic);
 
   // pass a pointer of the model to the problem
-  trajectoryTask->getProblem()->setModel(dataModel->getModel());
+  trajectoryTask->getProblem()->setModel(mpModel);
 
-  // activate the task so that it will be run when the model is saved
+  // activate the task so that it will be run when the mpModel is saved
   // and passed to CopasiSE
   trajectoryTask->setScheduled(true);
 
   // get the problem for the task to set some parameters
-  CTrajectoryProblem* pProblem =
-    dynamic_cast<CTrajectoryProblem*>(trajectoryTask->getProblem());
+  CTrajectoryProblem* pProblem = dynamic_cast<CTrajectoryProblem*>(trajectoryTask->getProblem());
 
   // simulate 600 steps
-  pProblem->setStepNumber(600);
+  pProblem->setStepNumber(1);
+
   // start at time 0
-  dataModel->getModel()->setInitialTime(0.0);
+  mpDataModel->getModel()->setInitialTime(0.0);
+
   // simulate a duration of 60 time units
   pProblem->setDuration(60);
+
   // tell the problem to actually generate time series data
-  pProblem->setTimeSeriesRequested(true);
+  pProblem->setTimeSeriesRequested(false);
 
   // set some parameters for the LSODA method through the method
-  CTrajectoryMethod* pMethod =
-    dynamic_cast<CTrajectoryMethod*>(trajectoryTask->getMethod());
+  CTrajectoryMethod* pMethod = dynamic_cast<CTrajectoryMethod*>(trajectoryTask->getMethod());
 
   CCopasiParameter* pParameter = pMethod->getParameter("Absolute Tolerance");
-  assert(pParameter != NULL);
   pParameter->setValue(1.0e-12);
 }
 
 void TcellODE::runTimeCourse()
 {
-  model->applyInitialValues();
+  mpModel->applyInitialValues();
 
   bool result = true;
 

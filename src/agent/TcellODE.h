@@ -34,8 +34,8 @@ public:
 
 private:
   CReportDefinition * report;
-  CCopasiDataModel * dataModel;
-  CModel * model;
+  CCopasiDataModel * mpDataModel;
+  CModel * mpModel;
   CTrajectoryTask * trajectoryTask;
   std::map<std::string, CMetab*> nameMetabs;
 

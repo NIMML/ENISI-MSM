@@ -67,6 +67,7 @@ void numbers(const Agent::Type & type, std::vector< Agent * > agents, Number & n
 void numbers(const int & types, std::vector< Agent * > agents, Numbers & numbers);
 
 extern double Threshold;
+extern double Distance;
 
 void init();
 } // namespace ENISI
