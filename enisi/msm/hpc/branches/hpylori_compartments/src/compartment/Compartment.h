@@ -52,7 +52,10 @@ public:
   const Compartment * getAdjacentCompartment(const Borders::Coodinate &coordinate, const Borders::Side & side) const;
   Iterator begin();
 
+  double gridToSpace(const Borders::Coodinate &coordinate, const int & grid) const;
   std::vector< double > gridToSpace(const std::vector< int > & grid) const;
+
+  int spaceToGrid(const Borders::Coodinate &coordinate, const double & space) const;
   std::vector<int> spaceToGrid(const std::vector<double> & space) const;
 
   void getLocation(const repast::AgentId & id, std::vector<double> & Location) const;

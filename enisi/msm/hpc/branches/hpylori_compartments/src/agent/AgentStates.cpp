@@ -4,6 +4,7 @@
 using namespace ENISI;
 
 double ENISI::Threshold = 1.0;
+double ENISI::Distance = 1.0;
 double number2Concentration = 1.0;
 
 void ENISI::init()
@@ -12,6 +13,7 @@ void ENISI::init()
   Properties::instance(Properties::run)->getValue("grid.size", GridSize);
 
   // 2 dimensional
+
   Threshold = GridSize * GridSize;
   number2Concentration = 1.0 / Threshold;
 }

@@ -179,6 +179,11 @@ public:
     mCellContext.removeAgent(pAgent);
   }
 
+  int spaceToGrid(const Borders::Coodinate & coordinate, const double & space) const
+  {
+    return floor(space * mSpace2Grid[coordinate].scale);
+  }
+
   std::vector< int > spaceToGrid(const std::vector< double > & space) const
   {
     std::vector< int > Grid(mpSpace->dimensions().dimensionCount(), 0);
@@ -194,6 +199,11 @@ public:
       }
 
     return Grid;
+  }
+
+  double gridToSpace(const Borders::Coodinate &coordinate, const int & grid) const
+  {
+    return grid / mSpace2Grid[coordinate].scale;
   }
 
   std::vector< double > gridToSpace(const std::vector< int > & grid) const

@@ -7,30 +7,30 @@
 #include "grid/Borders.h"
 
 using namespace ENISI;
-int p_rule18;/*Rule 18 parameter*/
-int p_rule19;/*Rule 19 parameter*/
-int p_rule20;/*Rule 20 parameter*/
-int p_rule21;/*Rule 21 parameter*/
-int p_rule22;/*Rule 22 parameter*/
-int p_rule23;/*Rule 23 parameter*/
-int p_rule24;/*Rule 24 parameter*/
-int p_rule26;/*Rule 26 parameter*/
-int p_rule27;/*Rule 27 parameter*/
-int p_rule31;/*Rule 31 parameter*/
+int p_rule18; /*Rule 18 parameter*/
+int p_rule19; /*Rule 19 parameter*/
+int p_rule20; /*Rule 20 parameter*/
+int p_rule21; /*Rule 21 parameter*/
+int p_rule22; /*Rule 22 parameter*/
+int p_rule23; /*Rule 23 parameter*/
+int p_rule24; /*Rule 24 parameter*/
+int p_rule26; /*Rule 26 parameter*/
+int p_rule27; /*Rule 27 parameter*/
+int p_rule31; /*Rule 31 parameter*/
 int p_rule31a;/*Rule 31a parameter*/
-int p_rule32;/*Rule 32 parameter*/
-int p_rule33;/*Rule 33 parameter*/
-int p_rule35;/*Rule 35 parameter*/
-int p_rule36;/*Rule 36 parameter*/
-int p_rule37;/*Rule 37 parameter*/
-int p_rule38;/*Rule 38 parameter*/
-int p_rule39;/*Rule 39 parameter*/
-int p_rule40;/*Rule 40 parameter*/
-int p_rule41;/*Rule 41 parameter*/
-int p_rule53;/*Rule 53 parameter*/
+int p_rule32; /*Rule 32 parameter*/
+int p_rule33; /*Rule 33 parameter*/
+int p_rule35; /*Rule 35 parameter*/
+int p_rule36; /*Rule 36 parameter*/
+int p_rule37; /*Rule 37 parameter*/
+int p_rule38; /*Rule 38 parameter*/
+int p_rule39; /*Rule 39 parameter*/
+int p_rule40; /*Rule 40 parameter*/
+int p_rule41; /*Rule 41 parameter*/
+int p_rule53; /*Rule 53 parameter*/
 int p_rule55a;/*Rule 55a parameter*/
 int p_rule55b;/*Rule 55b parameter*/
-int neardistance_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
+int neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
 TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -249,7 +249,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           newState = TcellState::TH17;/*Rule 38*//*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
         }
       else if (state == TcellState::TH1
-               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< neardistance_border //TODO - CRITICAL Determine this value
+               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance)
                && mpCompartment->getType() == Compartment::gastric_lymph_node
                && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
         {
@@ -259,7 +259,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           mpCompartment->moveTo(pAgent->getId(), Location);
         }
       else if (state == TcellState::iTREG
-               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< neardistance_border //TODO - CRITICAL Determine this value
+               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance) //TODO - CRITICAL Determine this value
                && mpCompartment->getType() == Compartment::gastric_lymph_node
                && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 33*/
         {
