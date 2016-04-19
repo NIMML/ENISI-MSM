@@ -120,9 +120,11 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       if (newState == EpithelialCellState::DAMAGED)
         {
+    	  int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
+
           // TODO We should use the production from the ODE model.
-          mpCompartment->cytokineValue("IL6", pt) += 70;
-          mpCompartment->cytokineValue("IL12", pt) += 70;
+          mpCompartment->cytokineValue("IL6", pt, 0, yOffset) += 70;
+          mpCompartment->cytokineValue("IL12", pt, 0, yOffset) += 70;
         }
 
       pAgent->setState(newState);
