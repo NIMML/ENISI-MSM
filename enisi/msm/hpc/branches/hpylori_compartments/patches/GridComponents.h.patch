@@ -1,5 +1,5 @@
---- GridComponents.h	2016-02-18 14:21:00.000000000 -0500
-+++ GridComponents.h	2016-02-18 14:20:28.000000000 -0500
+--- original/GridComponents.h	2013-08-11 14:50:13.000000000 -0400
++++ GridComponents.h	2016-03-07 17:29:43.359775837 -0500
 @@ -57,7 +57,7 @@
  class Borders {
  

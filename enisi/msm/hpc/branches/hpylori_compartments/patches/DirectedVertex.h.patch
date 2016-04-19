@@ -1,0 +1,25 @@
+--- original/DirectedVertex.h	2013-02-08 11:07:03.000000000 -0500
++++ DirectedVertex.h	2016-04-04 09:05:14.187490216 -0400
+@@ -130,18 +130,18 @@
+ 
+ template<typename V, typename E>
+ void DirectedVertex<V,E>::successors(std::vector<V*>& out) {
+-	getItems(outgoing, out);
++	Vertex<V,E>::getItems(outgoing, out);
+ }
+ 
+ template<typename V, typename E>
+ void DirectedVertex<V,E>::predecessors(std::vector<V*>& out) {
+-	getItems(incoming, out);
++	Vertex<V,E>::getItems(incoming, out);
+ }
+ 
+ template<typename V, typename E>
+ void DirectedVertex<V,E>::adjacent(std::vector<V*>& out) {
+-	getItems(incoming, out);
+-	getItems(outgoing, out);
++	Vertex<V,E>::getItems(incoming, out);
++	Vertex<V,E>::getItems(outgoing, out);
+ }
+ 
+ template<typename V, typename E>

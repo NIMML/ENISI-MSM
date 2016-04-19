@@ -1,0 +1,18 @@
+--- original/Point.h	2013-08-11 14:50:13.000000000 -0400
++++ Point.h	2016-04-06 09:58:29.214802626 -0400
+@@ -231,6 +231,15 @@
+ 	}
+ 
+ 	/**
++	 * Gets the coordinates of this point as a vector.
++	 *
++	 * @return a vector containing the coordinates of this point.
++	 */
++	std::vector<T>& coords() {
++		return point;
++	}
++
++	/**
+ 	 * Gets the start of an iterator over the coordinates of this point.
+ 	 *
+ 	 * @return the start of an iterator over the coordinates of this point.
