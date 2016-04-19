@@ -1,16 +1,25 @@
 if("${BUILD_STEP}" STREQUAL "patch")
-  set(REPAST_PROCESS_H ${REPAST_SRC_DIR}/RepastProcess.h)
-  set(REPAST_CONTEXT_H ${REPAST_SRC_DIR}/Context.h)
-  set(GRID_COMPONENTS_H ${REPAST_SRC_DIR}/GridComponents.h)
-  message(STATUS "Patching " ${REPAST_PROCESS_H})
-  execute_process(
-    COMMAND patch ${REPAST_PROCESS_H} -i RepastProcess.h.patch
-    COMMAND patch ${REPAST_CONTEXT_H} -i Context.h.patch
-    COMMAND patch ${GRID_COMPONENTS_H} -i GridComponents.h.patch
-    WORKING_DIRECTORY ${PATCH_DIR}
-    OUTPUT_FILE ${LOG_DIR}/repast_patch.log
-    ERROR_FILE ${LOG_DIR}/repast_patch_errors.log
-  )
+  foreach(REPAST_PATCH 
+      BaseGrid.h
+      Context.h
+      DirectedVertex.h
+      GridComponents.h
+      Point.h
+      RepastProcess.h
+      SharedBaseGrid.cpp
+      SharedBaseGrid.h
+      SharedDiscreteSpace.h
+      UndirectedVertex.h)
+
+    message(STATUS "Patching: " ${REPAST_SRC_DIR}/${REPAST_PATCH})
+
+    execute_process(
+        COMMAND patch ${REPAST_SRC_DIR}/${REPAST_PATCH} -i ${REPAST_PATCH}.patch
+        WORKING_DIRECTORY ${PATCH_DIR}
+        OUTPUT_FILE ${LOG_DIR}/repast_patch.log
+        ERROR_FILE ${LOG_DIR}/repast_patch_errors.log)
+
+   endforeach(REPAST_PATCH)
 endif()
 
 if("${BUILD_STEP}" STREQUAL "install")

@@ -1,0 +1,28 @@
+--- original/SharedBaseGrid.h	2013-08-11 14:50:13.000000000 -0400
++++ SharedBaseGrid.h	2016-04-05 09:12:33.469622946 -0400
+@@ -273,7 +273,6 @@
+ 	template <typename T>
+ 	void swapXY(std::vector<T>& vec);
+ 
+-	int  getRank(std::vector<int>& loc, int rowAdj, int colAdj);
+ 	void createNeighbor(Neighbors& nghs, int rank, Neighbors::Location location);
+ 
+ public:
+@@ -299,6 +298,7 @@
+   GridDimensions getDimensions(std::vector<int>& pCoordinates);
+ 
+ 	void createNeighbors(Neighbors& nghs);
++	int  getRank(const std::vector<int>& loc, int rowAdj, int colAdj);
+ 
+ };
+ 
+@@ -718,7 +718,8 @@
+   if(SW_set.size() > 0) agentsToPush[SW_rank].insert(SW_set.begin(), SW_set.end());
+   if( W_set.size() > 0) agentsToPush[ W_rank].insert( W_set.begin(),  W_set.end());
+ 
+-
++  agentsToPush.erase(rank);
++  
+ }
+ 
+ template<typename T, typename GPTransformer, typename Adder, typename GPType>
