@@ -23,6 +23,21 @@ public:
 private:
   void act(const repast::Point<int> &);
   Compartment * mpCompartment;
+
+  double p_rule17a;
+  double p_rule17b;
+  double p_rule48a;
+  double p_rule48b;
+  double p_DCDeath;
+  double p_rule15;
+  double p_rule34;
+  double p_rule51a;
+  double p_rule51b;
+  double p_rule52;
+  double p_iDCEpitheliumDistance;
+  double p_iDCLPDistance;
+  double p_mDCGLNDistance;
+
 };
 
 } // namespace ENISI

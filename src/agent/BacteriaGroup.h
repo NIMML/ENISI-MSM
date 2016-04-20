@@ -22,6 +22,13 @@ public:
 private:
   void act(const repast::Point<int> &);
   Compartment * mpCompartment;
+
+  double p_BacteriaKill;
+  double p_BacteriaDeath;
+  double p_BacteriaLPProl;
+  double p_BacteriaLumProl;
+  double p_rule1;
+
 };
 
 } // namespace ENISI

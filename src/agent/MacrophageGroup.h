@@ -27,6 +27,12 @@ public:
 private:
   void act(const repast::Point<int> &);
   Compartment * mpCompartment;
+
+  double p_rule42;
+  double p_MinfDiff;
+  double p_rule13;
+  double p_rule28a;
+  double p_rule28b;
 };
 
 } // namespace ENISI

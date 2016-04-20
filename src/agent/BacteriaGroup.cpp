@@ -2,14 +2,9 @@
 
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
-
-int p_BacteriaKill;
-int p_BacteriaDeath;
-int p_BacteriaLPProl;
-int p_BacteriaLumProl;
-int p_rule1;
 
 BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -20,6 +15,14 @@ BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const size_t & count):
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Bacteria, BacteriaState::TOLEROGENIC));
     }
+
+  const Properties * pModel = Properties::instance(Properties::model);
+
+  pModel->getValue("p_BacteriaKill", p_BacteriaKill);
+  pModel->getValue("p_BacteriaDeath", p_BacteriaDeath);
+  pModel->getValue("p_BacteriaLPProl", p_BacteriaLPProl);
+  pModel->getValue("p_BacteriaLumProl", p_BacteriaLumProl);
+  pModel->getValue("p_rule1", p_rule1);
 }
 
 void BacteriaGroup::act()

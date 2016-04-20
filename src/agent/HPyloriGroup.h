@@ -20,6 +20,12 @@ public:
 private:
   void act(const repast::Point<int> &);
   Compartment * mpCompartment;
+
+  double p_rule3;
+  double p_rule4a;
+  double p_rule4b;
+  double p_rule5;
+  double p_HPyloriDeath;
 };
 
 } // namespace ENISI
