@@ -10,8 +10,8 @@
 #include "agent/DendriticsGroup.h"
 #include "agent/EpithelialCellGroup.h"
 #include "agent/HPyloriGroup.h"
-
-#include "DataWriter/LocalFile.h"
+#include "agent/TcellGroup.h"
+#include "agent/MacrophageGroup.h"
 
 using namespace ENISI;
 
@@ -43,37 +43,54 @@ void HPModel::initialize_lumen()
 {
   mp_lumen = ENISI::Compartment::instance(ENISI::Compartment::lumen);
 
-  size_t count;
+  double concentration;
 
-  if (!mpProperties->getValue("lumen.HPylori.count", count)) count = 0;
-  new HPyloriGroup(mp_lumen, count);
+  if (!mpProperties->getValue("lumen.HPylori.concentration", concentration)) concentration = 0;
+  new HPyloriGroup(mp_lumen, concentration);
 
-  if (!mpProperties->getValue("lumen.Bacteria.count", count)) count = 0;
-  new BacteriaGroup(mp_lumen, count);
+  if (!mpProperties->getValue("lumen.Bacteria.concentration", concentration)) concentration = 0;
+  new BacteriaGroup(mp_lumen, concentration);
 
   mp_lumen->synchronizeCells();
-  mp_lumen->write(LocalFile::instance(mp_lumen->getName())->stream(), "\t", mp_lumen);
 }
 
 void HPModel::initialize_epithilium()
 {
   mp_epithilium = ENISI::Compartment::instance(ENISI::Compartment::epithilium);
 
-  size_t count;
+  double concentration;
 
-  if (!mpProperties->getValue("epithilium.EpithelialCell.count", count)) count = 0;
-  new EpithelialCellGroup(mp_epithilium, count);
+  if (!mpProperties->getValue("epithilium.EpithelialCell.concentration", concentration)) concentration = 0;
+  new EpithelialCellGroup(mp_epithilium, concentration);
 
-  if (!mpProperties->getValue("epithilium.Dendritics.count", count)) count = 0;
-  new DendriticsGroup(mp_epithilium, count);
+  if (!mpProperties->getValue("epithilium.Dendritics.concentration", concentration)) concentration = 0;
+  new DendriticsGroup(mp_epithilium, concentration);
 
   mp_epithilium->synchronizeCells();
-  mp_epithilium->write(LocalFile::instance(mp_epithilium->getName())->stream(), "\t", mp_epithilium);
 }
 
 void HPModel::initialize_lamina_propria()
 {
   mp_lamina_propria = ENISI::Compartment::instance(ENISI::Compartment::lamina_propria);
+
+  double concentration;
+
+  if (!mpProperties->getValue("mp_lamina_propria.Dendritics.concentration", concentration)) concentration = 0;
+  new DendriticsGroup(mp_lamina_propria, concentration);
+
+  if (!mpProperties->getValue("mp_lamina_propria.Tcell.concentration", concentration)) concentration = 0;
+  new TcellGroup(mp_lamina_propria, concentration);
+
+  if (!mpProperties->getValue("mp_lamina_propria.HPylori.concentration", concentration)) concentration = 0;
+  new HPyloriGroup(mp_lamina_propria, concentration);
+
+  if (!mpProperties->getValue("mp_lamina_propria.Bacteria.concentration", concentration)) concentration = 0;
+  new BacteriaGroup(mp_lamina_propria, concentration);
+
+  if (!mpProperties->getValue("mp_lamina_propria.macrophages.concentration", concentration)) concentration = 0;
+  new MacrophageGroup(mp_lamina_propria, concentration);
+
+  mp_epithilium->synchronizeCells();
 
   mp_lamina_propria->addCytokine("IL6");
   mp_lamina_propria->addCytokine("TGFb");
@@ -83,50 +100,26 @@ void HPModel::initialize_lamina_propria()
   mp_lamina_propria->addCytokine("IFNg");
 
   mp_lamina_propria->initializeDiffuserData();
-  mp_lamina_propria->write(LocalFile::instance(mp_lamina_propria->getName())->stream(), "\t", mp_lamina_propria);
 }
 
 void HPModel::initialize_gastric_lymph_node()
 {
   mp_gastric_lymph_node = ENISI::Compartment::instance(ENISI::Compartment::gastric_lymph_node);
-
-  mp_gastric_lymph_node->write(LocalFile::instance(mp_gastric_lymph_node->getName())->stream(), "\t", mp_gastric_lymph_node);
 }
 
 
 void HPModel::initSchedule(repast::ScheduleRunner & runner) 
 {
-  /*
-  runner.scheduleEvent(1, repast::Schedule::FunctorPtr(
-    new repast::MethodFunctor<HPModel> (
-      this, &HPModel::requestAgents)));
+  // We need to schedule diffusion and agent interaction.
 
-  double actStart = 2, interval = 1;
-  runner.scheduleEvent(actStart, interval, 
-    repast::Schedule::FunctorPtr(
-      new repast::MethodFunctor<HPModel>(
-      	this, &HPModel::act)
-    )
-  );
+  runner.scheduleEvent(0.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::recordResults)));
 
-  double updateStart = 2.1;
-  runner.scheduleEvent(updateStart, interval, 
-    repast::Schedule::FunctorPtr(
-      new repast::MethodFunctor<HPModel>(
-      	this, &HPModel::updateReferenceDiffuserGrid)
-    )
-  );
-
-  runner.scheduleEndEvent(
-    repast::Schedule::FunctorPtr(
-      new repast::MethodFunctor<HPModel> (
-      	this, &HPModel::recordResults)
-    )
-  );
-  */
+  runner.scheduleEvent(0.8, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::act)));
+  runner.scheduleEvent(0.9, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::diffuse)));
+  runner.scheduleEvent(1.0, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::recordResults)));
 
   /* Schedule will repeat infinitely without a stop */
-  int stopAt = 1;
+  double stopAt = 1;
   Properties::instance(Properties::run)->getValue("stop.at", stopAt);
   runner.scheduleStop(stopAt); 
 
@@ -134,92 +127,27 @@ void HPModel::initSchedule(repast::ScheduleRunner & runner)
 }
 
 
-void HPModel::requestAgents()
-{
-
-  int rank = repast::RepastProcess::instance()->rank();
-
-  int worldSize= repast::RepastProcess::instance()->worldSize();
-
-  repast::AgentRequest req(rank);
-
-  /* For each process */
-  for(int i = 0; i < worldSize; i++)
-    {
-      if(i != rank)// ... except this one
-        {
-          /* Choose all agents */
-          std::vector< ENISI::Agent * > agents;
-          // agents =ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectAllAgents();
-
-          for(size_t j = 0; j < agents.size(); j++)
-            {
-              /* Transform each local agent's id into a matching non-local one */
-              repast::AgentId local = agents[j]->getId();
-              repast::AgentId other(local.id(), i, 0);
-              other.currentRank(i);
-
-              /* Add it to the agent request */
-              req.addRequest(other);
-            }
-        }
-    }
-
-  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->requestAgents();
-  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->requestDiffuserAgents();
-}
-
 void HPModel::act()
 {
-  int startRank = 0;
-  repast::ScheduleRunner& runner = 
-    repast::RepastProcess::instance()->getScheduleRunner();
-
-  if(repast::RepastProcess::instance()->rank() == startRank) 
-    std::cout << " TICK " << runner.currentTick() << std::endl;
-
-  std::vector< ENISI::Agent * > remoteAgents;
-  // remoteAgents = ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectRemoteAgents();
-
-  std::vector< ENISI::Agent * > localAgents;
-  // localAgents = ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->selectLocalAgents();
-
-  std::vector< ENISI::Agent * >::iterator it = localAgents.begin();
-
-  while(it != localAgents.end())
-  {
-    // (*it)->act();
-    it++;
-  }
-
-  syncAgents();
-  diffuse();
+  mp_lumen->act();
+  mp_epithilium->act();
+  mp_lamina_propria->act();
+  mp_gastric_lymph_node->act();
 
   return;
-}
-
-void HPModel::syncAgents()
-{
-  // ENISI::Compartment::instance(ENISI::Compartment::lumen)->cellLayer()->synchronizeAgentStates();
 }
 
 void HPModel::diffuse() 
 {
+  mp_lamina_propria->diffuse();
 }
 
 void HPModel::recordResults()
 {
+  mp_lumen->write("\t");
+  mp_epithilium->write("\t");
+  mp_lamina_propria->write("\t");
+  mp_gastric_lymph_node->write("\t");
+
   return;
-}
-
-void HPModel::setUpCytokines()
-{
-  ENISI::Compartment * pCompartment = ENISI::Compartment::instance(ENISI::Compartment::lamina_propria);
-
-  pCompartment->addCytokine("IL6");
-  pCompartment->addCytokine("TGFb");
-  pCompartment->addCytokine("IL12");
-  pCompartment->addCytokine("IL17");
-  pCompartment->addCytokine("IL10");
-  pCompartment->addCytokine("IFNg");
 }

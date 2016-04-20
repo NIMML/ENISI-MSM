@@ -24,16 +24,8 @@ protected:
   void initialize_lamina_propria();
   void initialize_gastric_lymph_node();
 
-  void setUpCytokines();
-
-  void requestAgents();
   void act();
-  void syncAgents();
-
   void diffuse();
-
-  void updateReferenceDiffuserGrid();
-
   void recordResults();
 
 private:

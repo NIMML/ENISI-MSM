@@ -10,6 +10,8 @@ namespace ENISI {
 class DiffuserLayer;
 class Cytokine;
 class SharedValueLayer;
+class GroupInterface;
+class DiffuserImpl;
 
 template <class T, class Package, class PackageExchange> class ICompartmentLayer;
 
@@ -89,18 +91,22 @@ public:
 
   const Type & getType() const;
 
-  size_t localCount(const size_t & globalCount);
+  size_t localCount(const double & concentration);
 
   size_t getRank(const std::vector< int > & location) const;
   size_t getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const;
 
-  virtual void write(std::ostream & o, const std::string & separator, Compartment * pCompartment = NULL);
+  virtual void write(const std::string & separator);
 
   void getBorderCellsToPush(std::set<repast::AgentId>& agentsToTest,
                             std::map< int, std::set< repast::AgentId > > & agentsToPush);
 
   void getBorderValuesToPush(std::set<repast::AgentId>& agentsToTest,
                              std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  void addGroup(GroupInterface * pGroup);
+  void act();
+  void diffuse();
 
   std::string getName() const;
 
@@ -134,6 +140,8 @@ private:
   std::vector< Cytokine * > mCytokines;
 
   SharedValueLayer * mpDiffuserValues;
+  std::vector< GroupInterface * > mGroups;
+  DiffuserImpl * mpDiffuser;
 
 }; /* end Compartment */
 

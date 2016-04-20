@@ -3,23 +3,20 @@
 
 #include "agent/AgentStates.h"
 #include "repast_hpc/Point.h"
+#include "agent/GroupInterface.h"
 
 namespace ENISI
 {
 
-class Compartment;
-class Agent;
-
-class EpithelialCellGroup
+class EpithelialCellGroup: public GroupInterface
 {
 public:
-  EpithelialCellGroup(Compartment * pCompartment, const size_t & count);
+  EpithelialCellGroup(Compartment * pCompartment, const double & concentrations);
   virtual void act();
-  virtual std::string classname() {return "EpithelialCellGroup";}
+  virtual std::string classname() const {return "EpithelialCellGroup";}
 
 private:
   void act(const repast::Point<int> &);
-  Compartment * mpCompartment;
 
   double p_EpiCellDeath;//Rule 11
   double p_EpiProliferation;//Rule 8

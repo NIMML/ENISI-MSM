@@ -6,10 +6,10 @@
 
 using namespace ENISI;
 
-DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & count) :
-  mpCompartment(pCompartment)
+DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const double & concentrations) :
+  GroupInterface(pCompartment)
 {
-  size_t LocalCount = mpCompartment->localCount(count);
+  size_t LocalCount = mpCompartment->localCount(concentrations);
 
   for (size_t i = 0; i < LocalCount; i++)
     {

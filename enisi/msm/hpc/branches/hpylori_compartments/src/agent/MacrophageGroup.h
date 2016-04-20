@@ -6,27 +6,24 @@
 
 #include "agent/AgentStates.h"
 #include "repast_hpc/Point.h"
+#include "agent/GroupInterface.h"
 
 namespace ENISI
 {
 
-class Compartment;
-class Agent;
-
-class MacrophageGroup
+class MacrophageGroup: public GroupInterface
 {
 public:
-  MacrophageGroup(Compartment * pCompartment, const size_t & count);
+  MacrophageGroup(Compartment * pCompartment, const double & concentrations);
 
-  ~MacrophageGroup();
+  virtual ~MacrophageGroup();
 
-  void act();
+  virtual void act();
 
-  std::string classname() {return "MacrophageGroup";}
+  virtual std::string classname() const {return "MacrophageGroup";}
 
 private:
   void act(const repast::Point<int> &);
-  Compartment * mpCompartment;
 
   double p_rule42;
   double p_MinfDiff;
