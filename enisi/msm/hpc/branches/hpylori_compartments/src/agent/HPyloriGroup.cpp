@@ -2,14 +2,9 @@
 
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
-
-int p_rule3;
-int p_rule4a;
-int p_rule4b;
-int p_rule5;
-int p_HPyloriDeath;
 
 HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -20,6 +15,14 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const size_t & count):
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::HPylori, HPyloriState::NAIVE));
     }
+
+  const Properties * pModel = Properties::instance(Properties::model);
+
+  pModel->getValue("p_rule3", p_rule3);
+  pModel->getValue("p_rule4a", p_rule4a);
+  pModel->getValue("p_rule4b", p_rule4b);
+  pModel->getValue("p_rule5", p_rule5);
+  pModel->getValue("p_HPyloriDeath", p_HPyloriDeath);
 }
 
 void HPyloriGroup::act()

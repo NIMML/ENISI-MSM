@@ -2,35 +2,12 @@
 
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
+#include "grid/Properties.h"
 
 #include "agent/TcellODE.h"
 #include "grid/Borders.h"
 
 using namespace ENISI;
-int p_rule18; /*Rule 18 parameter*/
-int p_rule19; /*Rule 19 parameter*/
-int p_rule20; /*Rule 20 parameter*/
-int p_rule21; /*Rule 21 parameter*/
-int p_rule22; /*Rule 22 parameter*/
-int p_rule23; /*Rule 23 parameter*/
-int p_rule24; /*Rule 24 parameter*/
-int p_rule26; /*Rule 26 parameter*/
-int p_rule27; /*Rule 27 parameter*/
-int p_rule31; /*Rule 31 parameter*/
-int p_rule31a;/*Rule 31a parameter*/
-int p_rule32; /*Rule 32 parameter*/
-int p_rule33; /*Rule 33 parameter*/
-int p_rule35; /*Rule 35 parameter*/
-int p_rule36; /*Rule 36 parameter*/
-int p_rule37; /*Rule 37 parameter*/
-int p_rule38; /*Rule 38 parameter*/
-int p_rule39; /*Rule 39 parameter*/
-int p_rule40; /*Rule 40 parameter*/
-int p_rule41; /*Rule 41 parameter*/
-int p_rule53; /*Rule 53 parameter*/
-int p_rule55a;/*Rule 55a parameter*/
-int p_rule55b;/*Rule 55b parameter*/
-int neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
 TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -41,6 +18,33 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const size_t & count):
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::NAIVE));
     }
+
+  const Properties * pModel = Properties::instance(Properties::model);
+
+  pModel->getValue("p_rule18", p_rule18);
+  pModel->getValue("p_rule19", p_rule19);
+  pModel->getValue("p_rule20", p_rule20);
+  pModel->getValue("p_rule21", p_rule21);
+  pModel->getValue("p_rule22", p_rule22);
+  pModel->getValue("p_rule23", p_rule23);
+  pModel->getValue("p_rule24", p_rule24);
+  pModel->getValue("p_rule26", p_rule26);
+  pModel->getValue("p_rule27", p_rule27);
+  pModel->getValue("p_rule31", p_rule31);
+  pModel->getValue("p_rule31a", p_rule31a);
+  pModel->getValue("p_rule32", p_rule32);
+  pModel->getValue("p_rule33", p_rule33);
+  pModel->getValue("p_rule35", p_rule35);
+  pModel->getValue("p_rule36", p_rule36);
+  pModel->getValue("p_rule37", p_rule37);
+  pModel->getValue("p_rule38", p_rule38);
+  pModel->getValue("p_rule39", p_rule39);
+  pModel->getValue("p_rule40", p_rule40);
+  pModel->getValue("p_rule41", p_rule41);
+  pModel->getValue("p_rule53", p_rule53);
+  pModel->getValue("p_rule55a", p_rule55a);
+  pModel->getValue("p_rule55b", p_rule55b);
+  pModel->getValue("neardistane_border", neardistane_border);
 }
 
 void TcellGroup::act()

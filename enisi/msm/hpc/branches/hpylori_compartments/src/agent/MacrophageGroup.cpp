@@ -2,16 +2,10 @@
 
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
-
+#include "grid/Properties.h"
 #include "agent/MacrophageODE1.h"
 
 using namespace ENISI;
-
-int p_rule42;
-int p_MinfDiff;
-int p_rule13;
-int p_rule28a;
-int p_rule28b;
 
 MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & count) :
   mpCompartment(pCompartment)
@@ -22,6 +16,14 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & coun
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Macrophage, MacrophageState::MONOCYTE));
     }
+
+  const Properties * pModel = Properties::instance(Properties::model);
+
+  pModel->getValue("p_rule42", p_rule42);
+  pModel->getValue("p_MinfDiff", p_MinfDiff);
+  pModel->getValue("p_rule13", p_rule13);
+  pModel->getValue("p_rule28a", p_rule28a);
+  pModel->getValue("p_rule28b", p_rule28b);
 }
 
 void MacrophageGroup::act()

@@ -2,22 +2,9 @@
 
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
-
-int p_rule17a;
-int p_rule17b;
-int p_rule48a;
-int p_rule48b;
-int p_DCDeath;
-int p_rule15;
-int p_rule34;
-int p_rule51a;
-int p_rule51b;
-int p_rule52;
-double p_iDCEpitheliumDistance;
-double p_iDCLPDistance;
-double p_mDCGLNDistance;
 
 DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & count) :
   mpCompartment(pCompartment)
@@ -28,6 +15,22 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const size_t & coun
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Dentritics, DendriticState::IMMATURE));
     }
+
+  const Properties * pModel = Properties::instance(Properties::model);
+
+  pModel->getValue("p_rule17a", p_rule17a);
+  pModel->getValue("p_rule17b", p_rule17b);
+  pModel->getValue("p_rule48a", p_rule48a);
+  pModel->getValue("p_rule48b", p_rule48b);
+  pModel->getValue("p_DCDeath", p_DCDeath);
+  pModel->getValue("p_rule15", p_rule15);
+  pModel->getValue("p_rule34", p_rule34);
+  pModel->getValue("p_rule51a", p_rule51a);
+  pModel->getValue("p_rule51b", p_rule51b);
+  pModel->getValue("p_rule52", p_rule52);
+  pModel->getValue("p_iDCEpitheliumDistance", p_iDCEpitheliumDistance);
+  pModel->getValue("p_iDCLPDistance", p_iDCLPDistance);
+  pModel->getValue("p_mDCGLNDistance", p_mDCGLNDistance);
 }
 
 void DendriticsGroup::act()

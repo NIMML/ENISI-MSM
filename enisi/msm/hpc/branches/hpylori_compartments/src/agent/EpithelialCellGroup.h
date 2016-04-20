@@ -20,6 +20,12 @@ public:
 private:
   void act(const repast::Point<int> &);
   Compartment * mpCompartment;
+
+  double p_EpiCellDeath;//Rule 11
+  double p_EpiProliferation;//Rule 8
+  double p_rule10a;
+  double p_rule10b;
+  double p_rule12;//Rule 12
 };
 
 } // namespace ENISI

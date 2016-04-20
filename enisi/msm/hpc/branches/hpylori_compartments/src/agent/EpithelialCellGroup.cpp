@@ -2,14 +2,9 @@
 
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
-
-int p_EpiCellDeath;//Rule 11
-int p_EpiProliferation;//Rule 8
-int p_rule10a;
-int p_rule10b;
-int p_rule12;//Rule 12
 
 EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const size_t & count):
   mpCompartment(pCompartment)
@@ -20,6 +15,14 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const size_
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::EpithelialCell, EpithelialCellState::HEALTHY));
     }
+
+  const Properties * pModel = Properties::instance(Properties::model);
+
+  pModel->getValue("p_EpiCellDeath", p_EpiCellDeath);
+  pModel->getValue("p_EpiProliferation", p_EpiProliferation);
+  pModel->getValue("p_rule10a", p_rule10a);
+  pModel->getValue("p_rule10b", p_rule10b);
+  pModel->getValue("p_rule12", p_rule12);
 }
 
 void EpithelialCellGroup::act()
