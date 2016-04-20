@@ -7,10 +7,10 @@
 
 using namespace ENISI;
 
-MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & count) :
-  mpCompartment(pCompartment)
+MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const double & concentrations):
+  GroupInterface(pCompartment)
 {
-  size_t LocalCount = mpCompartment->localCount(count);
+  size_t LocalCount = mpCompartment->localCount(concentrations);
 
   for (size_t i = 0; i < LocalCount; i++)
     {
@@ -25,6 +25,9 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const size_t & coun
   pModel->getValue("p_rule28a", p_rule28a);
   pModel->getValue("p_rule28b", p_rule28b);
 }
+
+MacrophageGroup::~MacrophageGroup()
+{}
 
 void MacrophageGroup::act()
 {

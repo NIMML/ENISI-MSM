@@ -3,23 +3,20 @@
 
 #include "agent/AgentStates.h"
 #include "repast_hpc/Point.h"
+#include "agent/GroupInterface.h"
 
 namespace ENISI
 {
 
-class Compartment;
-class Agent;
-
-class HPyloriGroup
+class HPyloriGroup: public GroupInterface
 {
 public:
-  HPyloriGroup(Compartment * pCompartment, const size_t & count);
+  HPyloriGroup(Compartment * pCompartment, const double & concentrations);
   virtual void act();
-  virtual std::string classname() {return "HPyloriGroup";}
+  virtual std::string classname() const {return "HPyloriGroup";}
 
 private:
   void act(const repast::Point<int> &);
-  Compartment * mpCompartment;
 
   double p_rule3;
   double p_rule4a;

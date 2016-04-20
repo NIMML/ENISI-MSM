@@ -5,7 +5,10 @@
 #include "grid/Properties.h"
 #include "agent/Cytokine.h"
 #include "agent/SharedValueLayer.h"
+#include "agent/GroupInterface.h"
 #include "Projection.h"
+#include "diffuser/DiffuserImpl.h"
+#include "DataWriter/LocalFile.h"
 
 #define DEBUG_SHARED
 
@@ -41,7 +44,9 @@ Compartment::Compartment(const Type & type):
   mAdjacentCompartments(2, std::vector< Type >(2, INVALID)),
   mUniform(repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0)),
   mCytokineMap(),
-  mpDiffuserValues(NULL)
+  mpDiffuserValues(NULL),
+  mGroups(),
+  mpDiffuser(NULL)
 {
   std::string Name = Names[mType];
   const Properties * pProperties = Properties::instance(Properties::model);
@@ -634,6 +639,11 @@ void Compartment::initializeDiffuserData()
         }
     }
 
+  if (mpDiffuser == NULL)
+    {
+      mpDiffuser = new DiffuserImpl(this);
+    }
+
   synchronizeDiffuser();
 }
 
@@ -665,9 +675,12 @@ void Compartment::synchronizeCells()
 }
 
 // virtual
-void Compartment::write(std::ostream & o, const std::string & separator, Compartment * /* pCompartment */)
+void Compartment::write(const std::string & separator)
 {
-  o << getName() << " " << mpLayer->localGridDimensions() << std::endl;
+  std::ostream & o = LocalFile::instance(getName())->stream();
+
+  repast::ScheduleRunner& runner = repast::RepastProcess::instance()->getScheduleRunner();
+  o << getName() << " TICK: " << runner.currentTick() << " " << mpLayer->localGridDimensions() << std::endl;
 
   // We loop through all local agents an write them out.
   SharedLayer::Context::const_state_aware_iterator it = mpLayer->getCellContext().begin(SharedLayer::Context::LOCAL);
@@ -960,14 +973,15 @@ const Compartment::Type & Compartment::getType() const
   return mType;
 }
 
-size_t Compartment::localCount(const size_t & globalCount)
+size_t Compartment::localCount(const double & concentration)
 {
   size_t rank = repast::RepastProcess::instance()->rank();
   size_t worldSize = repast::RepastProcess::instance()->worldSize();
 
-  size_t LocalCount = globalCount / worldSize;
+  size_t GlobalCount = concentration * mProperties.spaceX *  mProperties.spaceY;
+  size_t LocalCount = GlobalCount / worldSize;
 
-  if (rank < globalCount - LocalCount * worldSize) LocalCount++;
+  if (rank < GlobalCount - LocalCount * worldSize) LocalCount++;
 
   return LocalCount;
 }
@@ -997,6 +1011,33 @@ size_t Compartment::getRank(const std::vector< int > & location, const int & xOf
   Location[Borders::Y] += yOffset;
 
   return getRank(Location);
+}
+
+void Compartment::addGroup(GroupInterface * pGroup)
+{
+  mGroups.push_back(pGroup);
+}
+
+void Compartment::act()
+{
+  std::vector< GroupInterface * >::iterator it = mGroups.begin();
+  std::vector< GroupInterface * >::iterator end = mGroups.end();
+
+  for (; it != end; ++it)
+    {
+      (*it)->act();
+    }
+
+  synchronizeCells();
+}
+
+void Compartment::diffuse()
+{
+  if (mpDiffuser != NULL)
+    {
+      mpDiffuser->diffuse(1.0); // TODO CRITICAL determine step size;
+      synchronizeDiffuser();
+    }
 }
 
 std::string Compartment::getName() const

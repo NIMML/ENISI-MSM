@@ -3,26 +3,23 @@
 
 #include "agent/AgentStates.h"
 #include "repast_hpc/Point.h"
+#include "agent/GroupInterface.h"
 
 namespace ENISI
 {
 
-class Compartment;
-class Agent;
-
-class DendriticsGroup
+class DendriticsGroup: public GroupInterface
 {
 public:
 
-  DendriticsGroup(Compartment * pCompartment, const size_t & count);
+  DendriticsGroup(Compartment * pCompartment, const double & concentrations);
 
   virtual void act();
 
-  virtual std::string classname() {return "DendriticsGroup";}
+  virtual std::string classname() const {return "DendriticsGroup";}
 
 private:
   void act(const repast::Point<int> &);
-  Compartment * mpCompartment;
 
   double p_rule17a;
   double p_rule17b;

@@ -62,14 +62,12 @@ int main(int argc, char** argv)
 
   ENISI::HPModel model;
 
-  /*
   repast::ScheduleRunner& runner = 
     repast::RepastProcess::instance()->getScheduleRunner();
 
   model.initSchedule(runner);
 
   runner.run();
-  */
 
   repast::RepastProcess::instance()->done();
 
