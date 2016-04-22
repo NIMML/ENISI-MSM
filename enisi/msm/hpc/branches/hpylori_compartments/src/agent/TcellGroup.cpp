@@ -85,8 +85,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
+
+  concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
   double IL6 = mpCompartment->cytokineValue("IL6", pt);
   double TGFb = mpCompartment->cytokineValue("TGFb", pt);
@@ -98,7 +99,10 @@ void TcellGroup::act(const repast::Point<int> & pt)
   odeModel.setInitialConcentration("IL12", IL12);
 
   /* run time course */
-  odeModel.runTimeCourse();
+  if (!odeModel.runTimeCourse())
+    {
+      std::cout << pt << std::endl;
+    }
 
   double IFNg = odeModel.getConcentration("IFNg");
   double IL17 = odeModel.getConcentration("IL17");
@@ -261,6 +265,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
       else if (state == TcellState::iTREG
                && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance) //TODO - CRITICAL Determine this value
@@ -271,6 +276,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
       else if ((eDCConcentration > ENISI::Threshold)
                && mpCompartment->getType() == Compartment::lamina_propria)

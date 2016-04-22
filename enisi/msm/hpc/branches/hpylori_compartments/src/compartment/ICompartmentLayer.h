@@ -53,22 +53,6 @@ public:
     mpGridTopology(NULL),
     mpDiffuserTopology(NULL)
   {
-    mpSpace = new Space(name + "-space", spaceDimension, processDimensions, 0, mpCommunicator);
-    mpGrid = new Grid(name + "-grid", gridDimension, processDimensions, mBufferSize, mpCommunicator);
-    mpGridTopology = new repast::CartTopology(processDimensions, gridDimension.origin().coords(), gridDimension.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
-
-    repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(processDimensions[0], processDimensions[1]));
-    mpSharedValues = new Grid(name +"-values", ProcessDimensions, processDimensions, mBufferSize, mpCommunicator);
-    mpDiffuserTopology = new repast::CartTopology(processDimensions, ProcessDimensions.origin().coords(), ProcessDimensions.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
-
-    mCellContext.addProjection(mpSpace);
-    mCellContext.addProjection(mpGrid);
-    mDiffuserContext.addProjection(mpSharedValues);
-
-    mLocalSpaceDimensions = mpSpace->dimensions();
-    mLocalGridDimensions = mpGrid->dimensions();
-    mLocalSharedValueDimensions = mpSharedValues->dimensions();
-
     typename std::vector< Space2Grid >::iterator itConversion = mSpace2Grid.begin();
     typename std::vector< Space2Grid >::iterator endConversion = mSpace2Grid.end();
 
@@ -85,6 +69,22 @@ public:
         itConversion->space = *itSpaceOrigin;
         itConversion->scale = *itGridExtents / *itSpaceExtents;
       }
+
+    mpSpace = new Space(name + "-space", spaceDimension, processDimensions, 0, mpCommunicator);
+    mpGrid = new Grid(name + "-grid", gridDimension, processDimensions, mBufferSize, mpCommunicator);
+    mpGridTopology = new repast::CartTopology(processDimensions, gridDimension.origin().coords(), gridDimension.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
+
+    repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(processDimensions[0], processDimensions[1]));
+    mpSharedValues = new Grid(name +"-values", ProcessDimensions, processDimensions, mBufferSize, mpCommunicator);
+    mpDiffuserTopology = new repast::CartTopology(processDimensions, ProcessDimensions.origin().coords(), ProcessDimensions.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
+
+    mCellContext.addProjection(mpSpace);
+    mCellContext.addProjection(mpGrid);
+    mDiffuserContext.addProjection(mpSharedValues);
+
+    mLocalSpaceDimensions = mpSpace->dimensions();
+    mLocalGridDimensions = mpGrid->dimensions();
+    mLocalSharedValueDimensions = mpSharedValues->dimensions();
   }
 
   virtual ~ICompartmentLayer()

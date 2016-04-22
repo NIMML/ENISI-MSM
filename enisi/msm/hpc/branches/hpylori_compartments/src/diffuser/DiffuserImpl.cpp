@@ -1,6 +1,7 @@
 #include "DiffuserImpl.h"
 #include "compartment/Compartment.h"
 #include "agent/Cytokine.h"
+#include "DataWriter/LocalFile.h"
 
 using namespace ENISI;
 
@@ -90,6 +91,8 @@ void DiffuserImpl::computeVals1D(const double & deltaT)
 
 void DiffuserImpl::computeVals2D(const double & deltaT)
 {
+  *mpNewValues = *mpCurrentValues;
+
   Iterator itNorth(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
 
   std::vector< double > * pOldValueNE = &mpCurrentValues->operator [](*itNorth);
@@ -147,13 +150,6 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
       std::vector< double >::const_iterator itOldValueS = pOldValueS->begin();
       std::vector< double >::const_iterator itOldValueSW = pOldValueSW->begin();
 
-      // Boundaries are marked by NaN values;
-      if (std::isnan(*itOldValueS)) itOldValueS = itOldValue;
-      if (std::isnan(*itOldValueSE)) itOldValueSE = itOldValueE;
-      if (std::isnan(*itOldValueSE)) itOldValueSE = itOldValueS;
-      if (std::isnan(*itOldValueSW)) itOldValueSW = itOldValueW;
-      if (std::isnan(*itOldValueSW)) itOldValueSW = itOldValueS;
-
       for (; it != end; ++it, ++itOldValueNE, ++itOldValueN, ++itOldValueNW, ++itOldValueE, ++itOldValue, ++itOldValueW, ++itOldValueSE, ++itOldValueS, ++itOldValueSW, ++itNewValue)
         {
           double Average = (*itOldValueNE + *itOldValueNW + *itOldValueSE + *itOldValueSW + 4.0 * (*itOldValueN + *itOldValueE + *itOldValueW  + *itOldValueS)) * 0.3;
@@ -178,6 +174,11 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
 
           itSouth.next();
 
+          if (!itSouth)
+            {
+              break;
+            }
+
           pOldValueSE = pOldValueS;
           pOldValueS = pOldValueSW;
           pOldValueSW = &mpCurrentValues->operator [](*itSouth);
@@ -185,10 +186,7 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
       while(itPoint->getX() == 0 || itPoint->getX() == 1);
     }
 
-  // Swap current and new values
-  DenseMatrix< std::vector< double > > * pTmp = mpCurrentValues;
-  mpCurrentValues = mpNewValues;
-  mpNewValues = pTmp;
+  *mpCurrentValues = *mpNewValues;
 }
 
 void DiffuserImpl::computeVals3D(const double & /* deltaT */)
@@ -222,19 +220,14 @@ void DiffuserImpl::diffuse(const double & deltaT)
   size_t steps = ceil(deltaT/mDeltaT);
   double DeltaT = deltaT/steps;
 
-
-  // Copy the value layer into the local matrix
-
   // Do integration steps to reach deltaT
   for (size_t s = 0; s < steps; ++s)
     {
-      // TODO We need to synchronize after each step
       computeVals(DeltaT);
-    }
 
-  if (mpCurrentValues != mpDiffuserData->getLocalValues())
-    {
-      *mpDiffuserData->getLocalValues() = *mpCurrentValues;
+      mpCompartment->synchronizeDiffuser();
+
+      // mpDiffuserData->write(LocalFile::instance(mpCompartment->getName())->stream(), "\t", mpCompartment);
     }
 }
 

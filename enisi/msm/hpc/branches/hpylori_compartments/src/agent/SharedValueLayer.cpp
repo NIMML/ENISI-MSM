@@ -12,7 +12,7 @@
 #include "compartment/Compartment.h"
 #include "Cytokine.h"
 
-#define DEBUG_SHARED
+// #define DEBUG_SHARED
 
 using namespace ENISI;
 
@@ -185,8 +185,6 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
   // Currently only 2D
   std::vector<Borders::BoundState> BoundState(2, Borders::INBOUND);
 
-  // TODO CRITICAL The code below only checks for the low borders however it can also be the high neighbor or even both.
-
   std::vector< int > OutLow(2, 0);
   std::vector< int > OutHigh(2, 0);
   globalBorders.transform(repast::Point< int >(mOrigin[0] - mShape[0], mOrigin[1] - mShape[1]).coords(), OutLow);
@@ -326,6 +324,97 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
           RemoteIndex[1] = 0;
 
           mpLocalValues->operator[](LocalIndex) = bufferValues.find(RemoteIndex)->second;
+        }
+    }
+}
+
+void SharedValueLayer::completeBufferValues(const Borders & globalBorders)
+{
+  // Currently only 2D
+  repast::Point< int > Origin(0, 0);
+  repast::Point< int > Shape(mShape[0] + 2, mShape[1] + 2);
+
+  std::vector< int > Low(2, 0);
+  Low[Borders::X] = mOrigin[Borders::X];
+  Low[Borders::Y] = mOrigin[Borders::Y];
+
+  std::vector< int > High(2, 0);
+  High[Borders::X] = mOrigin[Borders::X] + mShape[Borders::X] - 1;
+  High[Borders::Y] = mOrigin[Borders::Y] + mShape[Borders::Y] - 1;
+
+  if (globalBorders.getBorderType(Borders::X, Borders::LOW) != Borders::WRAP &&
+      globalBorders.distanceFromBorder(Low, Borders::X, Borders::LOW) < 0.5)
+    {
+      std::vector< int > Boundary(2, 0);
+      Boundary[Borders::X] = 0;
+      Boundary[Borders::Y] = 0;
+
+      std::vector< int > Value(2, 0);
+      Value[Borders::X] = 1;
+      Value[Borders::Y] = 0;
+
+      size_t i = 0, imax = Shape[Borders::Y];
+
+      for (; i < imax; i++, Boundary[Borders::Y]++, Value[Borders::Y]++)
+        {
+          mpLocalValues->operator [](Boundary) = mpLocalValues->operator [](Value);
+        }
+    }
+
+  if (globalBorders.getBorderType(Borders::X, Borders::HIGH) != Borders::WRAP &&
+      globalBorders.distanceFromBorder(High, Borders::X, Borders::HIGH) < 1.5)
+    {
+      std::vector< int > Boundary(2, 0);
+      Boundary[Borders::X] = Shape[Borders::X] - 1;
+      Boundary[Borders::Y] = 0;
+
+      std::vector< int > Value(2, 0);
+      Value[Borders::X] =  Shape[Borders::X] - 2;
+      Value[Borders::Y] = 0;
+
+      size_t i = 0, imax = Shape[Borders::Y];
+
+      for (; i < imax; i++, Boundary[Borders::Y]++, Value[Borders::Y]++)
+        {
+          mpLocalValues->operator [](Boundary) = mpLocalValues->operator [](Value);
+        }
+    }
+
+  if (globalBorders.getBorderType(Borders::Y, Borders::LOW) != Borders::WRAP &&
+      globalBorders.distanceFromBorder(Low, Borders::Y, Borders::LOW) < 0.5)
+    {
+      std::vector< int > Boundary(2, 0);
+      Boundary[Borders::X] = 0;
+      Boundary[Borders::Y] = 0;
+
+      std::vector< int > Value(2, 0);
+      Value[Borders::X] = 0;
+      Value[Borders::Y] = 1;
+
+      size_t i = 0, imax = Shape[Borders::X];
+
+      for (; i < imax; i++, Boundary[Borders::X]++, Value[Borders::X]++)
+        {
+          mpLocalValues->operator [](Boundary) = mpLocalValues->operator [](Value);
+        }
+    }
+
+  if (globalBorders.getBorderType(Borders::Y, Borders::HIGH) != Borders::WRAP &&
+      globalBorders.distanceFromBorder(High, Borders::Y, Borders::HIGH) < 1.5)
+    {
+      std::vector< int > Boundary(2, 0);
+      Boundary[Borders::X] = 0;
+      Boundary[Borders::Y] = Shape[Borders::Y] - 1;
+
+      std::vector< int > Value(2, 0);
+      Value[Borders::X] = 0;
+      Value[Borders::Y] = Shape[Borders::Y] - 2;
+
+      size_t i = 0, imax = Shape[Borders::X];
+
+      for (; i < imax; i++, Boundary[Borders::X]++, Value[Borders::X]++)
+        {
+          mpLocalValues->operator [](Boundary) = mpLocalValues->operator [](Value);
         }
     }
 }

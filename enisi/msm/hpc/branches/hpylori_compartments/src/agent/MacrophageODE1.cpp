@@ -246,7 +246,7 @@ void MacrophageODE1::runTimeCourse()
           std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
         }
 
-      std::exit(1);
+      // std::exit(1);
     }
 
   if (result == false)
@@ -260,7 +260,7 @@ void MacrophageODE1::runTimeCourse()
           std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
         }
 
-      std::exit(1);
+      // std::exit(1);
     }
 }
 

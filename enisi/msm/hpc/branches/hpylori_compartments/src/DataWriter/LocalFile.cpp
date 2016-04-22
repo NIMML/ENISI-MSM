@@ -29,6 +29,18 @@ LocalFile * LocalFile::instance(const std::string & name,
   return found->second;
 }
 
+// static
+void LocalFile::close()
+{
+  std::map< std::string, LocalFile * >::iterator it = INSTANCES.begin();
+  std::map< std::string, LocalFile * >::iterator end = INSTANCES.end();
+
+  for (; it != end; ++it)
+    {
+      delete it->second;
+    }
+}
+
 LocalFile::LocalFile(const std::string & name, const std::string extension):
   mOstream()
 {

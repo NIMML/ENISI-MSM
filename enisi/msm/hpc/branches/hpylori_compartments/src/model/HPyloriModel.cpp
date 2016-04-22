@@ -12,6 +12,7 @@
 #include "agent/HPyloriGroup.h"
 #include "agent/TcellGroup.h"
 #include "agent/MacrophageGroup.h"
+#include "DataWriter/LocalFile.h"
 
 using namespace ENISI;
 
@@ -21,6 +22,8 @@ HPModel::~HPModel()
   if (mp_epithilium != NULL) delete mp_epithilium;
   if (mp_lamina_propria != NULL) delete mp_lamina_propria;
   if (mp_gastric_lymph_node != NULL) delete mp_gastric_lymph_node;
+
+  LocalFile::close();
 }
 
 HPModel::HPModel():
@@ -75,22 +78,22 @@ void HPModel::initialize_lamina_propria()
 
   double concentration;
 
-  if (!mpProperties->getValue("mp_lamina_propria.Dendritics.concentration", concentration)) concentration = 0;
+  if (!mpProperties->getValue("lamina_propria.Dendritics.concentration", concentration)) concentration = 0;
   new DendriticsGroup(mp_lamina_propria, concentration);
 
-  if (!mpProperties->getValue("mp_lamina_propria.Tcell.concentration", concentration)) concentration = 0;
+  if (!mpProperties->getValue("lamina_propria.Tcell.concentration", concentration)) concentration = 0;
   new TcellGroup(mp_lamina_propria, concentration);
 
-  if (!mpProperties->getValue("mp_lamina_propria.HPylori.concentration", concentration)) concentration = 0;
+  if (!mpProperties->getValue("lamina_propria.HPylori.concentration", concentration)) concentration = 0;
   new HPyloriGroup(mp_lamina_propria, concentration);
 
   if (!mpProperties->getValue("mp_lamina_propria.Bacteria.concentration", concentration)) concentration = 0;
   new BacteriaGroup(mp_lamina_propria, concentration);
 
-  if (!mpProperties->getValue("mp_lamina_propria.macrophages.concentration", concentration)) concentration = 0;
+  if (!mpProperties->getValue("lamina_propria.macrophages.concentration", concentration)) concentration = 0;
   new MacrophageGroup(mp_lamina_propria, concentration);
 
-  mp_epithilium->synchronizeCells();
+  mp_lamina_propria->synchronizeCells();
 
   mp_lamina_propria->addCytokine("IL6");
   mp_lamina_propria->addCytokine("TGFb");
@@ -105,6 +108,25 @@ void HPModel::initialize_lamina_propria()
 void HPModel::initialize_gastric_lymph_node()
 {
   mp_gastric_lymph_node = ENISI::Compartment::instance(ENISI::Compartment::gastric_lymph_node);
+
+  double concentration;
+
+  if (!mpProperties->getValue("gastric_lymph_node.Dendritics.concentration", concentration)) concentration = 0;
+  new DendriticsGroup(mp_gastric_lymph_node, concentration);
+
+  if (!mpProperties->getValue("gastric_lymph_node.Tcell.concentration", concentration)) concentration = 0;
+  new TcellGroup(mp_gastric_lymph_node, concentration);
+
+  mp_gastric_lymph_node->synchronizeCells();
+
+  mp_gastric_lymph_node->addCytokine("IL6");
+  mp_gastric_lymph_node->addCytokine("TGFb");
+  mp_gastric_lymph_node->addCytokine("IL12");
+  mp_gastric_lymph_node->addCytokine("IL17");
+  mp_gastric_lymph_node->addCytokine("IL10");
+  mp_gastric_lymph_node->addCytokine("IFNg");
+
+  mp_gastric_lymph_node->initializeDiffuserData();
 }
 
 
@@ -121,7 +143,8 @@ void HPModel::initSchedule(repast::ScheduleRunner & runner)
   /* Schedule will repeat infinitely without a stop */
   double stopAt = 1;
   Properties::instance(Properties::run)->getValue("stop.at", stopAt);
-  runner.scheduleStop(stopAt); 
+  stopAt += 0.001;
+  runner.scheduleStop(stopAt);
 
   return;
 }
@@ -140,6 +163,7 @@ void HPModel::act()
 void HPModel::diffuse() 
 {
   mp_lamina_propria->diffuse();
+  mp_gastric_lymph_node->diffuse();
 }
 
 void HPModel::recordResults()
