@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- generated with COPASI 4.13 (Build 87) (http://www.copasi.org) at 2016-04-04 21:15:04 UTC -->
+<!-- generated with COPASI 4.16 (Build 104) (http://www.copasi.org) at 2016-04-21 20:48:15 UTC -->
 <?oxygen RNGSchema="http://www.copasi.org/static/schema/CopasiML.rng" type="xml"?>
-<COPASI xmlns="http://www.copasi.org/static/schema" versionMajor="4" versionMinor="13" versionDevel="87" copasiSourcesModified="0">
+<COPASI xmlns="http://www.copasi.org/static/schema" versionMajor="4" versionMinor="16" versionDevel="104" copasiSourcesModified="0">
   <ListOfFunctions>
     <Function key="Function_13" name="Mass action (irreversible)" type="MassAction" reversible="false">
       <MiriamAnnotation>
@@ -29,7 +29,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_40" name="1 Substrate, 3 Activators" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_40">
     <dcterms:created>
       <rdf:Description>
@@ -38,9 +40,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(A1^exp1/(A1^exp1+K1^exp1)+A2^exp1/(A2^exp1+K2^exp1)+A3^exp1/(A3^exp1+K3^exp1))-Vr*P
+        Vf*S*(max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1)+max(0,A2)^exp1/(max(0,A2)^exp1+K2^exp1)+max(0,A3)^exp1/(max(0,A3)^exp1+K3^exp1))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_264" name="Vf" order="0" role="constant"/>
@@ -58,7 +61,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_41" name="Activated ion transport" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_41">
     <dcterms:created>
       <rdf:Description>
@@ -67,6 +72,7 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
         K1*A1*S-K2*P
@@ -81,7 +87,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_42" name="1 Substrate, 1 Activator" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_42">
     <dcterms:created>
       <rdf:Description>
@@ -90,9 +98,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(1+A1^exp1/(A1^exp1+K^exp1))
+        Vf*S*(1+max(0,A1)^exp1/(max(0,A1)^exp1+K^exp1))
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_246" name="Vf" order="0" role="constant"/>
@@ -104,7 +113,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_43" name="1 Substrate, 2 Activators" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_43">
     <dcterms:created>
       <rdf:Description>
@@ -113,9 +124,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(A1^exp1/(A1^exp1+K1^exp1)+A2^exp1/(A2^exp1+K2^exp1))-Vr*P
+        Vf*S*(max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1)+max(0,A2)^exp1/(max(0,A2)^exp1+K2^exp1))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_285" name="Vf" order="0" role="constant"/>
@@ -131,7 +143,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_44" name="1 Substrate, 1 Inhibitor, 2 Activators" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_44">
     <dcterms:created>
       <rdf:Description>
@@ -140,9 +154,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(K^exp1/(I1^exp1+K^exp1))*(A1^exp1/(A1^exp1+K1^exp1)+A2^exp1/(A2^exp1+K2^exp1))-Vr*P
+        Vf*S*(K^exp1/(max(0,I1)^exp1+K^exp1))*(max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1)+max(0,A2)^exp1/(max(0,A2)^exp1+K2^exp1))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_298" name="Vf" order="0" role="constant"/>
@@ -246,7 +261,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_48" name="1 Substrate, 1 Activator (revmod)" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_48">
     <dcterms:created>
       <rdf:Description>
@@ -255,9 +272,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(A1^exp1/(A1^exp1+K1^exp1))-Vr*P
+        Vf*S*(max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_342" name="Vf" order="0" role="constant"/>
@@ -271,7 +289,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_49" name="1 S, 1 A (mod)" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_49">
     <dcterms:created>
       <rdf:Description>
@@ -280,9 +300,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(B+A1^exp1/(A1^exp1+K^exp1))
+        Vf*S*(B+max(0,A1)^exp1/(max(0,A1)^exp1+K^exp1))
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_346" name="Vf" order="0" role="constant"/>
@@ -295,7 +316,9 @@ Reaction scheme where the products are created from the reactants and the change
     </Function>
     <Function key="Function_50" name="1 S, 1A (revmod)" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Function_50">
     <dcterms:created>
       <rdf:Description>
@@ -304,9 +327,10 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(B+A1^exp1/(A1^exp1+K1^exp1))-Vr*P
+        Vf*S*(B+max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_351" name="Vf" order="0" role="constant"/>
@@ -335,7 +359,7 @@ Reaction scheme where the products are created from the reactants and the change
 
       </MiriamAnnotation>
       <Expression>
-        Vf*S*(K^exp1/(I1^exp1+K^exp1))*(B+(A1^exp1/(A1^exp1+K1^exp1)))-Vr*P
+        Vf*S*(K^exp1/(max(0,I1)^exp1+K^exp1))*(B+(max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1)))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
         <ParameterDescription key="FunctionParameter_361" name="Vf" order="0" role="constant"/>
@@ -350,10 +374,12 @@ Reaction scheme where the products are created from the reactants and the change
         <ParameterDescription key="FunctionParameter_372" name="P" order="9" role="product"/>
       </ListOfParameterDescriptions>
     </Function>
-    <Function key="Function_53" name="1 S, 2 A (mod2)" type="UserDefined" reversible="unspecified">
+    <Function key="Function_52" name="1 S, 2 A (mod2)" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Function_53">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Function_52">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-18T10:06:37Z</dcterms:W3CDTF>
@@ -361,27 +387,26 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
       </MiriamAnnotation>
       <Expression>
-        Vf*(A1^exp1/(A1^exp1+K1^exp1)+A2^exp1/(A2^exp1+K2^exp1))-Vr*P
+        Vf*(max(0,A1)^exp1/(max(0,A1)^exp1+K1^exp1)+max(0,A2)^exp1/(max(0,A2)^exp1+K2^exp1))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
-        <ParameterDescription key="FunctionParameter_377" name="Vf" order="0" role="constant"/>
-        <ParameterDescription key="FunctionParameter_359" name="A1" order="1" role="modifier"/>
-        <ParameterDescription key="FunctionParameter_363" name="exp1" order="2" role="constant"/>
-        <ParameterDescription key="FunctionParameter_371" name="K1" order="3" role="constant"/>
-        <ParameterDescription key="FunctionParameter_379" name="A2" order="4" role="modifier"/>
-        <ParameterDescription key="FunctionParameter_381" name="K2" order="5" role="constant"/>
-        <ParameterDescription key="FunctionParameter_383" name="Vr" order="6" role="constant"/>
-        <ParameterDescription key="FunctionParameter_385" name="P" order="7" role="product"/>
+        <ParameterDescription key="FunctionParameter_373" name="Vf" order="0" role="constant"/>
+        <ParameterDescription key="FunctionParameter_369" name="A1" order="1" role="modifier"/>
+        <ParameterDescription key="FunctionParameter_365" name="exp1" order="2" role="constant"/>
+        <ParameterDescription key="FunctionParameter_349" name="K1" order="3" role="constant"/>
+        <ParameterDescription key="FunctionParameter_355" name="A2" order="4" role="modifier"/>
+        <ParameterDescription key="FunctionParameter_374" name="K2" order="5" role="constant"/>
+        <ParameterDescription key="FunctionParameter_376" name="Vr" order="6" role="constant"/>
+        <ParameterDescription key="FunctionParameter_378" name="P" order="7" role="product"/>
       </ListOfParameterDescriptions>
     </Function>
-    <Function key="Function_55" name="Rate Law for IL10R activation" type="UserDefined" reversible="unspecified">
+    <Function key="Function_53" name="Rate Law for IL10R activation" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Function_55">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Function_53">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-04-04T17:08:48Z</dcterms:W3CDTF>
@@ -389,30 +414,29 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
       </MiriamAnnotation>
       <Expression>
         Vf*(K^exp1/(I1^exp1+K^exp1))*(B+(A1^exp1/(A1^exp1+K1^exp1)))-Vr*P
       </Expression>
       <ListOfParameterDescriptions>
-        <ParameterDescription key="FunctionParameter_591" name="Vf" order="0" role="constant"/>
-        <ParameterDescription key="FunctionParameter_619" name="K" order="1" role="constant"/>
-        <ParameterDescription key="FunctionParameter_599" name="exp1" order="2" role="constant"/>
-        <ParameterDescription key="FunctionParameter_620" name="I1" order="3" role="modifier"/>
-        <ParameterDescription key="FunctionParameter_586" name="B" order="4" role="constant"/>
-        <ParameterDescription key="FunctionParameter_606" name="A1" order="5" role="modifier"/>
-        <ParameterDescription key="FunctionParameter_621" name="K1" order="6" role="constant"/>
-        <ParameterDescription key="FunctionParameter_623" name="Vr" order="7" role="constant"/>
-        <ParameterDescription key="FunctionParameter_625" name="P" order="8" role="product"/>
+        <ParameterDescription key="FunctionParameter_379" name="Vf" order="0" role="constant"/>
+        <ParameterDescription key="FunctionParameter_375" name="K" order="1" role="constant"/>
+        <ParameterDescription key="FunctionParameter_344" name="exp1" order="2" role="constant"/>
+        <ParameterDescription key="FunctionParameter_367" name="I1" order="3" role="modifier"/>
+        <ParameterDescription key="FunctionParameter_380" name="B" order="4" role="constant"/>
+        <ParameterDescription key="FunctionParameter_382" name="A1" order="5" role="modifier"/>
+        <ParameterDescription key="FunctionParameter_384" name="K1" order="6" role="constant"/>
+        <ParameterDescription key="FunctionParameter_386" name="Vr" order="7" role="constant"/>
+        <ParameterDescription key="FunctionParameter_388" name="P" order="8" role="product"/>
       </ListOfParameterDescriptions>
     </Function>
   </ListOfFunctions>
-  <Model key="Model_3" name="NoName" simulationType="time" timeUnit="s" volumeUnit="l" areaUnit="m²" lengthUnit="m" quantityUnit="mol" type="deterministic" avogadroConstant="6.02214179e+023">
+  <Model key="Model_4" name="NoName" simulationType="time" timeUnit="s" volumeUnit="l" areaUnit="m²" lengthUnit="m" quantityUnit="mol" type="deterministic" avogadroConstant="6.02214179e+23">
     <MiriamAnnotation>
 <rdf:RDF
    xmlns:dcterms="http://purl.org/dc/terms/"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Model_3">
+  <rdf:Description rdf:about="#Model_4">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:32:21Z</dcterms:W3CDTF>
@@ -1387,9 +1411,7 @@ Reaction scheme where the products are created from the reactants and the change
       </Metabolite>
       <Metabolite key="Metabolite_13" name="PKA" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Metabolite_13">
     <dcterms:created>
       <rdf:Description>
@@ -1398,7 +1420,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -1446,9 +1467,7 @@ Reaction scheme where the products are created from the reactants and the change
       </Metabolite>
       <Metabolite key="Metabolite_19" name="IL10R" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Metabolite_19">
     <dcterms:created>
       <rdf:Description>
@@ -1457,7 +1476,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -1612,10 +1630,10 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_37" name="HP" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_35" name="HP" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_37">
+  <rdf:Description rdf:about="#Metabolite_35">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T16:20:03Z</dcterms:W3CDTF>
@@ -1639,10 +1657,10 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_39" name="Traf2" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_37" name="Traf2" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_39">
+  <rdf:Description rdf:about="#Metabolite_37">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-17T11:56:53Z</dcterms:W3CDTF>
@@ -1666,7 +1684,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_41" name="Fbxo7" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_39" name="Fbxo7" simulationType="reactions" compartment="Compartment_1">
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
 <celldesigner:extension xmlns:celldesigner="http://www.sbml.org/2001/ns/celldesigner">
@@ -1682,7 +1700,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_43" name="NCOR2" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_41" name="NCOR2" simulationType="reactions" compartment="Compartment_1">
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
 <celldesigner:extension xmlns:celldesigner="http://www.sbml.org/2001/ns/celldesigner">
@@ -1698,10 +1716,10 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_45" name="FOXP1" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_43" name="FOXP1" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_45">
+  <rdf:Description rdf:about="#Metabolite_43">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T16:17:31Z</dcterms:W3CDTF>
@@ -1726,7 +1744,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_47" name="NFkB" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_45" name="NFkB" simulationType="reactions" compartment="Compartment_1">
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
 <celldesigner:extension xmlns:celldesigner="http://www.sbml.org/2001/ns/celldesigner">
@@ -1742,10 +1760,10 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_49" name="ABA" simulationType="fixed" compartment="Compartment_1">
+      <Metabolite key="Metabolite_47" name="ABA" simulationType="fixed" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_49">
+  <rdf:Description rdf:about="#Metabolite_47">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:56:02Z</dcterms:W3CDTF>
@@ -1769,10 +1787,10 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
       </Metabolite>
-      <Metabolite key="Metabolite_51" name="pAkt" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_49" name="pAkt" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_51">
+  <rdf:Description rdf:about="#Metabolite_49">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:52:47Z</dcterms:W3CDTF>
@@ -1782,10 +1800,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_53" name="eCa2+" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_51" name="eCa2+" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_53">
+  <rdf:Description rdf:about="#Metabolite_51">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T16:18:37Z</dcterms:W3CDTF>
@@ -1795,12 +1813,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_55" name="iCa2+" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_53" name="iCa2+" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_55">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_53">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T16:18:39Z</dcterms:W3CDTF>
@@ -1808,13 +1824,12 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_57" name="pCREB" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_55" name="pCREB" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_57">
+  <rdf:Description rdf:about="#Metabolite_55">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:52:54Z</dcterms:W3CDTF>
@@ -1824,10 +1839,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_59" name="pCX3CR1" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_57" name="pCX3CR1" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_59">
+  <rdf:Description rdf:about="#Metabolite_57">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:52:56Z</dcterms:W3CDTF>
@@ -1837,10 +1852,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_61" name="pERK" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_59" name="pERK" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_61">
+  <rdf:Description rdf:about="#Metabolite_59">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:52:59Z</dcterms:W3CDTF>
@@ -1850,12 +1865,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_63" name="pFbxo7" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_61" name="pFbxo7" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_63">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_61">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:03Z</dcterms:W3CDTF>
@@ -1863,13 +1876,12 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_65" name="pFOXP1" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_63" name="pFOXP1" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_65">
+  <rdf:Description rdf:about="#Metabolite_63">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:06Z</dcterms:W3CDTF>
@@ -1879,10 +1891,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_67" name="pIL10" simulationType="fixed" compartment="Compartment_1">
+      <Metabolite key="Metabolite_65" name="pIL10" simulationType="fixed" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_67">
+  <rdf:Description rdf:about="#Metabolite_65">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:09Z</dcterms:W3CDTF>
@@ -1892,12 +1904,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_71" name="pLANCL2" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_67" name="pLANCL2" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_71">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_67">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:15Z</dcterms:W3CDTF>
@@ -1905,13 +1915,12 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_73" name="pM-CSF" simulationType="fixed" compartment="Compartment_1">
+      <Metabolite key="Metabolite_69" name="pM-CSF" simulationType="fixed" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_73">
+  <rdf:Description rdf:about="#Metabolite_69">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:18Z</dcterms:W3CDTF>
@@ -1921,10 +1930,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_75" name="pNCOR2" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_71" name="pNCOR2" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_75">
+  <rdf:Description rdf:about="#Metabolite_71">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:21Z</dcterms:W3CDTF>
@@ -1934,10 +1943,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_77" name="pNFAT" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_73" name="pNFAT" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_77">
+  <rdf:Description rdf:about="#Metabolite_73">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:23Z</dcterms:W3CDTF>
@@ -1947,10 +1956,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_79" name="pNFkB" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_75" name="pNFkB" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_79">
+  <rdf:Description rdf:about="#Metabolite_75">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:26Z</dcterms:W3CDTF>
@@ -1960,10 +1969,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_81" name="pPKA" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_77" name="pPKA" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_81">
+  <rdf:Description rdf:about="#Metabolite_77">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:30Z</dcterms:W3CDTF>
@@ -1973,10 +1982,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_83" name="pTraf2" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_79" name="pTraf2" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_83">
+  <rdf:Description rdf:about="#Metabolite_79">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T14:53:33Z</dcterms:W3CDTF>
@@ -1986,10 +1995,12 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_85" name="pIL10R" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_81" name="pIL10R" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_85">
+<rdf:RDF
+   xmlns:dcterms="http://purl.org/dc/terms/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_81">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T16:17:40Z</dcterms:W3CDTF>
@@ -1997,12 +2008,13 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
+
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_87" name="pCSF1R" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_83" name="pCSF1R" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_87">
+  <rdf:Description rdf:about="#Metabolite_83">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-16T16:17:36Z</dcterms:W3CDTF>
@@ -2012,14 +2024,12 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_89" name="Mono" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_85" name="Mono" simulationType="reactions" compartment="Compartment_1">
       </Metabolite>
-      <Metabolite key="Metabolite_91" name="KLF4" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_87" name="KLF4" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_91">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_87">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-17T17:39:01Z</dcterms:W3CDTF>
@@ -2027,13 +2037,12 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_93" name="pKLF4" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_89" name="pKLF4" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_93">
+  <rdf:Description rdf:about="#Metabolite_89">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-17T17:38:59Z</dcterms:W3CDTF>
@@ -2043,10 +2052,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_95" name="CX3CL1" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_91" name="CX3CL1" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_95">
+  <rdf:Description rdf:about="#Metabolite_91">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-17T17:39:10Z</dcterms:W3CDTF>
@@ -2056,10 +2065,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_97" name="pCX3CL1" simulationType="fixed" compartment="Compartment_1">
+      <Metabolite key="Metabolite_93" name="pCX3CL1" simulationType="fixed" compartment="Compartment_1">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_97">
+  <rdf:Description rdf:about="#Metabolite_93">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-02-17T17:38:47Z</dcterms:W3CDTF>
@@ -2069,12 +2078,10 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_99" name="IFNg" simulationType="reactions" compartment="Compartment_1">
+      <Metabolite key="Metabolite_95" name="IFNg" simulationType="reactions" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_99">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_95">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-04-04T16:57:14Z</dcterms:W3CDTF>
@@ -2082,15 +2089,12 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
-      <Metabolite key="Metabolite_101" name="pIFNg" simulationType="fixed" compartment="Compartment_1">
+      <Metabolite key="Metabolite_97" name="pIFNg" simulationType="fixed" compartment="Compartment_1">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Metabolite_101">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="#Metabolite_97">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2016-04-04T16:56:54Z</dcterms:W3CDTF>
@@ -2098,7 +2102,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
     </ListOfMetabolites>
@@ -2160,7 +2163,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_61" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_59" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_5" stoichiometry="1"/>
@@ -2170,37 +2173,37 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_3" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4775" name="Vf" value="0.0487012"/>
-          <Constant key="Parameter_4774" name="exp1" value="1.0115"/>
-          <Constant key="Parameter_4773" name="K1" value="0.1043"/>
-          <Constant key="Parameter_4772" name="K2" value="0.0851"/>
-          <Constant key="Parameter_4771" name="Vr" value="0.1607"/>
+          <Constant key="Parameter_4816" name="Vf" value="0.0487012"/>
+          <Constant key="Parameter_4817" name="exp1" value="1.0115"/>
+          <Constant key="Parameter_4818" name="K1" value="0.1043"/>
+          <Constant key="Parameter_4819" name="K2" value="0.0851"/>
+          <Constant key="Parameter_4820" name="Vr" value="0.1607"/>
         </ListOfConstants>
         <KineticLaw function="Function_43">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_285">
-              <SourceParameter reference="Parameter_4775"/>
+              <SourceParameter reference="Parameter_4816"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_262">
-              <SourceParameter reference="Metabolite_61"/>
+              <SourceParameter reference="Metabolite_59"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_267">
               <SourceParameter reference="Metabolite_1"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_287">
-              <SourceParameter reference="Parameter_4774"/>
+              <SourceParameter reference="Parameter_4817"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_289">
-              <SourceParameter reference="Parameter_4773"/>
+              <SourceParameter reference="Parameter_4818"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_291">
               <SourceParameter reference="Metabolite_3"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_293">
-              <SourceParameter reference="Parameter_4772"/>
+              <SourceParameter reference="Parameter_4819"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_295">
-              <SourceParameter reference="Parameter_4771"/>
+              <SourceParameter reference="Parameter_4820"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_297">
               <SourceParameter reference="Metabolite_5"/>
@@ -2254,34 +2257,34 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_53" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_51" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_55" stoichiometry="1"/>
+          <Product metabolite="Metabolite_53" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_5" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4770" name="K1" value="0.3076"/>
-          <Constant key="Parameter_4769" name="K2" value="0.1292"/>
+          <Constant key="Parameter_4821" name="K1" value="0.3076"/>
+          <Constant key="Parameter_4822" name="K2" value="0.1292"/>
         </ListOfConstants>
         <KineticLaw function="Function_41">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_281">
-              <SourceParameter reference="Parameter_4770"/>
+              <SourceParameter reference="Parameter_4821"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_277">
               <SourceParameter reference="Metabolite_5"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_273">
-              <SourceParameter reference="Metabolite_53"/>
+              <SourceParameter reference="Metabolite_51"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_269">
-              <SourceParameter reference="Parameter_4769"/>
+              <SourceParameter reference="Parameter_4822"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_265">
-              <SourceParameter reference="Metabolite_55"/>
+              <SourceParameter reference="Metabolite_53"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -2341,14 +2344,14 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_31" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4768" name="Vf" value="0.029"/>
-          <Constant key="Parameter_4767" name="exp1" value="1.0895"/>
-          <Constant key="Parameter_4766" name="K" value="0.185"/>
+          <Constant key="Parameter_4823" name="Vf" value="0.029"/>
+          <Constant key="Parameter_4824" name="exp1" value="1.0895"/>
+          <Constant key="Parameter_4825" name="K" value="0.185"/>
         </ListOfConstants>
         <KineticLaw function="Function_42">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_246">
-              <SourceParameter reference="Parameter_4768"/>
+              <SourceParameter reference="Parameter_4823"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_271">
               <SourceParameter reference="Metabolite_9"/>
@@ -2357,10 +2360,10 @@ Reaction scheme where the products are created from the reactants and the change
               <SourceParameter reference="Metabolite_31"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_282">
-              <SourceParameter reference="Parameter_4767"/>
+              <SourceParameter reference="Parameter_4824"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_284">
-              <SourceParameter reference="Parameter_4766"/>
+              <SourceParameter reference="Parameter_4825"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -2411,7 +2414,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_81" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_77" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_13" stoichiometry="1"/>
@@ -2420,34 +2423,34 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_11" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4765" name="Vf" value="0.1199"/>
-          <Constant key="Parameter_4764" name="exp1" value="1.301"/>
-          <Constant key="Parameter_4763" name="K1" value="0.0515"/>
-          <Constant key="Parameter_4762" name="Vr" value="0.18635"/>
-          <Constant key="Parameter_4761" name="B" value="0.1"/>
+          <Constant key="Parameter_4826" name="Vf" value="0.1199"/>
+          <Constant key="Parameter_4827" name="exp1" value="1.301"/>
+          <Constant key="Parameter_4828" name="K1" value="0.0515"/>
+          <Constant key="Parameter_4829" name="Vr" value="0.18635"/>
+          <Constant key="Parameter_4830" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_50">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_351">
-              <SourceParameter reference="Parameter_4765"/>
+              <SourceParameter reference="Parameter_4826"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_347">
-              <SourceParameter reference="Metabolite_81"/>
+              <SourceParameter reference="Metabolite_77"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_323">
-              <SourceParameter reference="Parameter_4761"/>
+              <SourceParameter reference="Parameter_4830"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_352">
               <SourceParameter reference="Metabolite_11"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_354">
-              <SourceParameter reference="Parameter_4764"/>
+              <SourceParameter reference="Parameter_4827"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_356">
-              <SourceParameter reference="Parameter_4763"/>
+              <SourceParameter reference="Parameter_4828"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_358">
-              <SourceParameter reference="Parameter_4762"/>
+              <SourceParameter reference="Parameter_4829"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_360">
               <SourceParameter reference="Metabolite_13"/>
@@ -2512,47 +2515,47 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_57" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_55" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_15" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_13" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_55" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_53" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4760" name="Vf" value="0.1493"/>
-          <Constant key="Parameter_4759" name="exp1" value="1.508"/>
-          <Constant key="Parameter_4758" name="K1" value="0.0635"/>
-          <Constant key="Parameter_4757" name="K2" value="0.0728"/>
-          <Constant key="Parameter_4756" name="Vr" value="0.19685"/>
+          <Constant key="Parameter_4831" name="Vf" value="0.1493"/>
+          <Constant key="Parameter_4832" name="exp1" value="1.508"/>
+          <Constant key="Parameter_4833" name="K1" value="0.0635"/>
+          <Constant key="Parameter_4834" name="K2" value="0.0728"/>
+          <Constant key="Parameter_4835" name="Vr" value="0.19685"/>
         </ListOfConstants>
         <KineticLaw function="Function_43">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_285">
-              <SourceParameter reference="Parameter_4760"/>
+              <SourceParameter reference="Parameter_4831"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_262">
-              <SourceParameter reference="Metabolite_57"/>
+              <SourceParameter reference="Metabolite_55"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_267">
               <SourceParameter reference="Metabolite_13"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_287">
-              <SourceParameter reference="Parameter_4759"/>
+              <SourceParameter reference="Parameter_4832"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_289">
-              <SourceParameter reference="Parameter_4758"/>
+              <SourceParameter reference="Parameter_4833"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_291">
-              <SourceParameter reference="Metabolite_55"/>
+              <SourceParameter reference="Metabolite_53"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_293">
-              <SourceParameter reference="Parameter_4757"/>
+              <SourceParameter reference="Parameter_4834"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_295">
-              <SourceParameter reference="Parameter_4756"/>
+              <SourceParameter reference="Parameter_4835"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_297">
               <SourceParameter reference="Metabolite_15"/>
@@ -2562,9 +2565,7 @@ Reaction scheme where the products are created from the reactants and the change
       </Reaction>
       <Reaction key="Reaction_5" name="IL10 production" reversible="false" fast="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_5">
     <dcterms:created>
       <rdf:Description>
@@ -2573,7 +2574,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -2630,59 +2630,59 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_67" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_65" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_17" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_99" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_95" stoichiometry="1"/>
           <Modifier metabolite="Metabolite_15" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_45" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_43" stoichiometry="1"/>
           <Modifier metabolite="Metabolite_33" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4755" name="Vf" value="1.66808"/>
-          <Constant key="Parameter_4754" name="K1" value="0.0593"/>
-          <Constant key="Parameter_4753" name="K2" value="0.09815"/>
-          <Constant key="Parameter_4752" name="exp1" value="1.193"/>
-          <Constant key="Parameter_4751" name="K" value="0.0536"/>
-          <Constant key="Parameter_4750" name="K3" value="0.01589"/>
+          <Constant key="Parameter_4836" name="Vf" value="1.66808"/>
+          <Constant key="Parameter_4837" name="K1" value="0.0593"/>
+          <Constant key="Parameter_4838" name="K2" value="0.09815"/>
+          <Constant key="Parameter_4839" name="exp1" value="1.193"/>
+          <Constant key="Parameter_4840" name="K" value="0.0536"/>
+          <Constant key="Parameter_4841" name="K3" value="0.01589"/>
         </ListOfConstants>
         <KineticLaw function="Function_45">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_311">
-              <SourceParameter reference="Parameter_4755"/>
+              <SourceParameter reference="Parameter_4836"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_307">
-              <SourceParameter reference="Metabolite_67"/>
+              <SourceParameter reference="Metabolite_65"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_303">
-              <SourceParameter reference="Parameter_4751"/>
+              <SourceParameter reference="Parameter_4840"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_299">
-              <SourceParameter reference="Parameter_4752"/>
+              <SourceParameter reference="Parameter_4839"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_288">
-              <SourceParameter reference="Metabolite_99"/>
+              <SourceParameter reference="Metabolite_95"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_296">
               <SourceParameter reference="Metabolite_15"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_313">
-              <SourceParameter reference="Parameter_4754"/>
+              <SourceParameter reference="Parameter_4837"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_315">
-              <SourceParameter reference="Metabolite_45"/>
+              <SourceParameter reference="Metabolite_43"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_317">
-              <SourceParameter reference="Parameter_4753"/>
+              <SourceParameter reference="Parameter_4838"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_319">
               <SourceParameter reference="Metabolite_33"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_321">
-              <SourceParameter reference="Parameter_4750"/>
+              <SourceParameter reference="Parameter_4841"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -2725,52 +2725,52 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_85" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_81" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_19" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_99" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_95" stoichiometry="1"/>
           <Modifier metabolite="Metabolite_17" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4749" name="Vf" value="0.169469"/>
-          <Constant key="Parameter_4748" name="exp1" value="1.042"/>
-          <Constant key="Parameter_4747" name="K1" value="0.463615"/>
-          <Constant key="Parameter_4746" name="Vr" value="0.188"/>
-          <Constant key="Parameter_4745" name="A1" value="0"/>
-          <Constant key="Parameter_4744" name="P" value="0"/>
-          <Constant key="Parameter_4743" name="B" value="0"/>
-          <Constant key="Parameter_4853" name="K" value="40"/>
+          <Constant key="Parameter_4842" name="Vf" value="0.169469"/>
+          <Constant key="Parameter_4843" name="exp1" value="1.042"/>
+          <Constant key="Parameter_4846" name="K1" value="0.463615"/>
+          <Constant key="Parameter_4845" name="Vr" value="0.188"/>
+          <Constant key="Parameter_4847" name="A1" value="0"/>
+          <Constant key="Parameter_4844" name="P" value="0"/>
+          <Constant key="Parameter_4848" name="B" value="0"/>
+          <Constant key="Parameter_4849" name="K" value="40"/>
         </ListOfConstants>
-        <KineticLaw function="Function_55">
+        <KineticLaw function="Function_53">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_591">
-              <SourceParameter reference="Parameter_4749"/>
+            <CallParameter functionParameter="FunctionParameter_379">
+              <SourceParameter reference="Parameter_4842"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_619">
-              <SourceParameter reference="Parameter_4853"/>
+            <CallParameter functionParameter="FunctionParameter_375">
+              <SourceParameter reference="Parameter_4849"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_599">
-              <SourceParameter reference="Parameter_4748"/>
+            <CallParameter functionParameter="FunctionParameter_344">
+              <SourceParameter reference="Parameter_4843"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_620">
-              <SourceParameter reference="Metabolite_99"/>
+            <CallParameter functionParameter="FunctionParameter_367">
+              <SourceParameter reference="Metabolite_95"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_586">
-              <SourceParameter reference="Parameter_4743"/>
+            <CallParameter functionParameter="FunctionParameter_380">
+              <SourceParameter reference="Parameter_4848"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_606">
+            <CallParameter functionParameter="FunctionParameter_382">
               <SourceParameter reference="Metabolite_17"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_621">
-              <SourceParameter reference="Parameter_4747"/>
+            <CallParameter functionParameter="FunctionParameter_384">
+              <SourceParameter reference="Parameter_4846"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_623">
-              <SourceParameter reference="Parameter_4746"/>
+            <CallParameter functionParameter="FunctionParameter_386">
+              <SourceParameter reference="Parameter_4845"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_625">
+            <CallParameter functionParameter="FunctionParameter_388">
               <SourceParameter reference="Metabolite_19"/>
             </CallParameter>
           </ListOfCallParameters>
@@ -2833,7 +2833,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_77" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_73" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_29" stoichiometry="1"/>
@@ -2843,41 +2843,41 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_3" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4742" name="Vf" value="0.11105"/>
-          <Constant key="Parameter_4741" name="exp1" value="1.5755"/>
-          <Constant key="Parameter_4740" name="K1" value="0.1586"/>
-          <Constant key="Parameter_4739" name="Vr" value="0.18755"/>
-          <Constant key="Parameter_4738" name="K" value="0.1307"/>
-          <Constant key="Parameter_4737" name="B" value="0.1"/>
+          <Constant key="Parameter_4850" name="Vf" value="0.11105"/>
+          <Constant key="Parameter_4851" name="exp1" value="1.5755"/>
+          <Constant key="Parameter_4852" name="K1" value="0.1586"/>
+          <Constant key="Parameter_4853" name="Vr" value="0.18755"/>
+          <Constant key="Parameter_4854" name="K" value="0.1307"/>
+          <Constant key="Parameter_4855" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_51">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_361">
-              <SourceParameter reference="Parameter_4742"/>
+              <SourceParameter reference="Parameter_4850"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_357">
-              <SourceParameter reference="Metabolite_77"/>
+              <SourceParameter reference="Metabolite_73"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_353">
-              <SourceParameter reference="Parameter_4738"/>
+              <SourceParameter reference="Parameter_4854"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_336">
-              <SourceParameter reference="Parameter_4741"/>
+              <SourceParameter reference="Parameter_4851"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_362">
               <SourceParameter reference="Metabolite_21"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_364">
-              <SourceParameter reference="Parameter_4737"/>
+              <SourceParameter reference="Parameter_4855"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_366">
               <SourceParameter reference="Metabolite_3"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_368">
-              <SourceParameter reference="Parameter_4740"/>
+              <SourceParameter reference="Parameter_4852"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_370">
-              <SourceParameter reference="Parameter_4739"/>
+              <SourceParameter reference="Parameter_4853"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_372">
               <SourceParameter reference="Metabolite_29"/>
@@ -2932,47 +2932,47 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_87" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_83" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_25" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_45" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_43" stoichiometry="1"/>
           <Modifier metabolite="Metabolite_23" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4736" name="Vf" value="0.185"/>
-          <Constant key="Parameter_4735" name="exp1" value="1.907"/>
-          <Constant key="Parameter_4734" name="K1" value="0.36647"/>
-          <Constant key="Parameter_4733" name="Vr" value="0.2"/>
-          <Constant key="Parameter_4732" name="K2" value="0.0551"/>
+          <Constant key="Parameter_4856" name="Vf" value="0.185"/>
+          <Constant key="Parameter_4857" name="exp1" value="1.907"/>
+          <Constant key="Parameter_4858" name="K1" value="0.36647"/>
+          <Constant key="Parameter_4859" name="Vr" value="0.2"/>
+          <Constant key="Parameter_4860" name="K2" value="0.0551"/>
         </ListOfConstants>
         <KineticLaw function="Function_43">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_285">
-              <SourceParameter reference="Parameter_4736"/>
+              <SourceParameter reference="Parameter_4856"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_262">
-              <SourceParameter reference="Metabolite_87"/>
+              <SourceParameter reference="Metabolite_83"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_267">
-              <SourceParameter reference="Metabolite_45"/>
+              <SourceParameter reference="Metabolite_43"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_287">
-              <SourceParameter reference="Parameter_4735"/>
+              <SourceParameter reference="Parameter_4857"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_289">
-              <SourceParameter reference="Parameter_4734"/>
+              <SourceParameter reference="Parameter_4858"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_291">
               <SourceParameter reference="Metabolite_23"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_293">
-              <SourceParameter reference="Parameter_4732"/>
+              <SourceParameter reference="Parameter_4860"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_295">
-              <SourceParameter reference="Parameter_4733"/>
+              <SourceParameter reference="Parameter_4859"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_297">
               <SourceParameter reference="Metabolite_25"/>
@@ -3028,46 +3028,46 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_59" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_57" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_1" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_29" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_95" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_91" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4731" name="K1" value="0.19115"/>
-          <Constant key="Parameter_4730" name="Vf" value="0.13385"/>
-          <Constant key="Parameter_4729" name="exp1" value="1.6325"/>
-          <Constant key="Parameter_4728" name="Vr" value="0.1715"/>
-          <Constant key="Parameter_4727" name="K2" value="0.05"/>
+          <Constant key="Parameter_4861" name="K1" value="0.19115"/>
+          <Constant key="Parameter_4862" name="Vf" value="0.13385"/>
+          <Constant key="Parameter_4863" name="exp1" value="1.6325"/>
+          <Constant key="Parameter_4864" name="Vr" value="0.1715"/>
+          <Constant key="Parameter_4865" name="K2" value="0.05"/>
         </ListOfConstants>
-        <KineticLaw function="Function_53">
+        <KineticLaw function="Function_52">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_377">
-              <SourceParameter reference="Parameter_4730"/>
+            <CallParameter functionParameter="FunctionParameter_373">
+              <SourceParameter reference="Parameter_4862"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_359">
+            <CallParameter functionParameter="FunctionParameter_369">
               <SourceParameter reference="Metabolite_29"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_363">
-              <SourceParameter reference="Parameter_4729"/>
+            <CallParameter functionParameter="FunctionParameter_365">
+              <SourceParameter reference="Parameter_4863"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_371">
-              <SourceParameter reference="Parameter_4731"/>
+            <CallParameter functionParameter="FunctionParameter_349">
+              <SourceParameter reference="Parameter_4861"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_379">
-              <SourceParameter reference="Metabolite_95"/>
+            <CallParameter functionParameter="FunctionParameter_355">
+              <SourceParameter reference="Metabolite_91"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_381">
-              <SourceParameter reference="Parameter_4727"/>
+            <CallParameter functionParameter="FunctionParameter_374">
+              <SourceParameter reference="Parameter_4865"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_383">
-              <SourceParameter reference="Parameter_4728"/>
+            <CallParameter functionParameter="FunctionParameter_376">
+              <SourceParameter reference="Parameter_4864"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_385">
+            <CallParameter functionParameter="FunctionParameter_378">
               <SourceParameter reference="Metabolite_1"/>
             </CallParameter>
           </ListOfCallParameters>
@@ -3113,12 +3113,12 @@ Reaction scheme where the products are created from the reactants and the change
           <Product metabolite="Metabolite_3" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_4726" name="k1" value="0.038436"/>
+          <Constant key="Parameter_4871" name="k1" value="0.038436"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4726"/>
+              <SourceParameter reference="Parameter_4871"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
               <SourceParameter reference="Metabolite_27"/>
@@ -3194,7 +3194,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_51" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_49" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_21" stoichiometry="1"/>
@@ -3205,35 +3205,35 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_3" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4725" name="Vf" value="0.1115"/>
-          <Constant key="Parameter_4724" name="K1" value="0.01779"/>
-          <Constant key="Parameter_4723" name="K2" value="0.11105"/>
-          <Constant key="Parameter_4722" name="K3" value="0.1328"/>
-          <Constant key="Parameter_4721" name="exp1" value="1.136"/>
-          <Constant key="Parameter_4720" name="Vr" value="0.1922"/>
+          <Constant key="Parameter_4870" name="Vf" value="0.1115"/>
+          <Constant key="Parameter_4869" name="K1" value="0.01779"/>
+          <Constant key="Parameter_4866" name="K2" value="0.11105"/>
+          <Constant key="Parameter_4867" name="K3" value="0.1328"/>
+          <Constant key="Parameter_4868" name="exp1" value="1.136"/>
+          <Constant key="Parameter_4872" name="Vr" value="0.1922"/>
         </ListOfConstants>
         <KineticLaw function="Function_40">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_264">
-              <SourceParameter reference="Parameter_4725"/>
+              <SourceParameter reference="Parameter_4870"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_268">
-              <SourceParameter reference="Parameter_4724"/>
+              <SourceParameter reference="Parameter_4869"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_272">
-              <SourceParameter reference="Parameter_4723"/>
+              <SourceParameter reference="Parameter_4866"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_276">
-              <SourceParameter reference="Parameter_4722"/>
+              <SourceParameter reference="Parameter_4867"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_254">
-              <SourceParameter reference="Metabolite_51"/>
+              <SourceParameter reference="Metabolite_49"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_258">
               <SourceParameter reference="Metabolite_31"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_266">
-              <SourceParameter reference="Parameter_4721"/>
+              <SourceParameter reference="Parameter_4868"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_270">
               <SourceParameter reference="Metabolite_1"/>
@@ -3242,7 +3242,7 @@ Reaction scheme where the products are created from the reactants and the change
               <SourceParameter reference="Metabolite_3"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_278">
-              <SourceParameter reference="Parameter_4720"/>
+              <SourceParameter reference="Parameter_4872"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_280">
               <SourceParameter reference="Metabolite_21"/>
@@ -3252,9 +3252,7 @@ Reaction scheme where the products are created from the reactants and the change
       </Reaction>
       <Reaction key="Reaction_12" name="LANCL2 activation" reversible="true" fast="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_12">
     <dcterms:created>
       <rdf:Description>
@@ -3263,7 +3261,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -3300,43 +3297,43 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_71" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_67" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_31" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_49" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_47" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4719" name="Vf" value="0.1328"/>
-          <Constant key="Parameter_4718" name="exp1" value="1.643"/>
-          <Constant key="Parameter_4717" name="K1" value="0.06395"/>
-          <Constant key="Parameter_4716" name="Vr" value="0.1835"/>
-          <Constant key="Parameter_4715" name="B" value="0.1"/>
+          <Constant key="Parameter_4873" name="Vf" value="0.1328"/>
+          <Constant key="Parameter_4876" name="exp1" value="1.643"/>
+          <Constant key="Parameter_4875" name="K1" value="0.06395"/>
+          <Constant key="Parameter_4874" name="Vr" value="0.1835"/>
+          <Constant key="Parameter_4877" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_50">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_351">
-              <SourceParameter reference="Parameter_4719"/>
+              <SourceParameter reference="Parameter_4873"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_347">
-              <SourceParameter reference="Metabolite_71"/>
+              <SourceParameter reference="Metabolite_67"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_323">
-              <SourceParameter reference="Parameter_4715"/>
+              <SourceParameter reference="Parameter_4877"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_352">
-              <SourceParameter reference="Metabolite_49"/>
+              <SourceParameter reference="Metabolite_47"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_354">
-              <SourceParameter reference="Parameter_4718"/>
+              <SourceParameter reference="Parameter_4876"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_356">
-              <SourceParameter reference="Parameter_4717"/>
+              <SourceParameter reference="Parameter_4875"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_358">
-              <SourceParameter reference="Parameter_4716"/>
+              <SourceParameter reference="Parameter_4874"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_360">
               <SourceParameter reference="Metabolite_31"/>
@@ -3392,7 +3389,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_73" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_69" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_23" stoichiometry="1"/>
@@ -3401,39 +3398,37 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_29" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4714" name="Vf" value="0.03888"/>
-          <Constant key="Parameter_4713" name="exp1" value="1.049"/>
-          <Constant key="Parameter_4712" name="K" value="0.13325"/>
-          <Constant key="Parameter_4711" name="B" value="0.1"/>
+          <Constant key="Parameter_4878" name="Vf" value="0.03888"/>
+          <Constant key="Parameter_4879" name="exp1" value="1.049"/>
+          <Constant key="Parameter_4880" name="K" value="0.13325"/>
+          <Constant key="Parameter_4881" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_49">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_346">
-              <SourceParameter reference="Parameter_4714"/>
+              <SourceParameter reference="Parameter_4878"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_331">
-              <SourceParameter reference="Metabolite_73"/>
+              <SourceParameter reference="Metabolite_69"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_316">
-              <SourceParameter reference="Parameter_4711"/>
+              <SourceParameter reference="Parameter_4881"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_340">
               <SourceParameter reference="Metabolite_29"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_348">
-              <SourceParameter reference="Parameter_4713"/>
+              <SourceParameter reference="Parameter_4879"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_350">
-              <SourceParameter reference="Parameter_4712"/>
+              <SourceParameter reference="Parameter_4880"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
       </Reaction>
       <Reaction key="Reaction_14" name="IFNg production" reversible="false" fast="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_14">
     <dcterms:created>
       <rdf:Description>
@@ -3442,7 +3437,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -3499,68 +3493,66 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_101" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_97" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_99" stoichiometry="1"/>
+          <Product metabolite="Metabolite_95" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_19" stoichiometry="1"/>
           <Modifier metabolite="Metabolite_33" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_47" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_45" stoichiometry="1"/>
           <Modifier metabolite="Metabolite_29" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4710" name="Vf" value="0.467575"/>
-          <Constant key="Parameter_4709" name="K1" value="0.06755"/>
-          <Constant key="Parameter_4708" name="K2" value="0.0785"/>
-          <Constant key="Parameter_4707" name="exp1" value="1.151"/>
-          <Constant key="Parameter_4706" name="K" value="0.06035"/>
-          <Constant key="Parameter_4705" name="K3" value="0.0692"/>
+          <Constant key="Parameter_4882" name="Vf" value="0.467575"/>
+          <Constant key="Parameter_4883" name="K1" value="0.06755"/>
+          <Constant key="Parameter_4884" name="K2" value="0.0785"/>
+          <Constant key="Parameter_4885" name="exp1" value="1.151"/>
+          <Constant key="Parameter_4886" name="K" value="0.06035"/>
+          <Constant key="Parameter_4887" name="K3" value="0.0692"/>
         </ListOfConstants>
         <KineticLaw function="Function_46">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_322">
-              <SourceParameter reference="Parameter_4710"/>
+              <SourceParameter reference="Parameter_4882"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_318">
-              <SourceParameter reference="Metabolite_101"/>
+              <SourceParameter reference="Metabolite_97"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_314">
-              <SourceParameter reference="Parameter_4706"/>
+              <SourceParameter reference="Parameter_4886"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_292">
-              <SourceParameter reference="Parameter_4707"/>
+              <SourceParameter reference="Parameter_4885"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_301">
               <SourceParameter reference="Metabolite_19"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_309">
-              <SourceParameter reference="Parameter_4705"/>
+              <SourceParameter reference="Parameter_4887"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_324">
               <SourceParameter reference="Metabolite_33"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_326">
-              <SourceParameter reference="Metabolite_47"/>
+              <SourceParameter reference="Metabolite_45"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_328">
-              <SourceParameter reference="Parameter_4709"/>
+              <SourceParameter reference="Parameter_4883"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_330">
               <SourceParameter reference="Metabolite_29"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_332">
-              <SourceParameter reference="Parameter_4708"/>
+              <SourceParameter reference="Parameter_4884"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
       </Reaction>
       <Reaction key="Reaction_15" name="Mreg differentiation" reversible="false" fast="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_15">
     <dcterms:created>
       <rdf:Description>
@@ -3569,7 +3561,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -3630,7 +3621,7 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_89" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_85" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
           <Product metabolite="Metabolite_33" stoichiometry="1"/>
@@ -3641,41 +3632,41 @@ Reaction scheme where the products are created from the reactants and the change
           <Modifier metabolite="Metabolite_25" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4704" name="K" value="1.49275"/>
-          <Constant key="Parameter_4703" name="K1" value="0.08075"/>
-          <Constant key="Parameter_4702" name="K2" value="0.1589"/>
-          <Constant key="Parameter_4701" name="exp1" value="1.001"/>
-          <Constant key="Parameter_4700" name="exp2" value="2.428"/>
-          <Constant key="Parameter_4699" name="exp3" value="1.001"/>
+          <Constant key="Parameter_4888" name="K" value="1.49275"/>
+          <Constant key="Parameter_4889" name="K1" value="0.08075"/>
+          <Constant key="Parameter_4890" name="K2" value="0.1589"/>
+          <Constant key="Parameter_4891" name="exp1" value="1.001"/>
+          <Constant key="Parameter_4892" name="exp2" value="2.428"/>
+          <Constant key="Parameter_4915" name="exp3" value="1.001"/>
         </ListOfConstants>
         <KineticLaw function="Function_47">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_333">
-              <SourceParameter reference="Parameter_4704"/>
+              <SourceParameter reference="Parameter_4888"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_329">
               <SourceParameter reference="Metabolite_1"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_325">
-              <SourceParameter reference="Parameter_4701"/>
+              <SourceParameter reference="Parameter_4891"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_305">
               <SourceParameter reference="Metabolite_19"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_312">
-              <SourceParameter reference="Parameter_4700"/>
+              <SourceParameter reference="Parameter_4892"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_320">
               <SourceParameter reference="Metabolite_25"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_335">
-              <SourceParameter reference="Parameter_4699"/>
+              <SourceParameter reference="Parameter_4915"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_337">
-              <SourceParameter reference="Parameter_4703"/>
+              <SourceParameter reference="Parameter_4889"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_339">
-              <SourceParameter reference="Parameter_4702"/>
+              <SourceParameter reference="Parameter_4890"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_341">
               <SourceParameter reference="Metabolite_33"/>
@@ -3730,55 +3721,53 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_63" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_61" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_41" stoichiometry="1"/>
+          <Product metabolite="Metabolite_39" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_31" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4698" name="Vf" value="0.1235"/>
-          <Constant key="Parameter_4697" name="exp1" value="1.349"/>
-          <Constant key="Parameter_4696" name="K1" value="0.1536"/>
-          <Constant key="Parameter_4695" name="Vr" value="0.19115"/>
-          <Constant key="Parameter_4694" name="B" value="0.1"/>
+          <Constant key="Parameter_4916" name="Vf" value="0.1235"/>
+          <Constant key="Parameter_4917" name="exp1" value="1.349"/>
+          <Constant key="Parameter_4918" name="K1" value="0.1536"/>
+          <Constant key="Parameter_4919" name="Vr" value="0.19115"/>
+          <Constant key="Parameter_4920" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_50">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_351">
-              <SourceParameter reference="Parameter_4698"/>
+              <SourceParameter reference="Parameter_4916"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_347">
-              <SourceParameter reference="Metabolite_63"/>
+              <SourceParameter reference="Metabolite_61"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_323">
-              <SourceParameter reference="Parameter_4694"/>
+              <SourceParameter reference="Parameter_4920"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_352">
               <SourceParameter reference="Metabolite_31"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_354">
-              <SourceParameter reference="Parameter_4697"/>
+              <SourceParameter reference="Parameter_4917"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_356">
-              <SourceParameter reference="Parameter_4696"/>
+              <SourceParameter reference="Parameter_4918"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_358">
-              <SourceParameter reference="Parameter_4695"/>
+              <SourceParameter reference="Parameter_4919"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_360">
-              <SourceParameter reference="Metabolite_41"/>
+              <SourceParameter reference="Metabolite_39"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
       </Reaction>
       <Reaction key="Reaction_17" name="Traf2 activation" reversible="true" fast="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_17">
     <dcterms:created>
       <rdf:Description>
@@ -3787,7 +3776,6 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfUnsupportedAnnotations>
           <UnsupportedAnnotation name="http://www.sbml.org/2001/ns/celldesigner">
@@ -3824,58 +3812,58 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_83" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_79" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_39" stoichiometry="1"/>
+          <Product metabolite="Metabolite_37" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_41" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_99" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_37" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_39" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_95" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_35" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4693" name="Vf" value="0.984949"/>
-          <Constant key="Parameter_4692" name="exp1" value="1.493"/>
-          <Constant key="Parameter_4691" name="K1" value="0.06815"/>
-          <Constant key="Parameter_4690" name="Vr" value="0.262"/>
-          <Constant key="Parameter_4689" name="K2" value="0.01646"/>
-          <Constant key="Parameter_4688" name="K" value="0.09545"/>
+          <Constant key="Parameter_4921" name="Vf" value="0.984949"/>
+          <Constant key="Parameter_4922" name="exp1" value="1.493"/>
+          <Constant key="Parameter_4923" name="K1" value="0.06815"/>
+          <Constant key="Parameter_4924" name="Vr" value="0.262"/>
+          <Constant key="Parameter_4925" name="K2" value="0.01646"/>
+          <Constant key="Parameter_4926" name="K" value="0.09545"/>
         </ListOfConstants>
         <KineticLaw function="Function_44">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_298">
-              <SourceParameter reference="Parameter_4693"/>
+              <SourceParameter reference="Parameter_4921"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_294">
-              <SourceParameter reference="Metabolite_83"/>
+              <SourceParameter reference="Metabolite_79"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_290">
-              <SourceParameter reference="Parameter_4688"/>
+              <SourceParameter reference="Parameter_4926"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_286">
-              <SourceParameter reference="Parameter_4692"/>
+              <SourceParameter reference="Parameter_4922"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_283">
-              <SourceParameter reference="Metabolite_41"/>
+              <SourceParameter reference="Metabolite_39"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_300">
-              <SourceParameter reference="Metabolite_99"/>
+              <SourceParameter reference="Metabolite_95"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_302">
-              <SourceParameter reference="Parameter_4691"/>
+              <SourceParameter reference="Parameter_4923"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_304">
-              <SourceParameter reference="Metabolite_37"/>
+              <SourceParameter reference="Metabolite_35"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_306">
-              <SourceParameter reference="Parameter_4689"/>
+              <SourceParameter reference="Parameter_4925"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_308">
-              <SourceParameter reference="Parameter_4690"/>
+              <SourceParameter reference="Parameter_4924"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_310">
-              <SourceParameter reference="Metabolite_39"/>
+              <SourceParameter reference="Metabolite_37"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -3927,46 +3915,46 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_75" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_71" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_43" stoichiometry="1"/>
+          <Product metabolite="Metabolite_41" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_31" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4687" name="Vf" value="0.124465"/>
-          <Constant key="Parameter_4686" name="exp1" value="1.8185"/>
-          <Constant key="Parameter_4685" name="K1" value="0.05315"/>
-          <Constant key="Parameter_4684" name="Vr" value="0.59075"/>
-          <Constant key="Parameter_4683" name="B" value="0.1"/>
+          <Constant key="Parameter_4927" name="Vf" value="0.124465"/>
+          <Constant key="Parameter_4928" name="exp1" value="1.8185"/>
+          <Constant key="Parameter_4929" name="K1" value="0.05315"/>
+          <Constant key="Parameter_4804" name="Vr" value="0.59075"/>
+          <Constant key="Parameter_4805" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_50">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_351">
-              <SourceParameter reference="Parameter_4687"/>
+              <SourceParameter reference="Parameter_4927"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_347">
-              <SourceParameter reference="Metabolite_75"/>
+              <SourceParameter reference="Metabolite_71"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_323">
-              <SourceParameter reference="Parameter_4683"/>
+              <SourceParameter reference="Parameter_4805"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_352">
               <SourceParameter reference="Metabolite_31"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_354">
-              <SourceParameter reference="Parameter_4686"/>
+              <SourceParameter reference="Parameter_4928"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_356">
-              <SourceParameter reference="Parameter_4685"/>
+              <SourceParameter reference="Parameter_4929"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_358">
-              <SourceParameter reference="Parameter_4684"/>
+              <SourceParameter reference="Parameter_4804"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_360">
-              <SourceParameter reference="Metabolite_43"/>
+              <SourceParameter reference="Metabolite_41"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -4017,42 +4005,42 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_65" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_63" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_45" stoichiometry="1"/>
+          <Product metabolite="Metabolite_43" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_43" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_41" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4682" name="Vf" value="0.10955"/>
-          <Constant key="Parameter_4681" name="exp1" value="1.193"/>
-          <Constant key="Parameter_4680" name="K1" value="0.0836"/>
-          <Constant key="Parameter_4679" name="Vr" value="0.31685"/>
+          <Constant key="Parameter_4806" name="Vf" value="0.10955"/>
+          <Constant key="Parameter_4807" name="exp1" value="1.193"/>
+          <Constant key="Parameter_4808" name="K1" value="0.0836"/>
+          <Constant key="Parameter_4809" name="Vr" value="0.31685"/>
         </ListOfConstants>
         <KineticLaw function="Function_48">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_342">
-              <SourceParameter reference="Parameter_4682"/>
+              <SourceParameter reference="Parameter_4806"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_338">
-              <SourceParameter reference="Metabolite_65"/>
+              <SourceParameter reference="Metabolite_63"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_334">
-              <SourceParameter reference="Metabolite_43"/>
+              <SourceParameter reference="Metabolite_41"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_275">
-              <SourceParameter reference="Parameter_4681"/>
+              <SourceParameter reference="Parameter_4807"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_327">
-              <SourceParameter reference="Parameter_4680"/>
+              <SourceParameter reference="Parameter_4808"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_343">
-              <SourceParameter reference="Parameter_4679"/>
+              <SourceParameter reference="Parameter_4809"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_345">
-              <SourceParameter reference="Metabolite_45"/>
+              <SourceParameter reference="Metabolite_43"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -4116,54 +4104,54 @@ Reaction scheme where the products are created from the reactants and the change
           </UnsupportedAnnotation>
         </ListOfUnsupportedAnnotations>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_79" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_75" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_47" stoichiometry="1"/>
+          <Product metabolite="Metabolite_45" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_43" stoichiometry="1"/>
-          <Modifier metabolite="Metabolite_39" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_41" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_37" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4678" name="Vf" value="0.139789"/>
-          <Constant key="Parameter_4677" name="K" value="0.316437"/>
-          <Constant key="Parameter_4676" name="K1" value="0.015346"/>
-          <Constant key="Parameter_4675" name="Vr" value="0.481511"/>
-          <Constant key="Parameter_4674" name="exp1" value="1.73699"/>
-          <Constant key="Parameter_4673" name="B" value="0.1"/>
+          <Constant key="Parameter_4810" name="Vf" value="0.139789"/>
+          <Constant key="Parameter_4811" name="K" value="0.316437"/>
+          <Constant key="Parameter_4812" name="K1" value="0.015346"/>
+          <Constant key="Parameter_4813" name="Vr" value="0.481511"/>
+          <Constant key="Parameter_4814" name="exp1" value="1.73699"/>
+          <Constant key="Parameter_4930" name="B" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_51">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_361">
-              <SourceParameter reference="Parameter_4678"/>
+              <SourceParameter reference="Parameter_4810"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_357">
-              <SourceParameter reference="Metabolite_79"/>
+              <SourceParameter reference="Metabolite_75"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_353">
-              <SourceParameter reference="Parameter_4677"/>
+              <SourceParameter reference="Parameter_4811"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_336">
-              <SourceParameter reference="Parameter_4674"/>
+              <SourceParameter reference="Parameter_4814"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_362">
-              <SourceParameter reference="Metabolite_43"/>
+              <SourceParameter reference="Metabolite_41"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_364">
-              <SourceParameter reference="Parameter_4673"/>
+              <SourceParameter reference="Parameter_4930"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_366">
-              <SourceParameter reference="Metabolite_39"/>
+              <SourceParameter reference="Metabolite_37"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_368">
-              <SourceParameter reference="Parameter_4676"/>
+              <SourceParameter reference="Parameter_4812"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_370">
-              <SourceParameter reference="Parameter_4675"/>
+              <SourceParameter reference="Parameter_4813"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_372">
-              <SourceParameter reference="Metabolite_47"/>
+              <SourceParameter reference="Metabolite_45"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -4184,12 +4172,12 @@ Reaction scheme where the products are created from the reactants and the change
           <Substrate metabolite="Metabolite_11" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfConstants>
-          <Constant key="Parameter_4672" name="k1" value="0.1"/>
+          <Constant key="Parameter_4931" name="k1" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4672"/>
+              <SourceParameter reference="Parameter_4931"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
               <SourceParameter reference="Metabolite_11"/>
@@ -4213,12 +4201,12 @@ Reaction scheme where the products are created from the reactants and the change
           <Substrate metabolite="Metabolite_3" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfConstants>
-          <Constant key="Parameter_4671" name="k1" value="0.1"/>
+          <Constant key="Parameter_4697" name="k1" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4671"/>
+              <SourceParameter reference="Parameter_4697"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
               <SourceParameter reference="Metabolite_3"/>
@@ -4242,12 +4230,12 @@ Reaction scheme where the products are created from the reactants and the change
           <Substrate metabolite="Metabolite_17" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfConstants>
-          <Constant key="Parameter_4670" name="k1" value="0.1"/>
+          <Constant key="Parameter_4696" name="k1" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4670"/>
+              <SourceParameter reference="Parameter_4696"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
               <SourceParameter reference="Metabolite_17"/>
@@ -4257,9 +4245,7 @@ Reaction scheme where the products are created from the reactants and the change
       </Reaction>
       <Reaction key="Reaction_24" name="IFNg degradation" reversible="false" fast="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_24">
     <dcterms:created>
       <rdf:Description>
@@ -4268,21 +4254,20 @@ Reaction scheme where the products are created from the reactants and the change
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_99" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_95" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfConstants>
-          <Constant key="Parameter_4669" name="k1" value="0.1"/>
+          <Constant key="Parameter_4695" name="k1" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4669"/>
+              <SourceParameter reference="Parameter_4695"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
-              <SourceParameter reference="Metabolite_99"/>
+              <SourceParameter reference="Metabolite_95"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -4303,12 +4288,12 @@ Reaction scheme where the products are created from the reactants and the change
           <Substrate metabolite="Metabolite_23" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfConstants>
-          <Constant key="Parameter_4668" name="k1" value="0.1"/>
+          <Constant key="Parameter_4694" name="k1" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4668"/>
+              <SourceParameter reference="Parameter_4694"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
               <SourceParameter reference="Metabolite_23"/>
@@ -4329,46 +4314,46 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_93" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_89" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_91" stoichiometry="1"/>
+          <Product metabolite="Metabolite_87" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
           <Modifier metabolite="Metabolite_13" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4667" name="Vf" value="0.1"/>
-          <Constant key="Parameter_4666" name="B" value="0.1"/>
-          <Constant key="Parameter_4665" name="exp1" value="1.1"/>
-          <Constant key="Parameter_4664" name="K1" value="0.0743"/>
-          <Constant key="Parameter_4663" name="Vr" value="0.114"/>
+          <Constant key="Parameter_4693" name="Vf" value="0.1"/>
+          <Constant key="Parameter_4692" name="B" value="0.1"/>
+          <Constant key="Parameter_4691" name="exp1" value="1.1"/>
+          <Constant key="Parameter_4690" name="K1" value="0.0743"/>
+          <Constant key="Parameter_4689" name="Vr" value="0.114"/>
         </ListOfConstants>
         <KineticLaw function="Function_50">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_351">
-              <SourceParameter reference="Parameter_4667"/>
+              <SourceParameter reference="Parameter_4693"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_347">
-              <SourceParameter reference="Metabolite_93"/>
+              <SourceParameter reference="Metabolite_89"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_323">
-              <SourceParameter reference="Parameter_4666"/>
+              <SourceParameter reference="Parameter_4692"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_352">
               <SourceParameter reference="Metabolite_13"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_354">
-              <SourceParameter reference="Parameter_4665"/>
+              <SourceParameter reference="Parameter_4691"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_356">
-              <SourceParameter reference="Parameter_4664"/>
+              <SourceParameter reference="Parameter_4690"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_358">
-              <SourceParameter reference="Parameter_4663"/>
+              <SourceParameter reference="Parameter_4689"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_360">
-              <SourceParameter reference="Metabolite_91"/>
+              <SourceParameter reference="Metabolite_87"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -4386,39 +4371,39 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_97" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_93" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfProducts>
-          <Product metabolite="Metabolite_95" stoichiometry="1"/>
+          <Product metabolite="Metabolite_91" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfModifiers>
-          <Modifier metabolite="Metabolite_91" stoichiometry="1"/>
+          <Modifier metabolite="Metabolite_87" stoichiometry="1"/>
         </ListOfModifiers>
         <ListOfConstants>
-          <Constant key="Parameter_4662" name="Vf" value="0.126"/>
-          <Constant key="Parameter_4661" name="B" value="0.1"/>
-          <Constant key="Parameter_4660" name="exp1" value="1"/>
-          <Constant key="Parameter_4659" name="K" value="0.0678"/>
+          <Constant key="Parameter_4688" name="Vf" value="0.126"/>
+          <Constant key="Parameter_4687" name="B" value="0.1"/>
+          <Constant key="Parameter_4686" name="exp1" value="1"/>
+          <Constant key="Parameter_4685" name="K" value="0.0678"/>
         </ListOfConstants>
         <KineticLaw function="Function_49">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_346">
-              <SourceParameter reference="Parameter_4662"/>
+              <SourceParameter reference="Parameter_4688"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_331">
-              <SourceParameter reference="Metabolite_97"/>
+              <SourceParameter reference="Metabolite_93"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_316">
-              <SourceParameter reference="Parameter_4661"/>
+              <SourceParameter reference="Parameter_4687"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_340">
-              <SourceParameter reference="Metabolite_91"/>
+              <SourceParameter reference="Metabolite_87"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_348">
-              <SourceParameter reference="Parameter_4660"/>
+              <SourceParameter reference="Parameter_4686"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_350">
-              <SourceParameter reference="Parameter_4659"/>
+              <SourceParameter reference="Parameter_4685"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -4436,25 +4421,25 @@ Reaction scheme where the products are created from the reactants and the change
 </rdf:RDF>
         </MiriamAnnotation>
         <ListOfSubstrates>
-          <Substrate metabolite="Metabolite_95" stoichiometry="1"/>
+          <Substrate metabolite="Metabolite_91" stoichiometry="1"/>
         </ListOfSubstrates>
         <ListOfConstants>
-          <Constant key="Parameter_4658" name="k1" value="0.1"/>
+          <Constant key="Parameter_4684" name="k1" value="0.1"/>
         </ListOfConstants>
         <KineticLaw function="Function_13">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_81">
-              <SourceParameter reference="Parameter_4658"/>
+              <SourceParameter reference="Parameter_4684"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
-              <SourceParameter reference="Metabolite_95"/>
+              <SourceParameter reference="Metabolite_91"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
       </Reaction>
     </ListOfReactions>
-    <ListOfModelParameterSets activeSet="ModelParameterSet_1">
-      <ModelParameterSet key="ModelParameterSet_1" name="Initial State">
+    <ListOfModelParameterSets activeSet="ModelParameterSet_0">
+      <ModelParameterSet key="ModelParameterSet_0" name="Initial State">
         <ModelParameterGroup cn="String=Initial Time" type="Group">
           <ModelParameter cn="CN=Root,Model=NoName" value="0" type="Model" simulationType="time"/>
         </ModelParameterGroup>
@@ -4466,7 +4451,7 @@ Reaction scheme where the products are created from the reactants and the change
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[DAP12]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ERK]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Ca2+]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[AC]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[AC]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[cAMP]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[PKA]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CREB]" value="0" type="Species" simulationType="reactions"/>
@@ -4475,42 +4460,42 @@ Reaction scheme where the products are created from the reactants and the change
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Akt]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[M-CSF]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CSF1R]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[SIRPb1]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[SIRPb1]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFAT]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[LANCL2]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mreg]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP]" value="1.5055354475e+025" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP]" value="1.5055354475e+25" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Traf2]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Fbxo7]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NCOR2]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[FOXP1]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFkB]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ABA]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pAkt]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[eCa2+]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[iCa2+]" value="3.011070895e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCREB]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCX3CR1]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pERK]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFbxo7]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFOXP1]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIL10]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pLANCL2]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pM-CSF]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNCOR2]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFAT]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFkB]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pPKA]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pTraf2]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIL10R]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCSF1R]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mono]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ABA]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pAkt]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[eCa2+]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[iCa2+]" value="3.011070895e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCREB]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCX3CR1]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pERK]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFbxo7]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFOXP1]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIL10]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pLANCL2]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pM-CSF]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNCOR2]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFAT]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFkB]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pPKA]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pTraf2]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIL10R]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCSF1R]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mono]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[KLF4]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pKLF4]" value="6.02214179e+023" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pKLF4]" value="6.02214179e+23" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CX3CL1]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCX3CL1]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCX3CL1]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IFNg]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIFNg]" value="6.02214179e+023" type="Species" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIFNg]" value="6.02214179e+23" type="Species" simulationType="fixed"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Global Quantities" type="Group">
         </ModelParameterGroup>
@@ -4688,7 +4673,7 @@ Reaction scheme where the products are created from the reactants and the change
             <ModelParameter cn="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=Vf" value="0.1" type="ReactionParameter" simulationType="fixed"/>
             <ModelParameter cn="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=B" value="0.1" type="ReactionParameter" simulationType="fixed"/>
             <ModelParameter cn="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=exp1" value="1.1" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=K1" value="0.07430000000000001" type="ReactionParameter" simulationType="fixed"/>
+            <ModelParameter cn="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=K1" value="0.0743" type="ReactionParameter" simulationType="fixed"/>
             <ModelParameter cn="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=Vr" value="0.114" type="ReactionParameter" simulationType="fixed"/>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=NoName,Vector=Reactions[CX3CL1 activation]" type="Reaction">
@@ -4704,13 +4689,13 @@ Reaction scheme where the products are created from the reactants and the change
       </ModelParameterSet>
     </ListOfModelParameterSets>
     <StateTemplate>
-      <StateTemplateVariable objectReference="Model_3"/>
+      <StateTemplateVariable objectReference="Model_4"/>
       <StateTemplateVariable objectReference="Metabolite_3"/>
       <StateTemplateVariable objectReference="Metabolite_11"/>
       <StateTemplateVariable objectReference="Metabolite_17"/>
       <StateTemplateVariable objectReference="Metabolite_23"/>
+      <StateTemplateVariable objectReference="Metabolite_91"/>
       <StateTemplateVariable objectReference="Metabolite_95"/>
-      <StateTemplateVariable objectReference="Metabolite_99"/>
       <StateTemplateVariable objectReference="Metabolite_5"/>
       <StateTemplateVariable objectReference="Metabolite_19"/>
       <StateTemplateVariable objectReference="Metabolite_21"/>
@@ -4719,56 +4704,56 @@ Reaction scheme where the products are created from the reactants and the change
       <StateTemplateVariable objectReference="Metabolite_29"/>
       <StateTemplateVariable objectReference="Metabolite_31"/>
       <StateTemplateVariable objectReference="Metabolite_33"/>
+      <StateTemplateVariable objectReference="Metabolite_37"/>
       <StateTemplateVariable objectReference="Metabolite_39"/>
       <StateTemplateVariable objectReference="Metabolite_41"/>
       <StateTemplateVariable objectReference="Metabolite_43"/>
       <StateTemplateVariable objectReference="Metabolite_45"/>
-      <StateTemplateVariable objectReference="Metabolite_47"/>
-      <StateTemplateVariable objectReference="Metabolite_53"/>
-      <StateTemplateVariable objectReference="Metabolite_57"/>
-      <StateTemplateVariable objectReference="Metabolite_81"/>
-      <StateTemplateVariable objectReference="Metabolite_91"/>
-      <StateTemplateVariable objectReference="Metabolite_13"/>
-      <StateTemplateVariable objectReference="Metabolite_77"/>
-      <StateTemplateVariable objectReference="Metabolite_15"/>
+      <StateTemplateVariable objectReference="Metabolite_51"/>
       <StateTemplateVariable objectReference="Metabolite_55"/>
+      <StateTemplateVariable objectReference="Metabolite_77"/>
+      <StateTemplateVariable objectReference="Metabolite_87"/>
+      <StateTemplateVariable objectReference="Metabolite_13"/>
+      <StateTemplateVariable objectReference="Metabolite_73"/>
+      <StateTemplateVariable objectReference="Metabolite_15"/>
+      <StateTemplateVariable objectReference="Metabolite_53"/>
+      <StateTemplateVariable objectReference="Metabolite_67"/>
       <StateTemplateVariable objectReference="Metabolite_71"/>
+      <StateTemplateVariable objectReference="Metabolite_59"/>
       <StateTemplateVariable objectReference="Metabolite_75"/>
-      <StateTemplateVariable objectReference="Metabolite_61"/>
+      <StateTemplateVariable objectReference="Metabolite_63"/>
       <StateTemplateVariable objectReference="Metabolite_79"/>
-      <StateTemplateVariable objectReference="Metabolite_65"/>
+      <StateTemplateVariable objectReference="Metabolite_81"/>
       <StateTemplateVariable objectReference="Metabolite_83"/>
       <StateTemplateVariable objectReference="Metabolite_85"/>
-      <StateTemplateVariable objectReference="Metabolite_87"/>
+      <StateTemplateVariable objectReference="Metabolite_49"/>
       <StateTemplateVariable objectReference="Metabolite_89"/>
-      <StateTemplateVariable objectReference="Metabolite_51"/>
-      <StateTemplateVariable objectReference="Metabolite_93"/>
-      <StateTemplateVariable objectReference="Metabolite_59"/>
-      <StateTemplateVariable objectReference="Metabolite_63"/>
+      <StateTemplateVariable objectReference="Metabolite_57"/>
+      <StateTemplateVariable objectReference="Metabolite_61"/>
       <StateTemplateVariable objectReference="Metabolite_9"/>
       <StateTemplateVariable objectReference="Metabolite_27"/>
-      <StateTemplateVariable objectReference="Metabolite_49"/>
-      <StateTemplateVariable objectReference="Metabolite_67"/>
-      <StateTemplateVariable objectReference="Metabolite_73"/>
+      <StateTemplateVariable objectReference="Metabolite_47"/>
+      <StateTemplateVariable objectReference="Metabolite_65"/>
+      <StateTemplateVariable objectReference="Metabolite_69"/>
+      <StateTemplateVariable objectReference="Metabolite_93"/>
       <StateTemplateVariable objectReference="Metabolite_97"/>
-      <StateTemplateVariable objectReference="Metabolite_101"/>
       <StateTemplateVariable objectReference="Metabolite_7"/>
-      <StateTemplateVariable objectReference="Metabolite_37"/>
+      <StateTemplateVariable objectReference="Metabolite_35"/>
       <StateTemplateVariable objectReference="Compartment_1"/>
     </StateTemplate>
     <InitialState type="initialState">
-      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6.02214179e+023 6.02214179e+023 6.02214179e+023 0 0 6.02214179e+023 0 3.011070895e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 6.02214179e+023 0 1.5055354475e+025 1 
+      0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 6.02214179e+23 6.02214179e+23 6.02214179e+23 0 0 6.02214179e+23 0 3.011070895e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 6.02214179e+23 0 1.5055354475e+25 1 
     </InitialState>
   </Model>
   <ListOfTasks>
-    <Task key="Task_14" name="Steady-State" type="steadyState" scheduled="false" updateModel="false">
-      <Report reference="Report_9" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_12" name="Steady-State" type="steadyState" scheduled="false" updateModel="false">
+      <Report reference="Report_8" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="JacobianRequested" type="bool" value="1"/>
         <Parameter name="StabilityAnalysisRequested" type="bool" value="1"/>
       </Problem>
       <Method name="Enhanced Newton" type="EnhancedNewton">
-        <Parameter name="Resolution" type="unsignedFloat" value="1e-009"/>
+        <Parameter name="Resolution" type="unsignedFloat" value="1e-09"/>
         <Parameter name="Derivation Factor" type="unsignedFloat" value="0.001"/>
         <Parameter name="Use Newton" type="bool" value="1"/>
         <Parameter name="Use Integration" type="bool" value="1"/>
@@ -4779,7 +4764,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Parameter name="Maximum duration for backward integration" type="unsignedFloat" value="1000000"/>
       </Method>
     </Task>
-    <Task key="Task_15" name="Time-Course" type="timeCourse" scheduled="false" updateModel="false">
+    <Task key="Task_11" name="Time-Course" type="timeCourse" scheduled="false" updateModel="false">
       <Problem>
         <Parameter name="StepNumber" type="unsignedInteger" value="80"/>
         <Parameter name="StepSize" type="float" value="1.25"/>
@@ -4791,12 +4776,12 @@ Reaction scheme where the products are created from the reactants and the change
       </Problem>
       <Method name="Deterministic (LSODA)" type="Deterministic(LSODA)">
         <Parameter name="Integrate Reduced Model" type="bool" value="0"/>
-        <Parameter name="Relative Tolerance" type="unsignedFloat" value="1e-006"/>
-        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="1e-012"/>
+        <Parameter name="Relative Tolerance" type="unsignedFloat" value="1e-06"/>
+        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="1e-12"/>
         <Parameter name="Max Internal Steps" type="unsignedInteger" value="10000"/>
       </Method>
     </Task>
-    <Task key="Task_16" name="Scan" type="scan" scheduled="false" updateModel="true">
+    <Task key="Task_10" name="Scan" type="scan" scheduled="false" updateModel="true">
       <Problem>
         <Parameter name="Subtask" type="unsignedInteger" value="1"/>
         <ParameterGroup name="ScanItems">
@@ -4809,11 +4794,11 @@ Reaction scheme where the products are created from the reactants and the change
             <Parameter name="log" type="bool" value="0"/>
           </ParameterGroup>
           <ParameterGroup name="ScanItem">
-            <Parameter name="Number of steps" type="unsignedInteger" value="10"/>
-            <Parameter name="Type" type="unsignedInteger" value="1"/>
-            <Parameter name="Object" type="cn" value="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IFNg],Reference=InitialConcentration"/>
-            <Parameter name="Minimum" type="float" value="0"/>
             <Parameter name="Maximum" type="float" value="10"/>
+            <Parameter name="Minimum" type="float" value="0"/>
+            <Parameter name="Number of steps" type="unsignedInteger" value="10"/>
+            <Parameter name="Object" type="cn" value="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IFNg],Reference=InitialConcentration"/>
+            <Parameter name="Type" type="unsignedInteger" value="1"/>
             <Parameter name="log" type="bool" value="0"/>
           </ParameterGroup>
         </ParameterGroup>
@@ -4823,15 +4808,15 @@ Reaction scheme where the products are created from the reactants and the change
       <Method name="Scan Framework" type="ScanFramework">
       </Method>
     </Task>
-    <Task key="Task_17" name="Elementary Flux Modes" type="fluxMode" scheduled="false" updateModel="false">
-      <Report reference="Report_10" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_9" name="Elementary Flux Modes" type="fluxMode" scheduled="false" updateModel="false">
+      <Report reference="Report_7" target="" append="1" confirmOverwrite="1"/>
       <Problem>
       </Problem>
       <Method name="EFM Algorithm" type="EFMAlgorithm">
       </Method>
     </Task>
-    <Task key="Task_18" name="Optimization" type="optimization" scheduled="false" updateModel="false">
-      <Report reference="Report_11" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_8" name="Optimization" type="optimization" scheduled="false" updateModel="false">
+      <Report reference="Report_6" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="Subtask" type="cn" value="CN=Root,Vector=TaskList[Sensitivities]"/>
         <ParameterText name="ObjectiveExpression" type="expression">
@@ -5228,7 +5213,7 @@ Reaction scheme where the products are created from the reactants and the change
           <ParameterGroup name="OptimizationItem">
             <Parameter name="LowerBound" type="cn" value="0.01"/>
             <Parameter name="ObjectCN" type="cn" value="CN=Root,Model=NoName,Vector=Reactions[KLF4 activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value"/>
-            <Parameter name="StartValue" type="float" value="0.07430000000000001"/>
+            <Parameter name="StartValue" type="float" value="0.0743"/>
             <Parameter name="UpperBound" type="cn" value="1"/>
           </ParameterGroup>
           <ParameterGroup name="OptimizationItem">
@@ -5544,13 +5529,13 @@ Reaction scheme where the products are created from the reactants and the change
       <Method name="Particle Swarm" type="ParticleSwarm">
         <Parameter name="Iteration Limit" type="unsignedInteger" value="2000"/>
         <Parameter name="Swarm Size" type="unsignedInteger" value="50"/>
-        <Parameter name="Std. Deviation" type="unsignedFloat" value="1e-006"/>
+        <Parameter name="Std. Deviation" type="unsignedFloat" value="1e-06"/>
         <Parameter name="Random Number Generator" type="unsignedInteger" value="1"/>
         <Parameter name="Seed" type="unsignedInteger" value="0"/>
       </Method>
     </Task>
-    <Task key="Task_19" name="Parameter Estimation" type="parameterFitting" scheduled="false" updateModel="false">
-      <Report reference="Report_12" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_7" name="Parameter Estimation" type="parameterFitting" scheduled="false" updateModel="false">
+      <Report reference="Report_5" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="Maximize" type="bool" value="0"/>
         <Parameter name="Randomize Start Values" type="bool" value="0"/>
@@ -5576,17 +5561,19 @@ Reaction scheme where the products are created from the reactants and the change
         <Parameter name="Seed" type="unsignedInteger" value="0"/>
       </Method>
     </Task>
-    <Task key="Task_20" name="Metabolic Control Analysis" type="metabolicControlAnalysis" scheduled="false" updateModel="false">
-      <Report reference="Report_13" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_6" name="Metabolic Control Analysis" type="metabolicControlAnalysis" scheduled="false" updateModel="false">
+      <Report reference="Report_4" target="" append="1" confirmOverwrite="1"/>
       <Problem>
-        <Parameter name="Steady-State" type="key" value="Task_14"/>
+        <Parameter name="Steady-State" type="key" value="Task_12"/>
       </Problem>
       <Method name="MCA Method (Reder)" type="MCAMethod(Reder)">
-        <Parameter name="Modulation Factor" type="unsignedFloat" value="1e-009"/>
+        <Parameter name="Modulation Factor" type="unsignedFloat" value="1e-09"/>
+        <Parameter name="Use Reeder" type="bool" value="1"/>
+        <Parameter name="Use Smallbone" type="bool" value="1"/>
       </Method>
     </Task>
-    <Task key="Task_21" name="Lyapunov Exponents" type="lyapunovExponents" scheduled="false" updateModel="false">
-      <Report reference="Report_14" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_5" name="Lyapunov Exponents" type="lyapunovExponents" scheduled="false" updateModel="false">
+      <Report reference="Report_3" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="ExponentNumber" type="unsignedInteger" value="3"/>
         <Parameter name="DivergenceRequested" type="bool" value="1"/>
@@ -5595,13 +5582,13 @@ Reaction scheme where the products are created from the reactants and the change
       <Method name="Wolf Method" type="WolfMethod">
         <Parameter name="Orthonormalization Interval" type="unsignedFloat" value="1"/>
         <Parameter name="Overall time" type="unsignedFloat" value="1000"/>
-        <Parameter name="Relative Tolerance" type="unsignedFloat" value="1e-006"/>
-        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="1e-012"/>
+        <Parameter name="Relative Tolerance" type="unsignedFloat" value="1e-06"/>
+        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="1e-12"/>
         <Parameter name="Max Internal Steps" type="unsignedInteger" value="10000"/>
       </Method>
     </Task>
-    <Task key="Task_22" name="Time Scale Separation Analysis" type="timeScaleSeparationAnalysis" scheduled="false" updateModel="false">
-      <Report reference="Report_15" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_4" name="Time Scale Separation Analysis" type="timeScaleSeparationAnalysis" scheduled="false" updateModel="false">
+      <Report reference="Report_2" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="StepNumber" type="unsignedInteger" value="100"/>
         <Parameter name="StepSize" type="float" value="0.01"/>
@@ -5610,11 +5597,11 @@ Reaction scheme where the products are created from the reactants and the change
         <Parameter name="OutputStartTime" type="float" value="0"/>
       </Problem>
       <Method name="ILDM (LSODA,Deuflhard)" type="TimeScaleSeparation(ILDM,Deuflhard)">
-        <Parameter name="Deuflhard Tolerance" type="unsignedFloat" value="1e-006"/>
+        <Parameter name="Deuflhard Tolerance" type="unsignedFloat" value="1e-06"/>
       </Method>
     </Task>
-    <Task key="Task_23" name="Sensitivities" type="sensitivities" scheduled="false" updateModel="false">
-      <Report reference="Report_16" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_3" name="Sensitivities" type="sensitivities" scheduled="false" updateModel="false">
+      <Report reference="Report_1" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="SubtaskType" type="unsignedInteger" value="2"/>
         <ParameterGroup name="TargetFunctions">
@@ -5630,16 +5617,16 @@ Reaction scheme where the products are created from the reactants and the change
       </Problem>
       <Method name="Sensitivities Method" type="SensitivitiesMethod">
         <Parameter name="Delta factor" type="unsignedFloat" value="0.001"/>
-        <Parameter name="Delta minimum" type="unsignedFloat" value="1e-012"/>
+        <Parameter name="Delta minimum" type="unsignedFloat" value="1e-12"/>
       </Method>
     </Task>
-    <Task key="Task_24" name="Moieties" type="moieties" scheduled="false" updateModel="false">
+    <Task key="Task_2" name="Moieties" type="moieties" scheduled="false" updateModel="false">
       <Problem>
       </Problem>
       <Method name="Householder Reduction" type="Householder">
       </Method>
     </Task>
-    <Task key="Task_25" name="Cross Section" type="crosssection" scheduled="false" updateModel="false">
+    <Task key="Task_1" name="Cross Section" type="crosssection" scheduled="false" updateModel="false">
       <Problem>
         <Parameter name="StepNumber" type="unsignedInteger" value="100"/>
         <Parameter name="StepSize" type="float" value="0.01"/>
@@ -5666,22 +5653,22 @@ Reaction scheme where the products are created from the reactants and the change
       </Problem>
       <Method name="Deterministic (LSODA)" type="Deterministic(LSODA)">
         <Parameter name="Integrate Reduced Model" type="bool" value="0"/>
-        <Parameter name="Relative Tolerance" type="unsignedFloat" value="1e-006"/>
-        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="1e-012"/>
+        <Parameter name="Relative Tolerance" type="unsignedFloat" value="1e-06"/>
+        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="1e-12"/>
         <Parameter name="Max Internal Steps" type="unsignedInteger" value="10000"/>
       </Method>
     </Task>
-    <Task key="Task_26" name="Linear Noise Approximation" type="linearNoiseApproximation" scheduled="false" updateModel="false">
-      <Report reference="Report_17" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_13" name="Linear Noise Approximation" type="linearNoiseApproximation" scheduled="false" updateModel="false">
+      <Report reference="Report_0" target="" append="1" confirmOverwrite="1"/>
       <Problem>
-        <Parameter name="Steady-State" type="key" value="Task_14"/>
+        <Parameter name="Steady-State" type="key" value="Task_12"/>
       </Problem>
       <Method name="Linear Noise Approximation" type="LinearNoiseApproximation">
       </Method>
     </Task>
   </ListOfTasks>
   <ListOfReports>
-    <Report key="Report_9" name="Steady-State" taskType="steadyState" separator="&#x09;" precision="6">
+    <Report key="Report_8" name="Steady-State" taskType="steadyState" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5689,7 +5676,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Steady-State]"/>
       </Footer>
     </Report>
-    <Report key="Report_10" name="Elementary Flux Modes" taskType="fluxMode" separator="&#x09;" precision="6">
+    <Report key="Report_7" name="Elementary Flux Modes" taskType="fluxMode" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5697,7 +5684,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Elementary Flux Modes],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_11" name="Optimization" taskType="optimization" separator="&#x09;" precision="6">
+    <Report key="Report_6" name="Optimization" taskType="optimization" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5721,7 +5708,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Optimization],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_12" name="Parameter Estimation" taskType="parameterFitting" separator="&#x09;" precision="6">
+    <Report key="Report_5" name="Parameter Estimation" taskType="parameterFitting" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5745,7 +5732,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Parameter Estimation],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_13" name="Metabolic Control Analysis" taskType="metabolicControlAnalysis" separator="&#x09;" precision="6">
+    <Report key="Report_4" name="Metabolic Control Analysis" taskType="metabolicControlAnalysis" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5757,7 +5744,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Metabolic Control Analysis],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_14" name="Lyapunov Exponents" taskType="lyapunovExponents" separator="&#x09;" precision="6">
+    <Report key="Report_3" name="Lyapunov Exponents" taskType="lyapunovExponents" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5769,7 +5756,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Lyapunov Exponents],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_15" name="Time Scale Separation Analysis" taskType="timeScaleSeparationAnalysis" separator="&#x09;" precision="6">
+    <Report key="Report_2" name="Time Scale Separation Analysis" taskType="timeScaleSeparationAnalysis" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5781,7 +5768,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Time Scale Separation Analysis],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_16" name="Sensitivities" taskType="sensitivities" separator="&#x09;" precision="6">
+    <Report key="Report_1" name="Sensitivities" taskType="sensitivities" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5793,7 +5780,7 @@ Reaction scheme where the products are created from the reactants and the change
         <Object cn="CN=Root,Vector=TaskList[Sensitivities],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_17" name="Linear Noise Approximation" taskType="linearNoiseApproximation" separator="&#x09;" precision="6">
+    <Report key="Report_0" name="Linear Noise Approximation" taskType="linearNoiseApproximation" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -5807,1316 +5794,512 @@ Reaction scheme where the products are created from the reactants and the change
     </Report>
   </ListOfReports>
   <ListOfPlots>
-    <PlotSpecification name="Concentrations, Volumes, and Global Quantity Values" type="Plot2D" active="0">
+    <PlotSpecification name="Concentrations, Volumes, and Global Quantity Values" type="Plot2D" active="1">
       <Parameter name="log X" type="bool" value="0"/>
       <Parameter name="log Y" type="bool" value="0"/>
       <ListOfPlotItems>
         <PlotItem name="[CX3CR1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CX3CR1],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[DAP12]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[DAP12],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[ERK]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ERK],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[Ca2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Ca2+],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[AC]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[AC],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[cAMP]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[cAMP],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[PKA]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[PKA],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[CREB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CREB],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[IL10]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL10],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[IL10R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL10R],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Akt]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Akt],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[M-CSF]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[M-CSF],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[CSF1R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CSF1R],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[SIRPb1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[SIRPb1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[NFAT]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFAT],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[LANCL2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[LANCL2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Mreg]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mreg],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[IL1B]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL1B],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[HP]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Traf2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Traf2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Fbxo7]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Fbxo7],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[NCOR2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NCOR2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[FOXP1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[FOXP1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[NFkB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFkB],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[ABA]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ABA],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[eCa2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[eCa2+],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[iCa2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[iCa2+],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-      </ListOfPlotItems>
-    </PlotSpecification>
-    <PlotSpecification name="Concentrations, Volumes, and Global Quantity Values_1" type="Plot2D" active="0">
-      <Parameter name="log X" type="bool" value="0"/>
-      <Parameter name="log Y" type="bool" value="0"/>
-      <ListOfPlotItems>
-        <PlotItem name="[Akt]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Akt],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[CREB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CREB],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[CSF1R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CSF1R],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[CX3CR1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CX3CR1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Ca2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Ca2+],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[DAP12]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[DAP12],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[ERK]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ERK],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[FOXP1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[FOXP1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Fbxo7]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Fbxo7],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[HP]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[IL10R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL10R],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[IL10]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL10],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[IL1B]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL1B],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[LANCL2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[LANCL2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[M-CSF]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[M-CSF],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Mono]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mono],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Mreg]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mreg],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[NCOR2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NCOR2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[NFAT]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFAT],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[NFkB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFkB],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[PKA]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[PKA],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Traf2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Traf2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[cAMP]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[cAMP],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[eCa2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[eCa2+],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[iCa2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[iCa2+],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pAkt]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pAkt],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pCREB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCREB],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pCSF1R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCSF1R],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pCX3CR1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCX3CR1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pERK]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pERK],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pFOXP1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFOXP1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pFbxo7]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFbxo7],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pIL10R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIL10R],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pLANCL2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pLANCL2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pNCOR2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNCOR2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pNFAT]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFAT],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pNFkB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFkB],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pPKA]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pPKA],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[pTraf2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pTraf2],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-      </ListOfPlotItems>
-    </PlotSpecification>
-    <PlotSpecification name="Concentrations, Volumes, and Global Quantity Values_2" type="Plot2D" active="1">
-      <Parameter name="log X" type="bool" value="0"/>
-      <Parameter name="log Y" type="bool" value="0"/>
-      <ListOfPlotItems>
-        <PlotItem name="[CX3CR1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CX3CR1],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[DAP12]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[DAP12],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[ERK]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
           <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[ERK],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
-        <PlotItem name="[Ca2+]" type="Curve2D">
           <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
           <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Ca2+],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[cAMP]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[cAMP],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[PKA]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[PKA],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[CREB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CREB],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[IL10]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL10],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[IL10R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL10R],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[Akt]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Akt],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[M-CSF]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[M-CSF],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[CSF1R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CSF1R],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[NFAT]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFAT],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[LANCL2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[LANCL2],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[Mreg]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mreg],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
-        <PlotItem name="[IL1B]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
-          <Parameter name="Line type" type="unsignedInteger" value="0"/>
-          <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
-          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
-          <ListOfChannels>
-            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IL1B],Reference=Concentration"/>
-          </ListOfChannels>
-        </PlotItem>
         <PlotItem name="[HP]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[Traf2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Traf2],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[Fbxo7]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Fbxo7],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[NCOR2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NCOR2],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[FOXP1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[FOXP1],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[NFkB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[NFkB],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pAkt]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pAkt],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[eCa2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[eCa2+],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[iCa2+]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[iCa2+],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pCREB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCREB],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pCX3CR1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCX3CR1],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pERK]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pERK],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pFbxo7]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFbxo7],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pFOXP1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pFOXP1],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pLANCL2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pLANCL2],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pNCOR2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNCOR2],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pNFAT]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFAT],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pNFkB]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pNFkB],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pPKA]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pPKA],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pTraf2]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pTraf2],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pIL10R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pIL10R],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pCSF1R]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pCSF1R],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[Mono]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[Mono],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[KLF4]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[KLF4],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[pKLF4]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[pKLF4],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[CX3CL1]" type="Curve2D">
-          <Parameter name="Color" type="string" value="auto"/>
-          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
           <Parameter name="Line width" type="unsignedFloat" value="1"/>
-          <Parameter name="Recording Activity" type="string" value="during"/>
           <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
             <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[CX3CL1],Reference=Concentration"/>
+          </ListOfChannels>
+        </PlotItem>
+        <PlotItem name="[IFNg]" type="Curve2D">
+          <Parameter name="Line type" type="unsignedInteger" value="0"/>
+          <Parameter name="Line subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Line width" type="unsignedFloat" value="1"/>
+          <Parameter name="Symbol subtype" type="unsignedInteger" value="0"/>
+          <Parameter name="Color" type="string" value="auto"/>
+          <Parameter name="Recording Activity" type="string" value="during"/>
+          <ListOfChannels>
+            <ChannelSpec cn="CN=Root,Model=NoName,Reference=Time"/>
+            <ChannelSpec cn="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[IFNg],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
       </ListOfPlotItems>
@@ -7124,47 +6307,47 @@ Reaction scheme where the products are created from the reactants and the change
   </ListOfPlots>
   <GUI>
     <ListOfSliders>
-      <Slider key="Slider_0" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP],Reference=InitialConcentration" objectType="float" objectValue="25" minValue="0.5" maxValue="25" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_1" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="1.49275" minValue="0.05" maxValue="10" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_2" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.08075" minValue="0.05" maxValue="0.2" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_3" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.1589" minValue="0.05" maxValue="0.2" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_4" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[DAP12 activation],ParameterGroup=Parameters,Parameter=k1,Reference=Value" objectType="float" objectValue="0.038436" minValue="0.033775" maxValue="0.1351" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_5" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.1043" minValue="0.05215" maxValue="0.2086" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_6" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.0851" minValue="0.04255" maxValue="0.1702" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_7" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.0487012" minValue="0.0436" maxValue="0.1744" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_8" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.1607" minValue="0.08035" maxValue="0.3214" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_9" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.0115" minValue="0.50575" maxValue="2.023" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_10" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.001" minValue="0.5" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_11" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=exp2,Reference=Value" objectType="float" objectValue="2.428" minValue="1" maxValue="4" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_12" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=exp3,Reference=Value" objectType="float" objectValue="1.001" minValue="0.5" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_13" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.316437" minValue="0.164725" maxValue="0.6589" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_14" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.015346" minValue="0.01" maxValue="0.1072" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_15" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.139789" minValue="0.063025" maxValue="0.2521" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_16" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.481511" minValue="0.15325" maxValue="0.613" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_17" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.73699" minValue="0.73075" maxValue="2.923" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_18" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.09545" minValue="0.047725" maxValue="0.1909" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_19" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.06815" minValue="0.034075" maxValue="0.1363" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_20" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.01646" minValue="0.00823" maxValue="0.03292" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_21" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.984949" minValue="0.114625" maxValue="1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_22" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.262" minValue="0.131" maxValue="0.524" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_23" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.493" minValue="0.7465" maxValue="2.986" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_24" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.0536" minValue="0.0268" maxValue="0.1072" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_25" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.0593" minValue="0.02965" maxValue="0.1186" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_26" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.09815" minValue="0.049075" maxValue="0.1963" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_27" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K3,Reference=Value" objectType="float" objectValue="0.01589" minValue="0.007945" maxValue="0.03178" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_28" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="1.66808" minValue="0.0982" maxValue="6" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_29" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.193" minValue="0.5965" maxValue="2.386" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_30" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.06035" minValue="0.030175" maxValue="0.1207" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_31" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.06755" minValue="0.033775" maxValue="0.1351" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_32" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.0785" minValue="0.03925" maxValue="0.157" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_33" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K3,Reference=Value" objectType="float" objectValue="0.0692" minValue="0.0346" maxValue="0.1384" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_34" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.467575" minValue="0.05035" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_35" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.151" minValue="0.5755" maxValue="2.302" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_36" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.169469" minValue="0.159425" maxValue="0.6377" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_37" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.042" minValue="1" maxValue="4" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_38" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.188" minValue="0.05" maxValue="0.3" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_39" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=B,Reference=Value" objectType="float" objectValue="0" minValue="0" maxValue="1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_40" associatedEntityKey="Task_15" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.463615" minValue="0.02125" maxValue="0.5" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_0" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Compartments[default],Vector=Metabolites[HP],Reference=InitialConcentration" objectType="float" objectValue="25" minValue="0.5" maxValue="25" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_1" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="1.49275" minValue="0.05" maxValue="10" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_2" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.08075" minValue="0.05" maxValue="0.2" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_3" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.1589" minValue="0.05" maxValue="0.2" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_4" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[DAP12 activation],ParameterGroup=Parameters,Parameter=k1,Reference=Value" objectType="float" objectValue="0.038436" minValue="0.033775" maxValue="0.1351" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_5" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.1043" minValue="0.05215" maxValue="0.2086" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_6" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.0851" minValue="0.04255" maxValue="0.1702" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_7" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.0487012" minValue="0.0436" maxValue="0.1744" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_8" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.1607" minValue="0.08035" maxValue="0.3214" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_9" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[ERK activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.0115" minValue="0.50575" maxValue="2.023" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_10" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.001" minValue="0.5" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_11" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=exp2,Reference=Value" objectType="float" objectValue="2.428" minValue="1" maxValue="4" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_12" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Mreg differentiation],ParameterGroup=Parameters,Parameter=exp3,Reference=Value" objectType="float" objectValue="1.001" minValue="0.5" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_13" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.316437" minValue="0.164725" maxValue="0.6589" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_14" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.015346" minValue="0.01" maxValue="0.1072" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_15" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.139789" minValue="0.063025" maxValue="0.2521" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_16" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.481511" minValue="0.15325" maxValue="0.613" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_17" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[NFkB activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.73699" minValue="0.73075" maxValue="2.923" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_18" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.09545" minValue="0.047725" maxValue="0.1909" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_19" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.06815" minValue="0.034075" maxValue="0.1363" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_20" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.01646" minValue="0.00823" maxValue="0.03292" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_21" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.984949" minValue="0.114625" maxValue="1" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_22" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.262" minValue="0.131" maxValue="0.524" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_23" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[Traf2 activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.493" minValue="0.7465" maxValue="2.986" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_24" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.0536" minValue="0.0268" maxValue="0.1072" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_25" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.0593" minValue="0.02965" maxValue="0.1186" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_26" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.09815" minValue="0.049075" maxValue="0.1963" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_27" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=K3,Reference=Value" objectType="float" objectValue="0.01589" minValue="0.007945" maxValue="0.03178" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_28" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="1.66808" minValue="0.0982" maxValue="6" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_29" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10 production],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.193" minValue="0.5965" maxValue="2.386" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_30" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K,Reference=Value" objectType="float" objectValue="0.06035" minValue="0.030175" maxValue="0.1207" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_31" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.06755" minValue="0.033775" maxValue="0.1351" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_32" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K2,Reference=Value" objectType="float" objectValue="0.0785" minValue="0.03925" maxValue="0.157" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_33" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=K3,Reference=Value" objectType="float" objectValue="0.0692" minValue="0.0346" maxValue="0.1384" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_34" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.467575" minValue="0.05035" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_35" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IFNg production],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.151" minValue="0.5755" maxValue="2.302" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_36" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=Vf,Reference=Value" objectType="float" objectValue="0.169469" minValue="0.159425" maxValue="0.6377" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_37" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=exp1,Reference=Value" objectType="float" objectValue="1.042" minValue="1" maxValue="4" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_38" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=Vr,Reference=Value" objectType="float" objectValue="0.188" minValue="0.05" maxValue="0.3" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_39" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=B,Reference=Value" objectType="float" objectValue="0" minValue="0" maxValue="1" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_40" associatedEntityKey="Task_11" objectCN="CN=Root,Model=NoName,Vector=Reactions[IL10R activation],ParameterGroup=Parameters,Parameter=K1,Reference=Value" objectType="float" objectValue="0.463615" minValue="0.02125" maxValue="0.5" tickNumber="1000" tickFactor="100" scaling="linear"/>
     </ListOfSliders>
   </GUI>
   <SBMLReference file="hplancl2.xml">
@@ -7199,14 +6382,14 @@ Reaction scheme where the products are created from the reactants and the change
     <SBMLMap SBMLid="s15" COPASIkey="Metabolite_29"/>
     <SBMLMap SBMLid="s16" COPASIkey="Metabolite_31"/>
     <SBMLMap SBMLid="s17" COPASIkey="Metabolite_33"/>
-    <SBMLMap SBMLid="s19" COPASIkey="Metabolite_37"/>
+    <SBMLMap SBMLid="s19" COPASIkey="Metabolite_35"/>
     <SBMLMap SBMLid="s2" COPASIkey="Metabolite_3"/>
-    <SBMLMap SBMLid="s20" COPASIkey="Metabolite_39"/>
-    <SBMLMap SBMLid="s21" COPASIkey="Metabolite_41"/>
-    <SBMLMap SBMLid="s22" COPASIkey="Metabolite_43"/>
-    <SBMLMap SBMLid="s23" COPASIkey="Metabolite_45"/>
-    <SBMLMap SBMLid="s24" COPASIkey="Metabolite_47"/>
-    <SBMLMap SBMLid="s25" COPASIkey="Metabolite_49"/>
+    <SBMLMap SBMLid="s20" COPASIkey="Metabolite_37"/>
+    <SBMLMap SBMLid="s21" COPASIkey="Metabolite_39"/>
+    <SBMLMap SBMLid="s22" COPASIkey="Metabolite_41"/>
+    <SBMLMap SBMLid="s23" COPASIkey="Metabolite_43"/>
+    <SBMLMap SBMLid="s24" COPASIkey="Metabolite_45"/>
+    <SBMLMap SBMLid="s25" COPASIkey="Metabolite_47"/>
     <SBMLMap SBMLid="s3" COPASIkey="Metabolite_5"/>
     <SBMLMap SBMLid="s4" COPASIkey="Metabolite_7"/>
     <SBMLMap SBMLid="s5" COPASIkey="Metabolite_9"/>
