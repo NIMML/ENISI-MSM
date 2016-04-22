@@ -1,4 +1,4 @@
 debug.wait = 0
 grid.size = 1
-stop.at = 20
+stop.at = 2.0
 

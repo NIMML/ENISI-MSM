@@ -1,18 +1,34 @@
-space.x = 300 nm
+space.x = 30 nm
+
+# HPylori.concentration = 0.0
+# Bacteria.concentration = 0.0
+# EpithelialCell.concentration = 0.0
+# Dendritics.concentration = 0.0
+# Tcell.concentration = 0.0
+# macrophages.concentration = 0.0
+
+HPylori.concentration = 100.0
+Bacteria.concentration = 10.0
+EpithelialCell.concentration = 1.0
+Dendritics.concentration = 1.5
+Tcell.concentration = 10.0
+macrophages.concentration = 0.125
+
+cell.speed = 10 µm/min mesenchymal cells move slower (~<1 µm/min)
 
 # compartments
 lumen.space.x = space.x
 lumen.space.y = 100 nm
 lumen.border.y.low = REFLECT
 lumen.border.y.high = epithilium
-lumen.Bacteria.concentration = 1000
-lumen.HPylori.concentration = 1000
+lumen.Bacteria.concentration = Bacteria.concentration
+lumen.HPylori.concentration = HPylori.concentration
 
 epithilium.space.x = space.x
 epithilium.space.y = 3 nm
 epithilium.border.y.low = lumen
 epithilium.border.y.high = lamina_propria
-epithilium.EpithelialCell.concentration = 1000
+epithilium.EpithelialCell.concentration = EpithelialCell.concentration
 epithilium.Dendritics.concentration = 0
 
 lamina_propria.space.x = space.x
@@ -46,19 +62,39 @@ lamina_propria.IFNg.initialValue = 0
 lamina_propria.IFNg.diffusion = 0.6
 lamina_propria.IFNg.degradation = 0.02
 
-lamina_propria.dendritics.concentration = 
-lamina_propria.Tcell.concentration
+lamina_propria.dendritics.concentration = dendritics.concentration 
+lamina_propria.Tcell.concentration = Tcell.concentration
 lamina_propria.Bacteria.concentration = 0
 lamina_propria.HPylori.concentration = 0
-lamina_propria.macrophages.concentration =
+lamina_propria.macrophages.concentration = macrophages.concentration
 
 #gastric_lymph_node
 gastric_lymph_node.space.x = space.x
 gastric_lymph_node.space.y = 100
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
-gastric_lymph_node.dendritics.concentration = 
-gastric_lymph_node.Tcell.concentration
+gastric_lymph_node.dendritics.concentration = dendritics.concentration 
+gastric_lymph_node.Tcell.concentration = Tcell.concentration
+
+gastric_lymph_node.TGFb.initialValue = 100
+gastric_lymph_node.TGFb.diffusion = 0.6
+gastric_lymph_node.TGFb.degradation = 0.02
+
+gastric_lymph_node.IL12.initialValue = 1
+gastric_lymph_node.IL12.diffusion = 0.6
+gastric_lymph_node.IL12.degradation = 0.02
+
+gastric_lymph_node.IL17.initialValue = 0
+gastric_lymph_node.IL17.diffusion = 0.6
+gastric_lymph_node.IL17.degradation = 0.02
+
+gastric_lymph_node.IL10.initialValue = 0
+gastric_lymph_node.IL10.diffusion = 0.6
+gastric_lymph_node.IL10.degradation = 0.02
+
+gastric_lymph_node.IFNg.initialValue = 0
+gastric_lymph_node.IFNg.diffusion = 0.6
+gastric_lymph_node.IFNg.degradation = 0.02
 
 # Parameter rules
 #### From COPASI ####
