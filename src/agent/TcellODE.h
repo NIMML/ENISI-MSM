@@ -22,7 +22,7 @@ public:
 
   TcellODE();
   void setInitialConcentration(std::string, double);
-  void runTimeCourse();
+  bool runTimeCourse();
   double getConcentration(std::string);
 
   static TcellODE& getInstance()

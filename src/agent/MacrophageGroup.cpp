@@ -63,8 +63,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
+
+  concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
   std::vector< Agent * > Dentritics;
   mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);

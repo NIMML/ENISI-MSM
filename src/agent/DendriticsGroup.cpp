@@ -122,6 +122,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
 
       if (state == DendriticState::IMMATURE
@@ -133,6 +134,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
 
       if (state == (DendriticState::EFFECTOR || DendriticState::TOLEROGENIC)
@@ -144,6 +146,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
 
       /* if no bacteria is around DC, then stays immature */
@@ -162,6 +165,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
       /* if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
        * 0.5 is arbitrary */
@@ -174,6 +178,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
           mpCompartment->moveTo(pAgent->getId(), Location);
+          continue;
         }
       /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
        *  1 is arbitrary, Rule 48 */

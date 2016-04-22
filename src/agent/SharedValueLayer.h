@@ -50,6 +50,8 @@ public:
   void updateBufferValues(const SharedValueLayer & neighbor,
                           const Borders & globalBorders);
 
+  void completeBufferValues(const Borders & globalBorders);
+
   LocalValues * getLocalValues();
 
   std::vector< double > & operator[](const repast::Point< int > location);

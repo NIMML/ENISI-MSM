@@ -226,7 +226,7 @@ void TcellODE::setUpTask()
   pParameter->setValue(1.0e-12);
 }
 
-void TcellODE::runTimeCourse()
+bool TcellODE::runTimeCourse()
 {
   mpModel->applyInitialValues();
 
@@ -236,23 +236,19 @@ void TcellODE::runTimeCourse()
     {
       result = trajectoryTask->process(true);
     }
+
   catch (...)
     {
-      std::cout << "Error. Running the time course simulation failed.\n";
-
-      // check if there are additional error messages
-      if (CCopasiMessage::size() > 0)
-        {
-          // print the messages in chronological order
-          std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
-        }
-
-      std::exit(1);
+      result = false;
     }
 
   if (result == false)
     {
-      std::cerr << "An error occured while running the time course simulation.\n";
+      std::cout << "Error. Running the time course simulation failed.\n";
+
+      mpModel->applyInitialValues();
+      std::cout << mpModel->getState() << std::endl;
+
 
       // check if there are additional error messages
       if (CCopasiMessage::size() > 0)
@@ -260,9 +256,9 @@ void TcellODE::runTimeCourse()
           // print the messages in chronological order
           std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
         }
-
-      std::exit(1);
     }
+
+  return result;
 }
 
 double TcellODE::getConcentration(std::string name)

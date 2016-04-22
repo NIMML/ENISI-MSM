@@ -69,7 +69,7 @@ bool Borders::boundsCheck(const std::vector<int>& pt, std::vector<BoundState> * 
 
   std::vector<int>::const_iterator itPt = pt.begin();
 
-  for (; itState != endState; ++itState, ++itType, ++itOrigin, ++itExtend)
+  for (; itState != endState; ++itState, ++itType, ++itOrigin, ++itExtend, ++itPt)
     {
       const std::vector< Type > & Type = *itType;
 
@@ -129,7 +129,7 @@ bool Borders::boundsCheck(const std::vector<double>& pt, std::vector<BoundState>
 
   std::vector<double>::const_iterator itPt = pt.begin();
 
-  for (; itState != endState; ++itState, ++itType, ++itOrigin, ++itExtend)
+  for (; itState != endState; ++itState, ++itType, ++itOrigin, ++itExtend, ++itPt)
     {
       const std::vector< Type > & Type = *itType;
 

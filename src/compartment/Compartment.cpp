@@ -10,7 +10,7 @@
 #include "diffuser/DiffuserImpl.h"
 #include "DataWriter/LocalFile.h"
 
-#define DEBUG_SHARED
+// #define DEBUG_SHARED
 
 using namespace ENISI;
 
@@ -183,7 +183,7 @@ Compartment::~Compartment()
       INSTANCES[mType] = NULL;
     }
 
-  if (mpLayer != NULL) delete mpLayer;
+//  if (mpLayer != NULL) delete mpLayer;
   if (mpSpaceBorders != NULL) delete mpSpaceBorders;
   if (mpGridBorders != NULL) delete mpGridBorders;
 }
@@ -333,7 +333,7 @@ Compartment * Compartment::transform(std::vector< int > & pt) const
 {
   mpGridBorders->transform(pt);
 
-  std::vector< Borders::BoundState > BoundState(2);
+  std::vector< Borders::BoundState > BoundState(2, Borders::INBOUND);
 
   if (mpGridBorders->boundsCheck(pt, &BoundState))
     {
@@ -557,7 +557,8 @@ const std::vector< Cytokine * > & Compartment::getCytokines() const
 
 std::vector< double > & Compartment::cytokineValues(const repast::Point< int > & pt)
 {
-  if (this->localGridDimensions().contains(pt))
+  if (mpDiffuserValues != NULL &&
+      localGridDimensions().contains(pt))
     {
       return mpDiffuserValues->operator[](pt);
     }
@@ -680,7 +681,10 @@ void Compartment::write(const std::string & separator)
   std::ostream & o = LocalFile::instance(getName())->stream();
 
   repast::ScheduleRunner& runner = repast::RepastProcess::instance()->getScheduleRunner();
-  o << getName() << " TICK: " << runner.currentTick() << " " << mpLayer->localGridDimensions() << std::endl;
+  o << getName() << " TICK: " << runner.currentTick()
+    << ", Agents " << mpLayer->getCellContext().size()
+    << ", " << mpLayer->localGridDimensions() << std::endl;
+
 
   // We loop through all local agents an write them out.
   SharedLayer::Context::const_state_aware_iterator it = mpLayer->getCellContext().begin(SharedLayer::Context::LOCAL);
@@ -768,6 +772,8 @@ void Compartment::write(const std::string & separator)
 
   o << std::endl;
   o << std::endl;
+
+  o.flush();
 }
 
 void Compartment::getBorderCellsToPush(std::set<repast::AgentId> & /* agentsToTest */,
@@ -966,6 +972,9 @@ void Compartment::synchronizeDiffuser()
       mpDiffuserValues->updateBufferValues(*static_cast< SharedValueLayer * >(&**it),
                                            *mpGridBorders);
     }
+
+  // Complete Information based on border settings
+  mpDiffuserValues->completeBufferValues(*mpGridBorders);
 }
 
 const Compartment::Type & Compartment::getType() const

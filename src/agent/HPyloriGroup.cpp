@@ -56,14 +56,14 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
   else if (mpCompartment->getType() == Compartment::lamina_propria &&
            mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
+
+  concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
   for (; it != end; ++it)
     {

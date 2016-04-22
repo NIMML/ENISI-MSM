@@ -54,18 +54,18 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
-      concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
-      concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 
       IL10 = mpCompartment->cytokineValue("IL10", pt, 0, 1);
     }
   else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
-      concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
     }
+
+  concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
+  concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 
   for (; it != end; ++it)
     {
