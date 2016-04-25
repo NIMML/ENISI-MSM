@@ -1,4 +1,4 @@
-space.x = 300 nm
+space.x = 30 nm
 
 # HPylori.concentration = 0.0
 # Bacteria.concentration = 0.0
@@ -13,6 +13,9 @@ EpithelialCell.concentration = 1.0
 Dendritics.concentration = 1.5
 Tcell.concentration = 10.0
 macrophages.concentration = 0.125
+
+Tcell.ODE = MSM_CD4.cps
+macrophages.ODE = MregDiff.cps
 
 cell.speed = 10 µm/min mesenchymal cells move slower (~<1 µm/min)
 
