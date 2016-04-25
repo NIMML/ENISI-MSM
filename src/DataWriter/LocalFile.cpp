@@ -7,6 +7,7 @@
 
 #include "LocalFile.h"
 #include "repast_hpc/RepastProcess.h"
+#include "grid/Properties.h"
 
 #include <sstream>
 
@@ -44,8 +45,11 @@ void LocalFile::close()
 LocalFile::LocalFile(const std::string & name, const std::string extension):
   mOstream()
 {
+  std::string config;
+  Properties::instance(Properties::model)->getValue("config", config);
+
   std::stringstream Name;
-  Name << name << "_" << repast::RepastProcess::instance()->rank() << "." << extension;
+  Name << config << "/" << name << "_" << repast::RepastProcess::instance()->rank() << "." << extension;
 
   mOstream.open(Name.str().c_str());
 }
