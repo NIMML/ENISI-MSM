@@ -1,5 +1,6 @@
 #include "MacrophageODE1.h"
 #include "COPASI.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
 
@@ -7,7 +8,11 @@ MacrophageODE1* MacrophageODE1::instance = NULL;
 
 MacrophageODE1::MacrophageODE1() : DEBUG(false)
 {
-  std::string modelFileName("./modelfiles/MregDiff.cps");
+  std::string config;
+  Properties::instance(Properties::model)->getValue("config", config);
+  std::string modelFileName;
+  Properties::instance(Properties::model)->getValue("macrophages.ODE", modelFileName);
+  modelFileName = config + "/" + modelFileName;
 
   // create a new datamodel
   dataModel = COPASI::loadDataModel(modelFileName);

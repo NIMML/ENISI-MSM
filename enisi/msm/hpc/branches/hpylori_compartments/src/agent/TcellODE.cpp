@@ -1,5 +1,6 @@
 #include "TcellODE.h"
 #include "COPASI.h"
+#include "grid/Properties.h"
 
 using namespace ENISI;
 
@@ -7,7 +8,11 @@ TcellODE * TcellODE::instance = NULL;
 
 TcellODE::TcellODE() : DEBUG(false)
 {
-  std::string modelFileName("./modelfiles/MSM_CD4.cps");
+  std::string config;
+  Properties::instance(Properties::model)->getValue("config", config);
+  std::string modelFileName;
+  Properties::instance(Properties::model)->getValue("Tcell.ODE", modelFileName);
+  modelFileName = config + "/" + modelFileName;
 
   // create a new datamodel
   mpDataModel = COPASI::loadDataModel(modelFileName);

@@ -24,14 +24,14 @@ int main(int argc, char** argv)
   boost::mpi::environment env(argc, argv);
   boost::mpi::communicator world;
 
-  std::string configFile = argv[1];
-  std::string runFile  = argv[2];
-  std::string modelFile  = argv[3];
+  std::string config = argv[1];
+  size_t pos = config.find('=');
+  config = config.substr(pos + 1);
 
-  ENISI::Properties ConfigProperties(ENISI::Properties::config, configFile, argc, argv, &world);
-  repast::RepastProcess::init(configFile, &world);
+  ENISI::Properties ConfigProperties(ENISI::Properties::config, config + "/config.props", argc, argv, &world);
+  repast::RepastProcess::init(config + "/config.props", &world);
 
-  ENISI::Properties RunProperties(ENISI::Properties::run, runFile, argc, argv, &world);
+  ENISI::Properties RunProperties(ENISI::Properties::run, config + "/run.props", argc, argv, &world);
 
 #ifndef DEBUG_WAIT
   if (!RunProperties.getValue("debug.wait", debugwait)) debugwait = 0;
@@ -58,7 +58,7 @@ int main(int argc, char** argv)
     }
   while (debugwait) ;
 
-  ENISI::Properties ModelProperties(ENISI::Properties::model, modelFile, argc, argv, &world);
+  ENISI::Properties ModelProperties(ENISI::Properties::model, config + "/model.props", argc, argv, &world);
 
   ENISI::HPModel model;
 
