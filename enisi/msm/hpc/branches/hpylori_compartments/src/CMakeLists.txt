@@ -25,23 +25,23 @@ set(SILO_DIR ${VISIT_LIBS_DIR}/silo/4.10.2/${PLATFORM})
 # (necessary when using -Wall compiler flag with 3rd-party libs)
 include_directories(SYSTEM
   ${PROJECT_SOURCE_DIR}/src
-  ${ZLIB_DIR}/include
-  ${SZIP_DIR}/include
-  ${HDF5_DIR}/include
-  ${SILO_DIR}/include
+#  ${ZLIB_DIR}/include
+#  ${SZIP_DIR}/include
+#  ${HDF5_DIR}/include
+#  ${SILO_DIR}/include
   ${BOOST_DIR}/include
   ${REPAST_DIR}/include
   ${DEPS_DIR}/src/project_copasi
   ${DEPS_DIR}/src/project_copasi/copasi
-  ${GMOCK_DIR}/include
-  ${GMOCK_DIR}/gtest/include
+#  ${GMOCK_DIR}/include
+#  ${GMOCK_DIR}/gtest/include
 )
 
 link_directories(
-  ${ZLIB_DIR}/lib
-  ${SZIP_DIR}/lib
-  ${HDF5_DIR}/lib
-  ${SILO_DIR}/lib
+#  ${ZLIB_DIR}/lib
+#  ${SZIP_DIR}/lib
+#  ${HDF5_DIR}/lib
+#  ${SILO_DIR}/lib
   ${BOOST_DIR}/lib
   ${REPAST_DIR}/lib
   ${DEPS_DIR}/src/project_copasi-build/copasi
@@ -63,6 +63,7 @@ list(REMOVE_ITEM ALL_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/RepastHPCDemoAgentPackage.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellTest.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellGroupTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellODETest.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentFactory.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/BacteriaTest.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/agent/CellGroup.cpp"
@@ -86,9 +87,12 @@ list(REMOVE_ITEM ALL_SRCS
   "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/ParallelDiffuser.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/test/ParallelDiffuserTest.cpp"
   "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/test/DiffuserTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/SiloWriterTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/ValueLayerTest.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/gmock.cpp"
   )
 
-set(MAINS "main" "benchmark" "gmock" "test")
+set(MAINS "main" "benchmark" "test")
 foreach(f ${MAINS}) 
   list(REMOVE_ITEM ALL_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/${f}.cpp")
 endforeach()
@@ -116,15 +120,19 @@ set(BOOST_LIBS boost_mpi-mt-s boost_serialization-mt-s boost_system-mt-s
 
 set(GMOCK_LIBS gmock gtest)
 
-set(ALL_LIBS ${COPASI_LIBS} ${REPAST_LIBS} ${SILO_LIBS} ${BOOST_LIBS}
-  ${GMOCK_LIBS}
+set(ALL_LIBS 
+  ${COPASI_LIBS} 
+  ${REPAST_LIBS} 
+  # ${SILO_LIBS} 
+  ${BOOST_LIBS}
+  # ${GMOCK_LIBS}
   )
 
 add_executable(main "main.cpp" $<TARGET_OBJECTS:ENISI>)
 target_link_libraries(main ${ALL_LIBS})
 
-add_executable(testmain "gmock.cpp" $<TARGET_OBJECTS:ENISI>)
-target_link_libraries(testmain ${ALL_LIBS})
+# add_executable(testmain "gmock.cpp" $<TARGET_OBJECTS:ENISI>)
+# target_link_libraries(testmain ${ALL_LIBS})
 
-add_executable(benchmark "benchmark.cpp" $<TARGET_OBJECTS:ENISI>)
-target_link_libraries(benchmark ${ALL_LIBS})
+# add_executable(benchmark "benchmark.cpp" $<TARGET_OBJECTS:ENISI>)
+# target_link_libraries(benchmark ${ALL_LIBS})
