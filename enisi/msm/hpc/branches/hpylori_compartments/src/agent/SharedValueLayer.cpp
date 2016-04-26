@@ -202,17 +202,14 @@ void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
   const repast::Point< int > & origin = neighbor.mOrigin;
   const BufferValues & bufferValues = neighbor.mBufferValues;
 
-  /*
-  std::ostream & o = LocalFile::instance("", "log")->stream();
-  o << "receiving: " << origin << std::endl;
+  // LocalFile::debug() << "receiving: " << origin << std::endl;
   BufferValues::const_iterator it = bufferValues.begin();
   BufferValues::const_iterator end = bufferValues.end();
 
   for (; it != end; ++it)
     {
-      o << origin[0] + it->first[0] << ", " << origin[1] + it->first[1] << std::endl;
+       // LocalFile::debug() << origin[0] + it->first[0] << ", " << origin[1] + it->first[1] << std::endl;
     }
-  */
 
   // Currently only 2D
   std::vector<Borders::BoundState> BoundState(2, Borders::INBOUND);

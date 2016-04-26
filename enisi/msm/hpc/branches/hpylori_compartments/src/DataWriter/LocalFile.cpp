@@ -17,6 +17,12 @@ using namespace ENISI;
 std::map< std::string, LocalFile * > LocalFile::INSTANCES;
 
 // static
+std::ofstream & LocalFile::debug()
+{
+  return LocalFile::instance("", "log")->stream();
+}
+
+// static
 LocalFile * LocalFile::instance(const std::string & name,
                                 const std::string extension)
 {
