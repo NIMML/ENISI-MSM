@@ -11,6 +11,7 @@
 
 #include "compartment/Compartment.h"
 #include "Cytokine.h"
+#include "DataWriter/LocalFile.h"
 
 // #define DEBUG_SHARED
 
@@ -101,6 +102,15 @@ void SharedValueLayer::write(std::ostream & o, const std::string & separator, Co
     }
 }
 
+bool SharedValueLayer::contains(const repast::Point< int > & pt) const
+{
+  return mOrigin[0] - 1 <= pt[0]
+         && pt[0] < mOrigin[0] + mShape[0] + 1
+         && mOrigin[1] - 1 <= pt[1]
+         && pt[1] < mOrigin[1] + mShape[1] + 1;
+}
+
+
 std::vector< double > & SharedValueLayer::operator[](const repast::Point< int > location)
 {
 
@@ -109,7 +119,7 @@ std::vector< double > & SharedValueLayer::operator[](const repast::Point< int > 
       return mpLocalValues->operator[](repast::Point< int >(location[0] - mOrigin[0] + 1, location[1] - mOrigin[1] + 1));
     }
 
-  throw std::runtime_error("cytokine value not found");
+  throw std::runtime_error("cytokine value not found: no local values defined");
 
   static std::vector< double > NaN(mShape.dimensionCount(), std::numeric_limits< double >::quiet_NaN());
   return NaN;
@@ -117,8 +127,7 @@ std::vector< double > & SharedValueLayer::operator[](const repast::Point< int > 
 
 std::vector< double > * SharedValueLayer::tryLocation(const repast::Point< int > location)
 {
-
-  BufferValues::iterator found = mBufferValues.find(repast::Point< int >(location[0] - mOrigin[0] + 1, location[1] - mOrigin[1] + 1).coords());
+  BufferValues::iterator found = mBufferValues.find(repast::Point< int >(location[0] - mOrigin[0], location[1] - mOrigin[1]).coords());
 
   if (found != mBufferValues.end())
     {
@@ -126,6 +135,16 @@ std::vector< double > * SharedValueLayer::tryLocation(const repast::Point< int >
     }
 
   return NULL;
+}
+
+const repast::Point< int > & SharedValueLayer::origin() const
+{
+  return mOrigin;
+}
+
+const repast::Point< int > & SharedValueLayer::shape() const
+{
+  return mShape;
 }
 
 SharedValueLayer::LocalValues * SharedValueLayer::getLocalValues()
@@ -179,8 +198,21 @@ void SharedValueLayer::getBufferValues(repast::Point< int > & origin,
 void SharedValueLayer::updateBufferValues(const SharedValueLayer & neighbor,
     const Borders & globalBorders)
 {
+
   const repast::Point< int > & origin = neighbor.mOrigin;
   const BufferValues & bufferValues = neighbor.mBufferValues;
+
+  /*
+  std::ostream & o = LocalFile::instance("", "log")->stream();
+  o << "receiving: " << origin << std::endl;
+  BufferValues::const_iterator it = bufferValues.begin();
+  BufferValues::const_iterator end = bufferValues.end();
+
+  for (; it != end; ++it)
+    {
+      o << origin[0] + it->first[0] << ", " << origin[1] + it->first[1] << std::endl;
+    }
+  */
 
   // Currently only 2D
   std::vector<Borders::BoundState> BoundState(2, Borders::INBOUND);
@@ -341,6 +373,8 @@ void SharedValueLayer::completeBufferValues(const Borders & globalBorders)
   std::vector< int > High(2, 0);
   High[Borders::X] = mOrigin[Borders::X] + mShape[Borders::X] - 1;
   High[Borders::Y] = mOrigin[Borders::Y] + mShape[Borders::Y] - 1;
+
+  // TODO CRITICAL It is possible that we have WRAP and we are our own neighbor.
 
   if (globalBorders.getBorderType(Borders::X, Borders::LOW) != Borders::WRAP &&
       globalBorders.distanceFromBorder(Low, Borders::X, Borders::LOW) < 0.5)

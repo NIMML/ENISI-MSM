@@ -45,6 +45,10 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
   pModel->getValue("p_rule55a", p_rule55a);
   pModel->getValue("p_rule55b", p_rule55b);
   pModel->getValue("neardistane_border", neardistane_border);
+
+  pModel->getValue("p_IL17", p_IL17);
+  pModel->getValue("p_IFNg", p_IFNg);
+  pModel->getValue("p_IL10", p_IL10);
 }
 
 void TcellGroup::act()
@@ -82,7 +86,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
   Concentration EpithelialCellConcentration;
 
   if (mpCompartment->getType() == Compartment::lamina_propria &&
-      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
     }
@@ -131,15 +135,15 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
       if (state != TcellState::Tr)
         {
-          if (IL17 > 0.5)
+          if (IL17 > p_IL17)
             {
               newState = TcellState::TH17;
             }
-          else if (IFNg > 0.5)
+          else if (IFNg > p_IFNg)
             {
               newState = TcellState::TH1;
             }
-          else if (IL10 > 0.5)
+          else if (IL10 > p_IL10)
             {
               newState = TcellState::iTREG;
             }

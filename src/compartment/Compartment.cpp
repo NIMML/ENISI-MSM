@@ -557,8 +557,10 @@ const std::vector< Cytokine * > & Compartment::getCytokines() const
 
 std::vector< double > & Compartment::cytokineValues(const repast::Point< int > & pt)
 {
+  // std::ostream & o = LocalFile::instance("", "log")->stream();
+
   if (mpDiffuserValues != NULL &&
-      localGridDimensions().contains(pt))
+      mpDiffuserValues->contains(pt))
     {
       return mpDiffuserValues->operator[](pt);
     }
@@ -571,7 +573,10 @@ std::vector< double > & Compartment::cytokineValues(const repast::Point< int > &
 
   for (; it != end && pFound == NULL; ++it)
     {
-      pFound = static_cast< SharedValueLayer * >(&**it)->tryLocation(pt);
+      SharedValueLayer * pValues = static_cast< SharedValueLayer * >(&**it);
+      // o << "trying: " << pValues->origin() << ", " << pValues->shape() << std::endl;
+
+      pFound = pValues->tryLocation(pt);
     }
 
   if (pFound != NULL)
@@ -579,7 +584,10 @@ std::vector< double > & Compartment::cytokineValues(const repast::Point< int > &
       return *pFound;
     }
 
-  throw std::runtime_error("cytokine value not found");
+  // o << "ERROR: " << getName() << " " << pt << ", " << localGridDimensions() << std::endl;
+  // o << mpDiffuserValues->origin() << ", " << mpDiffuserValues->shape() << std::endl;
+
+  throw std::runtime_error("cytokine value not found: location not shared");
 
   static std::vector< double > NaN(mCytokines.size(), std::numeric_limits< double >::quiet_NaN());
   return NaN;
@@ -600,7 +608,8 @@ double & Compartment::cytokineValue(const std::string & name, const repast::Poin
       return pTarget->cytokineValue(name, Location);
     }
 
-  throw std::runtime_error("cytokine value not found");
+
+  throw std::runtime_error("cytokine value not found: unable to determine target compartment");
 
   static double NaN = std::numeric_limits< double >::quiet_NaN();
   return NaN;
@@ -622,7 +631,7 @@ void Compartment::initializeDiffuserData()
   if (mpDiffuserValues == NULL)
     {
       mpDiffuserValues = new SharedValueLayer(Agent::DiffuserValues, mType, mCytokineMap.size());
-      mpLayer->addDiffuserValues(mpDiffuserValues);
+      mpLayer->addDiffuserValues(mpDiffuserValues, this);
 
       std::vector< double > InitialValues(mCytokineMap.size());
       std::vector< double >::iterator itInitialValue = InitialValues.begin();
@@ -785,14 +794,14 @@ void Compartment::getBorderCellsToPush(std::set<repast::AgentId> & /* agentsToTe
   repast::Point< double > Out = localGridDimensions().origin();
 
   if (mAdjacentCompartments[Borders::X][Borders::LOW] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::LOW)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::LOW) < 0.5)
     {
       Coordinates.push_back(Borders::X);
       Sides.push_back(Borders::LOW);
     }
 
   if (mAdjacentCompartments[Borders::Y][Borders::LOW] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::LOW)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
       Coordinates.push_back(Borders::Y);
       Sides.push_back(Borders::LOW);
@@ -801,14 +810,14 @@ void Compartment::getBorderCellsToPush(std::set<repast::AgentId> & /* agentsToTe
   Out.add(localGridDimensions().extents());
 
   if (mAdjacentCompartments[Borders::X][Borders::HIGH] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::HIGH)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::HIGH) < 1.5)
     {
       Coordinates.push_back(Borders::X);
       Sides.push_back(Borders::HIGH);
     }
 
   if (mAdjacentCompartments[Borders::Y][Borders::HIGH] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::HIGH)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       Coordinates.push_back(Borders::Y);
       Sides.push_back(Borders::HIGH);
@@ -837,7 +846,7 @@ void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
   Iterator itPoint(localGridDimensions());
   if (side == Borders::HIGH)
     {
-      for (int i = 0, imax = localGridDimensions().extents(coordinate); i < imax; ++i)
+      for (int i = 0, imax = localGridDimensions().extents(coordinate) - 1; i < imax; ++i)
         {
           itPoint.next(OtherCordinate);
         }
@@ -869,20 +878,23 @@ void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
 void Compartment::getBorderValuesToPush(std::set<repast::AgentId> & /* agentsToTest */,
                                         std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
+  // std::ostream & o = LocalFile::instance("", "log")->stream();
+  // o << getName() << ": " << localGridDimensions() << std::endl;
+
   std::vector< Borders::Coodinate > Coordinates;
   std::vector< Borders::Side > Sides;
 
   repast::Point< double > Out = localGridDimensions().origin();
 
   if (mAdjacentCompartments[Borders::X][Borders::LOW] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::LOW)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::LOW) < 0.5)
     {
       Coordinates.push_back(Borders::X);
       Sides.push_back(Borders::LOW);
     }
 
   if (mAdjacentCompartments[Borders::Y][Borders::LOW] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::LOW)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
       Coordinates.push_back(Borders::Y);
       Sides.push_back(Borders::LOW);
@@ -891,14 +903,14 @@ void Compartment::getBorderValuesToPush(std::set<repast::AgentId> & /* agentsToT
   Out.add(localGridDimensions().extents());
 
   if (mAdjacentCompartments[Borders::X][Borders::HIGH] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::HIGH)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::X, Borders::HIGH) < 1.5)
     {
       Coordinates.push_back(Borders::X);
       Sides.push_back(Borders::HIGH);
     }
 
   if (mAdjacentCompartments[Borders::Y][Borders::HIGH] != INVALID &&
-      fabs(mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::HIGH)) < 0.5)
+      mpGridBorders->distanceFromBorder(Out.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       Coordinates.push_back(Borders::Y);
       Sides.push_back(Borders::HIGH);
@@ -919,6 +931,8 @@ void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
                                         const Borders::Side & side,
                                         std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
+  // std::ostream & o = LocalFile::instance("", "log")->stream();
+
   Borders::Coodinate OtherCordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
 
   int xOffset = (coordinate != Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
@@ -928,7 +942,7 @@ void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
 
   if (side == Borders::HIGH)
     {
-      for (int i = 0, imax = localGridDimensions().extents(coordinate); i < imax; ++i)
+      for (int i = 0, imax = localGridDimensions().extents(coordinate) - 1; i < imax; ++i)
         {
           itPoint.next(OtherCordinate);
         }
@@ -946,8 +960,11 @@ void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
   std::set< int >::const_iterator itTarget = Targets.begin();
   std::set< int >::const_iterator endTarget = Targets.end();
 
+  // o << mpDiffuserValues->origin() << ", " << mpDiffuserValues->shape() << " to: ";
+
   for (; itTarget != endTarget; ++itTarget)
     {
+      // o <<  *itTarget << " ";
       std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(*itTarget);
 
       if (found == agentsToPush.end())
@@ -957,10 +974,14 @@ void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
 
       found->second.insert(Id);
     }
+
+  // o << std::endl;
 }
 
 void Compartment::synchronizeDiffuser()
 {
+  // mpDiffuserValues->write(LocalFile::instance(getName())->stream(), "\t", this);
+
   mpLayer->synchronizeDiffuser();
 
   // We loop through all non local agents and update the local diffuser border values.
@@ -975,6 +996,8 @@ void Compartment::synchronizeDiffuser()
 
   // Complete Information based on border settings
   mpDiffuserValues->completeBufferValues(*mpGridBorders);
+
+  // mpDiffuserValues->write(LocalFile::instance(getName())->stream(), "\t", this);
 }
 
 const Compartment::Type & Compartment::getType() const

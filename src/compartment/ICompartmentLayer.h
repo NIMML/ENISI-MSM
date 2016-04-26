@@ -370,10 +370,11 @@ public:
     return agents;
   }
 
-  bool addDiffuserValues(SharedValueLayer * pDiffuserValues)
+  bool addDiffuserValues(SharedValueLayer * pDiffuserValues, Compartment * pCompartment)
   {
     AgentType * pAgent = mDiffuserContext.addAgent(pDiffuserValues);
     repast::AgentId Id = pAgent->getId();
+    mpSharedValues->setFunctor(new Functor< Compartment >(pCompartment, &Compartment::getBorderValuesToPush));
 
     return mpSharedValues->moveTo(Id, repast::Point< int >(mLocalSharedValueDimensions.origin()[0], mLocalSharedValueDimensions.origin()[1]));
   }

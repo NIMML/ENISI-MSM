@@ -51,7 +51,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
   double IL10 = 0.0;
 
-  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
 
@@ -59,7 +59,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       IL10 = mpCompartment->cytokineValue("IL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
@@ -93,8 +93,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
         {
           newState = EpithelialCellState::HEALTHY;
         }
-      else if ((th17Concentration > ENISI::Threshold
-                || th1Concentration)
+      else if (th17Concentration + th1Concentration > ENISI::Threshold
                && state == EpithelialCellState::HEALTHY
                && mpCompartment->getType() == Compartment::epithilium && (p_rule10b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) // TODO CRITICAL This will never be true-FIXED
         {
@@ -123,7 +122,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       if (newState == EpithelialCellState::DAMAGED)
         {
-    	  int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
+          int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
 
           // TODO We should use the production from the ODE model.
           mpCompartment->cytokineValue("IL6", pt, 0, yOffset) += 70;
