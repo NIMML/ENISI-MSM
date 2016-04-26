@@ -64,20 +64,17 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
         {
           mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
-          concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
-
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
-          concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
         }
       else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
         {
           mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
-          concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
-
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
-          concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
         }
     }
+
+  concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
+  concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
 
   std::vector< Agent * > Tcells;
   Concentration TcellConcentration;
@@ -92,8 +89,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
     }
+
+  concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
   for (; it != end; ++it)
     {
