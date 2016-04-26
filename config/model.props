@@ -65,7 +65,7 @@ lamina_propria.IFNg.initialValue = 0
 lamina_propria.IFNg.diffusion = 0.6
 lamina_propria.IFNg.degradation = 0.02
 
-lamina_propria.dendritics.concentration = dendritics.concentration 
+lamina_propria.Dendritics.concentration = Dendritics.concentration 
 lamina_propria.Tcell.concentration = Tcell.concentration
 lamina_propria.Bacteria.concentration = 0
 lamina_propria.HPylori.concentration = 0
@@ -76,7 +76,7 @@ gastric_lymph_node.space.x = space.x
 gastric_lymph_node.space.y = 100
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
-gastric_lymph_node.dendritics.concentration = dendritics.concentration 
+gastric_lymph_node.Dendritics.concentration = Dendritics.concentration 
 gastric_lymph_node.Tcell.concentration = Tcell.concentration
 
 gastric_lymph_node.TGFb.initialValue = 100
