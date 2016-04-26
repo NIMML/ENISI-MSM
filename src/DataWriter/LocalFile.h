@@ -23,6 +23,8 @@ public:
   static LocalFile * instance(const std::string & name,
                               const std::string extension = "tsv");
 
+  static std::ofstream & debug();
+
   static void close();
 
   LocalFile(const std::string & name,
