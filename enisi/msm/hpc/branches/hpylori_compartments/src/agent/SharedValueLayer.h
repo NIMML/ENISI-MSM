@@ -54,8 +54,12 @@ public:
 
   LocalValues * getLocalValues();
 
+  bool contains(const repast::Point< int > & pt) const;
   std::vector< double > & operator[](const repast::Point< int > location);
   std::vector< double > * tryLocation(const repast::Point< int > location);
+
+  const repast::Point< int > & origin() const;
+  const repast::Point< int > & shape() const;
 
 protected:
   size_t mValueSize;

@@ -44,6 +44,11 @@ private:
   double p_rule55b;/*Rule 55b parameter*/
   double neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
+  double p_IL17;
+  double p_IFNg;
+  double p_IL10;
+
+
 };
 
 } // namespace ENISI

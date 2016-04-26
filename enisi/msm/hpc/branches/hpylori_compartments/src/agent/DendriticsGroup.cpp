@@ -61,12 +61,12 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
   if (mpCompartment->getType() == Compartment::epithilium)
     {
-      if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.0)
+      if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
         {
           mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
         }
-      else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
+      else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
         {
           mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
@@ -86,7 +86,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   Concentration EpithelialCellConcentration;
 
   if (mpCompartment->getType() == Compartment::lamina_propria &&
-      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.0)
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
     }
