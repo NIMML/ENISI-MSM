@@ -218,7 +218,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
         {
           newState = TcellState::TH17; /*Rule 21*/
         }
-      else if ((itregConcentration > ENISI::Threshold) && state == TcellState::TH1
+      else if ((itregConcentration > ENISI::Threshold) && state == TcellState::TH17
                && mpCompartment->getType() == Compartment::lamina_propria
                && (p_rule22 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
