@@ -46,7 +46,8 @@ public:
   virtual ~Compartment();
 
 
-  const repast::GridDimensions & dimensions() const;
+  const repast::GridDimensions & spaceDimensions() const;
+  const repast::GridDimensions & gridDimensions() const;
   const repast::GridDimensions & localSpaceDimensions() const;
   const repast::GridDimensions & localGridDimensions() const;
   const Borders * spaceBorders() const;
@@ -93,6 +94,13 @@ public:
 
   size_t localCount(const double & concentration);
 
+  std::set< size_t > getRanks(const std::vector< int > & location,
+                              const Borders::Coodinate & coordinate,
+                              const Borders::Side & side) const;
+  void bisect(const Borders::Coodinate & coordinate,
+              const std::vector< int > & low,
+              const std::vector< int > & high,
+              std::set< size_t > & ranks) const;
   size_t getRank(const std::vector< int > & location) const;
   size_t getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const;
 
@@ -111,7 +119,7 @@ public:
   std::string getName() const;
 
 private:
-  void adjustForProcessDimensions();
+  void determineProcessDimensions();
   void getBorderCellsToPush(const Borders::Coodinate &coordinate,
                             const Borders::Side & side,
                              std::map< int, std::set< repast::AgentId > > & agentsToPush);
@@ -122,13 +130,15 @@ private:
 
   Compartment * transform(std::vector< double > & pt) const;
   Compartment * transform(std::vector< int > & pt) const;
-
+  Compartment * mapToOtherCompartment(std::vector< double > & pt,
+                                      const std::vector< Borders::BoundState > & BoundState) const;
 
   Type mType;
 
   sProperties mProperties;
   std::vector<int> mProcessDimensions;
-  repast::GridDimensions mDimensions;
+  repast::GridDimensions mSpaceDimensions;
+  repast::GridDimensions mGridDimensions;
   SharedLayer * mpLayer;
   Borders * mpSpaceBorders;
   Borders * mpGridBorders;
@@ -142,6 +152,8 @@ private:
   SharedValueLayer * mpDiffuserValues;
   std::vector< GroupInterface * > mGroups;
   DiffuserImpl * mpDiffuser;
+
+  bool mNoLocalAgents;
 
 }; /* end Compartment */
 

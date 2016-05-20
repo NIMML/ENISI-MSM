@@ -19,7 +19,7 @@ DiffuserImpl::DiffuserImpl(Compartment * pCompartment) :
   mpCompartment(pCompartment),
   mCytokines(pCompartment->getCytokines()),
   mDeltaT(1.0),
-  mShape(std::vector< int >(mpCompartment->dimensions().dimensionCount(), 2)),
+  mShape(std::vector< int >(mpCompartment->spaceDimensions().dimensionCount(), 2)),
   mpNewValues(NULL),
   mpCurrentValues(NULL),
   mpDiffuserData(mpCompartment->getDiffuserData())

@@ -12,12 +12,12 @@ class HPyloriGroup: public GroupInterface
 {
 public:
   HPyloriGroup(Compartment * pCompartment, const double & concentrations);
-  virtual void act();
   virtual std::string classname() const {return "HPyloriGroup";}
 
-private:
-  void act(const repast::Point<int> &);
+protected:
+  virtual void act(const repast::Point<int> &);
 
+private:
   double p_rule3;
   double p_rule4a;
   double p_rule4b;

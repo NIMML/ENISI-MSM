@@ -6,9 +6,9 @@
 #include "agent/Cytokine.h"
 #include "agent/SharedValueLayer.h"
 #include "agent/GroupInterface.h"
-#include "Projection.h"
 #include "diffuser/DiffuserImpl.h"
 #include "DataWriter/LocalFile.h"
+#include "grid/SharedSpace.h"
 
 // #define DEBUG_SHARED
 
@@ -37,7 +37,8 @@ Compartment::Compartment(const Type & type):
   mType(type),
   mProperties(),
   mProcessDimensions(2, 0),
-  mDimensions(),
+  mSpaceDimensions(),
+  mGridDimensions(),
   mpLayer(NULL),
   mpSpaceBorders(NULL),
   mpGridBorders(NULL),
@@ -46,7 +47,8 @@ Compartment::Compartment(const Type & type):
   mCytokineMap(),
   mpDiffuserValues(NULL),
   mGroups(),
-  mpDiffuser(NULL)
+  mpDiffuser(NULL),
+  mNoLocalAgents(false)
 {
   std::string Name = Names[mType];
   const Properties * pProperties = Properties::instance(Properties::model);
@@ -55,12 +57,11 @@ Compartment::Compartment(const Type & type):
   pProperties->getValue(Name + ".space.y", mProperties.spaceY);
   Properties::instance(Properties::run)->getValue("grid.size", mProperties.gridSize);
 
-  adjustForProcessDimensions();
+  determineProcessDimensions();
+  mNoLocalAgents = repast::RepastProcess::instance()->rank() >= mProcessDimensions[0] * mProcessDimensions[1];
 
-  mProperties.gridX = ceil(mProperties.spaceX / mProperties.gridSize);
-  mProperties.spaceX = mProperties.gridX * mProperties.gridSize;
-  mProperties.gridY = ceil(mProperties.spaceY / mProperties.gridSize);
-  mProperties.spaceY = mProperties.gridY * mProperties.gridSize;
+  mProperties.gridX = round(mProperties.spaceX / mProcessDimensions[Borders::X]) * mProcessDimensions[Borders::X];
+  mProperties.gridY = round(mProperties.spaceY / mProcessDimensions[Borders::Y]) * mProcessDimensions[Borders::Y];
 
   std::string borderLow = pProperties->getValue(Name + ".border.y.low");
   mProperties.borderLowCompartment = pProperties->toEnum(borderLow, Names, INVALID);
@@ -78,16 +79,14 @@ Compartment::Compartment(const Type & type):
   GridExtents[Borders::X] = mProperties.gridX;
   GridExtents[Borders::Y] = mProperties.gridY;
 
-  mDimensions = repast::GridDimensions(Origin, SpaceExtents);
-  repast::GridDimensions GridDimensions(Origin, GridExtents);
+  mSpaceDimensions = repast::GridDimensions(Origin, SpaceExtents);
+  mGridDimensions = repast::GridDimensions(Origin, GridExtents);
 
-  mpLayer = new SharedLayer(Name, mProcessDimensions, mDimensions, GridDimensions);
-
-  mpSpaceBorders = new Borders(mDimensions);
+  mpSpaceBorders = new Borders(mSpaceDimensions);
   mpSpaceBorders->setBorderType(Borders::Y, Borders::LOW, mProperties.borderLowType);
   mpSpaceBorders->setBorderType(Borders::Y, Borders::HIGH, mProperties.borderHighType);
 
-  mpGridBorders = new Borders(GridDimensions);
+  mpGridBorders = new Borders(mGridDimensions);
   mpGridBorders->setBorderType(Borders::Y, Borders::LOW, mProperties.borderLowType);
   mpGridBorders->setBorderType(Borders::Y, Borders::HIGH, mProperties.borderHighType);
 
@@ -96,10 +95,30 @@ Compartment::Compartment(const Type & type):
   mAdjacentCompartments[Borders::Y][Borders::LOW] = mProperties.borderLowCompartment;
   mAdjacentCompartments[Borders::Y][Borders::HIGH] = mProperties.borderHighCompartment;
 
+  LocalFile::debug() << getName() << ": Process Dimensions:     " << mProcessDimensions[0] << ", " << mProcessDimensions[1] << std::endl;
+
+  mpLayer = new SharedLayer(Name, mProcessDimensions, mSpaceDimensions, mGridDimensions);
+
+  LocalFile::debug() << " Space Dimensions:       " << mSpaceDimensions << std::endl;
+  LocalFile::debug() << " Grid Dimensions :       " << mGridDimensions << std::endl;
+  LocalFile::debug() << " Local Space Dimensions: " << localSpaceDimensions() << std::endl;
+  LocalFile::debug() << " Local Grid Dimensions:  " << localGridDimensions() << std::endl << std::endl;
+
   mpLayer->addCompartment(this);
+
+  /*
+  repast::CartTopology topology(mProcessDimensions,
+                                mDimensions.origin().coords(),
+                                mDimensions.extents().coords(),
+                                true,
+                                repast::RepastProcess::instance()->getCommunicator());
+
+  repast::Neighbors neighbors;
+  topology.createNeighbors(neighbors);
+  */
 }
 
-void Compartment::adjustForProcessDimensions()
+void Compartment::determineProcessDimensions()
 {
   std::vector< double > Dimension = repast::Point< double >(mProperties.spaceX, mProperties.spaceY).coords();
 
@@ -144,14 +163,14 @@ void Compartment::adjustForProcessDimensions()
       n = ceil(sqrt(worldSize * Dimension[i] / Dimension[i + 1]));
 
       nMax = n;
-      while (worldSize % nMax > worldSize % (nMax + 1))
+      while (worldSize % nMax != 0)
         nMax++;
 
       nMin = n;
-      while (nMin > 1 && worldSize % nMin > worldSize % (nMin - 1))
+      while (nMin > 1 && worldSize % nMin != 0)
         nMin--;
 
-      n = (n - nMin < nMax -n) ? nMin : nMax;
+      n = (n - nMin < nMax - n) ? nMin : nMax;
 
       mProcessDimensions[i] = n;
       worldSize /= n;
@@ -169,9 +188,6 @@ void Compartment::adjustForProcessDimensions()
       mProcessDimensions[i] = mProcessDimensions[i - 1];
       mProcessDimensions[i - 1] = tmp;
     }
-
-  mProperties.spaceX = round(mProperties.spaceX / mProcessDimensions[0]) * mProcessDimensions[0];
-  mProperties.spaceY = round(mProperties.spaceY / mProcessDimensions[1]) * mProcessDimensions[1];
 }
 
 
@@ -188,9 +204,14 @@ Compartment::~Compartment()
   if (mpGridBorders != NULL) delete mpGridBorders;
 }
 
-const repast::GridDimensions & Compartment::dimensions() const
+const repast::GridDimensions & Compartment::spaceDimensions() const
 {
-  return mDimensions;
+  return mSpaceDimensions;
+}
+
+const repast::GridDimensions & Compartment::gridDimensions() const
+{
+  return mGridDimensions;
 }
 
 const repast::GridDimensions & Compartment::localSpaceDimensions() const
@@ -220,6 +241,11 @@ const Compartment * Compartment::getAdjacentCompartment(const Borders::Coodinate
 
 Iterator Compartment::begin()
 {
+  if (mNoLocalAgents)
+    {
+      return Iterator(repast::GridDimensions(repast::Point<double>(0, 0), repast::Point<double>(0, 0)));
+    }
+
   return Iterator(mpLayer->localGridDimensions());
 }
 
@@ -276,104 +302,73 @@ bool Compartment::moveTo(const repast::AgentId &id, std::vector< double > &pt)
   return success;
 }
 
-Compartment * Compartment::transform(std::vector< double > & pt) const
+Compartment * Compartment::transform(std::vector< double > & location) const
 {
-  mpSpaceBorders->transform(pt);
+  mpSpaceBorders->transform(location);
 
   std::vector< Borders::BoundState > BoundState(2);
 
-  if (mpSpaceBorders->boundsCheck(pt, &BoundState))
+  if (mpSpaceBorders->boundsCheck(location, &BoundState))
     {
       return const_cast< Compartment * >(this);
     }
 
-  // We are at the compartment boundaries;
-  size_t i = Borders::X;
-
-  std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
-  std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
-  std::vector<double>::iterator itIn = pt.begin();
-
-  Compartment * pTarget = NULL;
-
-  for (; itState != endState && pTarget == NULL; ++itState, ++itIn, ++i)
-    {
-      switch (*itState)
-        {
-          case Borders::OUT_LOW:
-            if (mAdjacentCompartments[i][Borders::LOW] != INVALID)
-              {
-                pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
-                const repast::GridDimensions & Dimensions = pTarget->dimensions();
-                *itIn += Dimensions.origin(i) + Dimensions.extents(i) - mDimensions.origin(i);
-              }
-
-            break;
-
-          case Borders::OUT_HIGH:
-            if (mAdjacentCompartments[i][Borders::HIGH] != INVALID)
-              {
-                pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
-                const repast::GridDimensions & Dimensions = pTarget->dimensions();
-                *itIn += Dimensions.origin(i) - mDimensions.extents(i);
-              }
-
-            break;
-
-          case Borders::INBOUND:
-          case Borders::OUT_BOTH:
-            break;
-        }
-    }
-
-  return pTarget;
+  return mapToOtherCompartment(location, BoundState);
 }
 
-Compartment * Compartment::transform(std::vector< int > & pt) const
+Compartment * Compartment::transform(std::vector< int > & location) const
 {
-  mpGridBorders->transform(pt);
+  mpGridBorders->transform(location);
 
   std::vector< Borders::BoundState > BoundState(2, Borders::INBOUND);
 
-  if (mpGridBorders->boundsCheck(pt, &BoundState))
+  if (mpGridBorders->boundsCheck(location, &BoundState))
     {
       return const_cast< Compartment * >(this);
     }
 
-  // We are at the compartment boundaries;
-  size_t i = Borders::X;
+  std::vector< double > Space = gridToSpace(location);
 
+  Compartment * pTarget = mapToOtherCompartment(Space, BoundState);
+
+  if (pTarget != NULL)
+    {
+      location = pTarget->spaceToGrid(Space);
+    }
+
+  return pTarget;
+}
+
+Compartment * Compartment::mapToOtherCompartment(std::vector< double > & pt,
+                                                 const std::vector< Borders::BoundState > & BoundState) const
+{
+  // We are outside the compartment boundaries, find the adjacent compartment
+  Compartment * pTarget = NULL;
+  size_t Coordinate = Borders::X;
   std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
   std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
-  std::vector< int >::iterator itIn = pt.begin();
+  std::vector< double >::iterator itIn = pt.begin();
 
-  Compartment * pTarget = NULL;
-
-  for (; itState != endState; ++itState, ++itIn, ++i)
+  for (; itState != endState; ++itState, ++itIn, ++Coordinate)
     {
-      if (pTarget != NULL)
-        {
-          continue;
-        }
-
       switch (*itState)
         {
           case Borders::OUT_LOW:
-            if (mAdjacentCompartments[i][Borders::LOW] != INVALID)
+            if (mAdjacentCompartments[Coordinate][Borders::LOW] != INVALID)
               {
-                pTarget = instance(mAdjacentCompartments[i][Borders::LOW]);
-                const repast::GridDimensions & Dimensions = pTarget->dimensions();
-                *itIn += Dimensions.origin(i) + Dimensions.extents(i) - mDimensions.origin(i);
+                pTarget = instance(mAdjacentCompartments[Coordinate][Borders::LOW]);
+                const repast::GridDimensions & Dimensions = pTarget->spaceDimensions();
+                *itIn += Dimensions.origin(Coordinate) + Dimensions.extents(Coordinate) - mSpaceDimensions.origin(Coordinate);
               }
 
             break;
 
           case Borders::OUT_HIGH:
-            if (mAdjacentCompartments[i][Borders::HIGH] != INVALID)
+            if (mAdjacentCompartments[Coordinate][Borders::HIGH] != INVALID)
               {
-                pTarget = instance(mAdjacentCompartments[i][Borders::HIGH]);
-                const repast::GridDimensions & Dimensions = pTarget->dimensions();
-                *itIn += Dimensions.origin(i) - mDimensions.extents(i);
+                pTarget = instance(mAdjacentCompartments[Coordinate][Borders::HIGH]);
+                const repast::GridDimensions & Dimensions = pTarget->spaceDimensions();
+                *itIn += Dimensions.origin(Coordinate) - mSpaceDimensions.extents(Coordinate);
               }
 
             break;
@@ -386,6 +381,7 @@ Compartment * Compartment::transform(std::vector< int > & pt) const
 
   return pTarget;
 }
+
 
 bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
 {
@@ -419,11 +415,11 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
           switch (*itState)
             {
               case Borders::OUT_LOW:
-                *itLocation = mDimensions.origin(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::LOW);
+                *itLocation = mSpaceDimensions.origin(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::LOW);
                 break;
 
               case Borders::OUT_HIGH:
-                *itLocation = mDimensions.origin(i) + mDimensions.extents(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::HIGH);
+                *itLocation = mSpaceDimensions.origin(i) + mSpaceDimensions.extents(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::HIGH);
                 break;
 
               case Borders::INBOUND:
@@ -560,6 +556,8 @@ std::vector< double > & Compartment::cytokineValues(const repast::Point< int > &
   if (mpDiffuserValues != NULL &&
       mpDiffuserValues->contains(pt))
     {
+      // LocalFile::debug() << "  local" << std::endl;
+
       return mpDiffuserValues->operator[](pt);
     }
 
@@ -572,7 +570,7 @@ std::vector< double > & Compartment::cytokineValues(const repast::Point< int > &
   for (; it != end && pFound == NULL; ++it)
     {
       SharedValueLayer * pValues = static_cast< SharedValueLayer * >(&**it);
-      // LocalFile::debug() << "trying: " << pValues->origin() << ", " << pValues->shape() << std::endl;
+      // LocalFile::debug() << "  trying: " << pValues->origin() << ", " << pValues->shape() << std::endl;
 
       pFound = pValues->tryLocation(pt);
     }
@@ -582,8 +580,8 @@ std::vector< double > & Compartment::cytokineValues(const repast::Point< int > &
       return *pFound;
     }
 
-  // LocalFile::debug() << "ERROR: " << getName() << " " << pt << ", " << localGridDimensions() << std::endl;
-  // LocalFile::debug() << mpDiffuserValues->origin() << ", " << mpDiffuserValues->shape() << std::endl;
+  LocalFile::debug() << "ERROR: " << getName() << " " << pt << ", " << localGridDimensions() << std::endl;
+  LocalFile::debug() << mpDiffuserValues->origin() << ", " << mpDiffuserValues->shape() << std::endl;
 
   throw std::runtime_error("cytokine value not found: location not shared");
 
@@ -594,15 +592,20 @@ std::vector< double > & Compartment::cytokineValues(const repast::Point< int > &
 double & Compartment::cytokineValue(const std::string & name, const repast::Point< int > & pt)
 {
   std::vector< int > Location = pt.coords();
+  // LocalFile::debug() << name << "(" << getName() << "): (" << Location[Borders::X] << ", " << Location[Borders::Y] << ") -> ";
 
   Compartment * pTarget = transform(Location);
 
   if (pTarget == this)
     {
+      // LocalFile::debug() << "(" << Location[Borders::X] << ", " << Location[Borders::Y] << ")" << std::endl;
+
       return cytokineValues(Location)[mCytokineMap[name]];
     }
   else if (pTarget != NULL)
     {
+      // LocalFile::debug() << name << "(" << pTarget->getName() << "): (" << Location[Borders::X] << ", " << Location[Borders::Y] << ")" << std::endl;
+
       return pTarget->cytokineValue(name, Location);
     }
 
@@ -616,6 +619,8 @@ double & Compartment::cytokineValue(const std::string & name, const repast::Poin
 double & Compartment::cytokineValue(const std::string & name, const repast::Point< int > & pt, const int & xOffset, const int & yOffset)
 {
   std::vector< int > Location = pt.coords();
+  // LocalFile::debug() << name << "(" << getName() << "): (" << Location[Borders::X] << ", " << Location[Borders::Y] << ") + (" << xOffset << ", " << yOffset << ")" << std::endl;
+
   Location[Borders::X] += xOffset;
   Location[Borders::Y] += yOffset;
 
@@ -624,6 +629,8 @@ double & Compartment::cytokineValue(const std::string & name, const repast::Poin
 
 void Compartment::initializeDiffuserData()
 {
+  if (mNoLocalAgents) return;
+
   if (mCytokineMap.empty()) return;
 
   if (mpDiffuserValues == NULL)
@@ -651,8 +658,6 @@ void Compartment::initializeDiffuserData()
     {
       mpDiffuser = new DiffuserImpl(this);
     }
-
-  synchronizeDiffuser();
 }
 
 SharedValueLayer * Compartment::getDiffuserData()
@@ -679,16 +684,20 @@ const std::vector< double > & Compartment::operator[](const repast::Point< doubl
 
 void Compartment::synchronizeCells()
 {
+  if (mNoLocalAgents) return;
+
   mpLayer->synchronizeCells();
 }
 
 // virtual
 void Compartment::write(const std::string & separator)
 {
+  if (mNoLocalAgents) return;
+
   std::ostream & o = LocalFile::instance(getName())->stream();
 
   repast::ScheduleRunner& runner = repast::RepastProcess::instance()->getScheduleRunner();
-  o << getName() << " TICK: " << runner.currentTick()
+  o << getName() << " TICK: " << round(runner.currentTick())
     << ", Agents " << mpLayer->getCellContext().size()
     << ", " << mpLayer->localGridDimensions() << std::endl;
 
@@ -786,6 +795,8 @@ void Compartment::write(const std::string & separator)
 void Compartment::getBorderCellsToPush(std::set<repast::AgentId> & /* agentsToTest */,
                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
+  // LocalFile::debug() << getName() << " (" << agentsToTest.size() << "): " << localGridDimensions() << std::endl;
+
   std::vector< Borders::Coodinate > Coordinates;
   std::vector< Borders::Side > Sides;
 
@@ -836,39 +847,47 @@ void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
                                        const Borders::Side & side,
                                        std::map< int, std::set< repast::AgentId > > & agentsToPush)
 {
+  // LocalFile::debug() << getName() << ": [" << (coordinate == Borders::X ? "X" : "Y") << ", " << (side == Borders::LOW ? "low" : "high") << "]" << std::endl;
   Borders::Coodinate OtherCordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
 
-  int xOffset = (coordinate != Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
-  int yOffset = (coordinate != Borders::Y) ? 0 : (side == Borders::HIGH) ? +1 : -1;
-
   Iterator itPoint(localGridDimensions());
+
   if (side == Borders::HIGH)
     {
       for (int i = 0, imax = localGridDimensions().extents(coordinate) - 1; i < imax; ++i)
         {
-          itPoint.next(OtherCordinate);
+          itPoint.next(coordinate);
         }
     }
 
-  for (; itPoint; itPoint.next(coordinate))
+  for (int i = 0, imax = localGridDimensions().extents(OtherCordinate); i < imax; i++, itPoint.next(OtherCordinate))
     {
-      int TargetRank = getRank(itPoint->coords(), xOffset, yOffset);
-      std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(TargetRank);
+      // LocalFile::debug() << *itPoint << ":" << std::endl;
 
-      if (found == agentsToPush.end())
+      std::set< size_t > TargetRanks = getRanks(itPoint->coords(), coordinate, side);
+
+      std::set< size_t >::const_iterator itRank = TargetRanks.begin();
+      std::set< size_t >::const_iterator endRank = TargetRanks.end();
+
+      for (; itRank != endRank; ++itRank)
         {
-          found = agentsToPush.insert(std::make_pair(TargetRank, std::set< repast::AgentId >())).first;
-        }
+          std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(*itRank);
 
-      std::vector< Agent * > out;
-      mpLayer->getAgents(*itPoint, out);
+          if (found == agentsToPush.end())
+            {
+              found = agentsToPush.insert(std::make_pair(*itRank, std::set< repast::AgentId >())).first;
+            }
 
-      std::vector< Agent * >::const_iterator it = out.begin();
-      std::vector< Agent * >::const_iterator end = out.end();
+          std::vector< Agent * > out;
+          mpLayer->getAgents(*itPoint, out);
 
-      for (; it != end; ++it)
-        {
-          found->second.insert((*it)->getId());
+          std::vector< Agent * >::const_iterator it = out.begin();
+          std::vector< Agent * >::const_iterator end = out.end();
+
+          for (; it != end; ++it)
+            {
+              found->second.insert((*it)->getId());
+            }
         }
     }
 }
@@ -930,24 +949,22 @@ void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
 {
   Borders::Coodinate OtherCordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
 
-  int xOffset = (coordinate != Borders::X) ? 0 : (side == Borders::HIGH) ? +1 : -1;
-  int yOffset = (coordinate != Borders::Y) ? 0 : (side == Borders::HIGH) ? +1 : -1;
-
   Iterator itPoint(localGridDimensions());
 
   if (side == Borders::HIGH)
     {
       for (int i = 0, imax = localGridDimensions().extents(coordinate) - 1; i < imax; ++i)
         {
-          itPoint.next(OtherCordinate);
+          itPoint.next(coordinate);
         }
     }
 
   std::set< int > Targets;
 
-  for (; itPoint; itPoint.next(coordinate))
+  for (int i = 0, imax = localGridDimensions().extents(OtherCordinate); i < imax; i++, itPoint.next(OtherCordinate))
     {
-      Targets.insert(getRank(itPoint->coords(), xOffset, yOffset));
+      std::set< size_t > TargetRanks = getRanks(itPoint->coords(), coordinate, side);
+      Targets.insert(TargetRanks.begin(), TargetRanks.end());
     }
 
   repast::AgentId Id = mpDiffuserValues->getId();
@@ -975,7 +992,12 @@ void Compartment::getBorderValuesToPush(const Borders::Coodinate & coordinate,
 
 void Compartment::synchronizeDiffuser()
 {
-  // mpDiffuserValues->write(// LocalFile::debug(), "\t", this);
+  if (mNoLocalAgents) return;
+
+  // Nothing to do
+  if (mpDiffuserValues == NULL) return;
+
+  // mpDiffuserValues->write(LocalFile::debug(), "\t", this);
 
   mpLayer->synchronizeDiffuser();
 
@@ -992,7 +1014,7 @@ void Compartment::synchronizeDiffuser()
   // Complete Information based on border settings
   mpDiffuserValues->completeBufferValues(*mpGridBorders);
 
-  // mpDiffuserValues->write(// LocalFile::debug(), "\t", this);
+  // mpDiffuserValues->write(LocalFile::debug(), "\t", this);
 }
 
 const Compartment::Type & Compartment::getType() const
@@ -1002,8 +1024,10 @@ const Compartment::Type & Compartment::getType() const
 
 size_t Compartment::localCount(const double & concentration)
 {
+  if (mNoLocalAgents) return 0;
+
   size_t rank = repast::RepastProcess::instance()->rank();
-  size_t worldSize = repast::RepastProcess::instance()->worldSize();
+  size_t worldSize = mProcessDimensions[0] * mProcessDimensions[1];
 
   size_t GlobalCount = concentration * mProperties.spaceX *  mProperties.spaceY;
   size_t LocalCount = GlobalCount / worldSize;
@@ -1013,19 +1037,83 @@ size_t Compartment::localCount(const double & concentration)
   return LocalCount;
 }
 
+std::set< size_t > Compartment::getRanks(const std::vector< int > & location,
+                                         const Borders::Coodinate & coordinate,
+                                         const Borders::Side & side) const
+{
+  // LocalFile::debug() << getName() << ": (" << location[Borders::X] << ", " << location[Borders::Y] << "), [" << (coordinate == Borders::X ? "X" : "Y") << ", " << (side == Borders::LOW ? "low" : "high") << "] -> (";
+  Borders::Coodinate OtherCoordinate = (coordinate == Borders::Y) ? Borders::X : Borders::Y;
+
+  std::vector< int > LowerLimit = location;
+  LowerLimit[coordinate] = mGridDimensions.origin(coordinate) + side == Borders::LOW ? -1 : mGridDimensions.extents(coordinate);
+  std::vector< int > UpperLimit = LowerLimit;
+  UpperLimit[OtherCoordinate] += 1;
+
+  // LocalFile::debug() << LowerLimit[Borders::X] << ", " << LowerLimit[Borders::Y] << ")-(" << UpperLimit[Borders::X] << ", " << UpperLimit[Borders::Y] << ") -> ";
+
+
+  // This transforms the lower limit to the new compartments coordinates
+  Compartment * pCompartment = transform(LowerLimit);
+
+  if (pCompartment == this || pCompartment == NULL)
+    {
+      LocalFile::debug() << "ERROR getRanks: " << getName() << ": " << location[Borders::X] << ", " << location[Borders::Y] << std::endl;
+
+      throw std::runtime_error("getRanks invalid location");
+    }
+
+  // We can now manually transform the the upper limit
+  UpperLimit[coordinate] = LowerLimit[coordinate];
+  UpperLimit[OtherCoordinate] = pCompartment->spaceToGrid(OtherCoordinate, gridToSpace(OtherCoordinate, UpperLimit[OtherCoordinate]));
+
+  // LocalFile::debug() << pCompartment->getName() << ": (" << LowerLimit[Borders::X] << ", " << LowerLimit[Borders::Y] << ")-(" << UpperLimit[Borders::X] << ", " << UpperLimit[Borders::Y] << "):" << std::endl;
+
+
+  std::set< size_t > Ranks;
+
+  Ranks.insert(pCompartment->getRank(LowerLimit));
+  Ranks.insert(pCompartment->getRank(UpperLimit));
+
+  pCompartment->bisect(OtherCoordinate, LowerLimit, UpperLimit, Ranks);
+
+  return Ranks;
+}
+
+void Compartment::bisect(const Borders::Coodinate & coordinate,
+                         const std::vector< int > & low,
+                         const std::vector< int > & high,
+                         std::set< size_t > & ranks) const
+{
+  std::vector< int > Middle = low;
+  Middle[coordinate] = (low[coordinate] + high[coordinate]) / 2;
+
+  if (ranks.insert(getRank(Middle)).second)
+    {
+      bisect(coordinate, low, Middle, ranks);
+      bisect(coordinate, Middle, high, ranks);
+    }
+}
+
 size_t Compartment::getRank(const std::vector< int > & location) const
 {
   std::vector< int > Location = location;
 
   Compartment * pTarget = transform(Location);
 
+  // LocalFile::debug() << pTarget->getName() << ": (" << Location[Borders::X] << ", " << Location[Borders::Y] << "): ";
+
   if (pTarget == this)
     {
-      return mpLayer->getRank(Location, 0, 0);
+      size_t Rank = mpLayer->getRank(Location, 0, 0);
+      // LocalFile::debug() << "Rank = " << Rank << std::endl;
+
+      return Rank;
     }
   else if (pTarget != NULL)
     {
-      pTarget->getRank(Location);
+      // LocalFile::debug() << " -> ";
+
+      return pTarget->getRank(Location);
     }
 
   return (size_t) INVALID;
@@ -1034,8 +1122,11 @@ size_t Compartment::getRank(const std::vector< int > & location) const
 size_t Compartment::getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const
 {
   std::vector< int > Location = location;
+  // LocalFile::debug() << getName() << ": (" << Location[Borders::X] << ", " << Location[Borders::Y] << ") + (" << xOffset << ", " <<yOffset << ") -> (";
+
   Location[Borders::X] += xOffset;
   Location[Borders::Y] += yOffset;
+  // LocalFile::debug() << Location[Borders::X] << ", " << Location[Borders::Y] << ") -> ";
 
   return getRank(Location);
 }

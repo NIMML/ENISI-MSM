@@ -14,13 +14,12 @@ public:
 
   DendriticsGroup(Compartment * pCompartment, const double & concentrations);
 
-  virtual void act();
-
   virtual std::string classname() const {return "DendriticsGroup";}
 
-private:
-  void act(const repast::Point<int> &);
+protected:
+  virtual void act(const repast::Point<int> &);
 
+private:
   double p_rule17a;
   double p_rule17b;
   double p_rule48a;

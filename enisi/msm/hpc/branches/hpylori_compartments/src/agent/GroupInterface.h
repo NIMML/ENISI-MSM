@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "repast_hpc/Point.h"
+
 namespace ENISI
 {
 
@@ -24,10 +26,11 @@ public:
 
   virtual ~GroupInterface();
 
-  virtual void act() = 0;
+  void act();
   virtual std::string classname() const = 0;
 
 protected:
+  virtual void act(const repast::Point<int> & pt) = 0;
   Compartment * mpCompartment;
 };
 

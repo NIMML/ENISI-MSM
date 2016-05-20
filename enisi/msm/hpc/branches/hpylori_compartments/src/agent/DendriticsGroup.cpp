@@ -33,14 +33,6 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const double & conc
   pModel->getValue("p_mDCGLNDistance", p_mDCGLNDistance);
 }
 
-void DendriticsGroup::act()
-{
-  for (Iterator it = mpCompartment->begin(); it; it.next())
-    {
-      act(*it);
-    }
-}
-
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0);
@@ -112,7 +104,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       double itregConcentration = TcellConcentration[TcellState::iTREG];
 
       if (state == DendriticState::IMMATURE
-          && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCEpitheliumDistance // TODO - CRITICAL Determine this value
+          && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCEpitheliumDistance // TODO - CRITICAL Determine this value
           && mpCompartment->getType() == Compartment::lamina_propria
           && (p_rule51a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
@@ -124,7 +116,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
 
       if (state == DendriticState::IMMATURE
-          && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCLPDistance //TODO - CRITICAL Determine this value
+          && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_iDCLPDistance //TODO - CRITICAL Determine this value
           && mpCompartment->getType() == Compartment::epithilium
           && (p_rule51b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
@@ -136,7 +128,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
 
       if (state == (DendriticState::EFFECTOR || DendriticState::TOLEROGENIC)
-          && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_mDCGLNDistance //TODO - CRITICAL Determine this value
+          && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < p_mDCGLNDistance //TODO - CRITICAL Determine this value
           && mpCompartment->getType() == Compartment::lamina_propria
           && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {

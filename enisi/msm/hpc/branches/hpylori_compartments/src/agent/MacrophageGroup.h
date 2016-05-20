@@ -18,13 +18,12 @@ public:
 
   virtual ~MacrophageGroup();
 
-  virtual void act();
-
   virtual std::string classname() const {return "MacrophageGroup";}
 
-private:
-  void act(const repast::Point<int> &);
+protected:
+  virtual void act(const repast::Point<int> &);
 
+private:
   double p_rule42;
   double p_MinfDiff;
   double p_rule13;

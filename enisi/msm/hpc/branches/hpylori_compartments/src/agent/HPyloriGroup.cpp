@@ -25,14 +25,6 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const double & concentrat
   pModel->getValue("p_HPyloriDeath", p_HPyloriDeath);
 }
 
-void HPyloriGroup::act()
-{
-  for (Iterator it = mpCompartment->begin(); it; it.next())
-    {
-      act(*it);
-    }
-}
-
 void HPyloriGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0);
@@ -83,7 +75,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
             1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH) // Move accross the border
-            + Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y); // Move all the way through the epithelium
+            + Compartment::instance(Compartment::epithilium)->spaceDimensions().extents(Borders::Y); // Move all the way through the epithelium
 
           mpCompartment->moveTo(pAgent->getId(), Location);
           continue;
