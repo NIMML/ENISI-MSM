@@ -29,14 +29,6 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const double & conc
 MacrophageGroup::~MacrophageGroup()
 {}
 
-void MacrophageGroup::act()
-{
-  for (Iterator it = mpCompartment->begin(); it; it.next())
-    {
-      act(*it);
-    }
-}
-
 void MacrophageGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0);

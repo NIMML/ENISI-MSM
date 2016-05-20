@@ -12,12 +12,12 @@ class EpithelialCellGroup: public GroupInterface
 {
 public:
   EpithelialCellGroup(Compartment * pCompartment, const double & concentrations);
-  virtual void act();
   virtual std::string classname() const {return "EpithelialCellGroup";}
 
-private:
-  void act(const repast::Point<int> &);
+protected:
+  virtual void act(const repast::Point<int> &);
 
+private:
   double p_EpiCellDeath;//Rule 11
   double p_EpiProliferation;//Rule 8
   double p_rule10a;

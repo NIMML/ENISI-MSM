@@ -9,7 +9,8 @@
 #include "agent/AgentStates.h"
 #include "agent/SharedValueLayer.h"
 #include "grid/Borders.h"
-#include "Projection.h"
+#include "grid/SharedSpace.h"
+#include "DataWriter/LocalFile.h"
 
 namespace ENISI {
 
@@ -28,8 +29,8 @@ private:
 public:
   typedef ENISI::SimpleBorders Transformer;
   typedef repast::SimpleAdder< AgentType > Adder;
-  typedef repast::SharedContinuousSpace<AgentType, Transformer, Adder> Space;
-  typedef ENISI::Projection<AgentType, Transformer, Adder> Grid;
+  typedef ENISI::SharedContinuousSpace<AgentType, Transformer, Adder> Space;
+  typedef ENISI::SharedDiscreteSpace<AgentType, Transformer, Adder> Grid;
   typedef repast::SharedContext< AgentType > Context;
 //  typedef Agent AgentType;
 
@@ -59,23 +60,32 @@ public:
     std::vector< double >::const_iterator itGridOrigin = gridDimension.origin().begin();
     std::vector< double >::const_iterator itGridExtents = gridDimension.extents().begin();
 
-
     std::vector< double >::const_iterator itSpaceOrigin = spaceDimension.origin().begin();
     std::vector< double >::const_iterator itSpaceExtents = spaceDimension.extents().begin();
+
+    double SpaceBufferScale = 0;
 
     for (; itConversion != endConversion; ++itConversion, ++itGridOrigin, ++itGridExtents, ++itSpaceOrigin, ++itSpaceExtents)
       {
         itConversion->grid = round(*itGridOrigin);
         itConversion->space = *itSpaceOrigin;
         itConversion->scale = *itGridExtents / *itSpaceExtents;
+
+        SpaceBufferScale = std::max(SpaceBufferScale,  *itSpaceExtents / *itGridExtents);
       }
 
-    mpSpace = new Space(name + "-space", spaceDimension, processDimensions, 0, mpCommunicator);
+    mpSpace = new Space(name + "-space", spaceDimension, processDimensions, SpaceBufferScale * mBufferSize, mpCommunicator);
     mpGrid = new Grid(name + "-grid", gridDimension, processDimensions, mBufferSize, mpCommunicator);
     mpGridTopology = new repast::CartTopology(processDimensions, gridDimension.origin().coords(), gridDimension.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
 
+    /*
+    repast::Neighbors Neighbors;
+    mpGridTopology->createNeighbors(Neighbors);
+    LocalFile::debug() << Neighbors;
+    */
+
     repast::GridDimensions ProcessDimensions(repast::Point< double >(0.0, 0.0), repast::Point< double >(processDimensions[0], processDimensions[1]));
-    mpSharedValues = new Grid(name +"-values", ProcessDimensions, processDimensions, mBufferSize, mpCommunicator);
+    mpSharedValues = new Grid(name + "-values", ProcessDimensions, processDimensions, mBufferSize, mpCommunicator);
     mpDiffuserTopology = new repast::CartTopology(processDimensions, ProcessDimensions.origin().coords(), ProcessDimensions.extents().coords(), Transformer().isPeriodic(), mpCommunicator);
 
     mCellContext.addProjection(mpSpace);
@@ -339,12 +349,20 @@ public:
 
   size_t getRank(const std::vector< double > & location, const double & xOffset, const double & yOffset) const
   {
-    return getRank(spaceToGrid(location), round(xOffset), round(xOffset));
+    std::vector< double > Location = location;
+    Location[Borders::X] += xOffset;
+    Location[Borders::Y] += yOffset;
+
+    return getRank(spaceToGrid(Location), 0, 0);
   }
 
   size_t getRank(const std::vector< int > & location, const int & xOffset, const int & yOffset) const
   {
-    size_t Rank = mpGridTopology->getRank(location, xOffset, yOffset);
+    std::vector< int > Location(2);
+    Location[Borders::X] = floor((location[Borders::Y] + yOffset) / mLocalGridDimensions.extents(Borders::Y));
+    Location[Borders::Y] = floor((location[Borders::X] + xOffset)/ mLocalGridDimensions.extents(Borders::X));
+
+    size_t Rank = mpGridTopology->getRank(Location, 0, 0);
 
     return Rank;
   }

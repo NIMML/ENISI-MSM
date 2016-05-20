@@ -74,7 +74,7 @@ Agent * AgentPackageExchange::createAgent(AgentPackage package)
 {
   Agent * pAgent = NULL;
 
-  // std::cout << repast::RepastProcess::instance()->rank() << ": " << package.id << ", " << package.rank << ", " << package.type << ", " << package.currentRank << ", " << package.state << std::endl;
+  // LocalFile::debug() << repast::RepastProcess::instance()->rank() << ": " << package.id << ", " << package.rank << ", " << package.type << ", " << package.currentRank << ", " << package.state << std::endl;
 
   if ((Agent::Type) package.type != Agent::DiffuserValues)
     {

@@ -26,6 +26,7 @@ protected:
 
   void act();
   void diffuse();
+  void synchronize();
   void recordResults();
 
 private:

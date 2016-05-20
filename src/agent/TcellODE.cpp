@@ -1,6 +1,7 @@
 #include "TcellODE.h"
 #include "COPASI.h"
 #include "grid/Properties.h"
+#include "DataWriter/LocalFile.h"
 
 using namespace ENISI;
 
@@ -19,7 +20,7 @@ TcellODE::TcellODE() : DEBUG(false)
 
   if (mpDataModel == NULL)
     {
-      std::cerr << "Error while loading the model from file named \""
+      LocalFile::debug() << "Error while loading the model from file named \""
                 << modelFileName << "\"." << std::endl;
 
       std::exit(1);
@@ -29,7 +30,7 @@ TcellODE::TcellODE() : DEBUG(false)
   assert(mpModel != NULL);
 
   if (DEBUG)
-    std::cout << "Model statistics for mpModel \""
+    LocalFile::debug() << "Model statistics for mpModel \""
               << mpModel->getObjectName() << "\"." << std::endl;
 
   // output number and names of all compartments
@@ -37,8 +38,8 @@ TcellODE::TcellODE() : DEBUG(false)
 
   if (DEBUG)
     {
-      std::cout << "Number of Compartments: " << iMax << std::endl;
-      std::cout << "Compartments: " << std::endl;
+      LocalFile::debug() << "Number of Compartments: " << iMax << std::endl;
+      LocalFile::debug() << "Compartments: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -47,7 +48,7 @@ TcellODE::TcellODE() : DEBUG(false)
       assert(pCompartment != NULL);
 
       if (DEBUG)
-        std::cout << "\t" << pCompartment->getObjectName() << std::endl;
+        LocalFile::debug() << "\t" << pCompartment->getObjectName() << std::endl;
     }
 
   // output number and names of all metabolites
@@ -55,8 +56,8 @@ TcellODE::TcellODE() : DEBUG(false)
 
   if (DEBUG)
     {
-      std::cout << "Number of Metabolites: " << iMax << std::endl;
-      std::cout << "Metabolites: " << std::endl;
+      LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
+      LocalFile::debug() << "Metabolites: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -68,7 +69,7 @@ TcellODE::TcellODE() : DEBUG(false)
       nameMetabs[metab->getObjectDisplayName()] = metab;
 
       if (DEBUG)
-        std::cout << "\t" << metab->getObjectName() << "\t"
+        LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
                   << metab->getInitialConcentration() << "\t"
                   << metab->getInitialValue() << std::endl;
     }
@@ -78,8 +79,8 @@ TcellODE::TcellODE() : DEBUG(false)
 
   if (DEBUG)
     {
-      std::cout << "Number of Reactions: " << iMax << std::endl;
-      std::cout << "Reactions: " << std::endl;
+      LocalFile::debug() << "Number of Reactions: " << iMax << std::endl;
+      LocalFile::debug() << "Reactions: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -88,7 +89,7 @@ TcellODE::TcellODE() : DEBUG(false)
       assert(pReaction != NULL);
 
       if (DEBUG)
-        std::cout << "\t" << pReaction->getObjectName() << std::endl;
+        LocalFile::debug() << "\t" << pReaction->getObjectName() << std::endl;
     }
 
   setUpReport();
@@ -105,7 +106,7 @@ void TcellODE::setInitialConcentration(std::string name, double value)
     }
   else
     {
-      std::cout << name << "\t does not exist as a metab" << std::endl;
+      LocalFile::debug() << name << "\t does not exist as a metab" << std::endl;
     }
 }
 
@@ -234,6 +235,7 @@ void TcellODE::setUpTask()
 bool TcellODE::runTimeCourse()
 {
   mpModel->applyInitialValues();
+  // LocalFile::debug() << mpModel->getState() << std::endl;
 
   bool result = true;
 
@@ -249,17 +251,17 @@ bool TcellODE::runTimeCourse()
 
   if (result == false)
     {
-      std::cout << "Error. Running the time course simulation failed.\n";
+      LocalFile::debug() << "Error. Running the time course simulation failed.\n";
 
       mpModel->applyInitialValues();
-      std::cout << mpModel->getState() << std::endl;
+      LocalFile::debug() << mpModel->getState() << std::endl;
 
 
       // check if there are additional error messages
       if (CCopasiMessage::size() > 0)
         {
           // print the messages in chronological order
-          std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
+          LocalFile::debug() << CCopasiMessage::getAllMessageText(true) << "\n";
         }
     }
 
@@ -279,7 +281,7 @@ double TcellODE::getConcentration(std::string name)
   else
     {
       if (DEBUG)
-        std::cout << name << "\t does not exist as a metab" << std::endl;
+        LocalFile::debug() << name << "\t does not exist as a metab" << std::endl;
     }
 
   return d;

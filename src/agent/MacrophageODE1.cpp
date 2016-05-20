@@ -1,6 +1,7 @@
 #include "MacrophageODE1.h"
 #include "COPASI.h"
 #include "grid/Properties.h"
+#include "DataWriter/LocalFile.h"
 
 using namespace ENISI;
 
@@ -19,7 +20,7 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
   if (dataModel == NULL)
     {
-      std::cerr << "Error while loading the model from file named \""
+      LocalFile::debug() << "Error while loading the model from file named \""
                 << modelFileName << "\"." << std::endl;
 
       std::exit(1);
@@ -29,7 +30,7 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
   assert(model != NULL);
 
   if (DEBUG)
-    std::cout << "Model statistics for model \""
+    LocalFile::debug() << "Model statistics for model \""
               << model->getObjectName() << "\"." << std::endl;
 
   // output number and names of all compartments
@@ -37,8 +38,8 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
   if (DEBUG)
     {
-      std::cout << "Number of Compartments: " << iMax << std::endl;
-      std::cout << "Compartments: " << std::endl;
+      LocalFile::debug() << "Number of Compartments: " << iMax << std::endl;
+      LocalFile::debug() << "Compartments: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -47,7 +48,7 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
       assert(pCompartment != NULL);
 
       if (DEBUG)
-        std::cout << "\t" << pCompartment->getObjectName() << std::endl;
+        LocalFile::debug() << "\t" << pCompartment->getObjectName() << std::endl;
     }
 
   // output number and names of all metabolites
@@ -55,8 +56,8 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
   if (DEBUG)
     {
-      std::cout << "Number of Metabolites: " << iMax << std::endl;
-      std::cout << "Metabolites: " << std::endl;
+      LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
+      LocalFile::debug() << "Metabolites: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -67,7 +68,7 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
       nameMetabs[metab->getObjectName()] = metab;
 
       if (DEBUG)
-        std::cout << "\t" << metab->getObjectName() << "\t"
+        LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
                   << metab->getInitialConcentration() << "\t"
                   << metab->getInitialValue() << std::endl;
     }
@@ -77,8 +78,8 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
   if (DEBUG)
     {
-      std::cout << "Number of Reactions: " << iMax << std::endl;
-      std::cout << "Reactions: " << std::endl;
+      LocalFile::debug() << "Number of Reactions: " << iMax << std::endl;
+      LocalFile::debug() << "Reactions: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -87,7 +88,7 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
       assert(pReaction != NULL);
 
       if (DEBUG)
-        std::cout << "\t" << pReaction->getObjectName() << std::endl;
+        LocalFile::debug() << "\t" << pReaction->getObjectName() << std::endl;
     }
 
   setUpReport();
@@ -104,7 +105,7 @@ void MacrophageODE1::setInitialConcentration(std::string name, double value)
     }
   else
     {
-      std::cout << name << "\t does not exist as a metab" << std::endl;
+      LocalFile::debug() << name << "\t does not exist as a metab" << std::endl;
     }
 }
 
@@ -242,13 +243,13 @@ void MacrophageODE1::runTimeCourse()
     }
   catch (...)
     {
-      std::cout << "Error. Running the time course simulation failed.\n";
+      LocalFile::debug() << "Error. Running the time course simulation failed.\n";
 
       // check if there are additional error messages
       if (CCopasiMessage::size() > 0)
         {
           // print the messages in chronological order
-          std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
+          LocalFile::debug() << CCopasiMessage::getAllMessageText(true) << "\n";
         }
 
       // std::exit(1);
@@ -256,13 +257,13 @@ void MacrophageODE1::runTimeCourse()
 
   if (result == false)
     {
-      std::cerr << "An error occured while running the time course simulation.\n";
+      LocalFile::debug() << "An error occured while running the time course simulation.\n";
 
       // check if there are additional error messages
       if (CCopasiMessage::size() > 0)
         {
           // print the messages in chronological order
-          std::cerr << CCopasiMessage::getAllMessageText(true) << "\n";
+          LocalFile::debug() << CCopasiMessage::getAllMessageText(true) << "\n";
         }
 
       // std::exit(1);
@@ -282,7 +283,7 @@ double MacrophageODE1::getConcentration(std::string name)
   else
     {
       if (DEBUG)
-        std::cout << name << "\t does not exist as a metab" << std::endl;
+        LocalFile::debug() << name << "\t does not exist as a metab" << std::endl;
     }
 
   return d;

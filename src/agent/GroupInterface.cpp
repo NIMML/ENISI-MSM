@@ -25,3 +25,11 @@ GroupInterface::GroupInterface(Compartment * pCompartment):
 // virtual
 GroupInterface::~GroupInterface()
 {}
+
+void GroupInterface::act()
+{
+  for (Iterator it = mpCompartment->begin(); it; it.next())
+    {
+      act(*it);
+    }
+}

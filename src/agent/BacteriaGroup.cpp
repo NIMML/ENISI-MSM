@@ -25,14 +25,6 @@ BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const double & concentr
   pModel->getValue("p_rule1", p_rule1);
 }
 
-void BacteriaGroup::act()
-{
-  for (Iterator it = mpCompartment->begin(); it; it.next())
-    {
-      act(*it);
-    }
-}
-
 void BacteriaGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0);
@@ -85,7 +77,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
-            Compartment::instance(Compartment::epithilium)->dimensions().extents(Borders::Y) +
+            Compartment::instance(Compartment::epithilium)->spaceDimensions().extents(Borders::Y) +
             mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
 
           mpCompartment->moveTo(pAgent->getId(), Location);

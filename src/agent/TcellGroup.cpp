@@ -3,6 +3,7 @@
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
+#include "DataWriter/LocalFile.h"
 
 #include "agent/TcellODE.h"
 #include "grid/Borders.h"
@@ -51,14 +52,6 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
   pModel->getValue("p_IL10", p_IL10);
 }
 
-void TcellGroup::act()
-{
-  for (Iterator it = mpCompartment->begin(); it; it.next())
-    {
-      act(*it);
-    }
-}
-
 void TcellGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0.0);
@@ -98,6 +91,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
   double IL12 = mpCompartment->cytokineValue("IL12", pt);
 
   TcellODE & odeModel = TcellODE::getInstance();
+
   odeModel.setInitialConcentration("IL6", IL6);
   odeModel.setInitialConcentration("TGFb", TGFb);
   odeModel.setInitialConcentration("IL12", IL12);
@@ -105,7 +99,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
   /* run time course */
   if (!odeModel.runTimeCourse())
     {
-      std::cout << pt << std::endl;
+      LocalFile::debug() << pt << std::endl;
     }
 
   double IFNg = odeModel.getConcentration("IFNg");
@@ -261,7 +255,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           newState = TcellState::TH17;/*Rule 38*//*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
         }
       else if (state == TcellState::TH1
-               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance)
+               && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance)
                && mpCompartment->getType() == Compartment::gastric_lymph_node
                && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
         {
@@ -272,7 +266,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
           continue;
         }
       else if (state == TcellState::iTREG
-               && (mpCompartment->spaceBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance) //TODO - CRITICAL Determine this value
+               && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< mpCompartment->spaceToGrid(Borders::Y, ENISI::Distance) //TODO - CRITICAL Determine this value
                && mpCompartment->getType() == Compartment::gastric_lymph_node
                && (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 33*/
         {

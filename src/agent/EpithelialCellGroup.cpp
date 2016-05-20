@@ -25,14 +25,6 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
   pModel->getValue("p_rule12", p_rule12);
 }
 
-void EpithelialCellGroup::act()
-{
-  for (Iterator it = mpCompartment->begin(); it; it.next())
-    {
-      act(*it);
-    }
-}
-
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
 {
   std::vector<double> Location(2, 0.0);

@@ -39,7 +39,6 @@ HPModel::HPModel():
   initialize_epithilium();
   initialize_lamina_propria();
   initialize_gastric_lymph_node();
-
 }
 
 void HPModel::initialize_lumen()
@@ -53,8 +52,6 @@ void HPModel::initialize_lumen()
 
   if (!mpProperties->getValue("lumen.Bacteria.concentration", concentration)) concentration = 0;
   new BacteriaGroup(mp_lumen, concentration);
-
-  mp_lumen->synchronizeCells();
 }
 
 void HPModel::initialize_epithilium()
@@ -68,8 +65,6 @@ void HPModel::initialize_epithilium()
 
   if (!mpProperties->getValue("epithilium.Dendritics.concentration", concentration)) concentration = 0;
   new DendriticsGroup(mp_epithilium, concentration);
-
-  mp_epithilium->synchronizeCells();
 }
 
 void HPModel::initialize_lamina_propria()
@@ -93,8 +88,6 @@ void HPModel::initialize_lamina_propria()
   if (!mpProperties->getValue("lamina_propria.macrophages.concentration", concentration)) concentration = 0;
   new MacrophageGroup(mp_lamina_propria, concentration);
 
-  mp_lamina_propria->synchronizeCells();
-
   mp_lamina_propria->addCytokine("IL6");
   mp_lamina_propria->addCytokine("TGFb");
   mp_lamina_propria->addCytokine("IL12");
@@ -117,8 +110,6 @@ void HPModel::initialize_gastric_lymph_node()
   if (!mpProperties->getValue("gastric_lymph_node.Tcell.concentration", concentration)) concentration = 0;
   new TcellGroup(mp_gastric_lymph_node, concentration);
 
-  mp_gastric_lymph_node->synchronizeCells();
-
   mp_gastric_lymph_node->addCytokine("IL6");
   mp_gastric_lymph_node->addCytokine("TGFb");
   mp_gastric_lymph_node->addCytokine("IL12");
@@ -134,11 +125,13 @@ void HPModel::initSchedule(repast::ScheduleRunner & runner)
 {
   // We need to schedule diffusion and agent interaction.
 
-  runner.scheduleEvent(0.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::recordResults)));
+  runner.scheduleEvent(0.01, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::synchronize)));
+  runner.scheduleEvent(0.02, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::recordResults)));
 
-  runner.scheduleEvent(0.8, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::act)));
-  runner.scheduleEvent(0.9, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::diffuse)));
-  runner.scheduleEvent(1.0, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::recordResults)));
+  runner.scheduleEvent(0.97, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::act)));
+  runner.scheduleEvent(0.98, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::diffuse)));
+  runner.scheduleEvent(0.99, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::synchronize)));
+  runner.scheduleEvent(1.00, 1.0, repast::Schedule::FunctorPtr(new repast::MethodFunctor<HPModel> (this, &HPModel::recordResults)));
 
   /* Schedule will repeat infinitely without a stop */
   double stopAt = 1;
@@ -164,6 +157,19 @@ void HPModel::diffuse()
 {
   mp_lamina_propria->diffuse();
   mp_gastric_lymph_node->diffuse();
+}
+
+void HPModel::synchronize()
+{
+  mp_lumen->synchronizeCells();
+  mp_epithilium->synchronizeCells();
+  mp_lamina_propria->synchronizeCells();
+  mp_gastric_lymph_node->synchronizeCells();
+
+  mp_lumen->synchronizeDiffuser();
+  mp_epithilium->synchronizeDiffuser();
+  mp_lamina_propria->synchronizeDiffuser();
+  mp_gastric_lymph_node->synchronizeDiffuser();
 }
 
 void HPModel::recordResults()

@@ -13,12 +13,12 @@ class TcellGroup: public GroupInterface
 {
 public:
   TcellGroup(Compartment * pCompartment, const double & concentrations);
-  virtual void act();
   virtual std::string classname() const {return "TcellGroup";}
 
-private:
-  void act(const repast::Point<int> &);
+protected:
+  virtual void act(const repast::Point<int> &);
 
+private:
   double p_rule18; /*Rule 18 parameter*/
   double p_rule19; /*Rule 19 parameter*/
   double p_rule20; /*Rule 20 parameter*/
