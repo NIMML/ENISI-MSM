@@ -3,6 +3,7 @@
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
+#include "DataWriter/LocalFile.h"
 
 using namespace ENISI;
 
@@ -23,6 +24,8 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
   pModel->getValue("p_rule10a", p_rule10a);
   pModel->getValue("p_rule10b", p_rule10b);
   pModel->getValue("p_rule12", p_rule12);
+  pModel->getValue("p_rule10a_infectiousBacteriaConcentration", p_rule10a_infectiousBacteriaConcentration);
+  pModel->getValue("p_rule10b_cytokineConcentration", p_rule10b_cytokineConcentration);
 }
 
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
@@ -75,7 +78,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
       double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
 
-      if (infectiousBacteriaConcentration > ENISI::Threshold
+      if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
           && state == EpithelialCellState::HEALTHY
           && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
@@ -85,7 +88,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
         {
           newState = EpithelialCellState::HEALTHY;
         }
-      else if (th17Concentration + th1Concentration > ENISI::Threshold
+      else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                && state == EpithelialCellState::HEALTHY
                && mpCompartment->getType() == Compartment::epithilium && (p_rule10b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) // TODO CRITICAL This will never be true-FIXED
         {
@@ -120,6 +123,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           mpCompartment->cytokineValue("IL6", pt, 0, yOffset) += 70;
           mpCompartment->cytokineValue("IL12", pt, 0, yOffset) += 70;
         }
+
+      LocalFile::debug() << pt << ": " << newState << std::endl;
 
       pAgent->setState(newState);
 
