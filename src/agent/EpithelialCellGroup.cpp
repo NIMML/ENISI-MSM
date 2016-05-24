@@ -72,28 +72,25 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       EpithelialCellState::State newState = state;
 
       double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-      double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
+      // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
       //Rules 9 and 10
       double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
       double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
 
-      if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
-          && state == EpithelialCellState::HEALTHY
-          && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-        {
-          newState = EpithelialCellState::DAMAGED;
-        }
-      else if (tolegenicBacteriaConcentration && state == EpithelialCellState::HEALTHY)
-        {
-          newState = EpithelialCellState::HEALTHY;
-        }
-      else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
-               && state == EpithelialCellState::HEALTHY
-               && mpCompartment->getType() == Compartment::epithilium && (p_rule10b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) // TODO CRITICAL This will never be true-FIXED
-        {
-          newState = EpithelialCellState::DAMAGED; /*Rule 10*/
-        }
+      if (state == EpithelialCellState::HEALTHY)
+      	{
+		  if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
+			  && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+			{
+			  newState = EpithelialCellState::DAMAGED;
+			}
+		  else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
+				   && mpCompartment->getType() == Compartment::epithilium && (p_rule10b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) // TODO CRITICAL This will never be true-FIXED
+			{
+			  newState = EpithelialCellState::DAMAGED; /*Rule 10*/
+			}
+      	}
 
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         {
