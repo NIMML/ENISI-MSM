@@ -18,7 +18,7 @@
 					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.2111468901.1713126950" name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.base.1104218085" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.1368151698" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
-							<builder arguments="VERBOSE=1" buildPath="${_}${workspace_loc:/ENISI}/../build" command="make" id="cdt.managedbuild.target.gnu.builder.base.1572016341" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="16" superClass="cdt.managedbuild.target.gnu.builder.base">
+							<builder arguments="VERBOSE=1" buildPath="${workspace_loc:}/build" command="make" id="cdt.managedbuild.target.gnu.builder.base.1572016341" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" parallelBuildOn="false" superClass="cdt.managedbuild.target.gnu.builder.base">
 								<outputEntries>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
 									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="build"/>
@@ -93,4 +93,5 @@
 			<resource resourceType="PROJECT" workspacePath="/ENISI"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
