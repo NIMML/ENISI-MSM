@@ -80,6 +80,10 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       if (state == EpithelialCellState::HEALTHY)
       	{
+    	  LocalFile::debug() << "infectiousBacteriaConcentration: " << infectiousBacteriaConcentration << std::endl;
+    	  LocalFile::debug() << "th17Concentration:               " << th17Concentration << std::endl;
+    	  LocalFile::debug() << "th1Concentration:                " << th1Concentration << std::endl;
+
 		  if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
 			  && (p_rule10a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
 			{
@@ -90,6 +94,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 			{
 			  newState = EpithelialCellState::DAMAGED; /*Rule 10*/
 			}
+
+	      LocalFile::debug() << pt << ": " << state << " -> " << newState << std::endl;
       	}
 
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
@@ -121,7 +127,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           mpCompartment->cytokineValue("IL12", pt, 0, yOffset) += 70;
         }
 
-      LocalFile::debug() << pt << ": " << newState << std::endl;
 
       pAgent->setState(newState);
 
