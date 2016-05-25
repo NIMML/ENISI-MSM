@@ -341,3 +341,24 @@ void TcellGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
+
+// virtual
+void TcellGroup::write(const repast::Point<int> & pt)
+{
+  std::ostream & o = LocalFile::instance(mpCompartment->getName())->stream();
+
+  std::vector< Agent * > Tcells;
+  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+  Concentration TcellConcentration;
+  concentrations(Agent::Tcell, Tcells, TcellConcentration);
+
+  Concentration::const_iterator it = TcellConcentration.begin();
+  Concentration::const_iterator end = TcellConcentration.end();
+
+  for (int i = 0; it != end; ++it, ++i)
+    {
+	  if (i) o << ", ";
+
+	  o << "[" << i << "] = " << *it;
+  }
+}
