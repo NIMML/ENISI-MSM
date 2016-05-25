@@ -48,49 +48,13 @@ link_directories(
   ${DEPS_DIR}/src/project_copasi_deps/bin/lib
   ${GMOCK_DIR}/lib/.libs ${GMOCK_DIR}/gtest/lib/.libs
 )
-
+ 
 file(GLOB_RECURSE ALL_SRCS
     "*.h"
     "*.cpp"
 )
 
-list(REMOVE_ITEM ALL_SRCS 
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/DendriticsTest.cpp" 
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/Bacteria.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/ENISIAgentTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentFactoryTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/Tcell.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/RepastHPCDemoAgentPackage.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellGroupTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/TcellODETest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentFactory.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/BacteriaTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/CellGroup.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/ImmuneCell.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/Dendritics.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/ImmuneCellTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/agent/AgentGroupPackage.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/model/HPyloriModelTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelMultiCoreWithGroups.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/model/ModelBuilderTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelMultiCore.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelBase.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/model/MucosalCD4ModelSingleCore.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/test/CellGroupCompartmentMovementTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/test/CellGroupSyncTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/compartment/CellLayer.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/compartment/CompartmentTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/compartment/DiffuserLayer.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/DiffuserPackage.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/Diffuser.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/ParallelDiffuser.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/test/ParallelDiffuserTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/diffuser/test/DiffuserTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/SiloWriterTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/ValueLayerTest.cpp"
-  "${CMAKE_CURRENT_SOURCE_DIR}/gmock.cpp"
-  )
+# list(REMOVE_ITEM ALL_SRCS)
 
 set(MAINS "main" "benchmark" "test")
 foreach(f ${MAINS}) 
