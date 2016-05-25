@@ -122,3 +122,9 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
+
+// virtual
+void HPyloriGroup::write(const repast::Point<int> &)
+{
+
+}

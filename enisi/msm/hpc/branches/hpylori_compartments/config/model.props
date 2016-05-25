@@ -21,51 +21,50 @@ cell.speed = 10 µm/min mesenchymal cells move slower (~<1 µm/min)
 
 # compartments
 lumen.space.x = space.x
-lumen.space.y = 100 nm
+lumen.space.y = 99 nm
 lumen.border.y.low = REFLECT
 lumen.border.y.high = epithilium
 lumen.Bacteria.concentration = Bacteria.concentration
 lumen.HPylori.concentration = HPylori.concentration
 
 epithilium.space.x = space.x
-epithilium.space.y = 3 nm
+epithilium.space.y = 99 nm
 epithilium.border.y.low = lumen
 epithilium.border.y.high = lamina_propria
 epithilium.EpithelialCell.concentration = EpithelialCell.concentration
-epithilium.Dendritics.concentration = 0
-
+epithilium.Dendritics.concentration = 0.1
 lamina_propria.space.x = space.x
-lamina_propria.space.y = 100 nm
+lamina_propria.space.y = 99 nm
 lamina_propria.border.y.low = epithilium
 lamina_propria.border.y.high = gastric_lymph_node
 
 # Yongguo used these values to make the model fit the data.
 # They don't have any inherent meaning otherwise
-lamina_propria.IL6.initialValue = 10000
+lamina_propria.IL6.initialValue = 10
 lamina_propria.IL6.diffusion = 0.6
 lamina_propria.IL6.degradation = 0.05
 
-lamina_propria.TGFb.initialValue = 100
+lamina_propria.TGFb.initialValue = 50
 lamina_propria.TGFb.diffusion = 0.6
 lamina_propria.TGFb.degradation = 0.02
 
-lamina_propria.IL12.initialValue = 1
+lamina_propria.IL12.initialValue = 20
 lamina_propria.IL12.diffusion = 0.6
 lamina_propria.IL12.degradation = 0.02
 
-lamina_propria.IL17.initialValue = 0
+lamina_propria.IL17.initialValue = 0.4
 lamina_propria.IL17.diffusion = 0.6
 lamina_propria.IL17.degradation = 0.02
 
-lamina_propria.IL10.initialValue = 0
+lamina_propria.IL10.initialValue = 0.4
 lamina_propria.IL10.diffusion = 0.6
 lamina_propria.IL10.degradation = 0.02
 
-lamina_propria.IFNg.initialValue = 0
+lamina_propria.IFNg.initialValue = 0.3
 lamina_propria.IFNg.diffusion = 0.6
 lamina_propria.IFNg.degradation = 0.02
 
-lamina_propria.Dendritics.concentration = Dendritics.concentration 
+lamina_propria.Dendritics.concentration = Dendritics.concentration
 lamina_propria.Tcell.concentration = Tcell.concentration
 lamina_propria.Bacteria.concentration = 0
 lamina_propria.HPylori.concentration = 0
@@ -73,95 +72,98 @@ lamina_propria.macrophages.concentration = macrophages.concentration
 
 #gastric_lymph_node
 gastric_lymph_node.space.x = space.x
-gastric_lymph_node.space.y = 100
+gastric_lymph_node.space.y = 99 nm
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
-gastric_lymph_node.Dendritics.concentration = Dendritics.concentration 
+gastric_lymph_node.Dendritics.concentration = Dendritics.concentration
 gastric_lymph_node.Tcell.concentration = Tcell.concentration
 
-gastric_lymph_node.TGFb.initialValue = 100
+gastric_lymph_node.TGFb.initialValue = 50
 gastric_lymph_node.TGFb.diffusion = 0.6
 gastric_lymph_node.TGFb.degradation = 0.02
 
-gastric_lymph_node.IL12.initialValue = 1
+gastric_lymph_node.IL12.initialValue = 10
 gastric_lymph_node.IL12.diffusion = 0.6
 gastric_lymph_node.IL12.degradation = 0.02
 
-gastric_lymph_node.IL17.initialValue = 0
+gastric_lymph_node.IL17.initialValue = 0.5
 gastric_lymph_node.IL17.diffusion = 0.6
 gastric_lymph_node.IL17.degradation = 0.02
 
-gastric_lymph_node.IL10.initialValue = 0
+gastric_lymph_node.IL10.initialValue = 0.4
 gastric_lymph_node.IL10.diffusion = 0.6
 gastric_lymph_node.IL10.degradation = 0.02
 
-gastric_lymph_node.IFNg.initialValue = 0
+gastric_lymph_node.IFNg.initialValue = 0.4
 gastric_lymph_node.IFNg.diffusion = 0.6
 gastric_lymph_node.IFNg.degradation = 0.02
 
 # Parameter rules
 #### From COPASI ####
-int p_rule10a =  2.5e-10 l^2/#*d
-int p_rule10b =  2.5e-9 l^2/#*d
-int p_EpiCellDeath = 0.05/d
-int p_EpiProliferation = 400/d
-int p_rule12 = 5e-8 l^2/#*d
+p_rule10a =  1 l^2/#*d
+p_rule10b =  1 l^2/#*d
+p_rule10a_infectiousBacteriaConcentration = 0
+p_rule10b_cytokineConcentration = 0
+p_EpiCellDeath = 0.1 /d
+p_EpiProliferation = 0.6 /d
+p_rule12 = 0 l^2/#*d
 
-p_rule18 = 0.000184914 l^2/#*d
-p_rule19 = 7.92589e-5 l^2/#*d
-p_rule20 = 0.000743054 l^2/#*d
-p_rule21 = 0.263435 l^2/#*d
-p_rule22 = 0.040876 l/#*d
-p_rule23 = 0.040876 l/#*d
-p_rule24 = 4.28394 l/d
-p_rule26 = 0.00324418 l/d
-p_rule27 = 53.8055 l/d
-p_rule29 = 5.07025 l/d
-p_rule30 = 0.024 l/#*d
-p_rule31 = 0.247568 l/d
-p_rule31a = 1e-6 l/#
-p_rule32 = 12.7624 l/d
-p_rule33 = 0.280925 l/d
-p_rule35 = 5e-8 l/#*d
-p_rule36 = 5e-8 l/#*d
-p_rule37 = 9.15403e-8 l/#*d
-p_rule38 = 3.3573e-6 l/#*d
-p_rule39 = 3.62196e-5 l^2/#*d
-p_rule40 = 3.3e7 #/l*d
-p_rule53 = 1.51011e-6 l/#*d
-p_rule55a = 5.9817e-6 l^2/#*d
-p_rule55b = 3.6219e-5 l^2/#*d
-p_BacteriaKill = 0.1 l^2/(#*d)
-p_BacteriaDeath = 6.8e-7 1/(#*d)
-p_BacteriaLPProl = 62843 #/(l*d)
-p_BacteriaLumProl = 87598 #/(l*d)
-p_rule1 = 0.1 l^2/(#^2*d)
-p_rule3 = 1.7375e-7 l^2/(#^2*d)
-p_rule4a = 58731.9 #/(l*d)
-p_rule4b = 100550 #/(l*d)
-p_rule5 = 8.1057e-9 l^2/(#*d)
-p_HPyloriDeath = 5.55e-7 l/(#*d)
-p_rule17a = 1e-8 l^2/(#^2*d)
-p_rule17b = 1.83621-8 l^2/(#^2*d)
-p_rule48a = 5.8055e-10 l^2/(#*d)
-p_rule48b = 7.86086e-9 l^2/(#*d)
-p_DCDeath = 0.01 l/(#*d)
-p_rule15 = 0.1 l/(d)
-p_rule34 = 4.39e-7 l^2/(#^2*d)
-p_rule51a = 0.1 l/d
-p_rule51b = 0.1 l/d
-p_rule52 = 0.01 l/d
-p_rule42 = 1.2702e-8 l/(#*d)
+p_rule18 = 0.65 l^2/#*d
+p_rule19 = 0.05 l^2/#*d
+p_rule20 = 0.6 l^2/#*d
+p_rule21 = 0.5 l^2/#*d
+p_rule22 = 0.5 l/#*d
+p_rule23 = 0.7 l/#*d
+p_rule24 = 0.7 l/d
+p_rule26 = 0.2 l/d
+p_rule27 = 0.3 l/d
+p_rule29 = 2 l/d
+p_rule30 = 3 l/#*d
+p_rule31 = 0.15 l/d
+p_rule31a = 0.75 l/#
+p_rule32 = 0.7 l/d
+p_rule33 = 0.7 l/d
+p_rule35 = 0.55 l/#*d
+p_rule36 =  0.6 l/#*d
+p_rule37 = 0.05 l/#*d
+p_rule38 = 0.05 l/#*d
+p_rule39 = 0.1 l^2/#*d
+p_rule40 = 0.15 #/l*d
+p_rule53 = 0.2 l/#*d
+p_rule55a = 0.05 l^2/#*d
+p_rule55b = 0.1 l^2/#*d
+p_BacteriaKill = 0.7 l^2/(#*d)
+p_BacteriaDeath = 0.35 1/(#*d)
+p_BacteriaLPProl = 0.2 #/(l*d)
+p_BacteriaLumProl = 0.5 #/(l*d)
+p_rule1 = 0.45 l^2/(#^2*d)
+p_rule3 = 0.55 l^2/(#^2*d)
+p_rule4a = 0.2 #/(l*d)
+p_rule4b = 0.5 #/(l*d)
+p_rule5 = 0.7 l^2/(#*d)
+p_HPyloriDeath = 0.35 l/(#*d)
+p_rule17a = 0.8 l^2/(#^2*d)
+p_rule17b = 0.3 l^2/(#^2*d)
+p_rule48a = 0.4 l^2/(#*d)
+p_rule48b = 0.75 l^2/(#*d)
+p_DCDeath = 0.2 l/(#*d)
+p_rule15 = 0.5 l/(d)
+p_rule34 = 0.5 l^2/(#^2*d)
+p_rule51a = 0.7 l/d
+p_rule51b = 0.7 l/d
+p_rule52 = 0.7 l/d
+p_rule42 = 0.9 l/(#*d)
 p_MinfDiff = 0.3 l/(#*d)
-p_rule13 = 68855.3 #/d
-p_rule28a = 2.1e-8 l/(#*d)
-p_rule28b = 7.5e-9 l/(#*d)
-
+p_rule13 = 0.4 #/d
+p_rule28a = 0.2 l/(#*d)
+p_rule28b = 0.2 l/(#*d)
+p_IFNg = 0.5
+p_IL10 = 0.5
+p_IL17 = 0.5
 #### Arbitrary ####
-p_iDCEpitheliumDistance = 2 
-p_iDCLPDistance = 2 
-p_mDCGLNDistance = 2 
-neardistance_border = 2 
-
+p_iDCEpitheliumDistance = 2
+p_iDCLPDistance = 2
+p_mDCGLNDistance = 2
+neardistance_border = 2
 
 

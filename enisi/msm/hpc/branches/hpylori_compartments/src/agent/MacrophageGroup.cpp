@@ -166,3 +166,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
+
+// virtual
+void MacrophageGroup::write(const repast::Point<int> &)
+{
+
+}

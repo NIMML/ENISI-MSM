@@ -33,3 +33,11 @@ void GroupInterface::act()
       act(*it);
     }
 }
+
+void GroupInterface::write()
+{
+  for (Iterator it = mpCompartment->begin(); it; it.next())
+    {
+      write(*it);
+    }
+}

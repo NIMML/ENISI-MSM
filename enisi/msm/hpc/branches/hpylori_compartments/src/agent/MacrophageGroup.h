@@ -22,6 +22,7 @@ public:
 
 protected:
   virtual void act(const repast::Point<int> &);
+  virtual void write(const repast::Point<int> & pt);
 
 private:
   double p_rule42;

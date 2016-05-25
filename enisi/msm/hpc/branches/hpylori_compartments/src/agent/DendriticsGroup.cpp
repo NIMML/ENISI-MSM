@@ -227,3 +227,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
+
+// virtual
+void DendriticsGroup::write(const repast::Point<int> &)
+{
+
+}

@@ -133,3 +133,9 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
 }
+
+// virtual
+void BacteriaGroup::write(const repast::Point<int> &)
+{
+
+}
