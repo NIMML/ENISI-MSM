@@ -10,7 +10,7 @@
 #include "DataWriter/LocalFile.h"
 #include "grid/SharedSpace.h"
 
-#define DEBUG_SHARED
+// #define DEBUG_SHARED
 
 using namespace ENISI;
 
@@ -313,7 +313,16 @@ Compartment * Compartment::transform(std::vector< double > & location) const
       return const_cast< Compartment * >(this);
     }
 
-  return mapToOtherCompartment(location, BoundState);
+  Compartment * pTarget = mapToOtherCompartment(location, BoundState);
+
+  if (pTarget != NULL)
+    {
+      // It is possible that we are still outside the boundaries and need another transformation
+      // This recursive call will take care of this
+      pTarget = pTarget->transform(location);
+    }
+
+  return pTarget;
 }
 
 Compartment * Compartment::transform(std::vector< int > & location) const
@@ -334,6 +343,10 @@ Compartment * Compartment::transform(std::vector< int > & location) const
   if (pTarget != NULL)
     {
       location = pTarget->spaceToGrid(Space);
+
+      // It is possible that we are still outside the boundaries and need another transformation
+      // This recursive call will take care of this
+      pTarget = pTarget->transform(location);
     }
 
   return pTarget;
@@ -741,9 +754,6 @@ void Compartment::write(const std::string & separator)
     }
 
 #ifdef DEBUG_SHARED
-  o << std::endl;
-  o << std::endl;
-
   // We loop through all local agents an write them out.
   it = mpLayer->getCellContext().begin(SharedLayer::Context::NON_LOCAL);
   end = mpLayer->getCellContext().end(SharedLayer::Context::NON_LOCAL);
@@ -865,7 +875,7 @@ void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
 
   for (int i = 0, imax = localGridDimensions().extents(OtherCordinate); i < imax; i++, itPoint.next(OtherCordinate))
     {
-      // LocalFile::debug() << *itPoint << ":";
+      // LocalFile::debug() << *itPoint << ":" << std::endl;
 
       std::set< size_t > TargetRanks = getRanks(itPoint->coords(), coordinate, side);
 
@@ -874,7 +884,6 @@ void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
 
       for (; itRank != endRank; ++itRank)
         {
-          // LocalFile::debug() << " " << *itRank;
           std::map< int, std::set< repast::AgentId > >::iterator found = agentsToPush.find(*itRank);
 
           if (found == agentsToPush.end())
@@ -893,11 +902,7 @@ void Compartment::getBorderCellsToPush(const Borders::Coodinate & coordinate,
               found->second.insert((*it)->getId());
             }
         }
-
-      // LocalFile::debug() << std::endl;
     }
-
-  // LocalFile::debug() << std::endl;
 }
 
 void Compartment::getBorderValuesToPush(std::set<repast::AgentId> & /* agentsToTest */,

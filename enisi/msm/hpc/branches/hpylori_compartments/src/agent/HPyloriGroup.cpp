@@ -69,12 +69,14 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
 
       /* move HPylori across epithelial border if in contact with damaged Epithelial cell *Rule 3*/
-      if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && damagedEpithelialCellConcentration && mpCompartment->getType() == Compartment::lumen)
+      if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+          && damagedEpithelialCellConcentration
+          && mpCompartment->getType() == Compartment::lumen)
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
-            1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH) // Move accross the border
+            mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH) // Move accross the border
             + Compartment::instance(Compartment::epithilium)->spaceDimensions().extents(Borders::Y); // Move all the way through the epithelium
 
           mpCompartment->moveTo(pAgent->getId(), Location);

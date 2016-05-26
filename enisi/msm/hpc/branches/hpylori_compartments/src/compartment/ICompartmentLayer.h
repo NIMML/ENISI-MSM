@@ -317,24 +317,38 @@ public:
     requestAgents(req);
   }
 
-  void synchronizeCellStates()
-  {
-    repast::RepastProcess::instance()->synchronizeAgentStates<AgentType, Package, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange);
-  }
-
-  void synchronizeDiffuserStates()
-  {
-    repast::RepastProcess::instance()->synchronizeAgentStates<AgentType, Package, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange);
-  }
-
   void synchronizeCells()
   {
+    // mpGrid->balance does not work since we may push to a non neighbor
+
+    // Find all local agents which are not part of the local space and move them to the new process
+    boost::filter_iterator<repast::IsLocalAgent< AgentType >, typename repast::SharedContext< AgentType >::const_iterator> itLocal = mCellContext.localBegin();
+    boost::filter_iterator<repast::IsLocalAgent< AgentType >, typename repast::SharedContext< AgentType >::const_iterator> endLocal = mCellContext.localEnd();
+
+    for (; itLocal != endLocal; ++itLocal)
+      {
+      std::vector< double > Location(2, 0);
+      repast::AgentId Id = (*itLocal)->getId();
+
+      getLocation(Id, Location);
+
+      if (!mLocalSpaceDimensions.contains(Location))
+        {
+          int Rank = getRank(Location, 0, 0);
+          // LocalFile::debug() << "Moving Agent: " << (*itLocal)->classname() << " to Rank: " << Rank << std::endl;
+          repast::RepastProcess::instance()->moveAgent(Id, Rank);
+        }
+      }
+
+    repast::RepastProcess::instance()->synchronizeAgentStatus<AgentType, Package, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
     repast::RepastProcess::instance()->synchronizeProjectionInfo<AgentType, Package, PackageExchange, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
+    repast::RepastProcess::instance()->synchronizeAgentStates<Package, PackageExchange, PackageExchange>(mpCellExchange, mpCellExchange);
   }
 
   void synchronizeDiffuser()
   {
     repast::RepastProcess::instance()->synchronizeProjectionInfo<AgentType, Package, PackageExchange, PackageExchange, PackageExchange>(mDiffuserContext, mpDiffuserExchange, mpDiffuserExchange, mpDiffuserExchange);
+    repast::RepastProcess::instance()->synchronizeAgentStates<Package, PackageExchange, PackageExchange>(mpDiffuserExchange, mpDiffuserExchange);
   }
 
   Context & getCellContext()
