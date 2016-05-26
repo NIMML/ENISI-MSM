@@ -160,11 +160,23 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
         }
 
       pAgent->setState(newState);
-
-      // TODO CRITICAL Determine the maximum speed
-      double MaxSpeed = 1.0;
-      mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
+}
+
+// virtual
+void MacrophageGroup::move()
+{
+  // TODO CRITICAL Determine the maximum speed
+  double MaxSpeed = 1.0;
+
+  // Find all local agents and move them
+  Compartment::LocalIterator itLocal = mpCompartment->localBegin();
+  Compartment::LocalIterator endLocal = mpCompartment->localEnd();
+
+  for (; itLocal != endLocal; ++itLocal)
+	{
+      mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
+	}
 }
 
 // virtual

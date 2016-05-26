@@ -32,6 +32,8 @@ public:
   typedef ENISI::SharedContinuousSpace<AgentType, Transformer, Adder> Space;
   typedef ENISI::SharedDiscreteSpace<AgentType, Transformer, Adder> Grid;
   typedef repast::SharedContext< AgentType > Context;
+  typedef boost::filter_iterator<repast::IsLocalAgent< AgentType >, typename repast::SharedContext< AgentType >::const_iterator> LocalIterator;
+
 //  typedef Agent AgentType;
 
   ICompartmentLayer(const std::string & name,
@@ -322,8 +324,8 @@ public:
     // mpGrid->balance does not work since we may push to a non neighbor
 
     // Find all local agents which are not part of the local space and move them to the new process
-    boost::filter_iterator<repast::IsLocalAgent< AgentType >, typename repast::SharedContext< AgentType >::const_iterator> itLocal = mCellContext.localBegin();
-    boost::filter_iterator<repast::IsLocalAgent< AgentType >, typename repast::SharedContext< AgentType >::const_iterator> endLocal = mCellContext.localEnd();
+	LocalIterator itLocal = localBegin();
+	LocalIterator endLocal = localEnd();
 
     for (; itLocal != endLocal; ++itLocal)
       {
@@ -343,6 +345,16 @@ public:
     repast::RepastProcess::instance()->synchronizeAgentStatus<AgentType, Package, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
     repast::RepastProcess::instance()->synchronizeProjectionInfo<AgentType, Package, PackageExchange, PackageExchange, PackageExchange>(mCellContext, mpCellExchange, mpCellExchange, mpCellExchange);
     repast::RepastProcess::instance()->synchronizeAgentStates<Package, PackageExchange, PackageExchange>(mpCellExchange, mpCellExchange);
+  }
+
+  LocalIterator localBegin()
+  {
+	return mCellContext.localBegin();
+  }
+
+  LocalIterator localEnd()
+  {
+	return mCellContext.localEnd();
   }
 
   void synchronizeDiffuser()

@@ -17,6 +17,7 @@ public:
 
 protected:
   virtual void act(const repast::Point<int> &);
+  virtual void move();
   virtual void write(const repast::Point<int> & pt);
 
 private:

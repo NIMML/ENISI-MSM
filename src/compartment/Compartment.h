@@ -23,6 +23,8 @@ private:
   typedef ICompartmentLayer< Agent, AgentPackage, AgentPackageExchange > SharedLayer;
 
 public:
+  typedef boost::filter_iterator<repast::IsLocalAgent< Agent >, typename repast::SharedContext< Agent >::const_iterator> LocalIterator;
+
   static const char* Names[];
   enum Type{lumen, epithilium, lamina_propria, gastric_lymph_node, INVALID = -1};
 
@@ -111,6 +113,9 @@ public:
 
   void getBorderValuesToPush(std::set<repast::AgentId>& agentsToTest,
                              std::map< int, std::set< repast::AgentId > > & agentsToPush);
+
+  LocalIterator localBegin();
+  LocalIterator localEnd();
 
   void addGroup(GroupInterface * pGroup);
   void act();
