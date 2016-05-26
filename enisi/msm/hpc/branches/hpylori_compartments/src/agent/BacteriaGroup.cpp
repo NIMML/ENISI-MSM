@@ -134,11 +134,23 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       /* TODO: Bacteria are removed when macrophage uptake/differentiate */
 
       pAgent->setState(newState);
-
-      // TODO CRITICAL Determine the maximum speed
-      double MaxSpeed = 1.0;
-      mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
+}
+
+// virtual
+void BacteriaGroup::move()
+{
+  // TODO CRITICAL Determine the maximum speed
+  double MaxSpeed = 1.0;
+
+  // Find all local agents and move them
+  Compartment::LocalIterator itLocal = mpCompartment->localBegin();
+  Compartment::LocalIterator endLocal = mpCompartment->localEnd();
+
+  for (; itLocal != endLocal; ++itLocal)
+	{
+      mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
+	}
 }
 
 // virtual

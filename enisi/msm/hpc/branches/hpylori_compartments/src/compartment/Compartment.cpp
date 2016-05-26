@@ -1159,6 +1159,11 @@ void Compartment::act()
       (*it)->act();
     }
 
+  for (it = mGroups.begin(); it != end; ++it)
+    {
+      (*it)->move();
+    }
+
   synchronizeCells();
 }
 
@@ -1176,3 +1181,12 @@ std::string Compartment::getName() const
   return Names[mType];
 }
 
+Compartment::LocalIterator Compartment::localBegin()
+{
+  return mpLayer->localBegin();
+}
+
+Compartment::LocalIterator Compartment::localEnd()
+{
+  return mpLayer->localEnd();
+}

@@ -28,7 +28,9 @@ public:
 
   void act();
   void write ();
+  virtual void move() = 0;
   virtual std::string classname() const = 0;
+
 protected:
   virtual void act(const repast::Point<int> & pt) = 0;
   virtual void write(const repast::Point<int> & pt) = 0;

@@ -123,11 +123,23 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
         }
 
       pAgent->setState(newState);
-
-      // TODO CRITICAL Determine the maximum speed
-      double MaxSpeed = 0.1;
-      mpCompartment->moveRandom(pAgent->getId(), MaxSpeed);
     }
+}
+
+// virtual
+void EpithelialCellGroup::move()
+{
+  // TODO CRITICAL Determine the maximum speed
+  double MaxSpeed = 0.1;
+
+  // Find all local agents and move them
+  Compartment::LocalIterator itLocal = mpCompartment->localBegin();
+  Compartment::LocalIterator endLocal = mpCompartment->localEnd();
+
+  for (; itLocal != endLocal; ++itLocal)
+	{
+      mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
+	}
 }
 
 // virtual
