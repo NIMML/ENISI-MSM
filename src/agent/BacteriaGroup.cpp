@@ -3,6 +3,7 @@
 #include "agent/ENISIAgent.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
+#include "DataWriter/LocalFile.h"
 
 using namespace ENISI;
 
@@ -23,6 +24,7 @@ BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const double & concentr
   pModel->getValue("p_BacteriaLPProl", p_BacteriaLPProl);
   pModel->getValue("p_BacteriaLumProl", p_BacteriaLumProl);
   pModel->getValue("p_rule1", p_rule1);
+  pModel->getValue("p_rule1_damagedEpithelialCellConcentration", p_rule1_damagedEpithelialCellConcentration);
 }
 
 void BacteriaGroup::act(const repast::Point<int> & pt)
@@ -33,6 +35,8 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
   std::vector< Agent * >::iterator it = Bacteria.begin();
   std::vector< Agent * >::iterator end = Bacteria.end();
+
+  if (it == end) return;
 
   std::vector< Agent * > Tcells;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
@@ -68,18 +72,21 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
       /*identify states of Epithelial Cells counted */
       double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+      double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
 
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
-      if (damagedEpithelialCellConcentration > ENISI::Threshold
+      if (damagedEpithelialCellConcentration > p_rule1_damagedEpithelialCellConcentration * ENISI::Threshold
           && mpCompartment->getType() == Compartment::lumen
-          && (p_rule1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          && p_rule1 > Random)
         {
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
+          // LocalFile::debug() << "Move Bacteria: (" << Location[0] << ", " << Location[1] << ") -> (";
           Location[Borders::Y] +=
             Compartment::instance(Compartment::epithilium)->spaceDimensions().extents(Borders::Y) +
             mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
 
+          // LocalFile::debug() << Location[0] << ", " << Location[1] << ")" <<  std::endl;
           mpCompartment->moveTo(pAgent->getId(), Location);
           continue;
         }
