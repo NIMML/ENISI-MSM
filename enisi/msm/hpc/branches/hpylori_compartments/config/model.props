@@ -21,20 +21,20 @@ cell.speed = 10 µm/min mesenchymal cells move slower (~<1 µm/min)
 
 # compartments
 lumen.space.x = space.x
-lumen.space.y = 99 nm
+lumen.space.y = 30 nm
 lumen.border.y.low = REFLECT
 lumen.border.y.high = epithilium
 lumen.Bacteria.concentration = Bacteria.concentration
 lumen.HPylori.concentration = HPylori.concentration
 
 epithilium.space.x = space.x
-epithilium.space.y = 99 nm
+epithilium.space.y = 1 nm
 epithilium.border.y.low = lumen
 epithilium.border.y.high = lamina_propria
 epithilium.EpithelialCell.concentration = EpithelialCell.concentration
 epithilium.Dendritics.concentration = 0.1
 lamina_propria.space.x = space.x
-lamina_propria.space.y = 99 nm
+lamina_propria.space.y = 30 nm
 lamina_propria.border.y.low = epithilium
 lamina_propria.border.y.high = gastric_lymph_node
 
@@ -72,7 +72,7 @@ lamina_propria.macrophages.concentration = macrophages.concentration
 
 #gastric_lymph_node
 gastric_lymph_node.space.x = space.x
-gastric_lymph_node.space.y = 99 nm
+gastric_lymph_node.space.y = 30 nm
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
 gastric_lymph_node.Dendritics.concentration = Dendritics.concentration
@@ -137,6 +137,7 @@ p_BacteriaDeath = 0.35 1/(#*d)
 p_BacteriaLPProl = 0.2 #/(l*d)
 p_BacteriaLumProl = 0.5 #/(l*d)
 p_rule1 = 0.45 l^2/(#^2*d)
+p_rule1_damagedEpithelialCellConcentration = 0.01
 p_rule3 = 0.55 l^2/(#^2*d)
 p_rule4a = 0.2 #/(l*d)
 p_rule4b = 0.5 #/(l*d)
