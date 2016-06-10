@@ -66,7 +66,7 @@ int Agent::getState() const
 // virtual
 void Agent::write(std::ostream & o, const std::string & separator, Compartment * /* pCompartment */)
 {
-  o << classname() << separator << _state;
+  o << getId().startingRank() << ":" << getId().id() << separator << classname() << separator << _state;
 }
 
 // virtual

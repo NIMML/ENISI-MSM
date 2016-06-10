@@ -728,7 +728,7 @@ void Compartment::write(const std::string & separator)
               o << "\t";
             }
 
-          o << "X\tY\tname\tstate";
+          o << "X\tY\tid\tname\tstate";
         }
 
       o << std::endl;
