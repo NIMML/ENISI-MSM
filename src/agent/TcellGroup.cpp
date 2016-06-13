@@ -86,24 +86,24 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
-	double IL6 = mpCompartment->cytokineValue("IL6", pt);
-	double TGFb = mpCompartment->cytokineValue("TGFb", pt);
-	double IL12 = mpCompartment->cytokineValue("IL12", pt);
+	double IL6_pool = mpCompartment->cytokineValue("IL6_pool", pt);
+	double TGFb_pool = mpCompartment->cytokineValue("TGFb_pool", pt);
+	double IL12_pool = mpCompartment->cytokineValue("IL12_pool", pt);
 
 	TcellODE & odeModel = TcellODE::getInstance();
 
-	odeModel.setInitialConcentration("IL6", IL6);
-	odeModel.setInitialConcentration("TGFb", TGFb);
-	odeModel.setInitialConcentration("IL12", IL12);
+	odeModel.setInitialConcentration("IL6_pool", IL6_pool);
+	odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
+	odeModel.setInitialConcentration("IL12_pool", IL12_pool);
 
 	/* run time course */
 	if (!odeModel.runTimeCourse()) {
 	  LocalFile::debug() << pt << std::endl;
 	}
 
-	double IFNg = odeModel.getConcentration("IFNg");
-	double IL17 = odeModel.getConcentration("IL17");
-	double IL10 = odeModel.getConcentration("IL10");
+	double IFNg_ode = odeModel.getConcentration("IFNg");
+	double IL17_ode = odeModel.getConcentration("IL17");
+	double IL10_ode = odeModel.getConcentration("IL10");
 
 	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
@@ -123,26 +123,25 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		if (state == TcellState::DEAD) {
 			continue;
 		}
-
-		if (state != TcellState::Tr) /*Rule 58*/
-		{
-//			LocalFile::debug() << "I am here 00" << std::endl;
+/*		if (state != TcellState::Tr) /*Rule 58
+ * 	{
+			LocalFile::debug() << "I am here 00" << std::endl;
 			if (IL17 > p_IL17) {
 				newState = TcellState::TH17;
 				mpCompartment->cytokineValue("IL17", pt) += 70;
-//				LocalFile::debug() << "I am here 01" << std::endl;
+				LocalFile::debug() << "I am here 01" << std::endl;
 			}
 			else if (IFNg > p_IFNg) {
 				newState = TcellState::TH1;
 				mpCompartment->cytokineValue("IFNg", pt) += 70;
-//				LocalFile::debug() << "I am here 02" << std::endl;
+				LocalFile::debug() << "I am here 02" << std::endl;
 			}
 			else if (IL10 > p_IL10) {
 				newState = TcellState::iTREG;
 				mpCompartment->cytokineValue("IL10", pt) += 70;
-//				LocalFile::debug() << "I am here 03" << std::endl;
+				LocalFile::debug() << "I am here 03" << std::endl;
 			}
-		}
+		} */
 
 		if (mpCompartment->getType() == Compartment::lamina_propria)
 		{
@@ -156,19 +155,19 @@ void TcellGroup::act(const repast::Point<int> & pt)
 			}
 
 			if (state == TcellState::NAIVE) {
-				if ((IL10 > p_rule31a * IFNg)
+				if ((mpCompartment->cytokineValue("IL10", pt) > p_rule31a * mpCompartment->cytokineValue("IFNg", pt))
 				   && (macrophageregConcentration > ENISI::Threshold)
 				   && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
 					newState = TcellState::Tr; //Rule 31: if nT is in contact with regulatory macrophages, and if IL10> a* IFNg, then nT -> Tr
 					LocalFile::debug() << "I am here 0" << std::endl;
 				}
 				else if (eDCConcentration > ENISI::Threshold) {
-					if(p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
+					if(p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (IL17_ode > p_IL17)) {
 						newState = TcellState::TH17;
 						mpCompartment->cytokineValue("IL17", pt) += 70;
 						LocalFile::debug() << "I am here 1" << std::endl;
 					}
-					else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
+					else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (IFNg_ode > p_IFNg)) {
 					   newState = TcellState::TH1;
 					   mpCompartment->cytokineValue("IFNg", pt) += 70;
 					   LocalFile::debug() << "I am here 2" << std::endl;
@@ -178,7 +177,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 			else if (state == TcellState::iTREG)
 			{
 				if ((th1Concentration > ENISI::Threshold)
-				   && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
+				   && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && (IL10_ode > p_IL10)) {
 					newState = TcellState::TH17; /*Rule 19*/
 					LocalFile::debug() << "I am here 3" << std::endl;
 				}
