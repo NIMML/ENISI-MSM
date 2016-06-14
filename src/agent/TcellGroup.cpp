@@ -86,9 +86,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
-	double IL6_pool = mpCompartment->cytokineValue("IL6_pool", pt);
-	double TGFb_pool = mpCompartment->cytokineValue("TGFb_pool", pt);
-	double IL12_pool = mpCompartment->cytokineValue("IL12_pool", pt);
+	double IL6 = mpCompartment->cytokineValue("IL6", pt);
+	double TGFb = mpCompartment->cytokineValue("TGFb", pt);
+	double IL12 = mpCompartment->cytokineValue("IL12", pt);
 
 	TcellODE & odeModel = TcellODE::getInstance();
 
