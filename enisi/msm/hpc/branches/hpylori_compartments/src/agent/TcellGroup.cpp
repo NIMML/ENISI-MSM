@@ -93,7 +93,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	TcellODE & odeModel = TcellODE::getInstance();
 
 	odeModel.setInitialConcentration("eIL6", eIL6);
-	odeModel.setInitialConcentration("eGFb", eTGFb);
+	odeModel.setInitialConcentration("eTGFb", eTGFb);
 	odeModel.setInitialConcentration("eIL12", eIL12);
 
 	/* run time course */
@@ -289,9 +289,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				LocalFile::debug() << "I am here 13" << std::endl;
 			}
 		}
-
 		pAgent->setState(newState);
-
 		if (newState == TcellState::TH1) { //Rule 29 If T cell state is TH1, then release IFNg
 			mpCompartment->cytokineValue("eIFNg", pt) += dIFNg; // production based on ODE for IFNg
 		}
@@ -300,7 +298,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		}
 	}
 }
-
 // virtual
 void TcellGroup::move()
 {
