@@ -63,7 +63,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
         }
 
-      if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+      if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
         {
           mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, -1, Agent::HPylori, HPylori);
@@ -78,9 +78,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
 
-  std::vector< Agent * > Tcells;
-  Concentration TcellConcentration;
-  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+ std::vector< Agent * > Tcells;
+ Concentration TcellConcentration;
+ mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
   // We only request information if we are at the border
