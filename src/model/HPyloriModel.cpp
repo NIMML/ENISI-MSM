@@ -88,12 +88,12 @@ void HPModel::initialize_lamina_propria()
   if (!mpProperties->getValue("lamina_propria.macrophages.concentration", concentration)) concentration = 0;
   new MacrophageGroup(mp_lamina_propria, concentration);
 
-  mp_lamina_propria->addCytokine("IL6");
-  mp_lamina_propria->addCytokine("TGFb");
-  mp_lamina_propria->addCytokine("IL12");
-  mp_lamina_propria->addCytokine("IL17");
-  mp_lamina_propria->addCytokine("IL10");
-  mp_lamina_propria->addCytokine("IFNg");
+  mp_lamina_propria->addCytokine("eIL6");
+  mp_lamina_propria->addCytokine("eTGFb");
+  mp_lamina_propria->addCytokine("eIL12");
+  mp_lamina_propria->addCytokine("eIL17");
+  mp_lamina_propria->addCytokine("eIL10");
+  mp_lamina_propria->addCytokine("eIFNg");
 
   mp_lamina_propria->initializeDiffuserData();
 }
@@ -110,12 +110,12 @@ void HPModel::initialize_gastric_lymph_node()
   if (!mpProperties->getValue("gastric_lymph_node.Tcell.concentration", concentration)) concentration = 0;
   new TcellGroup(mp_gastric_lymph_node, concentration);
 
-  mp_gastric_lymph_node->addCytokine("IL6");
-  mp_gastric_lymph_node->addCytokine("TGFb");
-  mp_gastric_lymph_node->addCytokine("IL12");
-  mp_gastric_lymph_node->addCytokine("IL17");
-  mp_gastric_lymph_node->addCytokine("IL10");
-  mp_gastric_lymph_node->addCytokine("IFNg");
+  mp_gastric_lymph_node->addCytokine("eIL6");
+  mp_gastric_lymph_node->addCytokine("eTGFb");
+  mp_gastric_lymph_node->addCytokine("eIL12");
+  mp_gastric_lymph_node->addCytokine("eIL17");
+  mp_gastric_lymph_node->addCytokine("eIL10");
+  mp_gastric_lymph_node->addCytokine("eIFNg");
 
   mp_gastric_lymph_node->initializeDiffuserData();
 }

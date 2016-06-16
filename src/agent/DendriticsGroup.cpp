@@ -242,8 +242,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
       if (newState == DendriticState::EFFECTOR)
       {
-    	  mpCompartment->cytokineValue("IL6", pt, 0, yOffset) += 70; /*Rule 56*/
-          mpCompartment->cytokineValue("IL12", pt, 0, yOffset) += 70;
+    	  mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70; /*Rule 56*/
+          mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 70;
 
     	  if (itregConcentration && (p_rule34 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
           {
@@ -253,7 +253,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       }
       else if (newState == DendriticState::TOLEROGENIC) /*Rule 57*/
       {
-    	  mpCompartment->cytokineValue("TGFb", pt, 0, yOffset) += 70;
+    	  mpCompartment->cytokineValue("eTGFb", pt, 0, yOffset) += 70;
       }
 
        pAgent->setState(newState);

@@ -50,7 +50,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
-      IL10 = mpCompartment->cytokineValue("IL10", pt, 0, 1);
+      IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
   else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
@@ -118,8 +118,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
 
           // TODO We should use the production from the ODE model.
-          mpCompartment->cytokineValue("IL6", pt, 0, yOffset) += 70;
-          mpCompartment->cytokineValue("IL12", pt, 0, yOffset) += 70;
+          mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70;
+          mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 70;
         }
 
       pAgent->setState(newState);
