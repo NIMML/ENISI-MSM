@@ -86,15 +86,15 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
-	double eIL6 = mpCompartment->cytokineValue("eIL6", pt);
-	double eTGFb = mpCompartment->cytokineValue("eTGFb", pt);
-	double eIL12 = mpCompartment->cytokineValue("eIL12", pt);
+	double IL6_pool = mpCompartment->cytokineValue("IL6_pool", pt);
+	double TGFb_pool = mpCompartment->cytokineValue("TGFb_pool", pt);
+	double IL12_pool = mpCompartment->cytokineValue("IL12_pool", pt);
 
 	TcellODE & odeModel = TcellODE::getInstance();
 
-	odeModel.setInitialConcentration("eIL6", eIL6);
-	odeModel.setInitialConcentration("eTGFb", eTGFb);
-	odeModel.setInitialConcentration("eIL12", eIL12);
+	odeModel.setInitialConcentration("IL6_pool", IL6_pool);
+	odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
+	odeModel.setInitialConcentration("IL12_pool", IL12_pool);
 
 	/* run time course */
 	if (!odeModel.runTimeCourse()) {
