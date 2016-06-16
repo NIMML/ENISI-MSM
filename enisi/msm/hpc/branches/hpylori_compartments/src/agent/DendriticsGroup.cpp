@@ -164,8 +164,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
        *  0.5 is arbitrary *Rule 2*/
 
-       if (mpCompartment->getType() == Compartment::epithilium
-          && liveHPyloriConcentration != 0)//(tolegenicBacteriaConcentration * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+       if (mpCompartment->getType() == Compartment::epithilium)
+          //&& liveHPyloriConcentration != 0)//(tolegenicBacteriaConcentration * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
     	  newState = DendriticState::EFFECTOR;
           std::vector< double > Location;
