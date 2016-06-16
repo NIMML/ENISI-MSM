@@ -40,29 +40,29 @@ lamina_propria.border.y.high = gastric_lymph_node
 
 # Yongguo used these values to make the model fit the data.
 # They don't have any inherent meaning otherwise
-lamina_propria.IL6.initialValue = 10
-lamina_propria.IL6.diffusion = 0.6
-lamina_propria.IL6.degradation = 0.05
+lamina_propria.eIL6.initialValue = 10
+lamina_propria.eIL6.diffusion = 0.6
+lamina_propria.eIL6.degradation = 0.05
 
-lamina_propria.TGFb.initialValue = 50
-lamina_propria.TGFb.diffusion = 0.6
-lamina_propria.TGFb.degradation = 0.02
+lamina_propria.eTGFb.initialValue = 50
+lamina_propria.eTGFb.diffusion = 0.6
+lamina_propria.eTGFb.degradation = 0.02
 
-lamina_propria.IL12.initialValue = 20
-lamina_propria.IL12.diffusion = 0.6
-lamina_propria.IL12.degradation = 0.02
+lamina_propria.eIL12.initialValue = 20
+lamina_propria.eIL12.diffusion = 0.6
+lamina_propria.eIL12.degradation = 0.02
 
-lamina_propria.IL17.initialValue = 0.4
-lamina_propria.IL17.diffusion = 0.6
-lamina_propria.IL17.degradation = 0.02
+lamina_propria.eIL17.initialValue = 0.4
+lamina_propria.eIL17.diffusion = 0.6
+lamina_propria.eIL17.degradation = 0.02
 
-lamina_propria.IL10.initialValue = 0.4
-lamina_propria.IL10.diffusion = 0.6
-lamina_propria.IL10.degradation = 0.02
+lamina_propria.eIL10.initialValue = 0.4
+lamina_propria.eIL10.diffusion = 0.6
+lamina_propria.eIL10.degradation = 0.02
 
-lamina_propria.IFNg.initialValue = 0.3
-lamina_propria.IFNg.diffusion = 0.6
-lamina_propria.IFNg.degradation = 0.02
+lamina_propria.eIFNg.initialValue = 0.3
+lamina_propria.eIFNg.diffusion = 0.6
+lamina_propria.eIFNg.degradation = 0.02
 
 lamina_propria.Dendritics.concentration = Dendritics.concentration
 lamina_propria.Tcell.concentration = Tcell.concentration
@@ -78,25 +78,25 @@ gastric_lymph_node.border.y.high = REFLECT
 gastric_lymph_node.Dendritics.concentration = Dendritics.concentration
 gastric_lymph_node.Tcell.concentration = Tcell.concentration
 
-gastric_lymph_node.TGFb.initialValue = 50
-gastric_lymph_node.TGFb.diffusion = 0.6
-gastric_lymph_node.TGFb.degradation = 0.02
+gastric_lymph_node.eTGFb.initialValue = 50
+gastric_lymph_node.eTGFb.diffusion = 0.6
+gastric_lymph_node.eTGFb.degradation = 0.02
 
-gastric_lymph_node.IL12.initialValue = 10
-gastric_lymph_node.IL12.diffusion = 0.6
-gastric_lymph_node.IL12.degradation = 0.02
+gastric_lymph_node.eIL12.initialValue = 10
+gastric_lymph_node.eIL12.diffusion = 0.6
+gastric_lymph_node.eIL12.degradation = 0.02
 
-gastric_lymph_node.IL17.initialValue = 0.5
-gastric_lymph_node.IL17.diffusion = 0.6
-gastric_lymph_node.IL17.degradation = 0.02
+gastric_lymph_node.eIL17.initialValue = 0.5
+gastric_lymph_node.eIL17.diffusion = 0.6
+gastric_lymph_node.eIL17.degradation = 0.02
 
-gastric_lymph_node.IL10.initialValue = 0.4
-gastric_lymph_node.IL10.diffusion = 0.6
-gastric_lymph_node.IL10.degradation = 0.02
+gastric_lymph_node.eIL10.initialValue = 0.4
+gastric_lymph_node.eIL10.diffusion = 0.6
+gastric_lymph_node.eIL10.degradation = 0.02
 
-gastric_lymph_node.IFNg.initialValue = 0.4
-gastric_lymph_node.IFNg.diffusion = 0.6
-gastric_lymph_node.IFNg.degradation = 0.02
+gastric_lymph_node.eIFNg.initialValue = 0.4
+gastric_lymph_node.eIFNg.diffusion = 0.6
+gastric_lymph_node.eIFNg.degradation = 0.02
 
 # Parameter rules
 #### From COPASI ####

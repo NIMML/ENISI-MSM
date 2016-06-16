@@ -86,24 +86,28 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
-	double IL6_pool = mpCompartment->cytokineValue("IL6_pool", pt);
-	double TGFb_pool = mpCompartment->cytokineValue("TGFb_pool", pt);
-	double IL12_pool = mpCompartment->cytokineValue("IL12_pool", pt);
+	double eIL6 = mpCompartment->cytokineValue("eIL6", pt);
+	double eTGFb = mpCompartment->cytokineValue("eTGFb", pt);
+	double eIL12 = mpCompartment->cytokineValue("eIL12", pt);
 
 	TcellODE & odeModel = TcellODE::getInstance();
 
-	odeModel.setInitialConcentration("IL6_pool", IL6_pool);
-	odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
-	odeModel.setInitialConcentration("IL12_pool", IL12_pool);
+	odeModel.setInitialConcentration("eIL6", eIL6);
+	odeModel.setInitialConcentration("eGFb", eTGFb);
+	odeModel.setInitialConcentration("eIL12", eIL12);
 
 	/* run time course */
 	if (!odeModel.runTimeCourse()) {
 	  LocalFile::debug() << pt << std::endl;
 	}
 
-	double IFNg_ode = odeModel.getConcentration("IFNg");
-	double IL17_ode = odeModel.getConcentration("IL17");
-	double IL10_ode = odeModel.getConcentration("IL10");
+	double IFNg = odeModel.getConcentration("IFNg");
+	double IL17 = odeModel.getConcentration("IL17");
+	double IL10 = odeModel.getConcentration("IL10");
+
+  double dIFNg = odeModel.getConcentration("dIFNg");
+  double dIL17 = odeModel.getConcentration("dIL17");
+  double dIL10 = odeModel.getConcentration("dIL10");
 
 	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
@@ -128,17 +132,17 @@ void TcellGroup::act(const repast::Point<int> & pt)
 			LocalFile::debug() << "I am here 00" << std::endl;
 			if (IL17 > p_IL17) {
 				newState = TcellState::TH17;
-				mpCompartment->cytokineValue("IL17", pt) += 70;
+				mpCompartment->cytokineValue("eIL17", pt) += 70;
 				LocalFile::debug() << "I am here 01" << std::endl;
 			}
 			else if (IFNg > p_IFNg) {
 				newState = TcellState::TH1;
-				mpCompartment->cytokineValue("IFNg", pt) += 70;
+				mpCompartment->cytokineValue("eIFNg", pt) += 70;
 				LocalFile::debug() << "I am here 02" << std::endl;
 			}
 			else if (IL10 > p_IL10) {
 				newState = TcellState::iTREG;
-				mpCompartment->cytokineValue("IL10", pt) += 70;
+				mpCompartment->cytokineValue("eIL10", pt) += 70;
 				LocalFile::debug() << "I am here 03" << std::endl;
 			}
 		}
@@ -162,14 +166,14 @@ void TcellGroup::act(const repast::Point<int> & pt)
 					LocalFile::debug() << "I am here 0" << std::endl;
 				}
 				else if (eDCConcentration > ENISI::Threshold) {
-					if(p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (IL17_ode > p_IL17)) {
+					if(p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (IL17 > p_IL17)) {
 						newState = TcellState::TH17;
-						mpCompartment->cytokineValue("IL17", pt) += 70;
+						mpCompartment->cytokineValue("eIL17", pt) += dIL17;
 						LocalFile::debug() << "I am here 1" << std::endl;
 					}
-					else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (IFNg_ode > p_IFNg)) {
+					else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (IFNg > p_IFNg)) {
 					   newState = TcellState::TH1;
-					   mpCompartment->cytokineValue("IFNg", pt) += 70;
+					   mpCompartment->cytokineValue("eIFNg", pt) += dIFNg;
 					   LocalFile::debug() << "I am here 2" << std::endl;
 					}
 				}
@@ -177,7 +181,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 			else if (state == TcellState::iTREG)
 			{
 				if ((th1Concentration > ENISI::Threshold)
-				   && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && (IL10_ode > p_IL10)) {
+				   && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && (IL10 > p_IL10)) {
 					newState = TcellState::TH17; /*Rule 19*/
 					LocalFile::debug() << "I am here 3" << std::endl;
 				}
@@ -289,10 +293,10 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		pAgent->setState(newState);
 
 		if (newState == TcellState::TH1) { //Rule 29 If T cell state is TH1, then release IFNg
-			mpCompartment->cytokineValue("IFNg", pt) += 2; // arbitrary value for IFNg
+			mpCompartment->cytokineValue("eIFNg", pt) += dIFNg; // production based on ODE for IFNg
 		}
 		else if (newState == TcellState::Tr || newState == TcellState::iTREG) { //Rule 30, If T cell state is Tr then release IL10 [or iTREG]
-			mpCompartment->cytokineValue("IL10", pt) += 3; //arbitrary value for IL10
+			mpCompartment->cytokineValue("eIL10", pt) += dIL10; // production based on ODE for IL10
 		}
 	}
 }

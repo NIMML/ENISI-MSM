@@ -109,8 +109,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 //      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
 
       /*get concentration of IFNg and IL10 for COPASI input*/
-      double IFNg = mpCompartment->cytokineValue("IFNg", pt);
-      double IL10 = mpCompartment->cytokineValue("IL10", pt);
+      double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
+      double IL10 = mpCompartment->cytokineValue("eIL10", pt);
 
 //	  LocalFile::debug() << count++ << ". HPylori.size() = " << HPylori.size() << std::endl;
 
