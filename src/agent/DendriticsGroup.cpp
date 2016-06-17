@@ -169,6 +169,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 		  liveHPyloriConcentration != 0)
     	   //&& tolegenicBacteriaConcentration * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {
+    	   LocalFile::debug() << "Dendritic cells differentiates due to HP " << std::endl;
     	  newState = DendriticState::EFFECTOR;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
