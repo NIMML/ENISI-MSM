@@ -52,6 +52,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
 
 void TcellGroup::act(const repast::Point<int> & pt)
 {
+	LocalFile::debug() << "I am in Tcells act()" << std::endl;
 	std::vector< double > Location(2, 0.0);
 
 	std::vector< Agent * > Tcells;
