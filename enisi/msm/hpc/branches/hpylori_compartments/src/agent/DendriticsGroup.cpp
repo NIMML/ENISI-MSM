@@ -38,7 +38,7 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const double & conc
 
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
-	LocalFile::debug() << "I am in Dendritics act() updated" << std::endl;
+	LocalFile::debug() << "I am inside the Dendritics act() function file" << std::endl;
   std::vector< double > Location(2, 0);
 
   std::vector< Agent * > Dentritics;
