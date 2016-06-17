@@ -103,7 +103,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
- /*if (mpCompartment->getType() == Compartment::lamina_propria &&
+ if (mpCompartment->getType() == Compartment::lamina_propria &&
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
 	  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
@@ -111,7 +111,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 	  LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
 	  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
 	  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
- }*/
+ }
 
   for (; it != end; ++it)
     {
