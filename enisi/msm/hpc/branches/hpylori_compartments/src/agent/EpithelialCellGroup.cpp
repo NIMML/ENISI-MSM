@@ -1,5 +1,4 @@
 #include "EpithelialCellGroup.h"
-
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
@@ -53,13 +52,14 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
 
   concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
   concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
+
 
   for (; it != end; ++it)
     {
@@ -71,11 +71,15 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       EpithelialCellState::State newState = state;
 
       double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+      LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
+
       // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
       //Rules 9 and 10
       double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
       double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
+      LocalFile::debug() << "th17Concentration =   " <<th17Concentration  << std::endl;
+      LocalFile::debug() << "th1Concentration =   " <<th1Concentration  << std::endl;
 
       if (state == EpithelialCellState::HEALTHY)
         {
