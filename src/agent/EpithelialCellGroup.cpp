@@ -29,7 +29,7 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
 
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
 {
-  LocalFile::debug() << "I am in Epithelial cells act()" << std::endl;
+  //LocalFile::debug() << "I am in Epithelial cells act()" << std::endl;
   std::vector<double> Location(2, 0.0);
 
   std::vector< Agent * > EpithelialCells;

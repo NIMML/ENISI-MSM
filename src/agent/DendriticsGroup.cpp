@@ -38,7 +38,7 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const double & conc
 
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
-	LocalFile::debug() << "I am inside the Dendritics act() function file" << std::endl;
+	//LocalFile::debug() << "I am inside the Dendritics act() function file" << std::endl;
   std::vector< double > Location(2, 0);
 
   std::vector< Agent * > Dentritics;
@@ -83,6 +83,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
  Concentration TcellConcentration;
  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
+
 
   // We only request information if we are at the border
   std::vector< Agent * > EpithelialCells;
