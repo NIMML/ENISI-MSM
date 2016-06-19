@@ -52,63 +52,39 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
 
 void TcellGroup::act(const repast::Point<int> & pt)
 {
-	LocalFile::debug() << "I am in Tcells act()" << std::endl;
+	//LocalFile::debug() << "I am in Tcells act()" << std::endl;
 	std::vector< double > Location(2, 0.0);
 
 	std::vector< Agent * > Tcells;
 	mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-	std::vector< Agent * >::iterator it = Tcells.begin();
-	std::vector< Agent * >::iterator end = Tcells.end();
+
+	std::vector< Agent * > Macrophages;
+	mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
+
+	std::vector< Agent * > Dentritics;
+	mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+
+	std::vector< Agent * > EpithelialCells; // We only request information if we are at the border
+
+	if (mpCompartment->getType() == Compartment::lamina_propria) {
+			mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
+			mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+	}
+	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
+			 mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+			}
 
 	Concentration TcellConcentration;
 	concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
-	std::vector< Agent * > Macrophages;
-	mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
 	Concentration MacrophageConcentration;
-
-	std::vector< Agent * > Dentritics;
-	mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-	Concentration DentriticsConcentration;
-
-	std::vector< Agent * > EpithelialCells; // We only request information if we are at the border
-	Concentration EpithelialCellConcentration;
-
-	if (mpCompartment->getType() == Compartment::lamina_propria) {
-		mpCompartment->getAgents(pt, 0, 1, Agent::Macrophage, Macrophages);
-		mpCompartment->getAgents(pt, 0, 1, Agent::Dentritics, Dentritics);
-
-		if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5) {
-		  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-		}
-	}
-
-	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
-	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
-	double IL6_pool = mpCompartment->cytokineValue("eIL6", pt);
-	double TGFb_pool = mpCompartment->cytokineValue("eTGFb", pt);
-	double IL12_pool = mpCompartment->cytokineValue("eIL12", pt);
+	Concentration DentriticsConcentration;
+	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 
-	TcellODE & odeModel = TcellODE::getInstance();
-
-	odeModel.setInitialConcentration("IL6_pool", IL6_pool);
-	odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
-	odeModel.setInitialConcentration("IL12_pool", IL12_pool);
-
-	/* run time course */
-	if (!odeModel.runTimeCourse()) {
-	  LocalFile::debug() << pt << std::endl;
-	}
-
-	//double IFNg = odeModel.getConcentration("IFNg");
-	//double IL17 = odeModel.getConcentration("IL17");
-	//double IL10 = odeModel.getConcentration("IL10");
-
-  double dIFNg = odeModel.getConcentration("dIFNg");
-  double dIL17 = odeModel.getConcentration("dIL17");
-  double dIL10 = odeModel.getConcentration("dIL10");//Ode cytokine
+	Concentration EpithelialCellConcentration;
+	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
 	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
@@ -118,6 +94,13 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
 
+	std::vector< Agent * >::iterator it = Tcells.begin();
+	std::vector< Agent * >::iterator end = Tcells.end();
+	/* run time course */
+
+	//double IFNg = odeModel.getConcentration("IFNg");
+	//double IL17 = odeModel.getConcentration("IL17");
+	//double IL10 = odeModel.getConcentration("IL10");
 
 	for (; it != end; ++it)
 	{
@@ -125,9 +108,30 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		TcellState::State state = (TcellState::State) pAgent->getState();
 		TcellState::State newState = state;
 
+		double IL6_pool = mpCompartment->cytokineValue("eIL6", pt);
+		double TGFb_pool = mpCompartment->cytokineValue("eTGFb", pt);
+		double IL12_pool = mpCompartment->cytokineValue("eIL12", pt);
+
+		TcellODE & odeModel = TcellODE::getInstance();
+		odeModel.setInitialConcentration("IL6_pool", IL6_pool);
+		odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
+		odeModel.setInitialConcentration("IL12_pool", IL12_pool);
+
+		 /* run time course */
+		odeModel.runTimeCourse();
+
+		double dIFNg = odeModel.getConcentration("dIFNg");
+		double dIL17 = odeModel.getConcentration("dIL17");
+		double dIL10 = odeModel.getConcentration("dIL10");//Ode cytokine
+
+		if (!odeModel.runTimeCourse()) {
+			  LocalFile::debug() << pt << std::endl;
+			}
+
 		if (state == TcellState::DEAD) {
 			continue;
 		}
+
 		/*if (state != TcellState::Tr) //Rule 58
 			{
 			LocalFile::debug() << "I am here 00" << std::endl;
