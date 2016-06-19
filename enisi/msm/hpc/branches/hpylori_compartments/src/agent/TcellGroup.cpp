@@ -72,7 +72,14 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	}
 	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
 			 mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+			 mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
 			}
+	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
+		 mpCompartment->getAgents(pt, 0, 1, Agent::Dentritics, Dentritics);
+		}
+	else if (mpCompartment->getType() == Compartment::gastric_lymph_node) {
+		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+	}
 
 	Concentration TcellConcentration;
 	concentrations(Agent::Tcell, Tcells, TcellConcentration);
@@ -86,14 +93,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	Concentration EpithelialCellConcentration;
 	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
-	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
-	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
-	double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
-	double th1Concentration = TcellConcentration[TcellState::TH1];
-	double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
-	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
-	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
-
 	std::vector< Agent * >::iterator it = Tcells.begin();
 	std::vector< Agent * >::iterator end = Tcells.end();
 	/* run time course */
@@ -106,7 +105,28 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	{
 		Agent * pAgent = *it;
 		TcellState::State state = (TcellState::State) pAgent->getState();
+
+		if (state == TcellState::DEAD) continue;
+
 		TcellState::State newState = state;
+
+		double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
+		double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
+		double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
+		double th1Concentration = TcellConcentration[TcellState::TH1];
+		double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
+		double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
+		double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
+
+
+		LocalFile::debug() << "itregConcentrationT=              		" << itregConcentration << std::endl;
+		LocalFile::debug() << "macrophageregConcentrationT=      		" << macrophageregConcentration << std::endl;
+		LocalFile::debug() << "th17ConcentrationT=               		" << th17Concentration << std::endl;
+		LocalFile::debug() << "th1ConcentrationT=                		" << th1Concentration << std::endl;
+		LocalFile::debug() << "eDCConcentrationT=                		" << eDCConcentration << std::endl;
+		LocalFile::debug() << "tDCConcentrationT=                		" << tDCConcentration << std::endl;
+		LocalFile::debug() << "damagedEpithelialCellConcentrationT=		" << damagedEpithelialCellConcentration << std::endl;
+
 
 		double IL6_pool = mpCompartment->cytokineValue("eIL6", pt);
 		double TGFb_pool = mpCompartment->cytokineValue("eTGFb", pt);
@@ -127,10 +147,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		if (!odeModel.runTimeCourse()) {
 			  LocalFile::debug() << pt << std::endl;
 			}
-
-		if (state == TcellState::DEAD) {
-			continue;
-		}
 
 		/*if (state != TcellState::Tr) //Rule 58
 			{

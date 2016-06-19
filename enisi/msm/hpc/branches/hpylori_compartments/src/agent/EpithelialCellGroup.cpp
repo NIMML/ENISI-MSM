@@ -52,7 +52,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2.5)
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
@@ -71,7 +71,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       EpithelialCellState::State newState = state;
 
       double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-      LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
+      LocalFile::debug() << "infectiousBacteriaConcentration in epithilium=   " << infectiousBacteriaConcentration << std::endl;
 
       // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 

@@ -90,29 +90,12 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   Concentration EpithelialCellConcentration;
 
   if (mpCompartment->getType() == Compartment::lamina_propria &&
-      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
     }
 
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
-
-  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
-  double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
-  double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
-  double itregConcentration = TcellConcentration[TcellState::iTREG];
-  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-  double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
-
- if (mpCompartment->getType() == Compartment::lamina_propria &&
-      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
-    {
-	  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
-	  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
-	  LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
-	  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
-	  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
- }
 
   for (; it != end; ++it)
     {
@@ -123,9 +106,25 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       DendriticState::State newState = state;
 
+      double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+      double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
+      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+      double itregConcentration = TcellConcentration[TcellState::iTREG];
+      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+      double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
       /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
        * tolegenic are all in lumen     */
 
+      if (mpCompartment->getType() == Compartment::lamina_propria &&
+           mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+         {
+     	  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
+     	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
+     	  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+     	  LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
+     	  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
+     	  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
+      }
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
 
 	  if (state == DendriticState::IMMATURE)
