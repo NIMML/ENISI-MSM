@@ -96,6 +96,18 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 //		  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl << std::endl;
 //    }
 
+  double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
+  double IL10 = mpCompartment->cytokineValue("eIL10", pt);
+
+  MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
+  odeModel.setInitialConcentration("IFNg", IFNg);
+  odeModel.setInitialConcentration("IL10", IL10);
+
+  /* run time course */
+  odeModel.runTimeCourse();
+
+  double Mreg = odeModel.getConcentration("Mreg");
+
   /*identify states of HPylori counted -- naive name should be changed to LIVE*/
   std::vector< Agent * >::iterator it = Macrophages.begin();
   std::vector< Agent * >::iterator end = Macrophages.end();
@@ -109,8 +121,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 //      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
 
       /*get concentration of IFNg and IL10 for COPASI input*/
-      double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
-      double IL10 = mpCompartment->cytokineValue("eIL10", pt);
 
 //	  LocalFile::debug() << count++ << ". HPylori.size() = " << HPylori.size() << std::endl;
 
@@ -129,16 +139,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  			  /* set initial concentrations */
 			  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
 
-			  MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
-			  odeModel.setInitialConcentration("IFNg", IFNg);
-			  odeModel.setInitialConcentration("IL10", IL10);
-
-			  /* run time course */
-			  odeModel.runTimeCourse();
 
 			  // double IFNg = odeModel.getConcentration("IFNg");
 			  // double IL10 = odeModel.getConcentration("IL10");
-			  double Mreg = odeModel.getConcentration("Mreg");
 
 			  /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
 			  /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
