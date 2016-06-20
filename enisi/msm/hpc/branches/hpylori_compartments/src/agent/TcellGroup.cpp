@@ -69,6 +69,10 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	if (mpCompartment->getType() == Compartment::lamina_propria) {
 			mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
 			mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+			mpCompartment->cytokineValue("eIL17", pt);
+			mpCompartment->cytokineValue("eIFNg", pt);
+			mpCompartment->cytokineValue("dIL10", pt);
+			mpCompartment->cytokineValue("dIFNg", pt);
 	}
 	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
 			 mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
@@ -93,10 +97,42 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	Concentration EpithelialCellConcentration;
 	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
+	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
+	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
+	double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
+	double th1Concentration = TcellConcentration[TcellState::TH1];
+	double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
+	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
+	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
+
+	LocalFile::debug() << "itregConcentrationT=              		" << itregConcentration << std::endl;
+	LocalFile::debug() << "macrophageregConcentrationT=      		" << macrophageregConcentration << std::endl;
+	LocalFile::debug() << "th17ConcentrationT=               		" << th17Concentration << std::endl;
+	LocalFile::debug() << "th1ConcentrationT=                		" << th1Concentration << std::endl;
+	LocalFile::debug() << "eDCConcentrationT=                		" << eDCConcentration << std::endl;
+	LocalFile::debug() << "tDCConcentrationT=                		" << tDCConcentration << std::endl;
+	LocalFile::debug() << "damagedEpithelialCellConcentrationT=		" << damagedEpithelialCellConcentration << std::endl;
+
 	std::vector< Agent * >::iterator it = Tcells.begin();
 	std::vector< Agent * >::iterator end = Tcells.end();
-	/* run time course */
 
+	double IL6_pool = mpCompartment->cytokineValue("eIL6", pt);
+	double TGFb_pool = mpCompartment->cytokineValue("eTGFb", pt);
+	double IL12_pool = mpCompartment->cytokineValue("eIL12", pt);
+
+	TcellODE & odeModel = TcellODE::getInstance();
+	odeModel.setInitialConcentration("IL6_pool", IL6_pool);
+	odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
+	odeModel.setInitialConcentration("IL12_pool", IL12_pool);
+
+	 /* run time course */
+	odeModel.runTimeCourse();
+
+	double dIFNg = odeModel.getConcentration("dIFNg");
+	double dIL17 = odeModel.getConcentration("dIL17");
+	double dIL10 = odeModel.getConcentration("dIL10");//Ode cytokine
+
+	//odeModel.runTimeCourse();
 	//double IFNg = odeModel.getConcentration("IFNg");
 	//double IL17 = odeModel.getConcentration("IL17");
 	//double IL10 = odeModel.getConcentration("IL10");
@@ -105,49 +141,13 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	{
 		Agent * pAgent = *it;
 		TcellState::State state = (TcellState::State) pAgent->getState();
-
-		if (state == TcellState::DEAD) continue;
-
 		TcellState::State newState = state;
 
-		double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
-		double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
-		double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
-		double th1Concentration = TcellConcentration[TcellState::TH1];
-		double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
-		double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
-		double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
-
-
-		LocalFile::debug() << "itregConcentrationT=              		" << itregConcentration << std::endl;
-		LocalFile::debug() << "macrophageregConcentrationT=      		" << macrophageregConcentration << std::endl;
-		LocalFile::debug() << "th17ConcentrationT=               		" << th17Concentration << std::endl;
-		LocalFile::debug() << "th1ConcentrationT=                		" << th1Concentration << std::endl;
-		LocalFile::debug() << "eDCConcentrationT=                		" << eDCConcentration << std::endl;
-		LocalFile::debug() << "tDCConcentrationT=                		" << tDCConcentration << std::endl;
-		LocalFile::debug() << "damagedEpithelialCellConcentrationT=		" << damagedEpithelialCellConcentration << std::endl;
-
-
-		double IL6_pool = mpCompartment->cytokineValue("eIL6", pt);
-		double TGFb_pool = mpCompartment->cytokineValue("eTGFb", pt);
-		double IL12_pool = mpCompartment->cytokineValue("eIL12", pt);
-
-		TcellODE & odeModel = TcellODE::getInstance();
-		odeModel.setInitialConcentration("IL6_pool", IL6_pool);
-		odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
-		odeModel.setInitialConcentration("IL12_pool", IL12_pool);
-
-		/* run time course */
-		odeModel.runTimeCourse();
-
-		double dIFNg = odeModel.getConcentration("dIFNg");
-		double dIL17 = odeModel.getConcentration("dIL17");
-		double dIL10 = odeModel.getConcentration("dIL10");//Ode cytokine
+		if (state == TcellState::DEAD) continue;
 
 		if (!odeModel.runTimeCourse()) {
 			  LocalFile::debug() << pt << std::endl;
 			}
-
 		/*if (state != TcellState::Tr) //Rule 58
 			{
 			LocalFile::debug() << "I am here 00" << std::endl;
@@ -170,16 +170,15 @@ void TcellGroup::act(const repast::Point<int> & pt)
 */
 		if (mpCompartment->getType() == Compartment::lamina_propria)
 		{
-			LocalFile::debug() << "I am in LP" << std::endl;
+			//LocalFile::debug() << "I am in LP" << std::endl;
 			if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
 				mpCompartment->getLocation(pAgent->getId(), Location);
 				mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
 				LocalFile::debug() << "I am here 04" << std::endl;
-				continue;
+				//continue;
 				// TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
 				// addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
 			}
-
 			if (state == TcellState::NAIVE) {
 				if ((mpCompartment->cytokineValue("dIL10", pt) > p_rule31a * mpCompartment->cytokineValue("dIFNg", pt))
 				   && (macrophageregConcentration > ENISI::Threshold)
