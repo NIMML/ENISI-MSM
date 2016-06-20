@@ -38,7 +38,7 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const double & conc
 
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
-	//LocalFile::debug() << "I am inside the Dendritics act() function file" << std::endl;
+//LocalFile::debug() << "I am in Dendritics act()" << std::endl;
   std::vector< double > Location(2, 0);
 
   std::vector< Agent * > Dentritics;
@@ -84,7 +84,6 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
-
   // We only request information if we are at the border
   std::vector< Agent * > EpithelialCells;
   Concentration EpithelialCellConcentration;
@@ -97,6 +96,22 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
+  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+  double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
+  double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  double itregConcentration = TcellConcentration[TcellState::iTREG];
+  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+  double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
+
+ if (mpCompartment->getType() == Compartment::lamina_propria &&
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+    {
+	  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
+	  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+	//  LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
+	// LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
+	  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
+ }
   for (; it != end; ++it)
     {
       Agent * pAgent = *it;
@@ -106,25 +121,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       DendriticState::State newState = state;
 
-      double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
-      double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
-      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
-      double itregConcentration = TcellConcentration[TcellState::iTREG];
-      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-      double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
       /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
        * tolegenic are all in lumen     */
 
-      if (mpCompartment->getType() == Compartment::lamina_propria &&
-           mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
-         {
-     	  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
-     	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
-     	  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
-     	  LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
-     	  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
-     	  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
-      }
       /*identify states of HPylori counted -- naive name should be changed to LIVE*/
 
 	  if (state == DendriticState::IMMATURE)
@@ -165,10 +164,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
        *  0.5 is arbitrary *Rule 2*/
 
        if (mpCompartment->getType() == Compartment::epithilium
-		  //liveHPyloriConcentration != 0)
-    	   && tolegenicBacteriaConcentration * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+    		   && tolegenicBacteriaConcentration * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         {
-    	   LocalFile::debug() << "Dendritic cells differentiates due to HP " << std::endl;
     	  newState = DendriticState::EFFECTOR;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);

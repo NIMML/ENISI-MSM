@@ -1,4 +1,5 @@
 #include "EpithelialCellGroup.h"
+
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
@@ -52,7 +53,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
@@ -60,6 +61,12 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
   concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 
+	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+	// double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
+
+	//Rules 9 and 10
+	double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
+	double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
 
   for (; it != end; ++it)
     {
@@ -70,16 +77,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       EpithelialCellState::State newState = state;
 
-      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-      LocalFile::debug() << "infectiousBacteriaConcentration in epithilium=   " << infectiousBacteriaConcentration << std::endl;
-
-      // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
-
-      //Rules 9 and 10
-      double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
-      double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
-      LocalFile::debug() << "th17Concentration =   " <<th17Concentration  << std::endl;
-      LocalFile::debug() << "th1Concentration =   " <<th1Concentration  << std::endl;
 
       if (state == EpithelialCellState::HEALTHY)
         {
@@ -89,12 +86,14 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
               && (p_rule10a > Random))
             {
               newState = EpithelialCellState::DAMAGED;
+              pAgent->setState(newState);
             }
           else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                    && mpCompartment->getType() == Compartment::epithilium
                    && (p_rule10b > Random)) // TODO CRITICAL This will never be true-FIXED
             {
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
+              pAgent->setState(newState);
             }
         }
 
