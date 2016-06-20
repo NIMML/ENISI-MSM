@@ -122,9 +122,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	//double IFNg = odeModel.getConcentration("IFNg");
 	//double IL17 = odeModel.getConcentration("IL17");
 	//double IL10 = odeModel.getConcentration("IL10");
-	double dIFNg = odeModel.getConcentration("dIFNg");
-	double dIL17 = odeModel.getConcentration("dIL17");
-	double dIL10 = odeModel.getConcentration("dIL10");//Ode cytokine
 
 	for (; it != end; ++it)
 	{
