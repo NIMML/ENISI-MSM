@@ -58,9 +58,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
 
-  concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
-  concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
-
+	concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
+	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 	// double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
@@ -77,7 +76,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       EpithelialCellState::State newState = state;
 
-
       if (state == EpithelialCellState::HEALTHY)
         {
           double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
@@ -85,6 +83,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random))
             {
+        	  
               newState = EpithelialCellState::DAMAGED;
               pAgent->setState(newState);
             }
