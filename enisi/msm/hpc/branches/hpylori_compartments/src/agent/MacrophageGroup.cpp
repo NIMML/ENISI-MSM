@@ -78,12 +78,12 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   Concentration DentriticsConcentration;
   concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 
-  /*double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
-  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];*/
+  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 
 //  if (mpCompartment->getType() == Compartment::lamina_propria &&
 //      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
@@ -104,21 +104,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       Agent * pAgent = *it;
       MacrophageState::State state = (MacrophageState::State) pAgent->getState();
       MacrophageState::State newState = state;
-
-      double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
-      double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
-      double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
-      double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
-      double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
-      double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-
-
-      LocalFile::debug() << "liveHPyloriConcentrationM=          " << liveHPyloriConcentration << std::endl;
-      LocalFile::debug() << "eDendriticsConcentrationM=          " << eDendriticsConcentration << std::endl;
-      LocalFile::debug() << "damagedEpithelialCellConcentrationM=" << damagedEpithelialCellConcentration << std::endl;
-      LocalFile::debug() << "macrophageregConcentrationM=        " << macrophageregConcentration << std::endl;
-      LocalFile::debug() << "macrophageinfConcentrationM=        " << macrophageinfConcentration << std::endl;
-      LocalFile::debug() << "infectiousBacteriaConcentrationM=   " << infectiousBacteriaConcentration << std::endl << std::endl;
 
       // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 //      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
