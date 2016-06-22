@@ -62,6 +62,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
   //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double damagedEpithelialCellConcentration = 1000;
+
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
 
