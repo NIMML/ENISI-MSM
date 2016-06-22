@@ -89,6 +89,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
   double damagedEpithelialCellConcentration = 1000;
   double itregConcentration = TcellConcentration[TcellState::iTREG];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
@@ -96,6 +97,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
   LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
   LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
   LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
   LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
   LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
