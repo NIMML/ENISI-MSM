@@ -62,7 +62,6 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
   //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double damagedEpithelialCellConcentration = 1000;
-
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
 
@@ -72,6 +71,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       BacteriaState::State state = (BacteriaState::State) pAgent->getState();
 
       if (state == BacteriaState::DEAD) continue;
+
       BacteriaState::State newState = state;
 
       /*identify states of Epithelial Cells counted */
@@ -81,7 +81,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       if (damagedEpithelialCellConcentration > p_rule1_damagedEpithelialCellConcentration * ENISI::Threshold
           && mpCompartment->getType() == Compartment::lumen
           && p_rule1 > Random){
-    	  LocalFile::debug() << "Epi is damaged and bacteria can enter" << std::endl ;
+    	  //LocalFile::debug() << "Epi is damaged and bacteria can enter" << std::endl ;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           // LocalFile::debug() << "Move Bacteria: (" << Location[0] << ", " << Location[1] << ") -> (";
