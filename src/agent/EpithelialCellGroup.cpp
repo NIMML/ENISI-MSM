@@ -57,9 +57,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
   else if (mpCompartment->getType() == Compartment::epithilium){
-	  mpCompartment->getAgents(pt,Agent::Bacteria, Bacteria);
-	  //mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
-	  //mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
   }
 	concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
