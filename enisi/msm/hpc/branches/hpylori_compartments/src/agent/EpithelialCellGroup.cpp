@@ -47,8 +47,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
   double IL10 = 0.0;
 
-  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
-    {
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
@@ -57,7 +56,11 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
     {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
-
+  else if (mpCompartment->getType() == Compartment::epithilium){
+	  mpCompartment->getAgents(pt,Agent::Bacteria, Bacteria);
+	  //mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
+	  //mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+  }
 	concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
@@ -83,7 +86,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random))
             {
-        	  
               newState = EpithelialCellState::DAMAGED;
               pAgent->setState(newState);
             }
