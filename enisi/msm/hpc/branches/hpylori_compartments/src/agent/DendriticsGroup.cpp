@@ -81,8 +81,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
  std::vector< Agent * > Tcells;
  Concentration TcellConcentration;
- mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-  concentrations(Agent::Tcell, Tcells, TcellConcentration);
+ 	 mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+ 	 concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
   // We only request information if we are at the border
   std::vector< Agent * > EpithelialCells;
@@ -98,13 +98,14 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
-  double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  double damagedEpithelialCellConcentration = 1000;
   double itregConcentration = TcellConcentration[TcellState::iTREG];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
  if (mpCompartment->getType() == Compartment::lamina_propria &&
-      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+     mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     {
 	  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
 	  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;

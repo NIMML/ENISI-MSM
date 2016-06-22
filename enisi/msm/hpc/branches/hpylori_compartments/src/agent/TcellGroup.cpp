@@ -75,18 +75,24 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	Concentration EpithelialCellConcentration;
 
 	if (mpCompartment->getType() == Compartment::lamina_propria) {
-		mpCompartment->getAgents(pt, 0, 1, Agent::Macrophage, Macrophages);
-		mpCompartment->getAgents(pt, 0, 1, Agent::Dentritics, Dentritics);
-	}
-	else if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
+
+		mpCompartment->getAgents(pt, 0, Agent::Macrophage, Macrophages);
+		mpCompartment->getAgents(pt, 0, Agent::Dentritics, Dentritics);
+
+		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
+			  mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
+			}
+
+		else if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
 		  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+		  mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
 		}
-	else if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
-		  mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-		  mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-		}
+	}
 	else if (mpCompartment->getType() == Compartment::gastric_lymph_node){
-		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+				mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
+				  mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
+				}
 	}
 
 	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
@@ -102,7 +108,8 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	odeModel.setInitialConcentration("IL6_pool", IL6_pool);
 	odeModel.setInitialConcentration("TGFb_pool", TGFb_pool);
 	odeModel.setInitialConcentration("IL12_pool", IL12_pool);
-	 /* run time course */
+
+	/* run time course */
 	if (!odeModel.runTimeCourse()){
 	LocalFile::debug() << pt << std::endl;
 	}
@@ -128,9 +135,8 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		TcellState::State state = (TcellState::State) pAgent->getState();
 		TcellState::State newState = state;
 
-		if (state == TcellState::DEAD) {
-			continue;
-		}
+		if (state == TcellState::DEAD) continue;
+
 		/*if (state != TcellState::Tr) //Rule 58
 			{
 			LocalFile::debug() << "I am here 00" << std::endl;
@@ -171,9 +177,10 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				}
 				else if (eDCConcentration > ENISI::Threshold) {
 					if(p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (dIL17 > p_IL17)) {
+						LocalFile::debug() << "eDC changed state to Th17 cell" << std::endl;
 						newState = TcellState::TH17;
 						mpCompartment->cytokineValue("eIL17", pt) += dIL17;
-						LocalFile::debug() << "I am here 1" << std::endl;
+
 					}
 					else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && (dIFNg > p_IFNg)) {
 					   newState = TcellState::TH1;
@@ -218,7 +225,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 			}
 			else if (eDCConcentration > ENISI::Threshold
 					 && (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
+				LocalFile::debug() << "eDC changed Th1 to Th17" << std::endl;
 				newState = TcellState::TH17; /*Rule 20*/
+				pAgent->setState(newState);
 				LocalFile::debug() << "I am here 6" << std::endl;
 			}
 		}
@@ -233,11 +242,13 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				if  ((tDCConcentration > ENISI::Threshold)
 					  && (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
 					newState = TcellState::iTREG; /*Rule 36*/
+					pAgent->setState(newState);
 					LocalFile::debug() << "I am here 7" << std::endl;
 				}
 				else if ((itregConcentration > ENISI::Threshold)
 						 && (p_rule35 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
 					newState = TcellState::iTREG; /*Rule 35*/
+					pAgent->setState(newState);
 					LocalFile::debug() << "I am here 8" << std::endl;
 				}
 			}
