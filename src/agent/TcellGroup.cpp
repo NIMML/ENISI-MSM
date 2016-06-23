@@ -76,8 +76,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 	if (mpCompartment->getType() == Compartment::lamina_propria) {
 
-		mpCompartment->getAgents(pt, 0, Agent::Macrophage, Macrophages);
-		mpCompartment->getAgents(pt, 0, Agent::Dentritics, Dentritics);
+		mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
+		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+		mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 
 		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
 			  mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
@@ -89,12 +90,13 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		}
 	}
 	else if (mpCompartment->getType() == Compartment::gastric_lymph_node){
+
 		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
+
 		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
 			mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
 		}
 	}
-
 	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
@@ -128,9 +130,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
 
-	LocalFile::debug() << "eDendriticsConcentrationT=	" << eDCConcentration << std::endl;
-	LocalFile::debug() << "th17ConcentrationT=			" << th17Concentration << std::endl;
-	LocalFile::debug() << "th1ConcentrationT=          	" << th1Concentration << std::endl;
+	LocalFile::debug() << "eDendriticsConcentrationT=" << eDCConcentration << std::endl;
+	LocalFile::debug() << "th17ConcentrationT=		 " << th17Concentration << std::endl;
+	LocalFile::debug() << "th1ConcentrationT=        " << th1Concentration << std::endl;
 
 	for (; it != end; ++it){
 		Agent * pAgent = *it;

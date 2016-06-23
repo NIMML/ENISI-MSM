@@ -60,8 +60,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   }
   else if (mpCompartment->getType() == Compartment::lamina_propria)
   {
-	  mpCompartment->getAgents(pt, 0, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, 0, Agent::HPylori, HPylori);
+	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
+	  mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
   }
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);

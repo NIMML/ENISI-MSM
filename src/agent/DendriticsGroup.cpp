@@ -69,21 +69,26 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
     	  mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
+          mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
+          mpCompartment->getAgents(pt, 0, 1, Agent::Dentritics, Dentritics);
         }
       if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
     	  mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, -1, Agent::HPylori, HPylori);
+          mpCompartment->getAgents(pt, 0, -1, Agent::Tcell, Tcells);
+          mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
         }
     }
   else if (mpCompartment->getType() == Compartment::lamina_propria){
-
-	  	  mpCompartment->getAgents(pt, 0, Agent::Bacteria, Bacteria);
-	  	  mpCompartment->getAgents(pt, 0, Agent::HPylori, HPylori);
-	  	  mpCompartment->getAgents(pt, 0, Agent::Tcell, Tcells);
+	  	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
+	  	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
+	  	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+	  	  mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
     }
   else if (mpCompartment->getType() == Compartment::lamina_propria &&
 		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
 	  	  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+	  	  mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
       }
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];

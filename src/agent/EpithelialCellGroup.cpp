@@ -82,15 +82,13 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
 
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
-              && (p_rule10a > Random))
-            {
+              && (p_rule10a > Random)){
               newState = EpithelialCellState::DAMAGED;
               pAgent->setState(newState);
             }
           else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
-                   && mpCompartment->getType() == Compartment::epithilium
-                   && (p_rule10b > Random)) // TODO CRITICAL This will never be true-FIXED
-            {
+                   && mpCompartment-> getType() == Compartment::epithilium
+                   && (p_rule10b > Random)) { // TODO CRITICAL This will never be true-FIXED
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
               pAgent->setState(newState);
             }
@@ -119,7 +117,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       if (newState == EpithelialCellState::DAMAGED)
         {
           int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
-
           // TODO We should use the production from the ODE model.
           mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70;
           mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 70;
