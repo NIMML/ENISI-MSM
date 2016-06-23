@@ -45,23 +45,24 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > HPylori;
   std::vector< Agent * > EpithelialCells;
 
-  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 5.0)
+  if (mpCompartment->getType() == Compartment::lamina_propria &&
+		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2.0)
   {
 	  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
 	  mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
 	  mpCompartment->getAgents(pt, 0, -1, Agent::HPylori, HPylori);
   }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+  else if (mpCompartment->getType() == Compartment::lamina_propria &&
+		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
   {
 	  mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
 	  mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
   }
   else if (mpCompartment->getType() == Compartment::lamina_propria)
   {
-	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
+	  mpCompartment->getAgents(pt, 0, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, 0, Agent::HPylori, HPylori);
   }
-
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
 
@@ -108,8 +109,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   /*identify states of HPylori counted -- naive name should be changed to LIVE*/
   std::vector< Agent * >::iterator it = Macrophages.begin();
   std::vector< Agent * >::iterator end = Macrophages.end();
-  for (; it != end; ++it)
-    {
+  for (; it != end; ++it){
+
       Agent * pAgent = *it;
       MacrophageState::State state = (MacrophageState::State) pAgent->getState();
 
@@ -133,8 +134,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
                    && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
 			  			  /* set initial concentrations */
 			  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
-
-
 			  // double IFNg = odeModel.getConcentration("IFNg");
 			  // double IL10 = odeModel.getConcentration("IL10");
 
@@ -158,7 +157,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  }
 		  }
       }
-		  // TODO We should use the production fo the ODE model
+		  // TODO We should use the production of the ODE model
 		  /* regulatory macrophages produce IL10 */
 	  if (newState == MacrophageState::REGULATORY) {
 		  mpCompartment->cytokineValue("IL10", pt) += 70;
@@ -168,7 +167,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  continue;
 		  }
 	  }
-
 	  if (newState == MacrophageState::INFLAMMATORY){
 		  mpCompartment->cytokineValue("IFNg", pt) += 70;
 		  if ((macrophageregConcentration > 0)
@@ -177,8 +175,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  continue;
 		  }
 	  }
-    }
-}
+    }//END of for
+}//END of act()
 // virtual
 void MacrophageGroup::move(){
   // TODO CRITICAL Determine the maximum speed
