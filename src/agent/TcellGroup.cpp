@@ -73,6 +73,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 	std::vector< Agent * > EpithelialCells; // We only request information if we are at the border
 	Concentration EpithelialCellConcentration;
+	mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
 
 	if (mpCompartment->getType() == Compartment::lamina_propria) {
 
