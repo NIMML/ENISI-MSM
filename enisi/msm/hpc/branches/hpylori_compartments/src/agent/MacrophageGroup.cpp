@@ -45,6 +45,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > HPylori;
   std::vector< Agent * > EpithelialCells;
 
+  mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
+  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
+
   if (mpCompartment->getType() == Compartment::lamina_propria &&
 		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2.0)
   {

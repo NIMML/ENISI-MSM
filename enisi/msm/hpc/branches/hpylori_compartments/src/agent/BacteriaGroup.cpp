@@ -82,7 +82,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       if (damagedEpithelialCellConcentration > p_rule1_damagedEpithelialCellConcentration * ENISI::Threshold
           && mpCompartment->getType() == Compartment::lumen
           && p_rule1 > Random){
-    	  //LocalFile::debug() << "Epi is damaged and bacteria can enter" << std::endl ;
+    	  LocalFile::debug() << "Epi is damaged and bacteria can enter" << std::endl ;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           // LocalFile::debug() << "Move Bacteria: (" << Location[0] << ", " << Location[1] << ") -> (";
