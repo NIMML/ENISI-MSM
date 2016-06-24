@@ -145,7 +145,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 		if (state != TcellState::Tr) //Rule 58
 			{
-			LocalFile::debug() << "I am here 00" << std::endl;
+			//LocalFile::debug() << "I am here 00" << std::endl;
 			if (dIL17 > p_IL17) {
 				newState = TcellState::TH17;
 				mpCompartment->cytokineValue("eIL17", pt) += 70;
