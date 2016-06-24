@@ -131,9 +131,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
 
-	LocalFile::debug() << "eDendriticsConcentrationT=" << eDCConcentration << std::endl;
-	LocalFile::debug() << "th17ConcentrationT=		 " << th17Concentration << std::endl;
-	LocalFile::debug() << "th1ConcentrationT=        " << th1Concentration << std::endl;
+	LocalFile::debug() << "dIFNg=" << dIFNg << std::endl;
+	LocalFile::debug() << "dIL17=		 " << dIL17 << std::endl;
+	LocalFile::debug() << "dIL10=        " << dIL10 << std::endl;
 
 	for (; it != end; ++it){
 		Agent * pAgent = *it;
