@@ -143,26 +143,25 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 		TcellState::State newState = state;
 
-		/*if (state != TcellState::Tr) //Rule 58
+		if (state != TcellState::Tr) //Rule 58
 			{
 			LocalFile::debug() << "I am here 00" << std::endl;
-			if (IL17 > p_IL17) {
+			if (dIL17 > p_IL17) {
 				newState = TcellState::TH17;
 				mpCompartment->cytokineValue("eIL17", pt) += 70;
 				LocalFile::debug() << "I am here 01" << std::endl;
 			}
-			else if (IFNg > p_IFNg) {
+			else if (dIFNg > p_IFNg) {
 				newState = TcellState::TH1;
 				mpCompartment->cytokineValue("eIFNg", pt) += 70;
 				LocalFile::debug() << "I am here 02" << std::endl;
 			}
-			else if (IL10 > p_IL10) {
+			else if (dIL10 > p_IL10) {
 				newState = TcellState::iTREG;
 				mpCompartment->cytokineValue("eIL10", pt) += 70;
 				LocalFile::debug() << "I am here 03" << std::endl;
 			}
 		}
-*/
 		if (mpCompartment->getType() == Compartment::lamina_propria){
 			if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
 				mpCompartment->getLocation(pAgent->getId(), Location);
