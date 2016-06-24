@@ -265,6 +265,8 @@ bool TcellODE::runTimeCourse()
         }
     }
 
+  mpModel->updateNonSimulatedValues();
+
   return result;
 }
 

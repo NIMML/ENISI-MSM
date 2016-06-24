@@ -119,10 +119,12 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 	double dIFNg = odeModel.getConcentration("dIFNg");
 	double dIL17 = odeModel.getConcentration("dIL17");
-	double dIL10 = odeModel.getConcentration("dIL10");//Ode cytokine
-	//double IFNg = odeModel.getConcentration("IFNg");
-	//double IL17 = odeModel.getConcentration("IL17");
-	//double IL10 = odeModel.getConcentration("IL10");
+	double dIL10 = odeModel.getConcentration("dIL10");
+
+  LocalFile::debug() << "dIFNg = " << dIFNg << std::endl;
+  LocalFile::debug() << "dIL17 = " << dIL17 << std::endl;
+  LocalFile::debug() << "dIL10 = " << dIL10 << std::endl;
+
 	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
 	double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21 when iTreg is in contact
@@ -159,9 +161,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				LocalFile::debug() << "I am here 03" << std::endl;
 			}
 		}*/
-		LocalFile::debug() << "dIFNg=" << dIFNg << std::endl;
-		LocalFile::debug() << "dIL17=		 " << dIL17 << std::endl;
-		LocalFile::debug() << "dIL10=        " << dIL10 << std::endl;
 		if (mpCompartment->getType() == Compartment::lamina_propria){
 			if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
 				mpCompartment->getLocation(pAgent->getId(), Location);

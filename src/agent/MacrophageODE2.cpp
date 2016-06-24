@@ -263,6 +263,8 @@ void MacrophageODE2::runTimeCourse()
 
       // std::exit(1);
     }
+
+  model->updateNonSimulatedValues();
 }
 
 double MacrophageODE2::getConcentration(std::string name)
