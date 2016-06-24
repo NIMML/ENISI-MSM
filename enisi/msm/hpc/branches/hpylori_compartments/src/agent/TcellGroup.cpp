@@ -131,9 +131,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
 
-	LocalFile::debug() << "dIFNg=" << dIFNg << std::endl;
-	LocalFile::debug() << "dIL17=		 " << dIL17 << std::endl;
-	LocalFile::debug() << "dIL10=        " << dIL10 << std::endl;
 
 	for (; it != end; ++it){
 		Agent * pAgent = *it;
@@ -162,6 +159,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				LocalFile::debug() << "I am here 03" << std::endl;
 			}
 		}*/
+		LocalFile::debug() << "dIFNg=" << dIFNg << std::endl;
+		LocalFile::debug() << "dIL17=		 " << dIL17 << std::endl;
+		LocalFile::debug() << "dIL10=        " << dIL10 << std::endl;
 		if (mpCompartment->getType() == Compartment::lamina_propria){
 			if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
 				mpCompartment->getLocation(pAgent->getId(), Location);
