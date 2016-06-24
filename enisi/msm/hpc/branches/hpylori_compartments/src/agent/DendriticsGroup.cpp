@@ -92,9 +92,10 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * >::iterator it = Dentritics.begin();
   std::vector< Agent * >::iterator end = Dentritics.end();
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
-  double damagedEpithelialCellConcentration = 1000;
+  //double damagedEpithelialCellConcentration = 1000;
   double itregConcentration = TcellConcentration[TcellState::iTREG];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
