@@ -241,6 +241,7 @@ void MacrophageODE1::runTimeCourse()
     {
       result = trajectoryTask->process(true);
     }
+
   catch (...)
     {
       LocalFile::debug() << "Error. Running the time course simulation failed.\n";
@@ -268,6 +269,10 @@ void MacrophageODE1::runTimeCourse()
 
       // std::exit(1);
     }
+
+  model->updateNonSimulatedValues();
+
+
 }
 
 double MacrophageODE1::getConcentration(std::string name)
