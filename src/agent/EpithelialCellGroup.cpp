@@ -46,13 +46,12 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   double IL10 = 0.0;
 
   if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
-      mpCompartment->getAgents(pt, 0, 2, Agent::Bacteria, Bacteria);
-      mpCompartment->getAgents(pt, 0, 2, Agent::Tcell, Tcells);
+      mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
+      mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
-    {
-      mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
+      mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
   /*else if (mpCompartment->getType() == Compartment::epithilium){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
@@ -84,8 +83,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       EpithelialCellState::State newState = state;
 
-      if (state == EpithelialCellState::HEALTHY)
-        {
+      if (state == EpithelialCellState::HEALTHY){
           double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
 
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
@@ -101,28 +99,24 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
             }
         }
 
-      if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-        {
+      if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
           mpCompartment->removeAgent(pAgent); /*Rule 11*/
           continue;
         }
 
       if (mpCompartment->getType() == Compartment::epithilium
-          && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-        {
+          && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
           mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
           mpCompartment->addAgent(new Agent(Agent::EpithelialCell, pAgent->getState()), Location);
         }
       else if (mpCompartment->getType() == Compartment::epithilium
                && state == EpithelialCellState::DAMAGED
                && IL10 > ENISI::Threshold
-               && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-        {
+               && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           newState = EpithelialCellState::HEALTHY; /* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
         }
 
-      if (newState == EpithelialCellState::DAMAGED)
-        {
+      if (newState == EpithelialCellState::DAMAGED){
           int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
           // TODO We should use the production from the ODE model.
           mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70;
@@ -131,10 +125,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       pAgent->setState(newState);
     }
 }
-
 // virtual
-void EpithelialCellGroup::move()
-{
+void EpithelialCellGroup::move(){
   // TODO CRITICAL Determine the maximum speed
   double MaxSpeed = 0.1;
 
@@ -142,12 +134,10 @@ void EpithelialCellGroup::move()
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
   Compartment::LocalIterator endLocal = mpCompartment->localEnd();
 
-  for (; itLocal != endLocal; ++itLocal)
-	{
+  for (; itLocal != endLocal; ++itLocal){
       mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
 	}
 }
-
 // virtual
 void EpithelialCellGroup::write(const repast::Point<int> &)
 {
