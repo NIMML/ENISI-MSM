@@ -105,12 +105,10 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
               pAgent->setState(newState);
             }
         }
-
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
           mpCompartment->removeAgent(pAgent); /*Rule 11*/
           continue;
         }
-
       if (mpCompartment->getType() == Compartment::epithilium
           && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
           mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
@@ -122,7 +120,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
                && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           newState = EpithelialCellState::HEALTHY; /* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
         }
-
       if (newState == EpithelialCellState::DAMAGED){
           int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
           // TODO We should use the production from the ODE model.
