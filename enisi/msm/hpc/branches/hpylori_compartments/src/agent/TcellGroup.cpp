@@ -17,7 +17,6 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::NAIVE));
     }
-
   const Properties * pModel = Properties::instance(Properties::model);
 
   pModel->getValue("p_rule18", p_rule18);
@@ -30,7 +29,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
   pModel->getValue("p_rule26", p_rule26);
   pModel->getValue("p_rule27", p_rule27);
   pModel->getValue("p_rule31", p_rule31);
-  pModel->getValue("p_rule31a", p_rule31a);
+  pModel->getValue("p_rule31a",p_rule31a);
   pModel->getValue("p_rule32", p_rule32);
   pModel->getValue("p_rule33", p_rule33);
   pModel->getValue("p_rule35", p_rule35);
@@ -60,6 +59,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 	Concentration TcellConcentration;
 	concentrations(Agent::Tcell, Tcells, TcellConcentration);
+	mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 
 
 	std::vector< Agent * > Macrophages;
@@ -80,24 +80,22 @@ void TcellGroup::act(const repast::Point<int> & pt)
 		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
 		mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 	}
-	else if (mpCompartment->getType() == Compartment::lamina_propria &&
-			mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
+	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
 		//mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
 		mpCompartment->getAgents(pt, 0, 2, Agent::Dentritics, Dentritics);
 	}
-	else if (mpCompartment->getType() == Compartment::lamina_propria &&
+	else if (
 			mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
 		mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
 		mpCompartment->getAgents(pt, 0, -2, Agent::Dentritics, Dentritics);
 	}
 	else if (mpCompartment->getType() == Compartment::gastric_lymph_node){
-
 		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
 	}
-	else if (mpCompartment->getType() == Compartment::gastric_lymph_node &&
+	/*else if (mpCompartment->getType() == Compartment::gastric_lymph_node &&
 			mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
 		mpCompartment->getAgents(pt, 0, -2, Agent::Dentritics, Dentritics);
-	}
+	}*/
 	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
@@ -146,10 +144,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	//		  LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
 	//		  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl << std::endl;
 
-	/*LocalFile::debug() << "dIFNg=" << dIFNg << std::endl;
-	LocalFile::debug() << "dIL17=		 " << dIL17 << std::endl;
-	LocalFile::debug() << "dIL10=        " << dIL10 << std::endl;
-*/
 	std::vector< Agent * >::iterator it = Tcells.begin();
 	std::vector< Agent * >::iterator end = Tcells.end();
 
