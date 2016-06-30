@@ -57,11 +57,10 @@ void TcellGroup::act(const repast::Point<int> & pt)
 
 	std::vector< Agent * > Tcells;
 	mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-	std::vector< Agent * >::iterator it = Tcells.begin();
-	std::vector< Agent * >::iterator end = Tcells.end();
 
 	Concentration TcellConcentration;
 	concentrations(Agent::Tcell, Tcells, TcellConcentration);
+
 
 	std::vector< Agent * > Macrophages;
 	mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
@@ -70,36 +69,37 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	std::vector< Agent * > Dentritics;
 	mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
 	Concentration DentriticsConcentration;
+	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 
 	std::vector< Agent * > EpithelialCells; // We only request information if we are at the border
 	Concentration EpithelialCellConcentration;
 	mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
 
 	if (mpCompartment->getType() == Compartment::lamina_propria) {
-
 		mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
 		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
 		mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-
-		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
-			  mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-			}
-
-		else if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
-		  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-		  mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
-		}
+	}
+	else if (mpCompartment->getType() == Compartment::lamina_propria &&
+			mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
+		//mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
+		mpCompartment->getAgents(pt, 0, 2, Agent::Dentritics, Dentritics);
+	}
+	else if (mpCompartment->getType() == Compartment::lamina_propria &&
+			mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
+		mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
+		mpCompartment->getAgents(pt, 0, -2, Agent::Dentritics, Dentritics);
 	}
 	else if (mpCompartment->getType() == Compartment::gastric_lymph_node){
 
 		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-
-		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
-			mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
-		}
+	}
+	else if (mpCompartment->getType() == Compartment::gastric_lymph_node &&
+			mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
+		mpCompartment->getAgents(pt, 0, -2, Agent::Dentritics, Dentritics);
 	}
 	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
-	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
+
 	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
 	double IL6_pool = mpCompartment->cytokineValue("eIL6", pt);
@@ -121,9 +121,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double dIL17 = odeModel.getConcentration("dIL17");
 	double dIL10 = odeModel.getConcentration("dIL10");
 
-  LocalFile::debug() << "dIFNg = " << dIFNg << std::endl;
+  /*LocalFile::debug() << "dIFNg = " << dIFNg << std::endl;
   LocalFile::debug() << "dIL17 = " << dIL17 << std::endl;
-  LocalFile::debug() << "dIL10 = " << dIL10 << std::endl;
+  LocalFile::debug() << "dIL10 = " << dIL10 << std::endl;*/
 
 	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
@@ -132,7 +132,26 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
+	//double immatureDentritics = DentriticsConcentration[DendriticState::IMMATURE];
 
+	//double damagedEpithelialCellConcentration = 1000;
+	//LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
+			/* LocalFile::debug() << "eDCConcentration			      =" << eDCConcentration << std::endl;
+			 LocalFile::debug() << "tDCConcentration				  =" << tDCConcentration << std::endl;
+			 LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+			 LocalFile::debug() << "macrophageregConcentration		  =" << macrophageregConcentration << std::endl;*/
+			 //LocalFile::debug() << "th17Concentration			  	  =" << th17Concentration << std::endl;
+			 //LocalFile::debug() << "th1Concentration			      =" << th1Concentration << std::endl;
+	//LocalFile::debug() << "immatureDentritics		      =" << immatureDentritics << std::endl;
+	//		  LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
+	//		  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl << std::endl;
+
+	/*LocalFile::debug() << "dIFNg=" << dIFNg << std::endl;
+	LocalFile::debug() << "dIL17=		 " << dIL17 << std::endl;
+	LocalFile::debug() << "dIL10=        " << dIL10 << std::endl;
+*/
+	std::vector< Agent * >::iterator it = Tcells.begin();
+	std::vector< Agent * >::iterator end = Tcells.end();
 
 	for (; it != end; ++it){
 		Agent * pAgent = *it;
@@ -171,7 +190,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				// addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
 			}
 			if (state == TcellState::NAIVE) {
-				if ((mpCompartment->cytokineValue("IL10", pt) > p_rule31a * mpCompartment->cytokineValue("IFNg", pt))
+				if ((mpCompartment->cytokineValue("eIL10", pt) > p_rule31a * mpCompartment->cytokineValue("eIFNg", pt))
 				   && (macrophageregConcentration > ENISI::Threshold)
 				   && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
 					newState = TcellState::Tr; //Rule 31: if nT is in contact with regulatory macrophages, and if IL10> a* IFNg, then nT -> Tr
@@ -182,11 +201,12 @@ void TcellGroup::act(const repast::Point<int> & pt)
 				if ((th1Concentration > ENISI::Threshold)
 				   && (p_rule19 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && (dIL10 > p_IL10)) {
 					newState = TcellState::TH17; /*Rule 19*/
+					pAgent->setState(newState);
 					LocalFile::debug() << "I am here 3" << std::endl;
 				}
 				else if (eDCConcentration > ENISI::Threshold
 						&& (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
-					LocalFile::debug() << "eDC changed iTREG to Th17" << std::endl;
+					//LocalFile::debug() << "eDC changed iTREG to Th17" << std::endl;
 					newState = TcellState::TH17; /*Rule 20*/
 					pAgent->setState(newState);
 					LocalFile::debug() << "I am here 6" << std::endl;
@@ -211,7 +231,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 					   && (p_rule23 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
 					newState = TcellState::iTREG; /*Rule 23*/
 					pAgent->setState(newState);
-					LocalFile::debug() << "I am here 5" << std::endl;
+					//LocalFile::debug() << "I am here 5" << std::endl;
 				}
 			}
 			else if (state == TcellState::TH1){
@@ -219,7 +239,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 						&& (p_rule22 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
 					newState = TcellState::iTREG; /*Rule 22*/
 					pAgent->setState(newState);
-					LocalFile::debug() << "I am here 4" << std::endl;
+					//LocalFile::debug() << "I am here 4" << std::endl;
 				}
 				else if (p_rule27 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
 					mpCompartment->removeAgent(pAgent); /*Rule 27*- Th1 can die in LP*/

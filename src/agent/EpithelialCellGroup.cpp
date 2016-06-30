@@ -1,5 +1,4 @@
 #include "EpithelialCellGroup.h"
-
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
@@ -35,26 +34,27 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
   std::vector< Agent * > EpithelialCells;
   mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
-  std::vector< Agent * >::iterator it = EpithelialCells.begin();
-  std::vector< Agent * >::iterator end = EpithelialCells.end();
 
   // We only request information if we are at the border
   std::vector< Agent * > Bacteria;
   Concentration BacteriaConcentration;
+  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 
   std::vector< Agent * > Tcells;
   Concentration TcellsCellConcentration;
-
+  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   double IL10 = 0.0;
 
-  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
-      mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
-      mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
+  if (mpCompartment->getType() == Compartment::epithilium &&
+		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+      mpCompartment->getAgents(pt, 0, 2, Agent::Bacteria, Bacteria);
+      mpCompartment->getAgents(pt, 0, 2, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+  else if (mpCompartment->getType() == Compartment::epithilium &&
+		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
     {
-      mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
+      mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
     }
   else if (mpCompartment->getType() == Compartment::epithilium){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
@@ -67,6 +67,16 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 	//Rules 9 and 10
 	double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
 	double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
+	//		LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
+	//		LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
+	//		  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+	//		  LocalFile::debug() << "macrophageregConcentration=        " << macrophageregConcentration << std::endl;
+	//		  LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
+	//LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
+	//LocalFile::debug() << "th17Concentration			  =   " << th17Concentration << std::endl;
+	//LocalFile::debug() << "th1Concentration			      =   " << th1Concentration << std::endl;
+	std::vector< Agent * >::iterator it = EpithelialCells.begin();
+	std::vector< Agent * >::iterator end = EpithelialCells.end();
 
   for (; it != end; ++it)
     {
@@ -86,7 +96,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
               newState = EpithelialCellState::DAMAGED;
               pAgent->setState(newState);
             }
-          else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
+          if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                    && mpCompartment-> getType() == Compartment::epithilium
                    && (p_rule10b > Random)) { // TODO CRITICAL This will never be true-FIXED
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
@@ -121,7 +131,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70;
           mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 70;
         }
-
       pAgent->setState(newState);
     }
 }
