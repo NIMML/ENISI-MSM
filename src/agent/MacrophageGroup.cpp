@@ -67,7 +67,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
   //double damagedEpithelialCellConcentration = 1000;
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
-  double healthyEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::HEALTHY];
   double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];

@@ -71,12 +71,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
-  double healthyEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::HEALTHY];
-  //double damagedEpithelialCellConcentration = 1000;
   double itregConcentration = TcellConcentration[TcellState::iTREG];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
-  double iDendriticsConcentration = DendriticsConcentration[DendriticState::IMMATURE];
 
   if (mpCompartment->getType() == Compartment::epithilium){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
@@ -98,7 +95,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
           LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl;
           LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
-        }
+          /*LocalFile::debug() << "healthyEpithelialCellConcentration=" << healthyEpithelialCellConcentration << std::endl;
+          LocalFile::debug() << "iDendriticsConcentration		   =" << iDendriticsConcentration << std::endl;*/
+  }
   else if (mpCompartment->getType() == Compartment::lamina_propria){
 	  	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 	  	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
@@ -110,8 +109,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 	  	  //double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
 
 
-	  	  LocalFile::debug() << "healthyEpithelialCellConcentration=" << healthyEpithelialCellConcentration << std::endl;
-	  	  LocalFile::debug() << "iDendriticsConcentration		   =" << iDendriticsConcentration << std::endl;
+
   }*/
  //if (mpCompartment->getType() == Compartment::lamina_propria &&
    //  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
