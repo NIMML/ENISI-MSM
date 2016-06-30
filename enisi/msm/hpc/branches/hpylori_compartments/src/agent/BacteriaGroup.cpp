@@ -33,28 +33,26 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
   std::vector< Agent * > Bacteria;
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
-  std::vector< Agent * >::iterator it = Bacteria.begin();
-  std::vector< Agent * >::iterator end = Bacteria.end();
-
-  if (it == end) return;
 
   std::vector< Agent * > Tcells;
   std::vector< Agent * > EpithelialCells;
-  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 
   // We only request information if we are at the border
-  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+  if (mpCompartment->getType() == Compartment::lumen &&
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+    {
       mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
-    {
-      mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      mpCompartment->getAgents(pt, 0, -1, Agent::Tcell, Tcells);// Get information about the th1/th17 cells present locally in that are; i.e near the border inside the LP
-    }
   else if (mpCompartment->getType() == Compartment::lamina_propria)
-  {
-	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-  }
+    {
+      mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+
+      if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+        {
+          mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+        }
+    }
+
   Concentration TcellConcentration;
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
@@ -65,6 +63,10 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   //double damagedEpithelialCellConcentration = 1000;
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
+
+  std::vector< Agent * >::iterator it = Bacteria.begin();
+  std::vector< Agent * >::iterator end = Bacteria.end();
+
 
   for (; it != end; ++it)
     {

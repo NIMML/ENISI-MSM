@@ -18,27 +18,29 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const double & concentrat
 	pModel->getValue("p_rule5", p_rule5);
 	pModel->getValue("p_HPyloriDeath", p_HPyloriDeath);
 }
+
 void HPyloriGroup::act(const repast::Point<int> & pt){
 
 	std::vector< double > Location(2, 0);
 	std::vector< Agent * > HPylori;
 	mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
-	std::vector< Agent * >::iterator it = HPylori.begin();
-	std::vector< Agent * >::iterator end = HPylori.end();
 
 	std::vector< Agent * > Tcells;
-	mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-
 	std::vector< Agent * > EpithelialCells;
 
-  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+	if (mpCompartment->getType() == Compartment::lumen &&
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+    {
       mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-      mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
-      	  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      	  mpCompartment->getAgents(pt, 0, -1, Agent::Tcell, Tcells);
+
+  if (mpCompartment->getType() == Compartment::lamina_propria &&
+      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+    {
+      mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+      mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
     }
+
   // We only request information if we are at the border
   Concentration EpithelialCellConcentration;
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
@@ -50,6 +52,9 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
   double th17Concentration = TcellConcentration[TcellState::TH17];
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+
+  std::vector< Agent * >::iterator it = HPylori.begin();
+  std::vector< Agent * >::iterator end = HPylori.end();
 
   for (; it != end; ++it)
     {

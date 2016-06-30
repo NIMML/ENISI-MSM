@@ -37,27 +37,34 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
   // We only request information if we are at the border
   std::vector< Agent * > Bacteria;
-  Concentration BacteriaConcentration;
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 
   std::vector< Agent * > Tcells;
-  Concentration TcellsCellConcentration;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   double IL10 = 0.0;
 
-  if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+    {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
+
+  // Bacteria in the lumen is comensual and deos not damage the epithelium/
+  /*
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+    {
       mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
     }
+  */
   /*else if (mpCompartment->getType() == Compartment::epithilium){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
   }*/
-	concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
+  Concentration BacteriaConcentration;
+  concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
+  Concentration TcellsCellConcentration;
 	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
+
 	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 	//double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 	//Rules 9 and 10
