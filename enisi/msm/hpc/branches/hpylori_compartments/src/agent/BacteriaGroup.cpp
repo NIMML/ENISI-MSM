@@ -44,17 +44,21 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
   // We only request information if we are at the border
   if (mpCompartment->getType() == Compartment::lumen
-		  &&mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+		  && mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
-      mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-      mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
+      mpCompartment->getAgents(pt, 0, 2, Agent::EpithelialCell, EpithelialCells);
+      mpCompartment->getAgents(pt, 0, 2, Agent::Tcell, Tcells);
     }
   else if (mpCompartment->getType() == Compartment::lamina_propria
 		  &&mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
     {
-      mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-      mpCompartment->getAgents(pt, 0, -1, Agent::Tcell, Tcells);// Get information about the th1/th17 cells present locally in that are; i.e near the border inside the LP
+      mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
+      mpCompartment->getAgents(pt, 0, -2, Agent::Tcell, Tcells);// Get information about the th1/th17 cells present locally in that are; i.e near the border inside the LP
     }
+  else if (mpCompartment->getType() == Compartment::lamina_propria)
+  {
+	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+  }
   Concentration TcellConcentration;
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
 

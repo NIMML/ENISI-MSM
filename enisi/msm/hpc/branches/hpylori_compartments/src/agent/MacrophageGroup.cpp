@@ -49,18 +49,18 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
 
   if (mpCompartment->getType() == Compartment::lamina_propria &&
-		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2.0)
-  {
-	  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-	  mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, 0, -1, Agent::HPylori, HPylori);
+		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
+  {   //LocalFile::debug() << "I am in LP near the border()" << std::endl;
+	  mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
+	  mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, 0, -2, Agent::HPylori, HPylori);
   }
-  else if (mpCompartment->getType() == Compartment::lamina_propria &&
-		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+  /*else if (mpCompartment->getType() == Compartment::lamina_propria &&
+		  mpCompartment->gridBorders()-> distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
   {
 	  mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
 	  mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
-  }
+  }*/
   else if (mpCompartment->getType() == Compartment::lamina_propria)
   {
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
@@ -84,21 +84,21 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
-  double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  double damagedEpithelialCellConcentration = 1000;
+  //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 
-//  if (mpCompartment->getType() == Compartment::lamina_propria &&
-//      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
-//    {
-//		  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
-//		  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
-//		  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
-//		  LocalFile::debug() << "macrophageregConcentration=        " << macrophageregConcentration << std::endl;
-//		  LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
-//		  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl << std::endl;
-//    }
+/*if (mpCompartment->getType() == Compartment::lamina_propria &&
+     mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2)
+   {  	LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
+		LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
+		LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+		LocalFile::debug() << "macrophageregConcentration=        " << macrophageregConcentration << std::endl;
+		LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
+		LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl << std::endl;
+    }*/
   double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
   double IL10 = mpCompartment->cytokineValue("eIL10", pt);
 
@@ -163,14 +163,14 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       }
 		  // TODO We should use the production of the ODE model
 		  /* regulatory macrophages produce IL10 */
-	  if (newState == MacrophageState::REGULATORY) {
-		  mpCompartment->cytokineValue("IL10", pt) += 70;
-		  if ((macrophageinfConcentration > 0)
-			  && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-			  mpCompartment->removeAgent(pAgent);
-			  continue;
-		  }
-	  }
+      if (newState == MacrophageState::REGULATORY) {
+    	  mpCompartment->cytokineValue("IL10", pt) += 70;
+    	  if ((macrophageinfConcentration > 0)
+    			  && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+    		  mpCompartment->removeAgent(pAgent);
+    		  continue;
+    	  }
+      }
 	  if (newState == MacrophageState::INFLAMMATORY){
 		  mpCompartment->cytokineValue("IFNg", pt) += 70;
 		  if ((macrophageregConcentration > 0)
