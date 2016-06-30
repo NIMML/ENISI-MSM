@@ -73,11 +73,11 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
   {   //LocalFile::debug() << "I am in LP near the border()" << std::endl;
-	  mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
+	  mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+	  mpCompartment->getAgents(pt, 0, -1, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, 0, -1, Agent::HPylori, HPylori);
 	  //LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
 	  //LocalFile::debug() << "healthyEpithelialCellConcentration=" << healthyEpithelialCellConcentration << std::endl;
-	  mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, 0, -2, Agent::HPylori, HPylori);
   }
   /*else if (mpCompartment->getType() == Compartment::lamina_propria &&
 		  mpCompartment->gridBorders()-> distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
@@ -85,13 +85,11 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 	  mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
 	  mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
   }*/
-  else if (mpCompartment->getType() == Compartment::lamina_propria)
-  {
+  else if (mpCompartment->getType() == Compartment::lamina_propria){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
 	  mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
   }
-
 /*if (mpCompartment->getType() == Compartment::lamina_propria &&
      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2)
    {  	LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
