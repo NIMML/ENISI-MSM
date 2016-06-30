@@ -56,41 +56,30 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	std::vector< Agent * > Tcells;
 	mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 
-	Concentration TcellConcentration;
-	concentrations(Agent::Tcell, Tcells, TcellConcentration);
-	mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-
 	std::vector< Agent * > Macrophages;
 	mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
-	Concentration MacrophageConcentration;
-	concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
 
 	std::vector< Agent * > Dentritics;
 	mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-	Concentration DentriticsConcentration;
-	concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
 
 	std::vector< Agent * > EpithelialCells; // We only request information if we are at the border
-	Concentration EpithelialCellConcentration;
-	mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
-	concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
-	if (mpCompartment->getType() == Compartment::lamina_propria) {
-		mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
-		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-		mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-	}
-	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5) {
-		//mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-		mpCompartment->getAgents(pt, 0, 1, Agent::Dentritics, Dentritics);
-	}
-	else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5) {
-		mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
-		mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
-	}
-	else if (mpCompartment->getType() == Compartment::gastric_lymph_node){
-		mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
-	}
+	if (mpCompartment->getType() == Compartment::lamina_propria)
+	  {
+	    if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+	      {
+	        mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
+	      }
+	  }
+
+  Concentration TcellConcentration;
+  concentrations(Agent::Tcell, Tcells, TcellConcentration);
+  Concentration MacrophageConcentration;
+  concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
+  Concentration DentriticsConcentration;
+  concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
+  Concentration EpithelialCellConcentration;
+  concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
 	double IL6_pool  = mpCompartment->cytokineValue("eIL6", pt);
 	double TGFb_pool = mpCompartment->cytokineValue("eTGFb", pt);
