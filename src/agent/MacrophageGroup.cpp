@@ -48,25 +48,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
   mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
 
-  if (mpCompartment->getType() == Compartment::lamina_propria &&
-		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
-  {   //LocalFile::debug() << "I am in LP near the border()" << std::endl;
-	  mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
-	  mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, 0, -2, Agent::HPylori, HPylori);
-  }
-  /*else if (mpCompartment->getType() == Compartment::lamina_propria &&
-		  mpCompartment->gridBorders()-> distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
-  {
-	  mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
-  }*/
-  else if (mpCompartment->getType() == Compartment::lamina_propria)
-  {
-	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
-	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
-	  mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
-  }
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
 
@@ -84,11 +65,33 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
-  double damagedEpithelialCellConcentration = 1000;
-  //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  //double damagedEpithelialCellConcentration = 1000;
+  double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  double healthyEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::HEALTHY];
   double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
+  {   //LocalFile::debug() << "I am in LP near the border()" << std::endl;
+	  mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
+	  //LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+	  //LocalFile::debug() << "healthyEpithelialCellConcentration=" << healthyEpithelialCellConcentration << std::endl;
+	  mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, 0, -2, Agent::HPylori, HPylori);
+  }
+  /*else if (mpCompartment->getType() == Compartment::lamina_propria &&
+		  mpCompartment->gridBorders()-> distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+  {
+	  mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, 0, 1, Agent::HPylori, HPylori);
+  }*/
+  else if (mpCompartment->getType() == Compartment::lamina_propria)
+  {
+	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
+	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
+	  mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
+  }
 
 /*if (mpCompartment->getType() == Compartment::lamina_propria &&
      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 2)

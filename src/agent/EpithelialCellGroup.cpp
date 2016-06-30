@@ -45,25 +45,22 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   double IL10 = 0.0;
 
-  if (mpCompartment->getType() == Compartment::epithilium &&
-		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+  if ( mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
       mpCompartment->getAgents(pt, 0, 2, Agent::Bacteria, Bacteria);
       mpCompartment->getAgents(pt, 0, 2, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
-  else if (mpCompartment->getType() == Compartment::epithilium &&
-		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
     }
-  else if (mpCompartment->getType() == Compartment::epithilium){
+  /*else if (mpCompartment->getType() == Compartment::epithilium){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
-  }
+  }*/
 	concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
 	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-	// double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
-
+	//double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 	//Rules 9 and 10
 	double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
 	double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact

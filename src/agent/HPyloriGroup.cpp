@@ -31,13 +31,11 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
 
 	std::vector< Agent * > EpithelialCells;
 
-  if (mpCompartment->getType() == Compartment::lumen &&
-      mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
-      mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
-      mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
+  if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+      mpCompartment->getAgents(pt, 0, 2, Agent::EpithelialCell, EpithelialCells);
+      mpCompartment->getAgents(pt, 0, 2, Agent::Tcell, Tcells);
     }
-  else if (mpCompartment->getType() == Compartment::lamina_propria &&
-           mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
       	  mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
       	  mpCompartment->getAgents(pt, 0, -2, Agent::Tcell, Tcells);
     }

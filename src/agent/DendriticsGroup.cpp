@@ -68,25 +68,36 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
   mpCompartment->getAgents(pt, Agent::EpithelialCell, EpithelialCells);
 
+  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+  double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
+  double healthyEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::HEALTHY];
+  //double damagedEpithelialCellConcentration = 1000;
+  double itregConcentration = TcellConcentration[TcellState::iTREG];
+  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+  double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
+  double iDendriticsConcentration = DendriticsConcentration[DendriticState::IMMATURE];
+
   if (mpCompartment->getType() == Compartment::epithilium){
 	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 	  mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
 	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 	  mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
   }
-  else if (mpCompartment->getType() == Compartment::epithilium
-		  && mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
-	  	  LocalFile::debug() << "I am in Epithelium near the border looking down" << std::endl;
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5){
+	  	  //LocalFile::debug() << "I am in Epithelium near the border looking down" << std::endl;
     	  mpCompartment->getAgents(pt, 0, 2, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, 2, Agent::HPylori, HPylori);
           mpCompartment->getAgents(pt, 0, 2, Agent::Tcell, Tcells);
         }
-  else if ( mpCompartment->getType() == Compartment::epithilium &&
-		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
-	  	  LocalFile::debug() << "I am in Epithelium near the border()" << std::endl;
+  else if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
+	  	  //LocalFile::debug() << "I am in Epithelium near the border()" << std::endl;
+	  	  mpCompartment->getAgents(pt, 0, -2, Agent::Dentritics, Dentritics);
     	  mpCompartment->getAgents(pt, 0, -2, Agent::Bacteria, Bacteria);
           mpCompartment->getAgents(pt, 0, -2, Agent::HPylori, HPylori);
-          mpCompartment->getAgents(pt, 0, -2, Agent::Tcell, Tcells);
+          mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
+          LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl;
+          LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
         }
   else if (mpCompartment->getType() == Compartment::lamina_propria){
 	  	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
@@ -94,28 +105,23 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 	  	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
 	  	  mpCompartment->getAgents(pt, Agent::Dentritics, Dentritics);
   }
-  else if (mpCompartment->getType() == Compartment::lamina_propria &&
+ /* else if (mpCompartment->getType() == Compartment::lamina_propria &&
 		  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 1.5){
-	  	  mpCompartment->getAgents(pt, 0, -2, Agent::EpithelialCell, EpithelialCells);
-	  	  mpCompartment->getAgents(pt, 0, -2, Agent::Dentritics, Dentritics);
-      }
+	  	  //double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
 
-  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
-  //double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
-  double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
-  double damagedEpithelialCellConcentration = 1000;
-  double itregConcentration = TcellConcentration[TcellState::iTREG];
-  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
-  double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
+
+	  	  LocalFile::debug() << "healthyEpithelialCellConcentration=" << healthyEpithelialCellConcentration << std::endl;
+	  	  LocalFile::debug() << "iDendriticsConcentration		   =" << iDendriticsConcentration << std::endl;
+  }*/
  //if (mpCompartment->getType() == Compartment::lamina_propria &&
    //  mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
     //{
 	  /*LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
 	  LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
-	  LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
-	  LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
-	  LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
-	  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;
+	  //LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
+	  //LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
+	  //LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
+	   <<  std::endl;
  //*/
   std::vector< Agent * >::iterator it = Dentritics.begin();
   std::vector< Agent * >::iterator end = Dentritics.end();
