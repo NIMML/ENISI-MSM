@@ -240,25 +240,25 @@ for (; it != end; ++it)
 			}
 		}
 		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5
-				&& && state == TcellState::iTREG
-				&& (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
-		{
-			std::vector<double> Location;
-			mpCompartment->getLocation(pAgent->getId(), Location);
-			Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
-			mpCompartment->moveTo(pAgent->getId(), Location);
-			continue;
-		}
+						&& state == TcellState::iTREG
+						&& (p_rule33 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
+				{
+					std::vector<double> Location;
+					mpCompartment->getLocation(pAgent->getId(), Location);
+					Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
+					mpCompartment->moveTo(pAgent->getId(), Location);
+					continue;
+				}
 		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5
-				&& && state == TcellState::TH17
-				&& (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
-		{
-			std::vector<double> Location;
-			mpCompartment->getLocation(pAgent->getId(), Location);
-			Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
-			mpCompartment->moveTo(pAgent->getId(), Location);
-			continue;
-		}
+						&& state == TcellState::TH17
+						&& (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
+				{
+					std::vector<double> Location;
+					mpCompartment->getLocation(pAgent->getId(), Location);
+					Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
+					mpCompartment->moveTo(pAgent->getId(), Location);
+					continue;
+				}
 		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5
 				&& state == TcellState::TH1
 				&& (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
