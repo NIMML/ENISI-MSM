@@ -93,9 +93,6 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
-  LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl;
-  LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
-
   std::vector< Agent * >::iterator it = Dentritics.begin();
   std::vector< Agent * >::iterator end = Dentritics.end();
   for (; it != end; ++it){
@@ -106,18 +103,6 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       DendriticState::State newState = state;
 
-      /*LocalFile::debug() << "liveHPyloriConcentration=          " << liveHPyloriConcentration << std::endl;
-          LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
-          LocalFile::debug() << "eDendriticsConcentration=          " << eDendriticsConcentration << std::endl;
-          LocalFile::debug() << "itregConcentration=                " << itregConcentration << std::endl;
-          LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
-          LocalFile::debug() << "tolegenicBacteriaConcentration=    " << tolegenicBacteriaConcentration << std::endl <<  std::endl;*/
-
-      /* with new compartments bacteria state only needs live and dead, as infectious are all in LP and
-       * tolegenic are all in lumen     */
-
-      /*identifLocation[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);y states of HPylori counted -- naive name should be changed to LIVE*/
-
       if (state == DendriticState::IMMATURE)
         {
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)) < 0.5
@@ -126,9 +111,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
-              //LocalFile::debug() << "Location_orig=" << std::setprecision (16) << Location[Borders::Y] << std::endl;
               Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
-              //LocalFile::debug() << "Location_new=" << std::setprecision (16) << Location[Borders::Y] << std::endl;
               mpCompartment->moveTo(pAgent->getId(), Location);
               continue;
             }//movement of DCs from LP to epithelium
