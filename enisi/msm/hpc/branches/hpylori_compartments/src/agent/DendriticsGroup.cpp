@@ -150,8 +150,9 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           }
           /* if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
            * 0.5 is arbitrary */
-          if (mpCompartment->getType() == Compartment::epithilium && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)< p_iDCLPDistance)
-              && (liveHPyloriConcentration * p_rule48b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          if (mpCompartment->getType() == Compartment::epithilium
+        		  && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)< 0.5)
+				  && (liveHPyloriConcentration * p_rule48b > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               newState = DendriticState::TOLEROGENIC;
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
@@ -162,8 +163,10 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           }
           /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
            *  1 is arbitrary, Rule 48 */
-          if (mpCompartment->getType() == Compartment::lamina_propria && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)< p_iDCEpitheliumDistance)
-              && (tolegenicBacteriaConcentration * p_rule17a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          if (mpCompartment->getType() == Compartment::lamina_propria
+        		  && (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)< 1.5)
+				  && (tolegenicBacteriaConcentration * p_rule17a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
               newState = DendriticState::EFFECTOR;
               pAgent->setState(newState);
               continue;
@@ -183,15 +186,16 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           }
       }
       else	{// case of (!DendriticState::IMMATURE)
-          if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 2 //TODO - CRITICAL Determine this value
+          if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
               && mpCompartment->getType() == Compartment::lamina_propria
-              && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
               Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
               mpCompartment->moveTo(pAgent->getId(), Location);
               continue;
-          }//movement form LP to GLN
+          }//movement from LP to GLN
           if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               mpCompartment->removeAgent(pAgent);
               continue;
@@ -199,10 +203,13 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
       }
       // TODO We should use the production from the ODE model.
       int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
-      if (newState == DendriticState::EFFECTOR)	{
+      if (newState == DendriticState::EFFECTOR)
+      {
           mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70; /*Rule 56*/
           mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 70;
-          if (itregConcentration && (p_rule34 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          if (itregConcentration &&
+        		  (p_rule34 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          {
               mpCompartment->removeAgent(pAgent);
               continue;
           }
