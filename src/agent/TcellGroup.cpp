@@ -114,11 +114,11 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
 
 
-	LocalFile::debug() << "eDCConcentration			      =" << eDCConcentration << std::endl;
-	LocalFile::debug() << "tDCConcentration				  =" << tDCConcentration << std::endl;
-	LocalFile::debug() << "damagedEpithelialCellConcentration=" << damagedEpithelialCellConcentration << std::endl;
-	LocalFile::debug() << "macrophageregConcentration		  =" << macrophageregConcentration << std::endl;
-	LocalFile::debug() << "th17Concentration			  	  =" << th17Concentration << std::endl;
+	LocalFile::debug() << "eDCConcentration			      		=" << eDCConcentration << std::endl;
+	LocalFile::debug() << "tDCConcentration				 		=" << tDCConcentration << std::endl;
+	LocalFile::debug() << "damagedEpithelialCellConcentration	=" << damagedEpithelialCellConcentration << std::endl;
+	LocalFile::debug() << "macrophageregConcentration		  	=" << macrophageregConcentration << std::endl;
+	LocalFile::debug() << "th17Concentration			  	  	=" << th17Concentration << std::endl;
 	//LocalFile::debug() << "th1Concentration			      =" << th1Concentration << std::endl;
 	//LocalFile::debug() << "immatureDentritics		      =" << immatureDentritics << std::endl;
 
