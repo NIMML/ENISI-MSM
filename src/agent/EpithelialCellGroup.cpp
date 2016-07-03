@@ -96,13 +96,13 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random)){
               newState = EpithelialCellState::DAMAGED;
-              pAgent->setState(newState);
+              //pAgent->setState(newState);
             }
           if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                    && mpCompartment-> getType() == Compartment::epithilium
                    && (p_rule10b > Random)) { // TODO CRITICAL This will never be true-FIXED
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
-              pAgent->setState(newState);
+              //pAgent->setState(newState);
             }
         }
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
