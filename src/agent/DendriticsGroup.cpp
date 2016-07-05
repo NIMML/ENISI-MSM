@@ -68,12 +68,16 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           mpCompartment->getAgents(pt, 0, -1, Agent::HPylori, HPylori);
         }
     }
-  else if (mpCompartment->getType() == Compartment::lamina_propria)
+  if (mpCompartment->getType() == Compartment::lamina_propria)
     {
       mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
       mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
       mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
     }
+  if (mpCompartment->getType() == Compartment::gastric_lymph_node)
+      {
+        mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+      }
 
   Concentration DendriticsConcentration;
   concentrations(Agent::Dentritics, Dentritics, DendriticsConcentration);
@@ -139,7 +143,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               && tolegenicBacteriaConcentration * p_rule48a > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               newState = DendriticState::EFFECTOR;
-              LocalFile::debug() << "DCS turn into effectors" << std::endl;
+             // LocalFile::debug() << "DCS turn into effectors" << std::endl;
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
               Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
@@ -147,7 +151,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               mpCompartment->moveTo(pAgent->getId(), Location);
               pAgent->setState(newState);
               continue;
-          }
+          }//movement of DCs from epithilium to lamina propria
           /* if less HPylori surrounds DC than bacteria and DC is in epithelium then becomes tolerogenic --
            * 0.5 is arbitrary */
           if (mpCompartment->getType() == Compartment::epithilium
@@ -185,7 +189,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
           }
       }
-      else	{// case of (!DendriticState::IMMATURE)
+      else if	(state == DendriticState::EFFECTOR || state == DendriticState::TOLEROGENIC)
+      {// case of (!DendriticState::IMMATURE)
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
               && mpCompartment->getType() == Compartment::lamina_propria
               && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
