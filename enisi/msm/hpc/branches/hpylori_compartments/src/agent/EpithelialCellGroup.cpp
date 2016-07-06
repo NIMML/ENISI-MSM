@@ -90,37 +90,45 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       EpithelialCellState::State newState = state;
 
-      if (state == EpithelialCellState::HEALTHY){
+      if (state == EpithelialCellState::HEALTHY)
+        {
           double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
 
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
-              && (p_rule10a > Random)){
+              && (p_rule10a > Random))
+            {
               newState = EpithelialCellState::DAMAGED;
               //pAgent->setState(newState);
             }
-          if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
-                   && mpCompartment-> getType() == Compartment::epithilium
-                   && (p_rule10b > Random)) { // TODO CRITICAL This will never be true-FIXED
+          else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
+                   && (p_rule10b > Random))
+            {
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
               //pAgent->setState(newState);
             }
         }
-      if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
+
+      if (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        {
+          mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
+          mpCompartment->addAgent(new Agent(Agent::EpithelialCell, EpithelialCellState::HEALTHY), Location);
+        }
+
+      if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        {
           mpCompartment->removeAgent(pAgent); /*Rule 11*/
           continue;
         }
-      if (mpCompartment->getType() == Compartment::epithilium
-          && (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) {
-          mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
-          mpCompartment->addAgent(new Agent(Agent::EpithelialCell, pAgent->getState()), Location);
-        }
-      else if (mpCompartment->getType() == Compartment::epithilium
-               && state == EpithelialCellState::DAMAGED
+
+      if (state == EpithelialCellState::DAMAGED
                && IL10 > ENISI::Threshold
-               && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+               && (p_rule12 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {
           newState = EpithelialCellState::HEALTHY; /* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
         }
-      if (newState == EpithelialCellState::DAMAGED){
+
+      if (newState == EpithelialCellState::DAMAGED)
+        {
           int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
           // TODO We should use the production from the ODE model.
           mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70;

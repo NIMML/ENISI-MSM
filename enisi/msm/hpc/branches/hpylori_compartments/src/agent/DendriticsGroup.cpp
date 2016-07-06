@@ -185,38 +185,39 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               continue;
           }
           if ((damagedEpithelialCellConcentration > ENISI::Threshold || eDendriticsConcentration > ENISI::Threshold)
-              && (p_rule15 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              && (p_rule15 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+            {
               mpCompartment->getLocation(pAgent->getId(), Location);
               mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
-          }
-      }
+            }
+        }
       else if	(state == DendriticState::EFFECTOR || state == DendriticState::TOLEROGENIC)
-      {// case of (!DendriticState::IMMATURE)
+        {// case of (!DendriticState::IMMATURE)
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
               && mpCompartment->getType() == Compartment::lamina_propria
               && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-          {
+            {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
               Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
               mpCompartment->moveTo(pAgent->getId(), Location);
               continue;
-          }//movement from LP to GLN
+            }//movement from LP to GLN
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
         		  && mpCompartment->getType() == Compartment::epithilium
         		  && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-          {
-        	  std::vector< double > Location;
-        	  mpCompartment->getLocation(pAgent->getId(), Location);
-        	  Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
-        	  mpCompartment->moveTo(pAgent->getId(), Location);
-        	  continue;
-          }//movement from epithilium to LP
+            {
+              std::vector< double > Location;
+              mpCompartment->getLocation(pAgent->getId(), Location);
+              Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
+              mpCompartment->moveTo(pAgent->getId(), Location);
+              continue;
+            }//movement from epithilium to LP
           if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-          {
+            {
               mpCompartment->removeAgent(pAgent);
               continue;
-          }
+            }
       }
       // TODO We should use the production from the ODE model.
       int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
