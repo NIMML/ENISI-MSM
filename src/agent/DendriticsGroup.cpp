@@ -245,7 +245,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 void DendriticsGroup::move()
 {
   // TODO CRITICAL Determine the maximum speed
-  double MaxSpeed = 1.0;
+  double MaxSpeed = 2.0;
 
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
