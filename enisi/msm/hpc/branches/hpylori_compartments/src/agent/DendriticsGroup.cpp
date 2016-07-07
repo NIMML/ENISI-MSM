@@ -197,6 +197,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               && mpCompartment->getType() == Compartment::lamina_propria
               && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
+        	  LocalFile::debug() << "eDC will move from LP to GLN" << std::endl;
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
               Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);

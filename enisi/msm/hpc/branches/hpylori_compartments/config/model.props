@@ -104,8 +104,8 @@ p_rule10a =  1 l^2/#*d
 p_rule10b =  1 l^2/#*d
 p_rule10a_infectiousBacteriaConcentration = 0
 p_rule10b_cytokineConcentration = 0
-p_EpiCellDeath = 0.1 /d
-p_EpiProliferation = 0.6 /d
+p_EpiProliferation = 0.6
+p_EpiCellDeath = p_EpiProliferation
 p_rule12 = 0 l^2/#*d
 
 p_rule18 = 0.65 l^2/#*d
