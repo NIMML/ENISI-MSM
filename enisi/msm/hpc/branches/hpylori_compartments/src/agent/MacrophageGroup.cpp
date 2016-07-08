@@ -141,7 +141,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 		  // TODO We should use the production of the ODE model
 		  /* regulatory macrophages produce IL10 */
       if (newState == MacrophageState::REGULATORY) {
-    	  mpCompartment->cytokineValue("IL10", pt) += 70;
+    	  mpCompartment->cytokineValue("eIL10", pt) += 7;
     	  if ((macrophageinfConcentration > 0)
     			  && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
     		  mpCompartment->removeAgent(pAgent);
@@ -149,7 +149,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
     	  }
       }
 	  if (newState == MacrophageState::INFLAMMATORY){
-		  mpCompartment->cytokineValue("IFNg", pt) += 70;
+		  mpCompartment->cytokineValue("eIFNg", pt) += 7;
 		  if ((macrophageregConcentration > 0)
 		       && (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
 			  mpCompartment->removeAgent(pAgent);

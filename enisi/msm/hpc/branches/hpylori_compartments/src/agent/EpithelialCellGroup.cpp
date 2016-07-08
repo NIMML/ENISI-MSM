@@ -131,8 +131,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
         {
           int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
           // TODO We should use the production from the ODE model.
-          mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 70;
-          mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 70;
+          mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 7;
+          mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 7;
         }
       pAgent->setState(newState);
     }
