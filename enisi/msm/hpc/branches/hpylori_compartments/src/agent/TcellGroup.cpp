@@ -72,6 +72,13 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	        mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
 	      }
 	  }
+	if (mpCompartment->getType() == Compartment::gastric_lymph_node)
+	 {
+		if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
+		  {
+			mpCompartment->getAgents(pt, 0, -1, Agent::Dentritics, Dentritics);
+		  }
+	 }
 
   Concentration TcellConcentration;
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
