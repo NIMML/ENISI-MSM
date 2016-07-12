@@ -191,7 +191,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
             }
         }
-      else if	(state == DendriticState::EFFECTOR || state == DendriticState::TOLEROGENIC)
+      else
         {
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
         	  && (mpCompartment->getType() == Compartment::lamina_propria)
@@ -214,11 +214,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               mpCompartment->moveTo(pAgent->getId(), Location);
               continue;
             }//movement from epithilium to LP
-          if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-            {
-              mpCompartment->removeAgent(pAgent);
-              continue;
-            }
+
       }
       // TODO We should use the production from the ODE model.
 // int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
@@ -243,6 +239,11 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         }
   }
       pAgent->setState(newState);
+if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	  {
+		mpCompartment->removeAgent(pAgent);
+		continue;
+	  }
   }//END of for
 }// End of act()
 
@@ -250,7 +251,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 void DendriticsGroup::move()
 {
   // TODO CRITICAL Determine the maximum speed
-  double MaxSpeed = 2.0;
+  double MaxSpeed = 4.0;
 
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
