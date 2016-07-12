@@ -36,7 +36,7 @@ DendriticsGroup::DendriticsGroup(Compartment * pCompartment, const double & conc
 
 void DendriticsGroup::act(const repast::Point<int> & pt)
 {
-  //LocalFile::debug() << "I am in Dendritics act()" << std::endl;
+ // LocalFile::debug() << "I am in Dendritics act()" << std::endl;
   std::vector< double > Location(2, 0);
 
   std::vector< Agent * > Dentritics;
@@ -192,12 +192,12 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
             }
         }
       else if	(state == DendriticState::EFFECTOR || state == DendriticState::TOLEROGENIC)
-        {// case of (!DendriticState::IMMATURE)
-          if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
-              && mpCompartment->getType() == Compartment::lamina_propria
-              && (p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {
+          if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
+        	  && (mpCompartment->getType() == Compartment::lamina_propria)
+              && p_rule52 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+              //LocalFile::debug() << "rule parameter > random number" << std::endl;
             {
-        	  LocalFile::debug() << "eDC will move from LP to GLN" << std::endl;
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
               Location[Borders::Y] += 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
