@@ -42,7 +42,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > Tcells;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   double IL10 = 0.0;
-  LocalFile::debug() << "distanceFromBorder	  =   " << mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)  << std::endl;
+  //LocalFile::debug() << "distanceFromBorder	  =   " << mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)  << std::endl;
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
@@ -93,7 +93,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       if (state == EpithelialCellState::HEALTHY)
         {
           double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
-          LocalFile::debug() << "***Epicell is healthy*****" << std::endl;
+          //LocalFile::debug() << "***Epicell is healthy*****" << std::endl;
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random))
             {
@@ -112,14 +112,14 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 
       if (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         {
-    	  LocalFile::debug() << "*** Epi cells proliferates*****" << std::endl;
+    	  //LocalFile::debug() << "*** Epi cells proliferates*****" << std::endl;
           mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
           mpCompartment->addAgent(new Agent(Agent::EpithelialCell, EpithelialCellState::HEALTHY), Location);
         }
 
       if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         {
-    	  LocalFile::debug() << "***Natural Death of Epi cells*****" << std::endl;
+    	  //LocalFile::debug() << "***Natural Death of Epi cells*****" << std::endl;
           mpCompartment->removeAgent(pAgent); /*Rule 11*/
           continue;
         }
