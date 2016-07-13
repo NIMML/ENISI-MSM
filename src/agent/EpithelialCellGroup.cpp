@@ -42,7 +42,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > Tcells;
   mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
   double IL10 = 0.0;
-
+  LocalFile::debug() << "distanceFromBorder	  =   " << mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)  << std::endl;
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
