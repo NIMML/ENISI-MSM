@@ -63,7 +63,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   Concentration BacteriaConcentration;
   concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
   Concentration TcellsCellConcentration;
-	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
+  concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 
 
 	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
@@ -78,7 +78,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 	//		  LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
 	//LocalFile::debug() << "infectiousBacteriaConcentration=   " << infectiousBacteriaConcentration << std::endl;
 	LocalFile::debug() << "th17Concentration			  =   " << th17Concentration << std::endl;
-	LocalFile::debug() << "th1Concentration			      =   " << th1Concentration << std::endl;
+	LocalFile::debug() << "th1Concentration			      =   " << th1Concentration  << std::endl;
 	std::vector< Agent * >::iterator it = EpithelialCells.begin();
 	std::vector< Agent * >::iterator end = EpithelialCells.end();
 
