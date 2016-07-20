@@ -2,6 +2,7 @@
 #include "grid/Borders.h"
 #include "compartment/Compartment.h"
 #include "grid/Properties.h"
+#include "DataWriter/LocalFile.h"
 using namespace ENISI;
 
 HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const double & concentrations):
@@ -50,8 +51,10 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
 
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
+
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
+  //LocalFile::debug() << "damagedEpithelialCellConcentration = " << damagedEpithelialCellConcentration << std::endl;
 
   std::vector< Agent * >::iterator it = HPylori.begin();
   std::vector< Agent * >::iterator end = HPylori.end();
