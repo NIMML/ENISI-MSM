@@ -51,8 +51,8 @@ MacrophageODE2::MacrophageODE2() : DEBUG(false)
 
   if (DEBUG)
     {
-      LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
-      LocalFile::debug() << "Metabolites: " << std::endl;
+      //LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
+      //LocalFile::debug() << "Metabolites: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -73,18 +73,18 @@ MacrophageODE2::MacrophageODE2() : DEBUG(false)
 
   if (DEBUG)
     {
-      LocalFile::debug() << "Number of Reactions: " << iMax << std::endl;
-      LocalFile::debug() << "Reactions: " << std::endl;
+      //LocalFile::debug() << "Number of Reactions: " << iMax << std::endl;
+      //LocalFile::debug() << "Reactions: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
-    {
-      CReaction* pReaction = model->getReactions()[i];
-      assert(pReaction != NULL);
+    if (DEBUG)
+      {
+        CReaction* pReaction = model->getReactions()[i];
+        assert(pReaction != NULL);
 
-      if (DEBUG)
         LocalFile::debug() << "\t" << pReaction->getObjectName() << std::endl;
-    }
+      }
 
   setUpReport();
   setUpTask();

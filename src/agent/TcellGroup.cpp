@@ -177,7 +177,7 @@ for (; it != end; ++it)
                   {
                     newState = TcellState::TH1; /*Rule 39*/
                     //pAgent->setState(newState);
-                    LocalFile::debug() << "I am here 11" << std::endl;
+                    //LocalFile::debug() << "I am here 11" << std::endl;
                   }
                 else if (p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
                     && (dIL17 > p_IL17))
@@ -201,7 +201,7 @@ for (; it != end; ++it)
               {
                 newState = TcellState::iTREG; /*Rule 53*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 12" << std::endl;
+                //LocalFile::debug() << "I am here 12" << std::endl;
               }
           }
         if (state == TcellState::TH17)
@@ -211,14 +211,14 @@ for (; it != end; ++it)
               {
                 newState = TcellState::iTREG; /*Rule 36*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 7" << std::endl;
+                //LocalFile::debug() << "I am here 7" << std::endl;
               }
             else if ((itregConcentration > ENISI::Threshold)
                 && (p_rule35 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::iTREG; /*Rule 35*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 8" << std::endl;
+                //LocalFile::debug() << "I am here 8" << std::endl;
               }
 
             /*if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< 0.5 //TODO - CRITICAL Determine this value
@@ -239,14 +239,14 @@ for (; it != end; ++it)
               {
                 newState = TcellState::TH17; /*Rule 37*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 9" << std::endl;
+                //LocalFile::debug() << "I am here 9" << std::endl;
               }
             else if((th1Concentration > ENISI::Threshold)
                 && (p_rule38 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::TH17;/*Rule 38*//*When iTREG is in contact with TH1 in GLN, iTREG changes to TH17*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 10" << std::endl;
+                //LocalFile::debug() << "I am here 10" << std::endl;
               }
           }
         if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5
@@ -300,7 +300,7 @@ for (; it != end; ++it)
                 && (p_rule31 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::Tr; //Rule 31: if nT is in contact with regulatory macrophages, and if IL10> a* IFNg, then nT -> Tr
-                LocalFile::debug() << "I am here 0" << std::endl;
+                //LocalFile::debug() << "I am here 0" << std::endl;
               }
           }
 
@@ -311,21 +311,21 @@ for (; it != end; ++it)
               {
                 newState = TcellState::TH17; /*Rule 19*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 3" << std::endl;
+                //LocalFile::debug() << "I am here 3" << std::endl;
               }
             else if (eDCConcentration > ENISI::Threshold
                 && (p_rule20 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::TH17; /*Rule 20*/
                 pAgent->setState(newState);
-                LocalFile::debug() << "I am here 6" << std::endl;
+                //LocalFile::debug() << "I am here 6" << std::endl;
               }
             else if (th17Concentration > ENISI::Threshold
                 && (p_rule21 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::TH17; /*Rule 22*/
                 //pAgent->setState(newState);
-                LocalFile::debug() << "I am here 4" << std::endl;
+                //LocalFile::debug() << "I am here 4" << std::endl;
               }
             else if (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
               {
@@ -336,7 +336,7 @@ for (; it != end; ++it)
                 && (p_rule18> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::TH17; /*Rule 18* - //This rule requires the state transition when iTREG is in contact with Edamaged at 'Epithelium and LaminaPropria' membrane*/
-                LocalFile::debug() << "I am here 13" << std::endl;
+                //LocalFile::debug() << "I am here 13" << std::endl;
               }
           }
 
@@ -400,11 +400,13 @@ for (; it != end; ++it)
       }
   }
 }//end of act
+
 // virtual
 void TcellGroup::move()
 {
   // TODO CRITICAL Determine the maximum speed
   double MaxSpeed = 8.0;
+
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
   Compartment::LocalIterator endLocal = mpCompartment->localEnd();
@@ -414,6 +416,7 @@ void TcellGroup::move()
       mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
 	}
 }
+
 // virtual
 void TcellGroup::write(const repast::Point<int> & pt)
 {

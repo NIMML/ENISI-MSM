@@ -7,7 +7,7 @@ using namespace ENISI;
 
 MacrophageODE1* MacrophageODE1::instance = NULL;
 
-MacrophageODE1::MacrophageODE1() : DEBUG(false)
+MacrophageODE1::MacrophageODE1() : DEBUG(true)
 {
   std::string config;
   Properties::instance(Properties::model)->getValue("config", config);
@@ -56,8 +56,8 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
   if (DEBUG)
     {
-      LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
-      LocalFile::debug() << "Metabolites: " << std::endl;
+      //LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
+      //LocalFile::debug() << "Metabolites: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -67,10 +67,10 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
       nameMetabs[metab->getObjectName()] = metab;
 
-      if (DEBUG)
-        LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
-                  << metab->getInitialConcentration() << "\t"
-                  << metab->getInitialValue() << std::endl;
+      //if (DEBUG)
+       // LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
+        //          << metab->getInitialConcentration() << "\t"
+         //         << metab->getInitialValue() << std::endl;
     }
 
   // output number and names of all reactions
@@ -78,17 +78,17 @@ MacrophageODE1::MacrophageODE1() : DEBUG(false)
 
   if (DEBUG)
     {
-      LocalFile::debug() << "Number of Reactions: " << iMax << std::endl;
-      LocalFile::debug() << "Reactions: " << std::endl;
+      //LocalFile::debug() << "Number of Reactions: " << iMax << std::endl;
+      //LocalFile::debug() << "Reactions: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
     {
-      CReaction* pReaction = model->getReactions()[i];
-      assert(pReaction != NULL);
+     //CReaction* pReaction = model->getReactions()[i];
+      //assert(pReaction != NULL);
 
-      if (DEBUG)
-        LocalFile::debug() << "\t" << pReaction->getObjectName() << std::endl;
+      //if (DEBUG)
+      //  LocalFile::debug() << "\t" << pReaction->getObjectName() << std::endl;
     }
 
   setUpReport();

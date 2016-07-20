@@ -56,8 +56,8 @@ TcellODE::TcellODE() : DEBUG(false)
 
   if (DEBUG)
     {
-      LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
-      LocalFile::debug() << "Metabolites: " << std::endl;
+      //LocalFile::debug() << "Number of Metabolites: " << iMax << std::endl;
+      //LocalFile::debug() << "Metabolites: " << std::endl;
     }
 
   for (i = 0; i < iMax; ++i)
@@ -68,10 +68,10 @@ TcellODE::TcellODE() : DEBUG(false)
       // The object display name is guaranteed to be unique even in multi-compartment models
       nameMetabs[metab->getObjectDisplayName()] = metab;
 
-      if (DEBUG)
-        LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
-                  << metab->getInitialConcentration() << "\t"
-                  << metab->getInitialValue() << std::endl;
+      //if (DEBUG)
+        //LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
+                  //<< metab->getInitialConcentration() << "\t"
+                  //<< metab->getInitialValue() << std::endl;
     }
 
   // output number and names of all reactions
