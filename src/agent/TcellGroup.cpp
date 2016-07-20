@@ -182,7 +182,7 @@ for (; it != end; ++it)
                 else if (p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
                     && (dIL17 > p_IL17))
                   {
-                    LocalFile::debug() << "eDC changed state to Th17 cell" << std::endl;
+                    LocalFile::debug() << ">>> eDC changed nT to Th17" << std::endl;
                     newState = TcellState::TH17;
                     //pAgent->setState(newState);
                     mpCompartment->cytokineValue("eIL17", pt) += dIL17;
@@ -193,7 +193,7 @@ for (; it != end; ++it)
                     newState = TcellState::TH1;
                     //pAgent->setState(newState);
                     mpCompartment->cytokineValue("eIFNg", pt) += dIFNg;
-                    LocalFile::debug() << "eDC changed state to Th1 cell" << std::endl;
+                    LocalFile::debug() << ">>> eDC changed nT to Th1" << std::endl;
                   }
               }
             if ((tDCConcentration > ENISI::Threshold)
