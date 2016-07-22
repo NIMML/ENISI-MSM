@@ -75,11 +75,11 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 
-  LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
-  LocalFile::debug() << "*** eDendriticsConcentration	= " << eDendriticsConcentration << std::endl;
-  LocalFile::debug() << "*** damagedEpithelialCellConcentration	= " << damagedEpithelialCellConcentration << std::endl;
-  LocalFile::debug() << "*** macrophageregConcentration	= " << macrophageregConcentration << std::endl;
-  LocalFile::debug() << "*** infectiousBacteriaConcentration	= " << infectiousBacteriaConcentration << std::endl;
+  //LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
+  //LocalFile::debug() << "*** eDendriticsConcentration	= " << eDendriticsConcentration << std::endl;
+  //LocalFile::debug() << "*** damagedEpithelialCellConcentration	= " << damagedEpithelialCellConcentration << std::endl;
+  //LocalFile::debug() << "*** macrophageregConcentration	= " << macrophageregConcentration << std::endl;
+  //LocalFile::debug() << "*** infectiousBacteriaConcentration	= " << infectiousBacteriaConcentration << std::endl;
 
   double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
   double IL10 = mpCompartment->cytokineValue("eIL10", pt);
