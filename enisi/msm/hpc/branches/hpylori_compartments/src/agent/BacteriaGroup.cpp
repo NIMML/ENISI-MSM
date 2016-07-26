@@ -31,42 +31,40 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 {
   std::vector< double > Location(2, 0);
 
-  std::vector< Agent * > Bacteria;
-  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
-
   std::vector< Agent * > Tcells;
+  std::vector< Agent * > Bacteria;
   std::vector< Agent * > EpithelialCells;
 
-  // We only request information if we are at the border
-  LocalFile::debug() << "Bacteria::Compartment Type = " << mpCompartment->getType() << std::endl;
+  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 
+  // We only request information if we are at the border
   if (mpCompartment->getType() == Compartment::lumen &&
       mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::EpithelialCell, EpithelialCells);
     }
+
   else if (mpCompartment->getType() == Compartment::lamina_propria)
     {
-	  //LocalFile::debug() << "I am here 1" << std::endl;
 	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
-
       if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
         {
           mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
         }
     }
-  //LocalFile::debug() << "I am here 2" << std::endl;
 
   Concentration TcellConcentration;
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
+  double th1Concentration = TcellConcentration[TcellState::TH1];
+  double th17Concentration = TcellConcentration[TcellState::TH17];
 
   Concentration EpithelialCellConcentration;
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
-
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
-  //double damagedEpithelialCellConcentration = 1000;
-  double th1Concentration = TcellConcentration[TcellState::TH1];
-  double th17Concentration = TcellConcentration[TcellState::TH17];
+
+  Concentration BacteriaConcentration;
+  concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
+  double tolerogenicBacteriaConcentraion = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
   std::vector< Agent * >::iterator it = Bacteria.begin();
   std::vector< Agent * >::iterator end = Bacteria.end();
@@ -91,7 +89,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       if (damagedEpithelialCellConcentration > p_rule1_damagedEpithelialCellConcentration * ENISI::Threshold
           && mpCompartment->getType() == Compartment::lumen
           && p_rule1 > Random){
-    	  LocalFile::debug() << "# Bacteria can enter due to Ecell damage" << std::endl ;
+    	  // LocalFile::debug() << "# Bacteria can enter due to E cell damage" << std::endl ;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           // LocalFile::debug() << "Move Bacteria: (" << Location[0] << ", " << Location[1] << ") -> (";
@@ -108,7 +106,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
               || th1Concentration > ENISI::Threshold
               || th17Concentration > ENISI::Threshold)
           && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria dies nearby damaged Ecell" << std::endl ;
+    	  //LocalFile::debug() << "# Bacteria dies nearby damaged E cell" << std::endl ;
           mpCompartment->removeAgent(pAgent);
           continue;
         }
@@ -120,21 +118,21 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
         }
 
       if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria dies naturally" << std::endl;
+    	  //LocalFile::debug() << "# Bacteria dies naturally" << std::endl;
           mpCompartment->removeAgent(pAgent);
           continue;
         }
 
       if (mpCompartment->getType() == Compartment::lamina_propria
-          && (p_BacteriaLPProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
+          && (p_BacteriaLPProl / tolerogenicBacteriaConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+    	  //LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
 
       if (mpCompartment->getType() == Compartment::lumen &&
-          (p_BacteriaLumProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
+          (p_BacteriaLumProl / tolerogenicBacteriaConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+    	  //LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
