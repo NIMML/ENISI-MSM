@@ -125,14 +125,14 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
       if (mpCompartment->getType() == Compartment::lamina_propria
           && (p_BacteriaLPProl / tolerogenicBacteriaConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  //LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
+    	  LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
 
       if (mpCompartment->getType() == Compartment::lumen &&
           (p_BacteriaLumProl / tolerogenicBacteriaConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  //LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
+    	  LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
