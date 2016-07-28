@@ -52,6 +52,10 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
 
+  Concentration HPyloriConcentration;
+  concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
+  double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
+
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   //LocalFile::debug() << "damagedEpithelialCellConcentration = " << damagedEpithelialCellConcentration << std::endl;
@@ -94,13 +98,13 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
         }
 
       if (mpCompartment->getType() == Compartment::lamina_propria
-          && (p_rule4a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4a / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
 
       if (mpCompartment->getType() == Compartment::lumen
-          && (p_rule4b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4b / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
