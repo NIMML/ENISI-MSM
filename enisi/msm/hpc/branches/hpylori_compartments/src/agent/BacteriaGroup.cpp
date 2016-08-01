@@ -81,7 +81,6 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
     	}
 
       BacteriaState::State newState = state;
-
       /*identify states of Epithelial Cells counted */
       double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
