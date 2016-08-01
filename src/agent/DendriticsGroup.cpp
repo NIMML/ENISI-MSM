@@ -217,14 +217,11 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 
       }
       // TODO We should use the production from the ODE model.
-// int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
-  if (mpCompartment->getType() == Compartment::lamina_propria
-		  && mpCompartment->getType() == Compartment::gastric_lymph_node)
-  {
-	  if (state == DendriticState::EFFECTOR)
+      int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
+      if (newState == DendriticState::EFFECTOR)
       {
-          mpCompartment->cytokineValue("eIL6", pt) += 7; /*Rule 56*/
-          mpCompartment->cytokineValue("eIL12",pt) += 7;
+          mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 7; /*Rule 56*/
+          mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 7;
 
           if (itregConcentration &&
         		  (p_rule34 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
@@ -233,11 +230,10 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               continue;
           }
       }
-      else if (state == DendriticState::TOLEROGENIC) /*Rule 57*/
+      else if (newState == DendriticState::TOLEROGENIC) /*Rule 57*/
         {
-          mpCompartment->cytokineValue("eTGFb", pt) += 7;
+          mpCompartment->cytokineValue("eTGFb", pt, 0, yOffset) += 7;
         }
-  }
       pAgent->setState(newState);
 if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
 	  {
