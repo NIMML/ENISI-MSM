@@ -6,7 +6,7 @@ using namespace ENISI;
 
 MacrophageODE2* MacrophageODE2::instance = NULL;
 
-MacrophageODE2::MacrophageODE2() : DEBUG(true)
+MacrophageODE2::MacrophageODE2() : DEBUG(false)
 {
   std::string modelFileName("./modelfiles/MSM_CD4.cps");
 

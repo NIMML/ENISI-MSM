@@ -220,6 +220,7 @@ for (; it != end; ++it)
                 //pAgent->setState(newState);
                 //LocalFile::debug() << "I am here 8" << std::endl;
               }
+
             /*if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< 0.5 //TODO - CRITICAL Determine this value
 					        && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
 			        {
@@ -369,6 +370,7 @@ for (; it != end; ++it)
                 continue;
               }
           }
+
         /*if (state == TcellState::TH17)
           {
             if (itregConcentration > ENISI::Threshold
