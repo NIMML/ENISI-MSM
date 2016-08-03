@@ -117,7 +117,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
         	  mpCompartment->getLocation(pAgent->getId(), Location);
     		  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
     	  }
-          else if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
+          if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
                    && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
 			  			  /* set initial concentrations */
 			  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
