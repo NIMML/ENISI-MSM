@@ -135,7 +135,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 					  HPylori.pop_back();
 				  }
 				  /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
-				  else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
+				  if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
 					  LocalFile::debug() << "*** Macrophage transit to INFLAMMATORY" << std::endl;
 					  newState = MacrophageState::INFLAMMATORY;
 					  pAgent->setState(newState);
