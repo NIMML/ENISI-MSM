@@ -103,14 +103,14 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random))
             {
-        	  //LocalFile::debug() << "@@@ E cell damaged due to infectious Bacteria" << std::endl;
+        	  LocalFile::debug() << "@@@ E cell damaged due to infectious Bacteria" << std::endl;
               newState = EpithelialCellState::DAMAGED;
               //pAgent->setState(newState);
             }
           else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                    && (p_rule10b > Random))
             {
-        	  //LocalFile::debug() << "@@@ E cell damaged due to T cells" << std::endl;
+        	  LocalFile::debug() << "@@@ E cell damaged due to T cells" << std::endl;
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
               //pAgent->setState(newState);
             }
