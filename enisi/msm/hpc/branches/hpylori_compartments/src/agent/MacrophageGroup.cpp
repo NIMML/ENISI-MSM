@@ -107,7 +107,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
       /*get concentration of IFNg and IL10 for COPASI input*/
 
-//	  LocalFile::debug() << count++ << ". HPylori.size() = " << HPylori.size() << std::endl;
+ LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
 
       /* if no bacteria is around macrophage, then stays immature */
       if (state == MacrophageState::MONOCYTE){
