@@ -23,7 +23,7 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
   pModel->getValue("p_rule10a", p_rule10a);
   pModel->getValue("p_rule10b", p_rule10b);
   pModel->getValue("p_rule12", p_rule12);
-  pModel->getValue("p_rule10a_infectiousBacteriaConcentration", p_rule10a_infectiousBacteriaConcentration);
+  //pModel->getValue("p_rule10a_infectiousBacteriaConcentration", p_rule10a_infectiousBacteriaConcentration);
   pModel->getValue("p_rule10b_cytokineConcentration", p_rule10b_cytokineConcentration);
 }
 
@@ -65,7 +65,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 
 
-	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+	//double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 	//double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 	//Rules 9 and 10
 	double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
@@ -76,9 +76,9 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
 	//		  LocalFile::debug() << "macrophageregConcentration=        " << macrophageregConcentration << std::endl;
 	//		  LocalFile::debug() << "macrophageinfConcentration=        " << macrophageinfConcentration << std::endl;
 
-	LocalFile::debug() << "@ th1Concentration	= " << th1Concentration  << std::endl;
+	/*LocalFile::debug() << "@ th1Concentration	= " << th1Concentration  << std::endl;
 	LocalFile::debug() << "@ th17Concentration	= " << th17Concentration << std::endl;
-	LocalFile::debug() << "@ infectiousBacteriaConcentration = " << infectiousBacteriaConcentration << std::endl;
+	LocalFile::debug() << "@ infectiousBacteriaConcentration = " << infectiousBacteriaConcentration << std::endl;*/
 
 	std::vector< Agent * >::iterator it = EpithelialCells.begin();
 	std::vector< Agent * >::iterator end = EpithelialCells.end();
@@ -100,17 +100,17 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           //LocalFile::debug() << "Epi::th17Concentration	= " << th17Concentration << std::endl;
           //LocalFile::debug() << "Epi::th1Concentration	= " << th1Concentration  << std::endl;
 
-          if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
+         /* if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random))
             {
         	  LocalFile::debug() << "@@@ E cell damaged due to infectious Bacteria" << std::endl;
               newState = EpithelialCellState::DAMAGED;
               //pAgent->setState(newState);
-            }
-          else if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
+            }*/
+          if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                    && (p_rule10b > Random))
             {
-        	  LocalFile::debug() << "@@@ E cell damaged due to T cells" << std::endl;
+        	  //LocalFile::debug() << "@@@ E cell damaged due to T cells" << std::endl;
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
               //pAgent->setState(newState);
             }

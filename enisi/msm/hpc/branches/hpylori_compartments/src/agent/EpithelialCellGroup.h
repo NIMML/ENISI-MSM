@@ -25,7 +25,7 @@ private:
   double p_rule10a;
   double p_rule10b;
   double p_rule12;//Rule 12
-  double p_rule10a_infectiousBacteriaConcentration;
+ // double p_rule10a_infectiousBacteriaConcentration;
   double p_rule10b_cytokineConcentration;
 };
 

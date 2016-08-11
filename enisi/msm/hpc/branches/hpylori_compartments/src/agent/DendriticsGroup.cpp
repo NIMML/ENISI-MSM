@@ -94,7 +94,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
   double itregConcentration = TcellConcentration[TcellState::iTREG];
-  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+  //double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 
   std::vector< Agent * >::iterator it = Dentritics.begin();
@@ -132,7 +132,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
             }//move of iDCs from epithelium to LP
 
           /* if no bacteria is around DC, then stays immature */
-          if (infectiousBacteriaConcentration + liveHPyloriConcentration == 0)
+          if (tolegenicBacteriaConcentration + liveHPyloriConcentration == 0)
             {
               newState = DendriticState::IMMATURE;
             }

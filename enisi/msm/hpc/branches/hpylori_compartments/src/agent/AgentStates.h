@@ -31,7 +31,7 @@ public:
 class BacteriaState
 {
 public:
-  enum State {DEAD, INFECTIOUS, TOLEROGENIC, KEEP_AT_END};
+  enum State {DEAD, TOLEROGENIC, KEEP_AT_END};
   static Agent::Type Type;
 };
 
