@@ -100,8 +100,8 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           mpCompartment->moveTo(pAgent->getId(), Location);
           continue;
         }
-      /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
-      if ((newState == BacteriaState::INFECTIOUS)
+      /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 */
+      if ((tolerogenicBacteriaConcentraion> ENISI::Threshold)
           && (damagedEpithelialCellConcentration > ENISI::Threshold
               || th1Concentration > ENISI::Threshold
               || th17Concentration > ENISI::Threshold)
@@ -111,11 +111,11 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           continue;
         }
       /* Bacteria become infectious when moved into Lamina Propria */
-      if (mpCompartment->getType() == Compartment::lamina_propria){
+      /*if (mpCompartment->getType() == Compartment::lamina_propria){
     	  LocalFile::debug() << "### Bacteria becomes infectious in LP" << std::endl;
     	  newState = BacteriaState::INFECTIOUS;
           pAgent->setState(newState);
-        }
+        }*/
 
       if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
     	  //LocalFile::debug() << "# Bacteria dies naturally" << std::endl;

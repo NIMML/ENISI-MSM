@@ -98,7 +98,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
         }
 
       if (mpCompartment->getType() == Compartment::lamina_propria
-          && (p_rule4a / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
