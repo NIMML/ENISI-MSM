@@ -54,7 +54,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
 
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
-  double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
+  //double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
 
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
@@ -105,7 +105,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
         }
 
       if (mpCompartment->getType() == Compartment::lumen
-          && (p_rule4b  > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
