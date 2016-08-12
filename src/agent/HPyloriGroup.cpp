@@ -74,6 +74,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
       if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
           && damagedEpithelialCellConcentration
           && mpCompartment->getType() == Compartment::lumen){
+    	  LocalFile::debug() << "*** HPylori moves across lumen" << std::endl;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
@@ -104,11 +105,11 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
         }
 
       if (mpCompartment->getType() == Compartment::lumen
-          && (p_rule4b / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4b  > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
-      /* H Pylori are removed when macrophage uptake/differentiate handled throu macrophages */
+      /* HPylori are removed when macrophage uptake/differentiate handled through macrophages */
     }
 }
 // virtual
