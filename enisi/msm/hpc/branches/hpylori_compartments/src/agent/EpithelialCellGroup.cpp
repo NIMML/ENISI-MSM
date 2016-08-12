@@ -23,7 +23,7 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
   pModel->getValue("p_rule10a", p_rule10a);
   pModel->getValue("p_rule10b", p_rule10b);
   pModel->getValue("p_rule12", p_rule12);
-  //pModel->getValue("p_rule10a_infectiousBacteriaConcentration", p_rule10a_infectiousBacteriaConcentration);
+  pModel->getValue("p_rule10a_infectiousBacteriaConcentration", p_rule10a_infectiousBacteriaConcentration);
   pModel->getValue("p_rule10b_cytokineConcentration", p_rule10b_cytokineConcentration);
 }
 
@@ -48,6 +48,9 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       mpCompartment->getAgents(pt, 0, 1, Agent::Tcell, Tcells);
       IL10 = mpCompartment->cytokineValue("eIL10", pt, 0, 1);
     }
+  if (mpCompartment->getType() == Compartment::lamina_propria){
+  	  mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
+    }
 
   // Bacteria in the lumen is comensual and deos not damage the epithelium/
   /*
@@ -64,8 +67,8 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   Concentration TcellsCellConcentration;
   concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
 
-
-	//double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+/* Note that we only have 2 states of bacteria now. Here we consider Infectious bacteria as the bacteria near the epithelial cell */
+	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 	//double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
 	//Rules 9 and 10
 	double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
@@ -100,13 +103,13 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
           //LocalFile::debug() << "Epi::th17Concentration	= " << th17Concentration << std::endl;
           //LocalFile::debug() << "Epi::th1Concentration	= " << th1Concentration  << std::endl;
 
-         /* if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
+         if (infectiousBacteriaConcentration > p_rule10a_infectiousBacteriaConcentration * ENISI::Threshold
               && (p_rule10a > Random))
             {
         	  LocalFile::debug() << "@@@ E cell damaged due to infectious Bacteria" << std::endl;
               newState = EpithelialCellState::DAMAGED;
               //pAgent->setState(newState);
-            }*/
+            }
           if (th17Concentration + th1Concentration > p_rule10b_cytokineConcentration * ENISI::Threshold
                    && (p_rule10b > Random))
             {
