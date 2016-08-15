@@ -54,7 +54,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
 
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
-  //double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
+  double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
 
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
@@ -74,7 +74,6 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
       if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
           && damagedEpithelialCellConcentration
           && mpCompartment->getType() == Compartment::lumen){
-    	  LocalFile::debug() << "HPylori moves across lumen" << std::endl;
           std::vector< double > Location;
           mpCompartment->getLocation(pAgent->getId(), Location);
           Location[Borders::Y] +=
@@ -99,17 +98,17 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
         }
 
       if (mpCompartment->getType() == Compartment::lamina_propria
-          && (p_rule4a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4a / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
 
       if (mpCompartment->getType() == Compartment::lumen
-          && (p_rule4b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && (p_rule4b / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
-      /* HPylori are removed when macrophage uptake/differentiate handled through macrophages */
+      /* H Pylori are removed when macrophage uptake/differentiate handled throu macrophages */
     }
 }
 // virtual
