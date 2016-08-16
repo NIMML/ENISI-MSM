@@ -107,8 +107,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
       /*get concentration of IFNg and IL10 for COPASI input*/
 
-
-
+ LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
 
       /* if no bacteria is around macrophage, then stays immature */
       if (state == MacrophageState::MONOCYTE){
@@ -127,10 +126,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
 			  /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
 			  /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
-        	  LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
-        	  LocalFile::debug() << " Concentration of HPylori = " << liveHPyloriConcentration << std::endl;
-        	  LocalFile::debug() << " Regulatory macrophages = " << Mreg << std::endl;
-
 			  if (HPylori.size() > 0){
 				  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
 					  LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
