@@ -14,7 +14,9 @@ namespace ENISI
 class MacrophageGroup: public GroupInterface
 {
 public:
-  MacrophageGroup(Compartment * pCompartment, const double & concentrations);
+  MacrophageGroup(Compartment * pCompartment,
+                  const double & concentrations,
+                  const double & regulatoryConcentration);
 
   virtual ~MacrophageGroup();
 
