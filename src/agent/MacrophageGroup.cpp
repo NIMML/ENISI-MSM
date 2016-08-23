@@ -115,9 +115,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 //      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
 
       /*get concentration of IFNg and IL10 for COPASI input*/
-
  LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
-
       /* if no bacteria is around macrophage, then stays immature */
       if (state == MacrophageState::MONOCYTE){
           if ((damagedEpithelialCellConcentration > 0 || eDendriticsConcentration > 0)
@@ -132,10 +130,15 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
 			  // double IFNg = odeModel.getConcentration("IFNg");
 			  // double IL10 = odeModel.getConcentration("IL10");
-
 			  /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
 			  /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
-			  if (HPylori.size() > 0){
+			  if (HPylori.size() > 0)
+			  	  {
+				  if (state == MacrophageState::REGULATORY){
+					  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
+					  mpCompartment->getLocation(pAgent->getId(), Location);
+					  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+				  }
 				  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
 					  LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
 					  newState = MacrophageState::REGULATORY;
@@ -154,6 +157,17 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 				  }
 			  }
 		  }
+      }//End of monocyte conditions
+      if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
+                        && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
+     			  			  /* set initial concentrations */
+     		if (HPylori.size() > 0){
+     				  if (state == MacrophageState::REGULATORY){
+     					  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
+     					  mpCompartment->getLocation(pAgent->getId(), Location);
+     					  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+     				  }
+     				}
       }
 		  // TODO We should use the production of the ODE model
 		  /* regulatory macrophages produce IL10 */
