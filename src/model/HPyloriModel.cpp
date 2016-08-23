@@ -85,8 +85,12 @@ void HPModel::initialize_lamina_propria()
   if (!mpProperties->getValue("mp_lamina_propria.Bacteria.concentration", concentration)) concentration = 0;
   new BacteriaGroup(mp_lamina_propria, concentration);
 
-  if (!mpProperties->getValue("lamina_propria.macrophages.concentration", concentration)) concentration = 0;
-  new MacrophageGroup(mp_lamina_propria, concentration);
+  if (!mpProperties->getValue("lamina_propria.macrophages.monocyte.concentration", concentration)) concentration = 0;
+
+  double concentration2;
+
+  if (!mpProperties->getValue("lamina_propria.macrophages.regulatory.concentration", concentration2)) concentration2 = 0;
+  new MacrophageGroup(mp_lamina_propria, concentration, concentration2);
 
   mp_lamina_propria->addCytokine("eIL6");
   mp_lamina_propria->addCytokine("eTGFb");

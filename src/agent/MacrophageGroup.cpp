@@ -7,14 +7,23 @@
 
 using namespace ENISI;
 
-MacrophageGroup::MacrophageGroup(Compartment * pCompartment, const double & concentrations):
+MacrophageGroup::MacrophageGroup(Compartment * pCompartment,
+                                 const double & monocyteConcentration,
+                                 const double & regulatoryConcentration):
   GroupInterface(pCompartment)
 {
-  size_t LocalCount = mpCompartment->localCount(concentrations);
+  size_t LocalCount = mpCompartment->localCount(monocyteConcentration);
 
   for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Macrophage, MacrophageState::MONOCYTE));
+    }
+
+  LocalCount = mpCompartment->localCount(regulatoryConcentration);
+
+  for (size_t i = 0; i < LocalCount; i++)
+    {
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Macrophage, MacrophageState::REGULATORY));
     }
 
   const Properties * pModel = Properties::instance(Properties::model);
