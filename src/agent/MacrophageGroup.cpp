@@ -134,11 +134,11 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
 			  if (HPylori.size() > 0)
 			  	  {
-				  if (state == MacrophageState::REGULATORY){
+				 /* if (state == MacrophageState::REGULATORY){
 					  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
 					  mpCompartment->getLocation(pAgent->getId(), Location);
 					  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
-				  }
+				  }*/
 				  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
 					  LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
 					  newState = MacrophageState::REGULATORY;
