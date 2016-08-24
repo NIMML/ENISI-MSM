@@ -76,7 +76,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
       if (state == BacteriaState::DEAD)
     	{
-    	  	LocalFile::debug() << "# Bacteria state is DEAD" << std::endl;
+    	  	//LocalFile::debug() << "# Bacteria state is DEAD" << std::endl;
     		continue;
     	}
 
@@ -106,13 +106,13 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
               || th1Concentration > ENISI::Threshold
               || th17Concentration > ENISI::Threshold)
           && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria dies nearby damaged E cell" << std::endl ;
+    	  //LocalFile::debug() << "# Bacteria dies nearby damaged E cell" << std::endl ;
           mpCompartment->removeAgent(pAgent);
           continue;
         }
       /* Bacteria become infectious when moved into Lamina Propria */
       if (mpCompartment->getType() == Compartment::lamina_propria){
-    	  LocalFile::debug() << "### Bacteria becomes infectious in LP" << std::endl;
+    	  //LocalFile::debug() << "### Bacteria becomes infectious in LP" << std::endl;
     	  newState = BacteriaState::INFECTIOUS;
           pAgent->setState(newState);
         }
@@ -125,14 +125,14 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
 
       if (mpCompartment->getType() == Compartment::lamina_propria
           && (p_BacteriaLPProl / tolerogenicBacteriaConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
+    	  //LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
 
       if (mpCompartment->getType() == Compartment::lumen &&
           (p_BacteriaLumProl / tolerogenicBacteriaConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
+    	  //LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
         }
