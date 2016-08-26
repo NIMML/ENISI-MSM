@@ -84,7 +84,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
 
-  //LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
+  LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
   //LocalFile::debug() << "*** eDendriticsConcentration	= " << eDendriticsConcentration << std::endl;
   //LocalFile::debug() << "*** damagedEpithelialCellConcentration	= " << damagedEpithelialCellConcentration << std::endl;
   //LocalFile::debug() << "*** macrophageregConcentration	= " << macrophageregConcentration << std::endl;
@@ -126,6 +126,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
           }
           if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
               && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
+        	  LocalFile::debug() << "HPylori or Infectious bacteria in LP" << std::endl;
               /* set initial concentrations */
               /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
               // double IFNg = odeModel.getConcentration("IFNg");
