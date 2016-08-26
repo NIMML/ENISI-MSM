@@ -112,85 +112,84 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       MacrophageState::State newState = state;
 
       // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
-//      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
+      //      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
 
       /*get concentration of IFNg and IL10 for COPASI input*/
- LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
+      LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
       /* if no bacteria is around macrophage, then stays immature */
       if (state == MacrophageState::MONOCYTE){
           if ((damagedEpithelialCellConcentration > 0 || eDendriticsConcentration > 0)
-    		  && (p_rule13 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-        	  LocalFile::debug() << "*** Macrophage proliferates" << std::endl;
-        	  mpCompartment->getLocation(pAgent->getId(), Location);
-    		  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
-    	  }
+              && (p_rule13 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              LocalFile::debug() << "*** Macrophage proliferates" << std::endl;
+              mpCompartment->getLocation(pAgent->getId(), Location);
+              mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+          }
           if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
-                   && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
-			  			  /* set initial concentrations */
-			  /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
-			  // double IFNg = odeModel.getConcentration("IFNg");
-			  // double IL10 = odeModel.getConcentration("IL10");
-			  /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
-			  /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
-			  if (HPylori.size() > 0)
-			  	  {
-				 /* if (state == MacrophageState::REGULATORY){
+              && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
+              /* set initial concentrations */
+              /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
+              // double IFNg = odeModel.getConcentration("IFNg");
+              // double IL10 = odeModel.getConcentration("IL10");
+              /* regulatory macrophages differentiate if ODE predicts regulatory differentiation */
+              /* NOTE: Mreg value from ODE model will vary from 0 to 1 */
+              if (HPylori.size() > 0)
+                {
+                  /* if (state == MacrophageState::REGULATORY){
 					  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
 					  mpCompartment->getLocation(pAgent->getId(), Location);
 					  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
 				  }*/
-				  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
-					  LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
-					  newState = MacrophageState::REGULATORY;
-					  pAgent->setState(newState);
-					  mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
-					  HPylori.pop_back();
-				  }
-				  /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
-				  else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
-					  LocalFile::debug() << "*** Macrophage transit to INFLAMMATORY" << std::endl;
-					  newState = MacrophageState::INFLAMMATORY;
-					  pAgent->setState(newState);
-					  // TODO CRITICAL Does this always consume an HPylori
-					  mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
-					  HPylori.pop_back();
-				  }
-			  }
-		  }
+                  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
+                      LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
+                      newState = MacrophageState::REGULATORY;
+                      pAgent->setState(newState);
+                      mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+                      HPylori.pop_back();
+                  }
+                  /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
+                  else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
+                      LocalFile::debug() << "*** Macrophage transit to INFLAMMATORY" << std::endl;
+                      newState = MacrophageState::INFLAMMATORY;
+                      pAgent->setState(newState);
+                      // TODO CRITICAL Does this always consume an HPylori
+                      mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+                      HPylori.pop_back();
+                  }
+                }
+          }
       }//End of monocyte conditions
-      if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
-                        && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
-     			  			  /* set initial concentrations */
-     		if (HPylori.size() > 0){
-     				  if (state == MacrophageState::REGULATORY){
-     					  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
-     					  mpCompartment->getLocation(pAgent->getId(), Location);
-     					  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
-     				  }
-     				}
+      else if (state == MacrophageState::REGULATORY){
+          if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
+              && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
+              /* set initial concentrations */
+                  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
+                  mpCompartment->getLocation(pAgent->getId(), Location);
+                  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+              }
+
+          mpCompartment->cytokineValue("eIL10", pt) += 7;
+
+          if ((macrophageinfConcentration > 0)
+              && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              LocalFile::debug() << "*** Macrophage_Regulatory dies naturally" << std::endl;
+              mpCompartment->removeAgent(pAgent);
+              continue;
+          }
       }
-		  // TODO We should use the production of the ODE model
-		  /* regulatory macrophages produce IL10 */
-      if (newState == MacrophageState::REGULATORY) {
-    	  mpCompartment->cytokineValue("eIL10", pt) += 7;
-    	  if ((macrophageinfConcentration > 0)
-    			  && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    		  LocalFile::debug() << "*** Macrophage_Regulatory dies naturally" << std::endl;
-    		  mpCompartment->removeAgent(pAgent);
-    		  continue;
-    	  }
+
+      if (state == MacrophageState::INFLAMMATORY){
+          mpCompartment->cytokineValue("eIFNg", pt) += 7;
+
+          if ((macrophageregConcentration > 0)
+              && (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              LocalFile::debug() << "*** Macrophage_Inflamatory dies naturally" << std::endl;
+              mpCompartment->removeAgent(pAgent);
+              continue;
+          }
       }
-	  if (newState == MacrophageState::INFLAMMATORY){
-		  mpCompartment->cytokineValue("eIFNg", pt) += 7;
-		  if ((macrophageregConcentration > 0)
-		       && (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-			  LocalFile::debug() << "*** Macrophage_Inflamatory dies naturally" << std::endl;
-			  mpCompartment->removeAgent(pAgent);
-			  continue;
-		  }
-	  }
-    }//END of for
+  }//END of for
 }//END of act()
+
 // virtual
 void MacrophageGroup::move(){
   // TODO CRITICAL Determine the maximum speed
