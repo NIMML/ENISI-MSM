@@ -114,7 +114,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
 // virtual
 void HPyloriGroup::move(){
   // TODO CRITICAL Determine the maximum speed
-  double MaxSpeed = 1.0;
+  double MaxSpeed = 4.0;
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
   Compartment::LocalIterator endLocal = mpCompartment->localEnd();
