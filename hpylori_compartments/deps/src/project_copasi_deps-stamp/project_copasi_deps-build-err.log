@@ -1,0 +1,165 @@
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/cppunit/config/missing: line 54: aclocal-1.10: command not found
+WARNING: `aclocal-1.10' is missing on your system.  You should only need it if
+         you modified `acinclude.m4' or `configure.in'.  You might want
+         to install the `Automake' and `Perl' packages.  Grab them from
+         any GNU archive site.
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/cppunit/config/missing: line 54: autoconf: command not found
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/cppunit/config/missing: line 54: automake-1.10: command not found
+WARNING: `autoconf' is missing on your system.  You should only need it if
+WARNING: `automake-1.10' is missing on your system.  You should only need it if
+         you modified `configure.in'.  You might want to install the
+         you modified `Makefile.am', `acinclude.m4' or `configure.in'.
+         `Autoconf' and `GNU m4' packages.  Grab them from any GNU
+         You might want to install the `Automake' and `Perl' packages.
+         archive site.
+         Grab them from any GNU archive site.
+ar: `u' modifier ignored since `D' is the default (see `U')
+../../src/cppunit/.libs/libcppunit.a(UnixDynamicLibraryManager.o): In function `CppUnit::DynamicLibraryManager::doLoadLibrary(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+UnixDynamicLibraryManager.cpp:(.text+0x25): undefined reference to `dlopen'
+../../src/cppunit/.libs/libcppunit.a(UnixDynamicLibraryManager.o): In function `CppUnit::DynamicLibraryManager::doReleaseLibrary()':
+UnixDynamicLibraryManager.cpp:(.text+0x43): undefined reference to `dlclose'
+../../src/cppunit/.libs/libcppunit.a(UnixDynamicLibraryManager.o): In function `CppUnit::DynamicLibraryManager::doFindSymbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+UnixDynamicLibraryManager.cpp:(.text+0x77): undefined reference to `dlsym'
+collect2: error: ld returned 1 exit status
+make[5]: *** [DllPlugInTester] Error 1
+make[4]: *** [all-recursive] Error 1
+make[3]: *** [all-recursive] Error 1
+../../src/cppunit/.libs/libcppunit.a(UnixDynamicLibraryManager.o): In function `CppUnit::DynamicLibraryManager::doLoadLibrary(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+UnixDynamicLibraryManager.cpp:(.text+0x25): undefined reference to `dlopen'
+../../src/cppunit/.libs/libcppunit.a(UnixDynamicLibraryManager.o): In function `CppUnit::DynamicLibraryManager::doReleaseLibrary()':
+UnixDynamicLibraryManager.cpp:(.text+0x43): undefined reference to `dlclose'
+../../src/cppunit/.libs/libcppunit.a(UnixDynamicLibraryManager.o): In function `CppUnit::DynamicLibraryManager::doFindSymbol(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)':
+UnixDynamicLibraryManager.cpp:(.text+0x77): undefined reference to `dlsym'
+collect2: error: ld returned 1 exit status
+make[5]: *** [DllPlugInTester] Error 1
+make[4]: *** [install-recursive] Error 1
+make[3]: *** [install-recursive] Error 1
+config.status: WARNING:  'Makefile.in' seems to ignore the --datarootdir setting
+ar: `u' modifier ignored since `D' is the default (see `U')
+configure: WARNING: expat.h: accepted by the compiler, rejected by the preprocessor!
+configure: WARNING: expat.h: proceeding with the compiler's result
+configure: WARNING: No WWW library in use - only file: URLs will work
+configure: WARNING: Install libcurl, libxml2 or BSD libfetch for WWW access
+ar: `u' modifier ignored since `D' is the default (see `U')
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    EXTRA_INCLUDE_DIRS
+
+
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/F2CLIBS/libf2c/arithchk.c: In function ‘ccheck’:
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/F2CLIBS/libf2c/arithchk.c:125:2: warning: format not a string literal and no format arguments [-Wformat-security]
+  Cray1 = printf(emptyfmt) < 0 ? 0 : 4617762;
+  ^
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/BLAS/SRC/xerbla.c: In function ‘xerbla_’:
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/BLAS/SRC/xerbla.c:69:2: warning: implicit declaration of function ‘printf’ [-Wimplicit-function-declaration]
+  printf("** On entry to %6s, parameter number %2i had an illegal value\n",
+  ^
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/BLAS/SRC/xerbla.c:69:2: warning: incompatible implicit declaration of built-in function ‘printf’
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/BLAS/SRC/xerbla.c:69:2: note: include ‘<stdio.h>’ or provide a declaration of ‘printf’
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/clapack/BLAS/SRC/xerbla.c:69:9: warning: format ‘%i’ expects argument of type ‘int’, but argument 3 has type ‘integer {aka long int}’ [-Wformat=]
+  printf("** On entry to %6s, parameter number %2i had an illegal value\n",
+         ^
+qmake: could not exec '/usr/lib/x86_64-linux-gnu/qt4/bin/qmake': No such file or directory
+CMake Error at /usr/share/cmake-3.5/Modules/FindQt4.cmake:1326 (message):
+  Found unsuitable Qt version "" from NOTFOUND, this code requires Qt 4.x
+Call Stack (most recent call first):
+  CMakeLists.txt:44 (find_package)
+
+
+make[3]: *** No targets specified and no makefile found.  Stop.
+make[3]: *** No rule to make target 'install'.  Stop.
+qmake: could not exec '/usr/lib/x86_64-linux-gnu/qt4/bin/qmake': No such file or directory
+CMake Error at /usr/share/cmake-3.5/Modules/FindQt4.cmake:1326 (message):
+  Found unsuitable Qt version "" from NOTFOUND, this code requires Qt 4.x
+Call Stack (most recent call first):
+  CMakeLists.txt:251 (find_package)
+
+
+make[3]: *** No targets specified and no makefile found.  Stop.
+make[3]: *** No rule to make target 'install'.  Stop.
+qmake: could not exec '/usr/lib/x86_64-linux-gnu/qt4/bin/qmake': No such file or directory
+CMake Error at /usr/share/cmake-3.5/Modules/FindQt4.cmake:1326 (message):
+  Found unsuitable Qt version "" from NOTFOUND, this code requires Qt 4.x
+Call Stack (most recent call first):
+  CMakeLists.txt:157 (find_package)
+
+
+make[3]: *** No targets specified and no makefile found.  Stop.
+make[3]: *** No rule to make target 'install'.  Stop.
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    EXTRA_INCLUDE_DIRS
+
+
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/core/SBWCore/SessionKey.cpp: In static member function ‘static void SystemsBiologyWorkbench::SessionKey::loadKey()’:
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/src/core/SBWCore/SessionKey.cpp:122:46: warning: ignoring return value of ‘char* fgets(char*, int, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
+   fgets(buffer, 2*SESSION_KEY_LENGTH + 1, fp);
+                                              ^
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    EXTRA_INCLUDE_DIRS
+
+
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    EXTRA_INCLUDE_DIRS
+
+
+CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+Please set them or make sure they are set and tested correctly in the CMake files:
+LIBZ_LIBRARY
+    linked by target "cmTC_b1221" in directory /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zipper/CMakeFiles/CMakeTmp
+
+CMake Error: Internal CMake error, TryCompile configure of cmake failed
+CMake Warning at CMakeLists.txt:158 (message):
+  The chosen zlib library does not appear to be valid because it is
+
+  missing certain required symbols.  Please check that LIBZ_LIBRARY-NOTFOUND
+  is
+
+  the correct zlib library.  For details about the error, please see
+
+  
+  /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zipper/CMakeFiles/CMakeError.log
+
+
+qmake: could not exec '/usr/lib/x86_64-linux-gnu/qt4/bin/qmake': No such file or directory
+CMake Error at /usr/share/cmake-3.5/Modules/FindQt4.cmake:1326 (message):
+  Found unsuitable Qt version "" from NOTFOUND, this code requires Qt 4.x
+Call Stack (most recent call first):
+  CMakeLists.txt:182 (find_package)
+
+
+make[3]: *** No targets specified and no makefile found.  Stop.
+make[3]: *** No rule to make target 'install'.  Stop.
+CMake Error: The following variables are used in this project, but they are set to NOTFOUND.
+Please set them or make sure they are set and tested correctly in the CMake files:
+LIBZ_LIBRARY
+    linked by target "cmTC_50f19" in directory /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/libCombine/CMakeFiles/CMakeTmp
+
+CMake Error: Internal CMake error, TryCompile configure of cmake failed
+CMake Warning at CMakeLists.txt:385 (message):
+  The chosen zlib library does not appear to be valid because it is
+
+  missing certain required symbols.  Please check that LIBZ_LIBRARY-NOTFOUND
+  is
+
+  the correct zlib library.  For details about the error, please see
+
+  
+  /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/libCombine/CMakeFiles/CMakeError.log
+
+
+qmake: could not exec '/usr/lib/x86_64-linux-gnu/qt4/bin/qmake': No such file or directory
+CMake Error at /usr/share/cmake-3.5/Modules/FindQt4.cmake:1326 (message):
+  Found unsuitable Qt version "" from NOTFOUND, this code requires Qt 4.x
+Call Stack (most recent call first):
+  CMakeLists.txt:409 (find_package)
+
+
+make[3]: *** No targets specified and no makefile found.  Stop.
+make[3]: *** No rule to make target 'install'.  Stop.

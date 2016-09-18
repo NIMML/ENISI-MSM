@@ -1,0 +1,10 @@
+rcencoder.lo: rcencoder.cpp /usr/include/stdc-predef.h rcencoder.h \
+ rcmodel.h rcencoder.inl
+
+/usr/include/stdc-predef.h:
+
+rcencoder.h:
+
+rcmodel.h:
+
+rcencoder.inl:

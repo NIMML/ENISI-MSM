@@ -1,0 +1,2930 @@
+curl-7.32.0/
+curl-7.32.0/depcomp
+curl-7.32.0/mkinstalldirs
+curl-7.32.0/docs/
+curl-7.32.0/docs/VERSIONS
+curl-7.32.0/docs/MAIL-ETIQUETTE
+curl-7.32.0/docs/BINDINGS
+curl-7.32.0/docs/LIBCURL-STRUCTS
+curl-7.32.0/docs/BUGS
+curl-7.32.0/docs/libcurl/
+curl-7.32.0/docs/libcurl/curl_share_init.3
+curl-7.32.0/docs/libcurl/libcurl.3
+curl-7.32.0/docs/libcurl/curl_share_strerror.3
+curl-7.32.0/docs/libcurl/curl_free.pdf
+curl-7.32.0/docs/libcurl/curl_easy_send.html
+curl-7.32.0/docs/libcurl/curl_easy_reset.3
+curl-7.32.0/docs/libcurl/curl_easy_duphandle.pdf
+curl-7.32.0/docs/libcurl/curl_multi_wait.html
+curl-7.32.0/docs/libcurl/curl_slist_append.html
+curl-7.32.0/docs/libcurl/curl_easy_strerror.html
+curl-7.32.0/docs/libcurl/curl_multi_add_handle.pdf
+curl-7.32.0/docs/libcurl/curl_easy_init.pdf
+curl-7.32.0/docs/libcurl/symbols-in-versions
+curl-7.32.0/docs/libcurl/curl_free.3
+curl-7.32.0/docs/libcurl/curl_easy_unescape.3
+curl-7.32.0/docs/libcurl/curl_multi_socket_action.html
+curl-7.32.0/docs/libcurl/libcurl-errors.pdf
+curl-7.32.0/docs/libcurl/curl_easy_init.3
+curl-7.32.0/docs/libcurl/libcurl-errors.html
+curl-7.32.0/docs/libcurl/curl_multi_init.pdf
+curl-7.32.0/docs/libcurl/curl_easy_unescape.pdf
+curl-7.32.0/docs/libcurl/curl_easy_perform.3
+curl-7.32.0/docs/libcurl/curl_global_cleanup.3
+curl-7.32.0/docs/libcurl/curl_multi_cleanup.pdf
+curl-7.32.0/docs/libcurl/libcurl-share.pdf
+curl-7.32.0/docs/libcurl/curl_share_setopt.pdf
+curl-7.32.0/docs/libcurl/curl_unescape.html
+curl-7.32.0/docs/libcurl/curl_getenv.3
+curl-7.32.0/docs/libcurl/curl_mprintf.3
+curl-7.32.0/docs/libcurl/curl_strequal.pdf
+curl-7.32.0/docs/libcurl/curl_global_init_mem.3
+curl-7.32.0/docs/libcurl/curl_multi_cleanup.3
+curl-7.32.0/docs/libcurl/libcurl-share.3
+curl-7.32.0/docs/libcurl/curl_multi_socket.html
+curl-7.32.0/docs/libcurl/curl_global_init.3
+curl-7.32.0/docs/libcurl/curl_easy_cleanup.3
+curl-7.32.0/docs/libcurl/curl_easy_cleanup.pdf
+curl-7.32.0/docs/libcurl/curl_multi_setopt.html
+curl-7.32.0/docs/libcurl/curl_easy_perform.html
+curl-7.32.0/docs/libcurl/curl_multi_timeout.html
+curl-7.32.0/docs/libcurl/libcurl-easy.pdf
+curl-7.32.0/docs/libcurl/curl_multi_info_read.3
+curl-7.32.0/docs/libcurl/libcurl-tutorial.3
+curl-7.32.0/docs/libcurl/curl_slist_free_all.3
+curl-7.32.0/docs/libcurl/libcurl-multi.3
+curl-7.32.0/docs/libcurl/curl_easy_send.pdf
+curl-7.32.0/docs/libcurl/curl_easy_send.3
+curl-7.32.0/docs/libcurl/curl_multi_wait.3
+curl-7.32.0/docs/libcurl/curl_multi_perform.3
+curl-7.32.0/docs/libcurl/curl_formadd.html
+curl-7.32.0/docs/libcurl/curl_formadd.3
+curl-7.32.0/docs/libcurl/curl_multi_socket.pdf
+curl-7.32.0/docs/libcurl/curl_global_cleanup.html
+curl-7.32.0/docs/libcurl/curl_multi_add_handle.html
+curl-7.32.0/docs/libcurl/curl_share_strerror.html
+curl-7.32.0/docs/libcurl/curl_multi_init.html
+curl-7.32.0/docs/libcurl/curl_slist_free_all.pdf
+curl-7.32.0/docs/libcurl/curl_easy_getinfo.html
+curl-7.32.0/docs/libcurl/curl_easy_unescape.html
+curl-7.32.0/docs/libcurl/curl_escape.html
+curl-7.32.0/docs/libcurl/curl_formget.pdf
+curl-7.32.0/docs/libcurl/curl_easy_cleanup.html
+curl-7.32.0/docs/libcurl/curl_share_strerror.pdf
+curl-7.32.0/docs/libcurl/curl_multi_wait.pdf
+curl-7.32.0/docs/libcurl/curl_easy_escape.pdf
+curl-7.32.0/docs/libcurl/index.html
+curl-7.32.0/docs/libcurl/curl_easy_recv.3
+curl-7.32.0/docs/libcurl/curl_global_init_mem.html
+curl-7.32.0/docs/libcurl/curl_multi_perform.html
+curl-7.32.0/docs/libcurl/curl_multi_fdset.pdf
+curl-7.32.0/docs/libcurl/curl_easy_setopt.html
+curl-7.32.0/docs/libcurl/libcurl-errors.3
+curl-7.32.0/docs/libcurl/libcurl-easy.html
+curl-7.32.0/docs/libcurl/curl_easy_setopt.pdf
+curl-7.32.0/docs/libcurl/curl_formget.html
+curl-7.32.0/docs/libcurl/curl_global_init.pdf
+curl-7.32.0/docs/libcurl/curl_share_cleanup.pdf
+curl-7.32.0/docs/libcurl/curl_free.html
+curl-7.32.0/docs/libcurl/curl_mprintf.html
+curl-7.32.0/docs/libcurl/curl_easy_setopt.3
+curl-7.32.0/docs/libcurl/libcurl-multi.html
+curl-7.32.0/docs/libcurl/curl_getdate.html
+curl-7.32.0/docs/libcurl/curl_slist_append.3
+curl-7.32.0/docs/libcurl/curl_global_init.html
+curl-7.32.0/docs/libcurl/curl_easy_getinfo.pdf
+curl-7.32.0/docs/libcurl/libcurl-tutorial.html
+curl-7.32.0/docs/libcurl/libcurl.m4
+curl-7.32.0/docs/libcurl/curl_share_cleanup.html
+curl-7.32.0/docs/libcurl/curl_multi_assign.pdf
+curl-7.32.0/docs/libcurl/curl_easy_pause.html
+curl-7.32.0/docs/libcurl/curl_easy_strerror.pdf
+curl-7.32.0/docs/libcurl/curl_easy_recv.html
+curl-7.32.0/docs/libcurl/curl_multi_timeout.pdf
+curl-7.32.0/docs/libcurl/curl_multi_socket.3
+curl-7.32.0/docs/libcurl/curl_easy_init.html
+curl-7.32.0/docs/libcurl/curl_unescape.pdf
+curl-7.32.0/docs/libcurl/curl_multi_strerror.3
+curl-7.32.0/docs/libcurl/libcurl-easy.3
+curl-7.32.0/docs/libcurl/curl_strequal.html
+curl-7.32.0/docs/libcurl/curl_easy_escape.3
+curl-7.32.0/docs/libcurl/curl_multi_timeout.3
+curl-7.32.0/docs/libcurl/curl_global_cleanup.pdf
+curl-7.32.0/docs/libcurl/curl_multi_fdset.3
+curl-7.32.0/docs/libcurl/curl_escape.pdf
+curl-7.32.0/docs/libcurl/curl_slist_append.pdf
+curl-7.32.0/docs/libcurl/curl_multi_info_read.pdf
+curl-7.32.0/docs/libcurl/curl_getenv.pdf
+curl-7.32.0/docs/libcurl/symbols.pl
+curl-7.32.0/docs/libcurl/curl_share_setopt.3
+curl-7.32.0/docs/libcurl/curl_multi_assign.html
+curl-7.32.0/docs/libcurl/curl_easy_recv.pdf
+curl-7.32.0/docs/libcurl/libcurl-share.html
+curl-7.32.0/docs/libcurl/curl_version.pdf
+curl-7.32.0/docs/libcurl/curl_mprintf.pdf
+curl-7.32.0/docs/libcurl/curl_multi_setopt.pdf
+curl-7.32.0/docs/libcurl/libcurl.pdf
+curl-7.32.0/docs/libcurl/curl_easy_duphandle.html
+curl-7.32.0/docs/libcurl/curl_share_cleanup.3
+curl-7.32.0/docs/libcurl/ABI
+curl-7.32.0/docs/libcurl/curl_easy_strerror.3
+curl-7.32.0/docs/libcurl/curl_formadd.pdf
+curl-7.32.0/docs/libcurl/curl_formfree.pdf
+curl-7.32.0/docs/libcurl/curl_getdate.pdf
+curl-7.32.0/docs/libcurl/curl_easy_perform.pdf
+curl-7.32.0/docs/libcurl/curl_multi_socket_action.pdf
+curl-7.32.0/docs/libcurl/curl_formget.3
+curl-7.32.0/docs/libcurl/libcurl.html
+curl-7.32.0/docs/libcurl/curl_escape.3
+curl-7.32.0/docs/libcurl/curl_multi_remove_handle.html
+curl-7.32.0/docs/libcurl/curl_multi_socket_action.3
+curl-7.32.0/docs/libcurl/curl_version.html
+curl-7.32.0/docs/libcurl/curl_multi_assign.3
+curl-7.32.0/docs/libcurl/curl_multi_info_read.html
+curl-7.32.0/docs/libcurl/curl_multi_init.3
+curl-7.32.0/docs/libcurl/curl_easy_pause.pdf
+curl-7.32.0/docs/libcurl/curl_multi_cleanup.html
+curl-7.32.0/docs/libcurl/curl_formfree.3
+curl-7.32.0/docs/libcurl/curl_multi_perform.pdf
+curl-7.32.0/docs/libcurl/curl_getenv.html
+curl-7.32.0/docs/libcurl/curl_multi_add_handle.3
+curl-7.32.0/docs/libcurl/libcurl-tutorial.pdf
+curl-7.32.0/docs/libcurl/curl_formfree.html
+curl-7.32.0/docs/libcurl/curl_version_info.pdf
+curl-7.32.0/docs/libcurl/curl_multi_strerror.html
+curl-7.32.0/docs/libcurl/Makefile.am
+curl-7.32.0/docs/libcurl/Makefile.in
+curl-7.32.0/docs/libcurl/curl_getdate.3
+curl-7.32.0/docs/libcurl/curl_share_init.html
+curl-7.32.0/docs/libcurl/curl_version_info.html
+curl-7.32.0/docs/libcurl/curl_strequal.3
+curl-7.32.0/docs/libcurl/curl_easy_getinfo.3
+curl-7.32.0/docs/libcurl/curl_multi_remove_handle.pdf
+curl-7.32.0/docs/libcurl/curl_multi_setopt.3
+curl-7.32.0/docs/libcurl/curl_easy_reset.pdf
+curl-7.32.0/docs/libcurl/curl_easy_duphandle.3
+curl-7.32.0/docs/libcurl/curl_easy_escape.html
+curl-7.32.0/docs/libcurl/curl_easy_pause.3
+curl-7.32.0/docs/libcurl/curl_multi_fdset.html
+curl-7.32.0/docs/libcurl/curl_multi_strerror.pdf
+curl-7.32.0/docs/libcurl/curl_share_init.pdf
+curl-7.32.0/docs/libcurl/libcurl-multi.pdf
+curl-7.32.0/docs/libcurl/curl_unescape.3
+curl-7.32.0/docs/libcurl/curl_version.3
+curl-7.32.0/docs/libcurl/curl_multi_remove_handle.3
+curl-7.32.0/docs/libcurl/curl_version_info.3
+curl-7.32.0/docs/libcurl/curl_global_init_mem.pdf
+curl-7.32.0/docs/libcurl/curl_share_setopt.html
+curl-7.32.0/docs/libcurl/curl_easy_reset.html
+curl-7.32.0/docs/libcurl/curl_slist_free_all.html
+curl-7.32.0/docs/curl-config.html
+curl-7.32.0/docs/KNOWN_BUGS
+curl-7.32.0/docs/SSLCERTS
+curl-7.32.0/docs/LICENSE-MIXING
+curl-7.32.0/docs/README.win32
+curl-7.32.0/docs/mk-ca-bundle.html
+curl-7.32.0/docs/index.html
+curl-7.32.0/docs/INTERNALS
+curl-7.32.0/docs/THANKS
+curl-7.32.0/docs/HTTP-COOKIES
+curl-7.32.0/docs/README.netware
+curl-7.32.0/docs/TheArtOfHttpScripting
+curl-7.32.0/docs/INSTALL.devcpp
+curl-7.32.0/docs/examples/
+curl-7.32.0/docs/examples/htmltidy.c
+curl-7.32.0/docs/examples/evhiperfifo.c
+curl-7.32.0/docs/examples/imap.c
+curl-7.32.0/docs/examples/version-check.pl
+curl-7.32.0/docs/examples/Makefile.inc
+curl-7.32.0/docs/examples/README
+curl-7.32.0/docs/examples/makefile.dj
+curl-7.32.0/docs/examples/ftpgetresp.c
+curl-7.32.0/docs/examples/rtsp.c
+curl-7.32.0/docs/examples/cookie_interface.c
+curl-7.32.0/docs/examples/sampleconv.c
+curl-7.32.0/docs/examples/fileupload.c
+curl-7.32.0/docs/examples/httpput.c
+curl-7.32.0/docs/examples/debug.c
+curl-7.32.0/docs/examples/ftpget.c
+curl-7.32.0/docs/examples/ftpgetinfo.c
+curl-7.32.0/docs/examples/cacertinmem.c
+curl-7.32.0/docs/examples/sepheaders.c
+curl-7.32.0/docs/examples/ghiper.c
+curl-7.32.0/docs/examples/persistant.c
+curl-7.32.0/docs/examples/pop3slist.c
+curl-7.32.0/docs/examples/chkspeed.c
+curl-7.32.0/docs/examples/externalsocket.c
+curl-7.32.0/docs/examples/multi-double.c
+curl-7.32.0/docs/examples/multi-debugcallback.c
+curl-7.32.0/docs/examples/simplepost.c
+curl-7.32.0/docs/examples/10-at-a-time.c
+curl-7.32.0/docs/examples/progressfunc.c
+curl-7.32.0/docs/examples/threaded-ssl.c
+curl-7.32.0/docs/examples/http-post.c
+curl-7.32.0/docs/examples/getinmemory.c
+curl-7.32.0/docs/examples/getinfo.c
+curl-7.32.0/docs/examples/multi-post.c
+curl-7.32.0/docs/examples/ftp-wildcard.c
+curl-7.32.0/docs/examples/ftpupload.c
+curl-7.32.0/docs/examples/smtp-tls.c
+curl-7.32.0/docs/examples/https.c
+curl-7.32.0/docs/examples/resolve.c
+curl-7.32.0/docs/examples/simple.c
+curl-7.32.0/docs/examples/multi-uv.c
+curl-7.32.0/docs/examples/httpcustomheader.c
+curl-7.32.0/docs/examples/certinfo.c
+curl-7.32.0/docs/examples/htmltitle.cpp
+curl-7.32.0/docs/examples/simplesmtp.c
+curl-7.32.0/docs/examples/simplessl.c
+curl-7.32.0/docs/examples/ftpsget.c
+curl-7.32.0/docs/examples/multithread.c
+curl-7.32.0/docs/examples/multi-single.c
+curl-7.32.0/docs/examples/sftpget.c
+curl-7.32.0/docs/examples/postit2.c
+curl-7.32.0/docs/examples/smtp-multi.c
+curl-7.32.0/docs/examples/curlgtk.c
+curl-7.32.0/docs/examples/xmlstream.c
+curl-7.32.0/docs/examples/asiohiper.cpp
+curl-7.32.0/docs/examples/curlx.c
+curl-7.32.0/docs/examples/Makefile.m32
+curl-7.32.0/docs/examples/anyauthput.c
+curl-7.32.0/docs/examples/Makefile.netware
+curl-7.32.0/docs/examples/url2file.c
+curl-7.32.0/docs/examples/synctime.c
+curl-7.32.0/docs/examples/fopen.c
+curl-7.32.0/docs/examples/multi-app.c
+curl-7.32.0/docs/examples/ftpuploadresume.c
+curl-7.32.0/docs/examples/href_extractor.c
+curl-7.32.0/docs/examples/usercertinmem.c
+curl-7.32.0/docs/examples/pop3s.c
+curl-7.32.0/docs/examples/Makefile.am
+curl-7.32.0/docs/examples/Makefile.in
+curl-7.32.0/docs/examples/hiperfifo.c
+curl-7.32.0/docs/examples/opensslthreadlock.c
+curl-7.32.0/docs/examples/sendrecv.c
+curl-7.32.0/docs/examples/smooth-gtk-thread.c
+curl-7.32.0/docs/examples/post-callback.c
+curl-7.32.0/docs/examples/Makefile.example
+curl-7.32.0/docs/curl.pdf
+curl-7.32.0/docs/curl.1
+curl-7.32.0/docs/FAQ
+curl-7.32.0/docs/INSTALL
+curl-7.32.0/docs/curl.html
+curl-7.32.0/docs/curl-config.1
+curl-7.32.0/docs/FEATURES
+curl-7.32.0/docs/mk-ca-bundle.pdf
+curl-7.32.0/docs/MANUAL
+curl-7.32.0/docs/RESOURCES
+curl-7.32.0/docs/DISTRO-DILEMMA
+curl-7.32.0/docs/CONTRIBUTE
+curl-7.32.0/docs/Makefile.am
+curl-7.32.0/docs/Makefile.in
+curl-7.32.0/docs/HISTORY
+curl-7.32.0/docs/TODO
+curl-7.32.0/docs/curl-config.pdf
+curl-7.32.0/winbuild/
+curl-7.32.0/winbuild/MakefileBuild.vc
+curl-7.32.0/winbuild/Makefile.msvc.names
+curl-7.32.0/winbuild/Makefile.vc
+curl-7.32.0/winbuild/BUILD.WINDOWS.txt
+curl-7.32.0/winbuild/gen_resp_file.bat
+curl-7.32.0/README
+curl-7.32.0/configure.ac
+curl-7.32.0/lib/
+curl-7.32.0/lib/bundles.c
+curl-7.32.0/lib/wildcard.h
+curl-7.32.0/lib/timeval.h
+curl-7.32.0/lib/setup-os400.h
+curl-7.32.0/lib/easy.c
+curl-7.32.0/lib/curl_setup.h
+curl-7.32.0/lib/imap.c
+curl-7.32.0/lib/strequal.c
+curl-7.32.0/lib/inet_pton.h
+curl-7.32.0/lib/ssh.h
+curl-7.32.0/lib/hostip6.c
+curl-7.32.0/lib/splay.h
+curl-7.32.0/lib/hostcheck.h
+curl-7.32.0/lib/hash.c
+curl-7.32.0/lib/http_digest.h
+curl-7.32.0/lib/Makefile.inc
+curl-7.32.0/lib/strtoofft.c
+curl-7.32.0/lib/http_proxy.h
+curl-7.32.0/lib/sockaddr.h
+curl-7.32.0/lib/curl_rtmp.h
+curl-7.32.0/lib/README.pingpong
+curl-7.32.0/lib/sslgen.c
+curl-7.32.0/lib/nss.c
+curl-7.32.0/lib/gtls.c
+curl-7.32.0/lib/makefile.dj
+curl-7.32.0/lib/warnless.h
+curl-7.32.0/lib/curl_gethostname.c
+curl-7.32.0/lib/curl_gssapi.c
+curl-7.32.0/lib/sendf.h
+curl-7.32.0/lib/hostip4.c
+curl-7.32.0/lib/tftp.h
+curl-7.32.0/lib/x509asn1.c
+curl-7.32.0/lib/rtsp.c
+curl-7.32.0/lib/file.h
+curl-7.32.0/lib/amigaos.h
+curl-7.32.0/lib/memdebug.c
+curl-7.32.0/lib/curl_fnmatch.c
+curl-7.32.0/lib/nwos.c
+curl-7.32.0/lib/conncache.c
+curl-7.32.0/lib/url.c
+curl-7.32.0/lib/strerror.h
+curl-7.32.0/lib/gopher.c
+curl-7.32.0/lib/curl_ntlm_wb.h
+curl-7.32.0/lib/fileinfo.c
+curl-7.32.0/lib/curl_ntlm_core.c
+curl-7.32.0/lib/cyassl.c
+curl-7.32.0/lib/makefile.amiga
+curl-7.32.0/lib/netrc.c
+curl-7.32.0/lib/README.pipelining
+curl-7.32.0/lib/nssg.h
+curl-7.32.0/lib/imap.h
+curl-7.32.0/lib/libcurl.vers.in
+curl-7.32.0/lib/strequal.h
+curl-7.32.0/lib/hash.h
+curl-7.32.0/lib/md4.c
+curl-7.32.0/lib/Makefile.Watcom
+curl-7.32.0/lib/strtoofft.h
+curl-7.32.0/lib/dict.c
+curl-7.32.0/lib/nwlib.c
+curl-7.32.0/lib/objnames-test10.sh
+curl-7.32.0/lib/rtsp.h
+curl-7.32.0/lib/sendf.c
+curl-7.32.0/lib/speedcheck.h
+curl-7.32.0/lib/hostcheck.c
+curl-7.32.0/lib/connect.c
+curl-7.32.0/lib/smtp.h
+curl-7.32.0/lib/memdebug.h
+curl-7.32.0/lib/amigaos.c
+curl-7.32.0/lib/config-win32.h
+curl-7.32.0/lib/strtok.c
+curl-7.32.0/lib/curl_fnmatch.h
+curl-7.32.0/lib/connect.h
+curl-7.32.0/lib/easyif.h
+curl-7.32.0/lib/setup-vms.h
+curl-7.32.0/lib/cookie.h
+curl-7.32.0/lib/curl_config.h.cmake
+curl-7.32.0/lib/pingpong.h
+curl-7.32.0/lib/url.h
+curl-7.32.0/lib/Makefile.vc8
+curl-7.32.0/lib/ssh.c
+curl-7.32.0/lib/transfer.c
+curl-7.32.0/lib/select.c
+curl-7.32.0/lib/inet_ntop.c
+curl-7.32.0/lib/Makefile.vc10
+curl-7.32.0/lib/curl_sspi.c
+curl-7.32.0/lib/smtp.c
+curl-7.32.0/lib/inet_ntop.h
+curl-7.32.0/lib/libcurl.plist
+curl-7.32.0/lib/curl_sasl.c
+curl-7.32.0/lib/escape.h
+curl-7.32.0/lib/content_encoding.h
+curl-7.32.0/lib/non-ascii.c
+curl-7.32.0/lib/multihandle.h
+curl-7.32.0/lib/openldap.c
+curl-7.32.0/lib/conncache.h
+curl-7.32.0/lib/file.c
+curl-7.32.0/lib/ssluse.c
+curl-7.32.0/lib/curl_ntlm_wb.c
+curl-7.32.0/lib/qssl.c
+curl-7.32.0/lib/telnet.h
+curl-7.32.0/lib/netrc.h
+curl-7.32.0/lib/mk-ca-bundle.pl
+curl-7.32.0/lib/pop3.h
+curl-7.32.0/lib/ssluse.h
+curl-7.32.0/lib/ftplistparser.h
+curl-7.32.0/lib/gskit.c
+curl-7.32.0/lib/curl_memrchr.h
+curl-7.32.0/lib/curl_addrinfo.c
+curl-7.32.0/lib/axtls.c
+curl-7.32.0/lib/parsedate.c
+curl-7.32.0/lib/dotdot.c
+curl-7.32.0/lib/checksrc.pl
+curl-7.32.0/lib/asyn.h
+curl-7.32.0/lib/base64.c
+curl-7.32.0/lib/curl_darwinssl.h
+curl-7.32.0/lib/polarssl_threadlock.h
+curl-7.32.0/lib/curl_md5.h
+curl-7.32.0/lib/formdata.c
+curl-7.32.0/lib/curl_sspi.h
+curl-7.32.0/lib/urldata.h
+curl-7.32.0/lib/curl_ntlm_msgs.h
+curl-7.32.0/lib/config-tpf.h
+curl-7.32.0/lib/firefox-db2pem.sh
+curl-7.32.0/lib/multiif.h
+curl-7.32.0/lib/curl_ntlm.h
+curl-7.32.0/lib/speedcheck.c
+curl-7.32.0/lib/progress.c
+curl-7.32.0/lib/http.c
+curl-7.32.0/lib/axtls.h
+curl-7.32.0/lib/krb4.h
+curl-7.32.0/lib/getinfo.c
+curl-7.32.0/lib/curl_base64.h
+curl-7.32.0/lib/arpa_telnet.h
+curl-7.32.0/lib/if2ip.h
+curl-7.32.0/lib/curl_schannel.h
+curl-7.32.0/lib/polarssl.c
+curl-7.32.0/lib/config-os400.h
+curl-7.32.0/lib/curl_multibyte.c
+curl-7.32.0/lib/curl_setup_once.h
+curl-7.32.0/lib/curl_threads.h
+curl-7.32.0/lib/libcurl.rc
+curl-7.32.0/lib/curl_addrinfo.h
+curl-7.32.0/lib/slist.h
+curl-7.32.0/lib/Makefile.vc6
+curl-7.32.0/lib/mk-ca-bundle.vbs
+curl-7.32.0/lib/content_encoding.c
+curl-7.32.0/lib/if2ip.c
+curl-7.32.0/lib/config-symbian.h
+curl-7.32.0/lib/hostip.h
+curl-7.32.0/lib/README.httpauth
+curl-7.32.0/lib/tftp.c
+curl-7.32.0/lib/Makefile.b32
+curl-7.32.0/lib/asyn-ares.c
+curl-7.32.0/lib/curl_gssapi.h
+curl-7.32.0/lib/share.c
+curl-7.32.0/lib/hmac.c
+curl-7.32.0/lib/sslgen.h
+curl-7.32.0/lib/polarssl_threadlock.c
+curl-7.32.0/lib/config-vxworks.h
+curl-7.32.0/lib/formdata.h
+curl-7.32.0/lib/slist.c
+curl-7.32.0/lib/README.hostip
+curl-7.32.0/lib/hostsyn.c
+curl-7.32.0/lib/http_chunks.h
+curl-7.32.0/lib/security.c
+curl-7.32.0/lib/http_digest.c
+curl-7.32.0/lib/curl_threads.c
+curl-7.32.0/lib/krb4.c
+curl-7.32.0/lib/wildcard.c
+curl-7.32.0/lib/version.c
+curl-7.32.0/lib/curl_sasl.h
+curl-7.32.0/lib/curl_memrchr.c
+curl-7.32.0/lib/http_negotiate.c
+curl-7.32.0/lib/curl_rtmp.c
+curl-7.32.0/lib/mprintf.c
+curl-7.32.0/lib/config-amigaos.h
+curl-7.32.0/lib/dotdot.h
+curl-7.32.0/lib/krb5.c
+curl-7.32.0/lib/curl_multibyte.h
+curl-7.32.0/lib/curl_gethostname.h
+curl-7.32.0/lib/curl_darwinssl.c
+curl-7.32.0/lib/CMakeLists.txt
+curl-7.32.0/lib/socks.c
+curl-7.32.0/lib/getinfo.h
+curl-7.32.0/lib/hostip.c
+curl-7.32.0/lib/splay.c
+curl-7.32.0/lib/cyassl.h
+curl-7.32.0/lib/README.curlx
+curl-7.32.0/lib/README.curl_off_t
+curl-7.32.0/lib/curl_ldap.h
+curl-7.32.0/lib/curl_md4.h
+curl-7.32.0/lib/progress.h
+curl-7.32.0/lib/objnames-test08.sh
+curl-7.32.0/lib/Makefile.m32
+curl-7.32.0/lib/bundles.h
+curl-7.32.0/lib/hostasyn.c
+curl-7.32.0/lib/curl_hmac.h
+curl-7.32.0/lib/telnet.c
+curl-7.32.0/lib/strdup.h
+curl-7.32.0/lib/config-riscos.h
+curl-7.32.0/lib/pingpong.c
+curl-7.32.0/lib/Makefile.vc9
+curl-7.32.0/lib/http_negotiate_sspi.c
+curl-7.32.0/lib/polarssl.h
+curl-7.32.0/lib/Makefile.netware
+curl-7.32.0/lib/llist.h
+curl-7.32.0/lib/ftp.h
+curl-7.32.0/lib/select.h
+curl-7.32.0/lib/parsedate.h
+curl-7.32.0/lib/gskit.h
+curl-7.32.0/lib/http_negotiate.h
+curl-7.32.0/lib/Makefile.vxworks
+curl-7.32.0/lib/getenv.c
+curl-7.32.0/lib/README.ares
+curl-7.32.0/lib/gtls.h
+curl-7.32.0/lib/transfer.h
+curl-7.32.0/lib/multi.c
+curl-7.32.0/lib/curl_memory.h
+curl-7.32.0/lib/objnames.inc
+curl-7.32.0/lib/warnless.c
+curl-7.32.0/lib/http.h
+curl-7.32.0/lib/x509asn1.h
+curl-7.32.0/lib/llist.c
+curl-7.32.0/lib/ftp.c
+curl-7.32.0/lib/pipeline.c
+curl-7.32.0/lib/timeval.c
+curl-7.32.0/lib/inet_pton.c
+curl-7.32.0/lib/socks_gssapi.c
+curl-7.32.0/lib/README.multi_socket
+curl-7.32.0/lib/Makefile.am
+curl-7.32.0/lib/ftplistparser.c
+curl-7.32.0/lib/Makefile.in
+curl-7.32.0/lib/dict.h
+curl-7.32.0/lib/curl_ntlm.c
+curl-7.32.0/lib/rawstr.c
+curl-7.32.0/lib/README.encoding
+curl-7.32.0/lib/idn_win32.c
+curl-7.32.0/lib/nonblock.h
+curl-7.32.0/lib/socks_sspi.c
+curl-7.32.0/lib/curl_config.h.in
+curl-7.32.0/lib/pop3.c
+curl-7.32.0/lib/md5.c
+curl-7.32.0/lib/strerror.c
+curl-7.32.0/lib/curl_ntlm_msgs.c
+curl-7.32.0/lib/pipeline.h
+curl-7.32.0/lib/config-mac.h
+curl-7.32.0/lib/escape.c
+curl-7.32.0/lib/socks.h
+curl-7.32.0/lib/http_proxy.c
+curl-7.32.0/lib/strtok.h
+curl-7.32.0/lib/config-dos.h
+curl-7.32.0/lib/curl_ntlm_core.h
+curl-7.32.0/lib/non-ascii.h
+curl-7.32.0/lib/README.memoryleak
+curl-7.32.0/lib/ldap.c
+curl-7.32.0/lib/share.h
+curl-7.32.0/lib/fileinfo.h
+curl-7.32.0/lib/asyn-thread.c
+curl-7.32.0/lib/qssl.h
+curl-7.32.0/lib/nonblock.c
+curl-7.32.0/lib/gopher.h
+curl-7.32.0/lib/cookie.c
+curl-7.32.0/lib/strdup.c
+curl-7.32.0/lib/curlx.h
+curl-7.32.0/lib/rawstr.h
+curl-7.32.0/lib/http_chunks.c
+curl-7.32.0/lib/curl_schannel.c
+curl-7.32.0/lib/config-win32ce.h
+curl-7.32.0/curl-config.in
+curl-7.32.0/MacOSX-Framework
+curl-7.32.0/acinclude.m4
+curl-7.32.0/configure
+curl-7.32.0/vs/
+curl-7.32.0/vs/vc6/
+curl-7.32.0/vs/vc6/lib/
+curl-7.32.0/vs/vc6/lib/vc6libcurl.dsp
+curl-7.32.0/vs/vc6/lib/vc6libcurl.dsw
+curl-7.32.0/vs/vc6/src/
+curl-7.32.0/vs/vc6/src/vc6curltool.dsw
+curl-7.32.0/vs/vc6/src/vc6curltool.dsp
+curl-7.32.0/vs/vc6/vc6curl.dsw
+curl-7.32.0/vs/vc8/
+curl-7.32.0/vs/vc8/lib/
+curl-7.32.0/vs/vc8/lib/vc8libcurl.vcproj
+curl-7.32.0/vs/t/
+curl-7.32.0/vs/t/README
+curl-7.32.0/vs/t/lib/
+curl-7.32.0/vs/t/lib/vc8_libcurl_prj.head
+curl-7.32.0/vs/t/lib/vc6_libcurl_dsp.foot
+curl-7.32.0/vs/t/lib/vc8_libcurl_prj.foot
+curl-7.32.0/vs/t/lib/vc6_libcurl_dsp.head
+curl-7.32.0/CHANGES
+curl-7.32.0/ltmain.sh
+curl-7.32.0/buildconf
+curl-7.32.0/install-sh
+curl-7.32.0/m4/
+curl-7.32.0/m4/ltoptions.m4
+curl-7.32.0/m4/xc-lt-iface.m4
+curl-7.32.0/m4/zz50-xc-ovr.m4
+curl-7.32.0/m4/xc-am-iface.m4
+curl-7.32.0/m4/libtool.m4
+curl-7.32.0/m4/xc-translit.m4
+curl-7.32.0/m4/curl-confopts.m4
+curl-7.32.0/m4/zz40-xc-ovr.m4
+curl-7.32.0/m4/curl-compilers.m4
+curl-7.32.0/m4/curl-functions.m4
+curl-7.32.0/m4/curl-override.m4
+curl-7.32.0/m4/curl-openssl.m4
+curl-7.32.0/m4/xc-val-flgs.m4
+curl-7.32.0/m4/ltsugar.m4
+curl-7.32.0/m4/zz60-xc-ovr.m4
+curl-7.32.0/m4/lt~obsolete.m4
+curl-7.32.0/m4/curl-reentrant.m4
+curl-7.32.0/m4/xc-cc-check.m4
+curl-7.32.0/m4/ltversion.m4
+curl-7.32.0/RELEASE-NOTES
+curl-7.32.0/src/
+curl-7.32.0/src/tool_cfgable.c
+curl-7.32.0/src/tool_hugehelp.h
+curl-7.32.0/src/tool_setup.h
+curl-7.32.0/src/tool_panykey.c
+curl-7.32.0/src/tool_binmode.h
+curl-7.32.0/src/tool_cfgable.h
+curl-7.32.0/src/tool_cb_hdr.h
+curl-7.32.0/src/Makefile.inc
+curl-7.32.0/src/tool_convert.h
+curl-7.32.0/src/makefile.dj
+curl-7.32.0/src/version.h
+curl-7.32.0/src/tool_operhlp.h
+curl-7.32.0/src/tool_helpers.h
+curl-7.32.0/src/tool_cb_dbg.c
+curl-7.32.0/src/tool_version.h
+curl-7.32.0/src/tool_bname.c
+curl-7.32.0/src/tool_paramhlp.c
+curl-7.32.0/src/tool_homedir.c
+curl-7.32.0/src/makefile.amiga
+curl-7.32.0/src/curl.rc
+curl-7.32.0/src/tool_operhlp.c
+curl-7.32.0/src/tool_doswin.c
+curl-7.32.0/src/tool_getpass.c
+curl-7.32.0/src/Makefile.Watcom
+curl-7.32.0/src/tool_sdecls.h
+curl-7.32.0/src/tool_main.h
+curl-7.32.0/src/tool_formparse.h
+curl-7.32.0/src/tool_cb_wrt.c
+curl-7.32.0/src/tool_writeout.c
+curl-7.32.0/src/mkhelp.pl
+curl-7.32.0/src/Makefile.vc8
+curl-7.32.0/src/Makefile.vc10
+curl-7.32.0/src/tool_cb_see.h
+curl-7.32.0/src/tool_panykey.h
+curl-7.32.0/src/tool_dirhie.c
+curl-7.32.0/src/tool_metalink.h
+curl-7.32.0/src/tool_setopt.h
+curl-7.32.0/src/tool_cb_wrt.h
+curl-7.32.0/src/tool_xattr.c
+curl-7.32.0/src/tool_dirhie.h
+curl-7.32.0/src/tool_bname.h
+curl-7.32.0/src/tool_writeenv.h
+curl-7.32.0/src/tool_sleep.c
+curl-7.32.0/src/tool_easysrc.h
+curl-7.32.0/src/tool_homedir.h
+curl-7.32.0/src/tool_help.c
+curl-7.32.0/src/tool_binmode.c
+curl-7.32.0/src/tool_getparam.h
+curl-7.32.0/src/tool_cb_hdr.c
+curl-7.32.0/src/tool_cb_dbg.h
+curl-7.32.0/src/tool_help.h
+curl-7.32.0/src/tool_cb_rea.c
+curl-7.32.0/src/tool_msgs.h
+curl-7.32.0/src/Makefile.vc6
+curl-7.32.0/src/tool_cb_rea.h
+curl-7.32.0/src/tool_convert.c
+curl-7.32.0/src/tool_xattr.h
+curl-7.32.0/src/Makefile.b32
+curl-7.32.0/src/tool_paramhlp.h
+curl-7.32.0/src/tool_setopt.c
+curl-7.32.0/src/tool_hugehelp.c
+curl-7.32.0/src/tool_operate.c
+curl-7.32.0/src/tool_getparam.c
+curl-7.32.0/src/tool_metalink.c
+curl-7.32.0/src/tool_cb_prg.c
+curl-7.32.0/src/tool_getpass.h
+curl-7.32.0/src/tool_cb_see.c
+curl-7.32.0/src/tool_sleep.h
+curl-7.32.0/src/tool_parsecfg.h
+curl-7.32.0/src/CMakeLists.txt
+curl-7.32.0/src/tool_helpers.c
+curl-7.32.0/src/tool_writeout.h
+curl-7.32.0/src/tool_cb_prg.h
+curl-7.32.0/src/tool_mfiles.c
+curl-7.32.0/src/Makefile.m32
+curl-7.32.0/src/tool_easysrc.c
+curl-7.32.0/src/Makefile.vc9
+curl-7.32.0/src/tool_operate.h
+curl-7.32.0/src/Makefile.netware
+curl-7.32.0/src/tool_parsecfg.c
+curl-7.32.0/src/tool_msgs.c
+curl-7.32.0/src/tool_formparse.c
+curl-7.32.0/src/tool_libinfo.c
+curl-7.32.0/src/tool_vms.c
+curl-7.32.0/src/Makefile.am
+curl-7.32.0/src/Makefile.in
+curl-7.32.0/src/tool_main.c
+curl-7.32.0/src/tool_vms.h
+curl-7.32.0/src/macos/
+curl-7.32.0/src/macos/src/
+curl-7.32.0/src/macos/src/curl_GUSIConfig.cpp
+curl-7.32.0/src/macos/src/macos_main.cpp
+curl-7.32.0/src/macos/MACINSTALL.TXT
+curl-7.32.0/src/macos/curl.mcp.xml.sit.hqx
+curl-7.32.0/src/tool_doswin.h
+curl-7.32.0/src/tool_urlglob.h
+curl-7.32.0/src/tool_urlglob.c
+curl-7.32.0/src/tool_libinfo.h
+curl-7.32.0/src/tool_util.c
+curl-7.32.0/src/tool_util.h
+curl-7.32.0/src/tool_writeenv.c
+curl-7.32.0/src/tool_mfiles.h
+curl-7.32.0/compile
+curl-7.32.0/Makefile
+curl-7.32.0/include/
+curl-7.32.0/include/README
+curl-7.32.0/include/curl/
+curl-7.32.0/include/curl/typecheck-gcc.h
+curl-7.32.0/include/curl/stdcheaders.h
+curl-7.32.0/include/curl/curlbuild.h.in
+curl-7.32.0/include/curl/curlbuild.h.cmake
+curl-7.32.0/include/curl/easy.h
+curl-7.32.0/include/curl/mprintf.h
+curl-7.32.0/include/curl/curl.h
+curl-7.32.0/include/curl/curlver.h
+curl-7.32.0/include/curl/multi.h
+curl-7.32.0/include/curl/curlbuild.h
+curl-7.32.0/include/curl/Makefile.am
+curl-7.32.0/include/curl/Makefile.in
+curl-7.32.0/include/curl/curlrules.h
+curl-7.32.0/include/Makefile.am
+curl-7.32.0/include/Makefile.in
+curl-7.32.0/packages/
+curl-7.32.0/packages/Win32/
+curl-7.32.0/packages/Win32/README
+curl-7.32.0/packages/Win32/cygwin/
+curl-7.32.0/packages/Win32/cygwin/README
+curl-7.32.0/packages/Win32/cygwin/Makefile.am
+curl-7.32.0/packages/Win32/cygwin/Makefile.in
+curl-7.32.0/packages/Win32/Makefile.am
+curl-7.32.0/packages/Win32/Makefile.in
+curl-7.32.0/packages/AIX/
+curl-7.32.0/packages/AIX/RPM/
+curl-7.32.0/packages/AIX/RPM/curl.spec.in
+curl-7.32.0/packages/AIX/RPM/README
+curl-7.32.0/packages/AIX/RPM/Makefile.am
+curl-7.32.0/packages/AIX/RPM/Makefile.in
+curl-7.32.0/packages/AIX/Makefile.am
+curl-7.32.0/packages/AIX/Makefile.in
+curl-7.32.0/packages/README
+curl-7.32.0/packages/Solaris/
+curl-7.32.0/packages/Solaris/Makefile.am
+curl-7.32.0/packages/Solaris/Makefile.in
+curl-7.32.0/packages/OS400/
+curl-7.32.0/packages/OS400/curl.inc.in
+curl-7.32.0/packages/OS400/README.OS400
+curl-7.32.0/packages/OS400/initscript.sh
+curl-7.32.0/packages/OS400/ccsidcurl.h
+curl-7.32.0/packages/OS400/makefile.sh
+curl-7.32.0/packages/OS400/ccsidcurl.c
+curl-7.32.0/packages/OS400/make-tests.sh
+curl-7.32.0/packages/OS400/make-src.sh
+curl-7.32.0/packages/OS400/os400sys.h
+curl-7.32.0/packages/OS400/make-lib.sh
+curl-7.32.0/packages/OS400/make-include.sh
+curl-7.32.0/packages/OS400/os400sys.c
+curl-7.32.0/packages/Linux/
+curl-7.32.0/packages/Linux/RPM/
+curl-7.32.0/packages/Linux/RPM/curl.spec.in
+curl-7.32.0/packages/Linux/RPM/README
+curl-7.32.0/packages/Linux/RPM/make_curl_rpm
+curl-7.32.0/packages/Linux/RPM/curl-ssl.spec.in
+curl-7.32.0/packages/Linux/RPM/Makefile.am
+curl-7.32.0/packages/Linux/RPM/Makefile.in
+curl-7.32.0/packages/Linux/Makefile.am
+curl-7.32.0/packages/Linux/Makefile.in
+curl-7.32.0/packages/NetWare/
+curl-7.32.0/packages/NetWare/get_exp.awk
+curl-7.32.0/packages/NetWare/get_ver.awk
+curl-7.32.0/packages/Symbian/
+curl-7.32.0/packages/Symbian/group/
+curl-7.32.0/packages/Symbian/group/curl.mmp
+curl-7.32.0/packages/Symbian/group/libcurl.mmp
+curl-7.32.0/packages/Symbian/group/bld.inf
+curl-7.32.0/packages/Symbian/group/libcurl.pkg
+curl-7.32.0/packages/Symbian/group/libcurl.iby
+curl-7.32.0/packages/Symbian/group/curl.pkg
+curl-7.32.0/packages/Symbian/group/curl.iby
+curl-7.32.0/packages/Symbian/bwins/
+curl-7.32.0/packages/Symbian/bwins/libcurlu.def
+curl-7.32.0/packages/Symbian/eabi/
+curl-7.32.0/packages/Symbian/eabi/libcurlu.def
+curl-7.32.0/packages/Symbian/readme.txt
+curl-7.32.0/packages/vms/
+curl-7.32.0/packages/vms/macro32_exactcase.patch
+curl-7.32.0/packages/vms/clean_gnv_curl.com
+curl-7.32.0/packages/vms/curlmsg.h
+curl-7.32.0/packages/vms/vms_eco_level.h
+curl-7.32.0/packages/vms/compare_curl_source.com
+curl-7.32.0/packages/vms/build_gnv_curl.com
+curl-7.32.0/packages/vms/build_vms.com
+curl-7.32.0/packages/vms/curlmsg.sdl
+curl-7.32.0/packages/vms/gnv_link_curl.com
+curl-7.32.0/packages/vms/gnv_conftest.c_first
+curl-7.32.0/packages/vms/make_gnv_curl_install.sh
+curl-7.32.0/packages/vms/gnv_libcurl_symbols.opt
+curl-7.32.0/packages/vms/build_libcurl_pc.com
+curl-7.32.0/packages/vms/generate_vax_transfer.com
+curl-7.32.0/packages/vms/report_openssl_version.c
+curl-7.32.0/packages/vms/generate_config_vms_h_curl.com
+curl-7.32.0/packages/vms/build_curl-config_script.com
+curl-7.32.0/packages/vms/build_gnv_curl_pcsi_text.com
+curl-7.32.0/packages/vms/curl_release_note_start.txt
+curl-7.32.0/packages/vms/pcsi_product_gnv_curl.com
+curl-7.32.0/packages/vms/config_h.com
+curl-7.32.0/packages/vms/curl_startup.com
+curl-7.32.0/packages/vms/backup_gnv_curl_src.com
+curl-7.32.0/packages/vms/gnv_curl_configure.sh
+curl-7.32.0/packages/vms/curl_gnv_build_steps.txt
+curl-7.32.0/packages/vms/curlmsg_vms.h
+curl-7.32.0/packages/vms/stage_curl_install.com
+curl-7.32.0/packages/vms/build_gnv_curl_pcsi_desc.com
+curl-7.32.0/packages/vms/readme
+curl-7.32.0/packages/vms/curl_crtl_init.c
+curl-7.32.0/packages/vms/pcsi_gnv_curl_file_list.txt
+curl-7.32.0/packages/vms/make_pcsi_curl_kit_name.com
+curl-7.32.0/packages/vms/Makefile.am
+curl-7.32.0/packages/vms/Makefile.in
+curl-7.32.0/packages/vms/setup_gnv_curl_build.com
+curl-7.32.0/packages/vms/build_gnv_curl_release_notes.com
+curl-7.32.0/packages/vms/curlmsg.msg
+curl-7.32.0/packages/EPM/
+curl-7.32.0/packages/EPM/README
+curl-7.32.0/packages/EPM/curl.list.in
+curl-7.32.0/packages/EPM/Makefile.am
+curl-7.32.0/packages/EPM/Makefile.in
+curl-7.32.0/packages/Android/
+curl-7.32.0/packages/Android/Android.mk
+curl-7.32.0/packages/DOS/
+curl-7.32.0/packages/DOS/README
+curl-7.32.0/packages/DOS/common.dj
+curl-7.32.0/packages/Makefile.am
+curl-7.32.0/packages/Makefile.in
+curl-7.32.0/packages/TPF/
+curl-7.32.0/packages/TPF/maketpf.env_curl
+curl-7.32.0/packages/TPF/curl.mak
+curl-7.32.0/packages/TPF/maketpf.env_curllib
+curl-7.32.0/libcurl.pc.in
+curl-7.32.0/config.sub
+curl-7.32.0/CMakeLists.txt
+curl-7.32.0/COPYING
+curl-7.32.0/missing
+curl-7.32.0/aclocal.m4
+curl-7.32.0/config.guess
+curl-7.32.0/tests/
+curl-7.32.0/tests/getpart.pm
+curl-7.32.0/tests/README
+curl-7.32.0/tests/libtest/
+curl-7.32.0/tests/libtest/lib590.c
+curl-7.32.0/tests/libtest/lib1511.c
+curl-7.32.0/tests/libtest/lib562.c
+curl-7.32.0/tests/libtest/lib521.c
+curl-7.32.0/tests/libtest/lib514.c
+curl-7.32.0/tests/libtest/Makefile.inc
+curl-7.32.0/tests/libtest/lib576.c
+curl-7.32.0/tests/libtest/test610.pl
+curl-7.32.0/tests/libtest/test.h
+curl-7.32.0/tests/libtest/lib508.c
+curl-7.32.0/tests/libtest/chkhostname.c
+curl-7.32.0/tests/libtest/lib542.c
+curl-7.32.0/tests/libtest/lib578.c
+curl-7.32.0/tests/libtest/lib519.c
+curl-7.32.0/tests/libtest/lib518.c
+curl-7.32.0/tests/libtest/lib1501.c
+curl-7.32.0/tests/libtest/test613.pl
+curl-7.32.0/tests/libtest/lib569.c
+curl-7.32.0/tests/libtest/lib582.c
+curl-7.32.0/tests/libtest/lib1509.c
+curl-7.32.0/tests/libtest/notexists.pl
+curl-7.32.0/tests/libtest/lib1900.c
+curl-7.32.0/tests/libtest/lib571.c
+curl-7.32.0/tests/libtest/lib560.c
+curl-7.32.0/tests/libtest/lib549.c
+curl-7.32.0/tests/libtest/lib515.c
+curl-7.32.0/tests/libtest/lib555.c
+curl-7.32.0/tests/libtest/lib1512.c
+curl-7.32.0/tests/libtest/testutil.c
+curl-7.32.0/tests/libtest/first.c
+curl-7.32.0/tests/libtest/lib567.c
+curl-7.32.0/tests/libtest/lib564.c
+curl-7.32.0/tests/libtest/lib573.c
+curl-7.32.0/tests/libtest/sethostname.h
+curl-7.32.0/tests/libtest/lib575.c
+curl-7.32.0/tests/libtest/lib557.c
+curl-7.32.0/tests/libtest/lib579.c
+curl-7.32.0/tests/libtest/lib572.c
+curl-7.32.0/tests/libtest/test1013.pl
+curl-7.32.0/tests/libtest/lib568.c
+curl-7.32.0/tests/libtest/lib525.c
+curl-7.32.0/tests/libtest/lib552.c
+curl-7.32.0/tests/libtest/lib1510.c
+curl-7.32.0/tests/libtest/lib537.c
+curl-7.32.0/tests/libtest/lib523.c
+curl-7.32.0/tests/libtest/lib505.c
+curl-7.32.0/tests/libtest/lib547.c
+curl-7.32.0/tests/libtest/lib1500.c
+curl-7.32.0/tests/libtest/lib506.c
+curl-7.32.0/tests/libtest/lib553.c
+curl-7.32.0/tests/libtest/lib509.c
+curl-7.32.0/tests/libtest/lib530.c
+curl-7.32.0/tests/libtest/lib510.c
+curl-7.32.0/tests/libtest/lib586.c
+curl-7.32.0/tests/libtest/lib1508.c
+curl-7.32.0/tests/libtest/lib520.c
+curl-7.32.0/tests/libtest/testtrace.h
+curl-7.32.0/tests/libtest/lib500.c
+curl-7.32.0/tests/libtest/lib507.c
+curl-7.32.0/tests/libtest/lib533.c
+curl-7.32.0/tests/libtest/lib556.c
+curl-7.32.0/tests/libtest/lib591.c
+curl-7.32.0/tests/libtest/lib1507.c
+curl-7.32.0/tests/libtest/lib544.c
+curl-7.32.0/tests/libtest/lib541.c
+curl-7.32.0/tests/libtest/lib597.c
+curl-7.32.0/tests/libtest/lib1502.c
+curl-7.32.0/tests/libtest/lib554.c
+curl-7.32.0/tests/libtest/libntlmconnect.c
+curl-7.32.0/tests/libtest/lib574.c
+curl-7.32.0/tests/libtest/lib570.c
+curl-7.32.0/tests/libtest/lib566.c
+curl-7.32.0/tests/libtest/lib536.c
+curl-7.32.0/tests/libtest/lib599.c
+curl-7.32.0/tests/libtest/lib1506.c
+curl-7.32.0/tests/libtest/testtrace.c
+curl-7.32.0/tests/libtest/testutil.h
+curl-7.32.0/tests/libtest/lib558.c
+curl-7.32.0/tests/libtest/lib513.c
+curl-7.32.0/tests/libtest/sethostname.c
+curl-7.32.0/tests/libtest/lib512.c
+curl-7.32.0/tests/libtest/lib501.c
+curl-7.32.0/tests/libtest/lib540.c
+curl-7.32.0/tests/libtest/test1022.pl
+curl-7.32.0/tests/libtest/lib503.c
+curl-7.32.0/tests/libtest/Makefile.am
+curl-7.32.0/tests/libtest/Makefile.in
+curl-7.32.0/tests/libtest/lib511.c
+curl-7.32.0/tests/libtest/libauthretry.c
+curl-7.32.0/tests/libtest/lib598.c
+curl-7.32.0/tests/libtest/lib502.c
+curl-7.32.0/tests/libtest/lib524.c
+curl-7.32.0/tests/libtest/lib539.c
+curl-7.32.0/tests/libtest/lib517.c
+curl-7.32.0/tests/libtest/test75.pl
+curl-7.32.0/tests/libtest/lib526.c
+curl-7.32.0/tests/libtest/lib516.c
+curl-7.32.0/tests/libtest/lib504.c
+curl-7.32.0/tests/libtest/lib543.c
+curl-7.32.0/tests/libtest/lib583.c
+curl-7.32.0/tests/libtest/test307.pl
+curl-7.32.0/tests/ftp.pm
+curl-7.32.0/tests/stunnel.pem
+curl-7.32.0/tests/sshserver.pl
+curl-7.32.0/tests/FILEFORMAT
+curl-7.32.0/tests/memanalyze.pl
+curl-7.32.0/tests/testcurl.pdf
+curl-7.32.0/tests/serverhelp.pm
+curl-7.32.0/tests/sshhelp.pm
+curl-7.32.0/tests/data/
+curl-7.32.0/tests/data/test86
+curl-7.32.0/tests/data/test238
+curl-7.32.0/tests/data/test2026
+curl-7.32.0/tests/data/test149
+curl-7.32.0/tests/data/test1046
+curl-7.32.0/tests/data/test1074
+curl-7.32.0/tests/data/test627
+curl-7.32.0/tests/data/test712
+curl-7.32.0/tests/data/test567
+curl-7.32.0/tests/data/test545
+curl-7.32.0/tests/data/test227
+curl-7.32.0/tests/data/test1022
+curl-7.32.0/tests/data/test530
+curl-7.32.0/tests/data/test159
+curl-7.32.0/tests/data/test1116
+curl-7.32.0/tests/data/test158
+curl-7.32.0/tests/data/test146
+curl-7.32.0/tests/data/test216
+curl-7.32.0/tests/data/test1036
+curl-7.32.0/tests/data/test591
+curl-7.32.0/tests/data/test1370
+curl-7.32.0/tests/data/test249
+curl-7.32.0/tests/data/test351
+curl-7.32.0/tests/data/test1414
+curl-7.32.0/tests/data/test196
+curl-7.32.0/tests/data/test2010
+curl-7.32.0/tests/data/test180
+curl-7.32.0/tests/data/test168
+curl-7.32.0/tests/data/test322
+curl-7.32.0/tests/data/test2023
+curl-7.32.0/tests/data/test46
+curl-7.32.0/tests/data/test34
+curl-7.32.0/tests/data/test1347
+curl-7.32.0/tests/data/test1073
+curl-7.32.0/tests/data/test1133
+curl-7.32.0/tests/data/test1111
+curl-7.32.0/tests/data/test1389
+curl-7.32.0/tests/data/test1027
+curl-7.32.0/tests/data/test1376
+curl-7.32.0/tests/data/test257
+curl-7.32.0/tests/data/test278
+curl-7.32.0/tests/data/test857
+curl-7.32.0/tests/data/test306
+curl-7.32.0/tests/data/test1092
+curl-7.32.0/tests/data/test1075
+curl-7.32.0/tests/data/test1373
+curl-7.32.0/tests/data/test22
+curl-7.32.0/tests/data/test1512
+curl-7.32.0/tests/data/test1204
+curl-7.32.0/tests/data/test1352
+curl-7.32.0/tests/data/test601
+curl-7.32.0/tests/data/test1371
+curl-7.32.0/tests/data/test106
+curl-7.32.0/tests/data/test407
+curl-7.32.0/tests/data/test1008
+curl-7.32.0/tests/data/test1226
+curl-7.32.0/tests/data/test214
+curl-7.32.0/tests/data/test51
+curl-7.32.0/tests/data/test286
+curl-7.32.0/tests/data/test79
+curl-7.32.0/tests/data/test1349
+curl-7.32.0/tests/data/test1118
+curl-7.32.0/tests/data/test182
+curl-7.32.0/tests/data/test908
+curl-7.32.0/tests/data/test804
+curl-7.32.0/tests/data/test590
+curl-7.32.0/tests/data/test523
+curl-7.32.0/tests/data/test1307
+curl-7.32.0/tests/data/test1120
+curl-7.32.0/tests/data/test295
+curl-7.32.0/tests/data/test625
+curl-7.32.0/tests/data/test235
+curl-7.32.0/tests/data/test1342
+curl-7.32.0/tests/data/test1314
+curl-7.32.0/tests/data/test109
+curl-7.32.0/tests/data/test1374
+curl-7.32.0/tests/data/test1359
+curl-7.32.0/tests/data/test568
+curl-7.32.0/tests/data/test170
+curl-7.32.0/tests/data/test599
+curl-7.32.0/tests/data/test124
+curl-7.32.0/tests/data/test187
+curl-7.32.0/tests/data/test604
+curl-7.32.0/tests/data/test533
+curl-7.32.0/tests/data/test1117
+curl-7.32.0/tests/data/test851
+curl-7.32.0/tests/data/test163
+curl-7.32.0/tests/data/test580
+curl-7.32.0/tests/data/test596
+curl-7.32.0/tests/data/test1379
+curl-7.32.0/tests/data/test208
+curl-7.32.0/tests/data/test107
+curl-7.32.0/tests/data/test102
+curl-7.32.0/tests/data/test98
+curl-7.32.0/tests/data/test112
+curl-7.32.0/tests/data/test1304
+curl-7.32.0/tests/data/test556
+curl-7.32.0/tests/data/test503
+curl-7.32.0/tests/data/test16
+curl-7.32.0/tests/data/test137
+curl-7.32.0/tests/data/test131
+curl-7.32.0/tests/data/test909
+curl-7.32.0/tests/data/test1105
+curl-7.32.0/tests/data/test151
+curl-7.32.0/tests/data/test543
+curl-7.32.0/tests/data/test855
+curl-7.32.0/tests/data/test572
+curl-7.32.0/tests/data/test514
+curl-7.32.0/tests/data/test637
+curl-7.32.0/tests/data/test588
+curl-7.32.0/tests/data/test1329
+curl-7.32.0/tests/data/test706
+curl-7.32.0/tests/data/test156
+curl-7.32.0/tests/data/test2003
+curl-7.32.0/tests/data/test134
+curl-7.32.0/tests/data/test1064
+curl-7.32.0/tests/data/test561
+curl-7.32.0/tests/data/test96
+curl-7.32.0/tests/data/test1113
+curl-7.32.0/tests/data/test702
+curl-7.32.0/tests/data/test500
+curl-7.32.0/tests/data/test1006
+curl-7.32.0/tests/data/test1222
+curl-7.32.0/tests/data/test1077
+curl-7.32.0/tests/data/test1107
+curl-7.32.0/tests/data/test80
+curl-7.32.0/tests/data/test1331
+curl-7.32.0/tests/data/test587
+curl-7.32.0/tests/data/test255
+curl-7.32.0/tests/data/test1511
+curl-7.32.0/tests/data/test15
+curl-7.32.0/tests/data/test2024
+curl-7.32.0/tests/data/test1400
+curl-7.32.0/tests/data/test59
+curl-7.32.0/tests/data/test206
+curl-7.32.0/tests/data/test256
+curl-7.32.0/tests/data/test1335
+curl-7.32.0/tests/data/test142
+curl-7.32.0/tests/data/test50
+curl-7.32.0/tests/data/test186
+curl-7.32.0/tests/data/test1312
+curl-7.32.0/tests/data/test1341
+curl-7.32.0/tests/data/test501
+curl-7.32.0/tests/data/test617
+curl-7.32.0/tests/data/test1038
+curl-7.32.0/tests/data/test635
+curl-7.32.0/tests/data/test400
+curl-7.32.0/tests/data/test579
+curl-7.32.0/tests/data/test623
+curl-7.32.0/tests/data/test1413
+curl-7.32.0/tests/data/test67
+curl-7.32.0/tests/data/test228
+curl-7.32.0/tests/data/test1068
+curl-7.32.0/tests/data/test273
+curl-7.32.0/tests/data/test203
+curl-7.32.0/tests/data/test43
+curl-7.32.0/tests/data/test506
+curl-7.32.0/tests/data/test269
+curl-7.32.0/tests/data/test1091
+curl-7.32.0/tests/data/test402
+curl-7.32.0/tests/data/test1405
+curl-7.32.0/tests/data/test1018
+curl-7.32.0/tests/data/test204
+curl-7.32.0/tests/data/test1406
+curl-7.32.0/tests/data/test231
+curl-7.32.0/tests/data/test2008
+curl-7.32.0/tests/data/test1311
+curl-7.32.0/tests/data/test566
+curl-7.32.0/tests/data/test1201
+curl-7.32.0/tests/data/test1351
+curl-7.32.0/tests/data/test1060
+curl-7.32.0/tests/data/test260
+curl-7.32.0/tests/data/test1004
+curl-7.32.0/tests/data/test173
+curl-7.32.0/tests/data/test52
+curl-7.32.0/tests/data/test289
+curl-7.32.0/tests/data/test1315
+curl-7.32.0/tests/data/test324
+curl-7.32.0/tests/data/test1364
+curl-7.32.0/tests/data/test1391
+curl-7.32.0/tests/data/test502
+curl-7.32.0/tests/data/test1229
+curl-7.32.0/tests/data/test711
+curl-7.32.0/tests/data/test524
+curl-7.32.0/tests/data/test563
+curl-7.32.0/tests/data/test296
+curl-7.32.0/tests/data/test274
+curl-7.32.0/tests/data/test64
+curl-7.32.0/tests/data/test552
+curl-7.32.0/tests/data/test20
+curl-7.32.0/tests/data/test1002
+curl-7.32.0/tests/data/test1020
+curl-7.32.0/tests/data/test2006
+curl-7.32.0/tests/data/test1404
+curl-7.32.0/tests/data/test152
+curl-7.32.0/tests/data/test60
+curl-7.32.0/tests/data/test1501
+curl-7.32.0/tests/data/test525
+curl-7.32.0/tests/data/test291
+curl-7.32.0/tests/data/test507
+curl-7.32.0/tests/data/test125
+curl-7.32.0/tests/data/test1369
+curl-7.32.0/tests/data/test145
+curl-7.32.0/tests/data/test1410
+curl-7.32.0/tests/data/test91
+curl-7.32.0/tests/data/test56
+curl-7.32.0/tests/data/test82
+curl-7.32.0/tests/data/test1123
+curl-7.32.0/tests/data/test305
+curl-7.32.0/tests/data/test611
+curl-7.32.0/tests/data/test1231
+curl-7.32.0/tests/data/test252
+curl-7.32.0/tests/data/test521
+curl-7.32.0/tests/data/test194
+curl-7.32.0/tests/data/test1900
+curl-7.32.0/tests/data/test1403
+curl-7.32.0/tests/data/test1224
+curl-7.32.0/tests/data/test1212
+curl-7.32.0/tests/data/test1381
+curl-7.32.0/tests/data/test1082
+curl-7.32.0/tests/data/test1103
+curl-7.32.0/tests/data/test573
+curl-7.32.0/tests/data/test518
+curl-7.32.0/tests/data/test141
+curl-7.32.0/tests/data/test1218
+curl-7.32.0/tests/data/test282
+curl-7.32.0/tests/data/test511
+curl-7.32.0/tests/data/test1085
+curl-7.32.0/tests/data/test1101
+curl-7.32.0/tests/data/test210
+curl-7.32.0/tests/data/test68
+curl-7.32.0/tests/data/test1308
+curl-7.32.0/tests/data/test527
+curl-7.32.0/tests/data/test529
+curl-7.32.0/tests/data/test300
+curl-7.32.0/tests/data/test1306
+curl-7.32.0/tests/data/test24
+curl-7.32.0/tests/data/test808
+curl-7.32.0/tests/data/test1228
+curl-7.32.0/tests/data/test1023
+curl-7.32.0/tests/data/test539
+curl-7.32.0/tests/data/test1227
+curl-7.32.0/tests/data/test1343
+curl-7.32.0/tests/data/test302
+curl-7.32.0/tests/data/test505
+curl-7.32.0/tests/data/test185
+curl-7.32.0/tests/data/test1354
+curl-7.32.0/tests/data/test2011
+curl-7.32.0/tests/data/test1080
+curl-7.32.0/tests/data/test234
+curl-7.32.0/tests/data/test528
+curl-7.32.0/tests/data/test1
+curl-7.32.0/tests/data/test1319
+curl-7.32.0/tests/data/test1102
+curl-7.32.0/tests/data/test53
+curl-7.32.0/tests/data/test548
+curl-7.32.0/tests/data/test171
+curl-7.32.0/tests/data/test162
+curl-7.32.0/tests/data/test28
+curl-7.32.0/tests/data/test1110
+curl-7.32.0/tests/data/test516
+curl-7.32.0/tests/data/test1050
+curl-7.32.0/tests/data/test113
+curl-7.32.0/tests/data/test513
+curl-7.32.0/tests/data/test549
+curl-7.32.0/tests/data/test1035
+curl-7.32.0/tests/data/test551
+curl-7.32.0/tests/data/test276
+curl-7.32.0/tests/data/test1321
+curl-7.32.0/tests/data/test1504
+curl-7.32.0/tests/data/test1061
+curl-7.32.0/tests/data/test241
+curl-7.32.0/tests/data/test801
+curl-7.32.0/tests/data/test1409
+curl-7.32.0/tests/data/test129
+curl-7.32.0/tests/data/test2002
+curl-7.32.0/tests/data/test1069
+curl-7.32.0/tests/data/test603
+curl-7.32.0/tests/data/test308
+curl-7.32.0/tests/data/test1043
+curl-7.32.0/tests/data/test557
+curl-7.32.0/tests/data/test2013
+curl-7.32.0/tests/data/test1505
+curl-7.32.0/tests/data/test856
+curl-7.32.0/tests/data/test1014
+curl-7.32.0/tests/data/test200
+curl-7.32.0/tests/data/test534
+curl-7.32.0/tests/data/test609
+curl-7.32.0/tests/data/test104
+curl-7.32.0/tests/data/test116
+curl-7.32.0/tests/data/test2033
+curl-7.32.0/tests/data/test310
+curl-7.32.0/tests/data/test140
+curl-7.32.0/tests/data/test1065
+curl-7.32.0/tests/data/test2019
+curl-7.32.0/tests/data/test110
+curl-7.32.0/tests/data/test1362
+curl-7.32.0/tests/data/test575
+curl-7.32.0/tests/data/test520
+curl-7.32.0/tests/data/test123
+curl-7.32.0/tests/data/test74
+curl-7.32.0/tests/data/test23
+curl-7.32.0/tests/data/test902
+curl-7.32.0/tests/data/test1356
+curl-7.32.0/tests/data/test213
+curl-7.32.0/tests/data/test1506
+curl-7.32.0/tests/data/test198
+curl-7.32.0/tests/data/test292
+curl-7.32.0/tests/data/test1042
+curl-7.32.0/tests/data/test266
+curl-7.32.0/tests/data/test900
+curl-7.32.0/tests/data/test47
+curl-7.32.0/tests/data/test221
+curl-7.32.0/tests/data/test1902
+curl-7.32.0/tests/data/test1115
+curl-7.32.0/tests/data/test2016
+curl-7.32.0/tests/data/test183
+curl-7.32.0/tests/data/test1033
+curl-7.32.0/tests/data/test121
+curl-7.32.0/tests/data/test1106
+curl-7.32.0/tests/data/test352
+curl-7.32.0/tests/data/test616
+curl-7.32.0/tests/data/test1015
+curl-7.32.0/tests/data/test1122
+curl-7.32.0/tests/data/test246
+curl-7.32.0/tests/data/test608
+curl-7.32.0/tests/data/test1044
+curl-7.32.0/tests/data/test607
+curl-7.32.0/tests/data/test606
+curl-7.32.0/tests/data/test85
+curl-7.32.0/tests/data/test40
+curl-7.32.0/tests/data/test294
+curl-7.32.0/tests/data/test2004
+curl-7.32.0/tests/data/test37
+curl-7.32.0/tests/data/test1305
+curl-7.32.0/tests/data/test45
+curl-7.32.0/tests/data/test517
+curl-7.32.0/tests/data/test1344
+curl-7.32.0/tests/data/test18
+curl-7.32.0/tests/data/test101
+curl-7.32.0/tests/data/test633
+curl-7.32.0/tests/data/test1300
+curl-7.32.0/tests/data/test1025
+curl-7.32.0/tests/data/test1346
+curl-7.32.0/tests/data/test117
+curl-7.32.0/tests/data/test522
+curl-7.32.0/tests/data/test2025
+curl-7.32.0/tests/data/test136
+curl-7.32.0/tests/data/test58
+curl-7.32.0/tests/data/test582
+curl-7.32.0/tests/data/test1330
+curl-7.32.0/tests/data/test2020
+curl-7.32.0/tests/data/test1205
+curl-7.32.0/tests/data/test25
+curl-7.32.0/tests/data/test148
+curl-7.32.0/tests/data/test262
+curl-7.32.0/tests/data/test309
+curl-7.32.0/tests/data/test1220
+curl-7.32.0/tests/data/test220
+curl-7.32.0/tests/data/test800
+curl-7.32.0/tests/data/test2031
+curl-7.32.0/tests/data/test265
+curl-7.32.0/tests/data/test189
+curl-7.32.0/tests/data/test103
+curl-7.32.0/tests/data/test1387
+curl-7.32.0/tests/data/test2014
+curl-7.32.0/tests/data/test1215
+curl-7.32.0/tests/data/test1112
+curl-7.32.0/tests/data/test218
+curl-7.32.0/tests/data/test1030
+curl-7.32.0/tests/data/test254
+curl-7.32.0/tests/data/test118
+curl-7.32.0/tests/data/test48
+curl-7.32.0/tests/data/test212
+curl-7.32.0/tests/data/test2027
+curl-7.32.0/tests/data/test119
+curl-7.32.0/tests/data/test2022
+curl-7.32.0/tests/data/test1375
+curl-7.32.0/tests/data/test284
+curl-7.32.0/tests/data/test181
+curl-7.32.0/tests/data/test207
+curl-7.32.0/tests/data/test217
+curl-7.32.0/tests/data/test1338
+curl-7.32.0/tests/data/test1326
+curl-7.32.0/tests/data/test229
+curl-7.32.0/tests/data/test75
+curl-7.32.0/tests/data/test1048
+curl-7.32.0/tests/data/test353
+curl-7.32.0/tests/data/test154
+curl-7.32.0/tests/data/test595
+curl-7.32.0/tests/data/test1124
+curl-7.32.0/tests/data/test1081
+curl-7.32.0/tests/data/test1407
+curl-7.32.0/tests/data/test31
+curl-7.32.0/tests/data/test1350
+curl-7.32.0/tests/data/test1119
+curl-7.32.0/tests/data/test574
+curl-7.32.0/tests/data/test1200
+curl-7.32.0/tests/data/test1317
+curl-7.32.0/tests/data/test1378
+curl-7.32.0/tests/data/test307
+curl-7.32.0/tests/data/test2015
+curl-7.32.0/tests/data/test19
+curl-7.32.0/tests/data/test250
+curl-7.32.0/tests/data/test1034
+curl-7.32.0/tests/data/test1325
+curl-7.32.0/tests/data/test65
+curl-7.32.0/tests/data/test184
+curl-7.32.0/tests/data/test81
+curl-7.32.0/tests/data/test576
+curl-7.32.0/tests/data/test2030
+curl-7.32.0/tests/data/test536
+curl-7.32.0/tests/data/test293
+curl-7.32.0/tests/data/test321
+curl-7.32.0/tests/data/test1232
+curl-7.32.0/tests/data/test807
+curl-7.32.0/tests/data/test1394
+curl-7.32.0/tests/data/test704
+curl-7.32.0/tests/data/test267
+curl-7.32.0/tests/data/test73
+curl-7.32.0/tests/data/test57
+curl-7.32.0/tests/data/test2012
+curl-7.32.0/tests/data/test1093
+curl-7.32.0/tests/data/test1126
+curl-7.32.0/tests/data/test1208
+curl-7.32.0/tests/data/test1301
+curl-7.32.0/tests/data/test1057
+curl-7.32.0/tests/data/test1395
+curl-7.32.0/tests/data/test532
+curl-7.32.0/tests/data/test89
+curl-7.32.0/tests/data/test2017
+curl-7.32.0/tests/data/test224
+curl-7.32.0/tests/data/test70
+curl-7.32.0/tests/data/test199
+curl-7.32.0/tests/data/test1130
+curl-7.32.0/tests/data/test1011
+curl-7.32.0/tests/data/test554
+curl-7.32.0/tests/data/test1039
+curl-7.32.0/tests/data/test1318
+curl-7.32.0/tests/data/test581
+curl-7.32.0/tests/data/test1345
+curl-7.32.0/tests/data/test1332
+curl-7.32.0/tests/data/test14
+curl-7.32.0/tests/data/test547
+curl-7.32.0/tests/data/test1021
+curl-7.32.0/tests/data/test193
+curl-7.32.0/tests/data/test504
+curl-7.32.0/tests/data/test236
+curl-7.32.0/tests/data/test275
+curl-7.32.0/tests/data/test802
+curl-7.32.0/tests/data/test553
+curl-7.32.0/tests/data/test27
+curl-7.32.0/tests/data/test2000
+curl-7.32.0/tests/data/test809
+curl-7.32.0/tests/data/test172
+curl-7.32.0/tests/data/test174
+curl-7.32.0/tests/data/test509
+curl-7.32.0/tests/data/test71
+curl-7.32.0/tests/data/test705
+curl-7.32.0/tests/data/test1129
+curl-7.32.0/tests/data/test1225
+curl-7.32.0/tests/data/test628
+curl-7.32.0/tests/data/test571
+curl-7.32.0/tests/data/test558
+curl-7.32.0/tests/data/test1334
+curl-7.32.0/tests/data/test1026
+curl-7.32.0/tests/data/test128
+curl-7.32.0/tests/data/test618
+curl-7.32.0/tests/data/test350
+curl-7.32.0/tests/data/test569
+curl-7.32.0/tests/data/test160
+curl-7.32.0/tests/data/test2005
+curl-7.32.0/tests/data/test1336
+curl-7.32.0/tests/data/test44
+curl-7.32.0/tests/data/test1071
+curl-7.32.0/tests/data/test1214
+curl-7.32.0/tests/data/test1388
+curl-7.32.0/tests/data/test1360
+curl-7.32.0/tests/data/test1079
+curl-7.32.0/tests/data/test94
+curl-7.32.0/tests/data/test166
+curl-7.32.0/tests/data/test1217
+curl-7.32.0/tests/data/test1132
+curl-7.32.0/tests/data/test701
+curl-7.32.0/tests/data/test1012
+curl-7.32.0/tests/data/test408
+curl-7.32.0/tests/data/test1221
+curl-7.32.0/tests/data/test2018
+curl-7.32.0/tests/data/test905
+curl-7.32.0/tests/data/test190
+curl-7.32.0/tests/data/test1392
+curl-7.32.0/tests/data/test1323
+curl-7.32.0/tests/data/test93
+curl-7.32.0/tests/data/test1009
+curl-7.32.0/tests/data/test510
+curl-7.32.0/tests/data/test248
+curl-7.32.0/tests/data/test540
+curl-7.32.0/tests/data/test709
+curl-7.32.0/tests/data/test77
+curl-7.32.0/tests/data/test515
+curl-7.32.0/tests/data/test1377
+curl-7.32.0/tests/data/test132
+curl-7.32.0/tests/data/test1327
+curl-7.32.0/tests/data/test1216
+curl-7.32.0/tests/data/test1056
+curl-7.32.0/tests/data/test115
+curl-7.32.0/tests/data/test130
+curl-7.32.0/tests/data/test1045
+curl-7.32.0/tests/data/test1316
+curl-7.32.0/tests/data/test9
+curl-7.32.0/tests/data/test906
+curl-7.32.0/tests/data/test1098
+curl-7.32.0/tests/data/test910
+curl-7.32.0/tests/data/test120
+curl-7.32.0/tests/data/test903
+curl-7.32.0/tests/data/test26
+curl-7.32.0/tests/data/test1063
+curl-7.32.0/tests/data/test612
+curl-7.32.0/tests/data/test197
+curl-7.32.0/tests/data/test8
+curl-7.32.0/tests/data/test535
+curl-7.32.0/tests/data/test126
+curl-7.32.0/tests/data/test1372
+curl-7.32.0/tests/data/test1313
+curl-7.32.0/tests/data/test1365
+curl-7.32.0/tests/data/test1088
+curl-7.32.0/tests/data/test99
+curl-7.32.0/tests/data/test703
+curl-7.32.0/tests/data/test1109
+curl-7.32.0/tests/data/test320
+curl-7.32.0/tests/data/test598
+curl-7.32.0/tests/data/test1097
+curl-7.32.0/tests/data/test1386
+curl-7.32.0/tests/data/test1219
+curl-7.32.0/tests/data/test1339
+curl-7.32.0/tests/data/test1031
+curl-7.32.0/tests/data/test55
+curl-7.32.0/tests/data/test1099
+curl-7.32.0/tests/data/test87
+curl-7.32.0/tests/data/test1340
+curl-7.32.0/tests/data/test277
+curl-7.32.0/tests/data/test854
+curl-7.32.0/tests/data/test153
+curl-7.32.0/tests/data/test1114
+curl-7.32.0/tests/data/test354
+curl-7.32.0/tests/data/test288
+curl-7.32.0/tests/data/test1094
+curl-7.32.0/tests/data/test90
+curl-7.32.0/tests/data/test1361
+curl-7.32.0/tests/data/test1051
+curl-7.32.0/tests/data/test258
+curl-7.32.0/tests/data/test610
+curl-7.32.0/tests/data/test111
+curl-7.32.0/tests/data/test261
+curl-7.32.0/tests/data/test92
+curl-7.32.0/tests/data/test299
+curl-7.32.0/tests/data/test602
+curl-7.32.0/tests/data/test138
+curl-7.32.0/tests/data/test1408
+curl-7.32.0/tests/data/test1322
+curl-7.32.0/tests/data/test406
+curl-7.32.0/tests/data/test1333
+curl-7.32.0/tests/data/test1355
+curl-7.32.0/tests/data/test1047
+curl-7.32.0/tests/data/test259
+curl-7.32.0/tests/data/test21
+curl-7.32.0/tests/data/test155
+curl-7.32.0/tests/data/test1383
+curl-7.32.0/tests/data/test1213
+curl-7.32.0/tests/data/test3
+curl-7.32.0/tests/data/test1384
+curl-7.32.0/tests/data/test192
+curl-7.32.0/tests/data/test263
+curl-7.32.0/tests/data/test1121
+curl-7.32.0/tests/data/test36
+curl-7.32.0/tests/data/test1382
+curl-7.32.0/tests/data/test404
+curl-7.32.0/tests/data/test66
+curl-7.32.0/tests/data/test167
+curl-7.32.0/tests/data/test620
+curl-7.32.0/tests/data/test1380
+curl-7.32.0/tests/data/test226
+curl-7.32.0/tests/data/test1053
+curl-7.32.0/tests/data/test1510
+curl-7.32.0/tests/data/test201
+curl-7.32.0/tests/data/test105
+curl-7.32.0/tests/data/test84
+curl-7.32.0/tests/data/test1032
+curl-7.32.0/tests/data/test143
+curl-7.32.0/tests/data/test62
+curl-7.32.0/tests/data/test150
+curl-7.32.0/tests/data/test2001
+curl-7.32.0/tests/data/test1368
+curl-7.32.0/tests/data/test83
+curl-7.32.0/tests/data/test78
+curl-7.32.0/tests/data/test1500
+curl-7.32.0/tests/data/test42
+curl-7.32.0/tests/data/test622
+curl-7.32.0/tests/data/test409
+curl-7.32.0/tests/data/test157
+curl-7.32.0/tests/data/test287
+curl-7.32.0/tests/data/test11
+curl-7.32.0/tests/data/test592
+curl-7.32.0/tests/data/test636
+curl-7.32.0/tests/data/test1067
+curl-7.32.0/tests/data/test323
+curl-7.32.0/tests/data/test1059
+curl-7.32.0/tests/data/test1070
+curl-7.32.0/tests/data/test312
+curl-7.32.0/tests/data/test805
+curl-7.32.0/tests/data/test1007
+curl-7.32.0/tests/data/test178
+curl-7.32.0/tests/data/test403
+curl-7.32.0/tests/data/test710
+curl-7.32.0/tests/data/test164
+curl-7.32.0/tests/data/test630
+curl-7.32.0/tests/data/test76
+curl-7.32.0/tests/data/test72
+curl-7.32.0/tests/data/test1076
+curl-7.32.0/tests/data/test1502
+curl-7.32.0/tests/data/test114
+curl-7.32.0/tests/data/test245
+curl-7.32.0/tests/data/test542
+curl-7.32.0/tests/data/test1390
+curl-7.32.0/tests/data/test1302
+curl-7.32.0/tests/data/test1230
+curl-7.32.0/tests/data/test1016
+curl-7.32.0/tests/data/test405
+curl-7.32.0/tests/data/test133
+curl-7.32.0/tests/data/test61
+curl-7.32.0/tests/data/test169
+curl-7.32.0/tests/data/test41
+curl-7.32.0/tests/data/test1086
+curl-7.32.0/tests/data/test313
+curl-7.32.0/tests/data/test179
+curl-7.32.0/tests/data/test593
+curl-7.32.0/tests/data/test546
+curl-7.32.0/tests/data/test215
+curl-7.32.0/tests/data/test1402
+curl-7.32.0/tests/data/test242
+curl-7.32.0/tests/data/test1223
+curl-7.32.0/tests/data/test1104
+curl-7.32.0/tests/data/test165
+curl-7.32.0/tests/data/test1503
+curl-7.32.0/tests/data/test88
+curl-7.32.0/tests/data/test290
+curl-7.32.0/tests/data/DISABLED
+curl-7.32.0/tests/data/test311
+curl-7.32.0/tests/data/test4
+curl-7.32.0/tests/data/test578
+curl-7.32.0/tests/data/test223
+curl-7.32.0/tests/data/test177
+curl-7.32.0/tests/data/test211
+curl-7.32.0/tests/data/test202
+curl-7.32.0/tests/data/test508
+curl-7.32.0/tests/data/test1131
+curl-7.32.0/tests/data/test911
+curl-7.32.0/tests/data/test13
+curl-7.32.0/tests/data/test597
+curl-7.32.0/tests/data/test1040
+curl-7.32.0/tests/data/test17
+curl-7.32.0/tests/data/test100
+curl-7.32.0/tests/data/test1019
+curl-7.32.0/tests/data/test1393
+curl-7.32.0/tests/data/test907
+curl-7.32.0/tests/data/test1348
+curl-7.32.0/tests/data/test1303
+curl-7.32.0/tests/data/test1401
+curl-7.32.0/tests/data/test1055
+curl-7.32.0/tests/data/test97
+curl-7.32.0/tests/data/test621
+curl-7.32.0/tests/data/test304
+curl-7.32.0/tests/data/test272
+curl-7.32.0/tests/data/test526
+curl-7.32.0/tests/data/test629
+curl-7.32.0/tests/data/test631
+curl-7.32.0/tests/data/test700
+curl-7.32.0/tests/data/test1210
+curl-7.32.0/tests/data/test624
+curl-7.32.0/tests/data/test550
+curl-7.32.0/tests/data/test1337
+curl-7.32.0/tests/data/test1901
+curl-7.32.0/tests/data/test538
+curl-7.32.0/tests/data/test1054
+curl-7.32.0/tests/data/test147
+curl-7.32.0/tests/data/test1358
+curl-7.32.0/tests/data/test38
+curl-7.32.0/tests/data/test626
+curl-7.32.0/tests/data/test1509
+curl-7.32.0/tests/data/test565
+curl-7.32.0/tests/data/test240
+curl-7.32.0/tests/data/test1078
+curl-7.32.0/tests/data/test586
+curl-7.32.0/tests/data/test544
+curl-7.32.0/tests/data/test12
+curl-7.32.0/tests/data/test209
+curl-7.32.0/tests/data/test222
+curl-7.32.0/tests/data/test708
+curl-7.32.0/tests/data/test1001
+curl-7.32.0/tests/data/test54
+curl-7.32.0/tests/data/test280
+curl-7.32.0/tests/data/test1324
+curl-7.32.0/tests/data/test519
+curl-7.32.0/tests/data/test1010
+curl-7.32.0/tests/data/test251
+curl-7.32.0/tests/data/test1309
+curl-7.32.0/tests/data/test1310
+curl-7.32.0/tests/data/test401
+curl-7.32.0/tests/data/test564
+curl-7.32.0/tests/data/test537
+curl-7.32.0/tests/data/test268
+curl-7.32.0/tests/data/Makefile.am
+curl-7.32.0/tests/data/test1037
+curl-7.32.0/tests/data/Makefile.in
+curl-7.32.0/tests/data/test1029
+curl-7.32.0/tests/data/test188
+curl-7.32.0/tests/data/test614
+curl-7.32.0/tests/data/test95
+curl-7.32.0/tests/data/test144
+curl-7.32.0/tests/data/test1108
+curl-7.32.0/tests/data/test49
+curl-7.32.0/tests/data/test904
+curl-7.32.0/tests/data/test32
+curl-7.32.0/tests/data/test1087
+curl-7.32.0/tests/data/test541
+curl-7.32.0/tests/data/test1125
+curl-7.32.0/tests/data/test634
+curl-7.32.0/tests/data/test7
+curl-7.32.0/tests/data/test2021
+curl-7.32.0/tests/data/test301
+curl-7.32.0/tests/data/test1207
+curl-7.32.0/tests/data/test1096
+curl-7.32.0/tests/data/test1320
+curl-7.32.0/tests/data/test122
+curl-7.32.0/tests/data/test253
+curl-7.32.0/tests/data/test283
+curl-7.32.0/tests/data/test1052
+curl-7.32.0/tests/data/test270
+curl-7.32.0/tests/data/test2
+curl-7.32.0/tests/data/test613
+curl-7.32.0/tests/data/test1017
+curl-7.32.0/tests/data/test1058
+curl-7.32.0/tests/data/test850
+curl-7.32.0/tests/data/test205
+curl-7.32.0/tests/data/test247
+curl-7.32.0/tests/data/test135
+curl-7.32.0/tests/data/test2029
+curl-7.32.0/tests/data/test2032
+curl-7.32.0/tests/data/test531
+curl-7.32.0/tests/data/test1412
+curl-7.32.0/tests/data/test1206
+curl-7.32.0/tests/data/test1095
+curl-7.32.0/tests/data/test239
+curl-7.32.0/tests/data/test1209
+curl-7.32.0/tests/data/test243
+curl-7.32.0/tests/data/test1083
+curl-7.32.0/tests/data/test585
+curl-7.32.0/tests/data/test639
+curl-7.32.0/tests/data/test632
+curl-7.32.0/tests/data/test63
+curl-7.32.0/tests/data/test1211
+curl-7.32.0/tests/data/test39
+curl-7.32.0/tests/data/test1357
+curl-7.32.0/tests/data/test233
+curl-7.32.0/tests/data/test10
+curl-7.32.0/tests/data/test1507
+curl-7.32.0/tests/data/test108
+curl-7.32.0/tests/data/test225
+curl-7.32.0/tests/data/test1508
+curl-7.32.0/tests/data/test281
+curl-7.32.0/tests/data/test594
+curl-7.32.0/tests/data/test1090
+curl-7.32.0/tests/data/test2009
+curl-7.32.0/tests/data/test175
+curl-7.32.0/tests/data/test1903
+curl-7.32.0/tests/data/test5
+curl-7.32.0/tests/data/test69
+curl-7.32.0/tests/data/test1385
+curl-7.32.0/tests/data/test707
+curl-7.32.0/tests/data/test2028
+curl-7.32.0/tests/data/test562
+curl-7.32.0/tests/data/test1396
+curl-7.32.0/tests/data/test570
+curl-7.32.0/tests/data/test29
+curl-7.32.0/tests/data/test619
+curl-7.32.0/tests/data/test1049
+curl-7.32.0/tests/data/test583
+curl-7.32.0/tests/data/test1128
+curl-7.32.0/tests/data/test298
+curl-7.32.0/tests/data/test1013
+curl-7.32.0/tests/data/test1127
+curl-7.32.0/tests/data/test127
+curl-7.32.0/tests/data/test1005
+curl-7.32.0/tests/data/test1028
+curl-7.32.0/tests/data/test853
+curl-7.32.0/tests/data/test1366
+curl-7.32.0/tests/data/test161
+curl-7.32.0/tests/data/test1062
+curl-7.32.0/tests/data/test555
+curl-7.32.0/tests/data/test30
+curl-7.32.0/tests/data/test901
+curl-7.32.0/tests/data/test1066
+curl-7.32.0/tests/data/test6
+curl-7.32.0/tests/data/test1084
+curl-7.32.0/tests/data/test191
+curl-7.32.0/tests/data/test303
+curl-7.32.0/tests/data/test1328
+curl-7.32.0/tests/data/test139
+curl-7.32.0/tests/data/test1089
+curl-7.32.0/tests/data/test803
+curl-7.32.0/tests/data/test560
+curl-7.32.0/tests/data/test806
+curl-7.32.0/tests/data/test1367
+curl-7.32.0/tests/data/test852
+curl-7.32.0/tests/data/test33
+curl-7.32.0/tests/data/test1203
+curl-7.32.0/tests/data/test1000
+curl-7.32.0/tests/data/test264
+curl-7.32.0/tests/data/test297
+curl-7.32.0/tests/data/test615
+curl-7.32.0/tests/data/test1041
+curl-7.32.0/tests/data/test2007
+curl-7.32.0/tests/data/test1072
+curl-7.32.0/tests/data/test35
+curl-7.32.0/tests/data/test605
+curl-7.32.0/tests/data/test1363
+curl-7.32.0/tests/data/test638
+curl-7.32.0/tests/data/test285
+curl-7.32.0/tests/data/test584
+curl-7.32.0/tests/data/test279
+curl-7.32.0/tests/data/test512
+curl-7.32.0/tests/data/test237
+curl-7.32.0/tests/data/test1024
+curl-7.32.0/tests/data/test1202
+curl-7.32.0/tests/data/test600
+curl-7.32.0/tests/data/test1353
+curl-7.32.0/tests/data/test176
+curl-7.32.0/tests/data/test1100
+curl-7.32.0/tests/data/test195
+curl-7.32.0/tests/data/test271
+curl-7.32.0/tests/data/test1233
+curl-7.32.0/tests/data/test1003
+curl-7.32.0/tests/certs/
+curl-7.32.0/tests/certs/Server-localhost0h-sv.crt
+curl-7.32.0/tests/certs/Server-localhost-sv.der
+curl-7.32.0/tests/certs/srp-verifier-conf
+curl-7.32.0/tests/certs/Server-localhost-sv.crt
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.prm
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.crl
+curl-7.32.0/tests/certs/Server-localhost-sv.key
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.key
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.csr
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.pem
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.prm
+curl-7.32.0/tests/certs/Server-localhost-sv.pem
+curl-7.32.0/tests/certs/Server-localhost0h-sv.der
+curl-7.32.0/tests/certs/Server-localhost0h-sv.p12
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.crt
+curl-7.32.0/tests/certs/Server-localhost-sv.csr
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.crt
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.cnf
+curl-7.32.0/tests/certs/Server-localhost0h-sv.dhp
+curl-7.32.0/tests/certs/Server-localhost0h-sv.crl
+curl-7.32.0/tests/certs/Server-localhost0h-sv.pem
+curl-7.32.0/tests/certs/srp-verifier-db
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.der
+curl-7.32.0/tests/certs/scripts/
+curl-7.32.0/tests/certs/scripts/genserv.sh
+curl-7.32.0/tests/certs/scripts/genroot.sh
+curl-7.32.0/tests/certs/scripts/Makefile.am
+curl-7.32.0/tests/certs/scripts/Makefile.in
+curl-7.32.0/tests/certs/Server-localhost-sv.p12
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.dhp
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.key
+curl-7.32.0/tests/certs/Server-localhost0h-sv.csr
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.csr
+curl-7.32.0/tests/certs/Server-localhost0h-sv.key
+curl-7.32.0/tests/certs/Makefile.am
+curl-7.32.0/tests/certs/Makefile.in
+curl-7.32.0/tests/certs/Server-localhost.nn-sv.der
+curl-7.32.0/tests/certs/Server-localhost-sv.dhp
+curl-7.32.0/tests/certs/Server-localhost0h-sv.prm
+curl-7.32.0/tests/certs/Server-localhost-sv.crl
+curl-7.32.0/tests/certs/Server-localhost-sv.prm
+curl-7.32.0/tests/certs/EdelCurlRoot-ca.cacert
+curl-7.32.0/tests/rtspserver.pl
+curl-7.32.0/tests/testcurl.1
+curl-7.32.0/tests/symbol-scan.pl
+curl-7.32.0/tests/directories.pm
+curl-7.32.0/tests/mem-include-scan.pl
+curl-7.32.0/tests/runtests.1
+curl-7.32.0/tests/ftpserver.pl
+curl-7.32.0/tests/CMakeLists.txt
+curl-7.32.0/tests/testcurl.html
+curl-7.32.0/tests/runtests.html
+curl-7.32.0/tests/valgrind.pm
+curl-7.32.0/tests/httpserver.pl
+curl-7.32.0/tests/runtests.pdf
+curl-7.32.0/tests/http_pipe.py
+curl-7.32.0/tests/runtests.pl
+curl-7.32.0/tests/Makefile.am
+curl-7.32.0/tests/Makefile.in
+curl-7.32.0/tests/secureserver.pl
+curl-7.32.0/tests/server/
+curl-7.32.0/tests/server/server_sockaddr.h
+curl-7.32.0/tests/server/tftpd.c
+curl-7.32.0/tests/server/testpart.c
+curl-7.32.0/tests/server/Makefile.inc
+curl-7.32.0/tests/server/tftp.h
+curl-7.32.0/tests/server/getpart.h
+curl-7.32.0/tests/server/sws.c
+curl-7.32.0/tests/server/getpart.c
+curl-7.32.0/tests/server/resolve.c
+curl-7.32.0/tests/server/fake_ntlm.c
+curl-7.32.0/tests/server/server_setup.h
+curl-7.32.0/tests/server/util.c
+curl-7.32.0/tests/server/base64.pl
+curl-7.32.0/tests/server/Makefile.am
+curl-7.32.0/tests/server/Makefile.in
+curl-7.32.0/tests/server/util.h
+curl-7.32.0/tests/server/rtspd.c
+curl-7.32.0/tests/server/sockfilt.c
+curl-7.32.0/tests/testcurl.pl
+curl-7.32.0/tests/tftpserver.pl
+curl-7.32.0/tests/unit/
+curl-7.32.0/tests/unit/unit1396.c
+curl-7.32.0/tests/unit/Makefile.inc
+curl-7.32.0/tests/unit/curlcheck.h
+curl-7.32.0/tests/unit/README
+curl-7.32.0/tests/unit/unit1330.c
+curl-7.32.0/tests/unit/unit1395.c
+curl-7.32.0/tests/unit/unit1394.c
+curl-7.32.0/tests/unit/unit1307.c
+curl-7.32.0/tests/unit/unit1302.c
+curl-7.32.0/tests/unit/unit1304.c
+curl-7.32.0/tests/unit/unit1308.c
+curl-7.32.0/tests/unit/unit1309.c
+curl-7.32.0/tests/unit/unit1301.c
+curl-7.32.0/tests/unit/unit1305.c
+curl-7.32.0/tests/unit/Makefile.am
+curl-7.32.0/tests/unit/Makefile.in
+curl-7.32.0/tests/unit/unit1300.c
+curl-7.32.0/tests/unit/unit1303.c
+curl-7.32.0/tests/valgrind.supp
+curl-7.32.0/maketgz
+curl-7.32.0/CMake/
+curl-7.32.0/CMake/Utilities.cmake
+curl-7.32.0/CMake/CurlTests.c
+curl-7.32.0/CMake/FindZLIB.cmake
+curl-7.32.0/CMake/CurlCheckCSourceCompiles.cmake
+curl-7.32.0/CMake/CurlCheckCSourceRuns.cmake
+curl-7.32.0/CMake/FindOpenSSL.cmake
+curl-7.32.0/CMake/Platforms/
+curl-7.32.0/CMake/Platforms/WindowsCache.cmake
+curl-7.32.0/CMake/OtherTests.cmake
+curl-7.32.0/CMake/CMakeConfigurableFile.in
+curl-7.32.0/Makefile.am
+curl-7.32.0/Makefile.in
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether to enable debug build options... no
+checking whether to enable compiler optimizer... (assumed) yes
+checking whether to enable strict compiler warnings... no
+checking whether to enable compiler warnings as errors... no
+checking whether to enable curl debug memory tracking... no
+checking whether to enable hiding of library internal symbols... yes
+checking whether to enable c-ares for DNS lookups... no
+checking for path separator... :
+checking for sed... /bin/sed
+checking for grep... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ar... /usr/bin/ar
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc and cc understand -c and -o together... yes
+checking how to run the C preprocessor... gcc -E
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... no
+checking for mawk... mawk
+checking whether make sets $(MAKE)... yes
+checking for style of include used by make... GNU
+checking whether make supports nested variables... yes
+checking dependency style of gcc... gcc3
+checking curl version... 7.32.0
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+checking for sys/types.h... yes
+checking for stdint.h... yes
+checking for inttypes.h... yes
+checking for grep that handles long lines and -e... (cached) /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... (cached) yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... (cached) yes
+checking for stdint.h... (cached) yes
+checking for unistd.h... yes
+checking size of long... 8
+checking size of void*... 8
+checking for 64-bit curl_off_t data type... long
+checking size of curl_off_t... 8
+checking formatting string directive for curl_off_t... "ld"
+checking formatting string directive for unsigned curl_off_t... "lu"
+checking constant suffix string for curl_off_t... L
+checking constant suffix string for unsigned curl_off_t... UL
+checking if OS is AIX (to define _ALL_SOURCE)... no
+checking if _THREAD_SAFE is already defined... no
+checking if _THREAD_SAFE is actually needed... no
+checking if _THREAD_SAFE is onwards defined... no
+checking if _REENTRANT is already defined... no
+checking if _REENTRANT is actually needed... no
+checking if _REENTRANT is onwards defined... no
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... no
+checking how to print strings... printf
+checking for a sed that does not truncate output... (cached) /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands "+="... yes
+checking how to convert x86_64-unknown-linux-gnu file names to x86_64-unknown-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-unknown-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... ranlib
+checking command to parse /usr/bin/nm -B output from gcc object... ok
+checking for sysroot... no
+checking for mt... mt
+checking if mt is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if gcc supports -fno-rtti -fno-exceptions... no
+checking for gcc option to produce PIC... -fPIC -DPIC
+checking if gcc PIC flag -fPIC -DPIC works... yes
+checking if gcc static flag -static works... yes
+checking if gcc supports -c -o file.o... yes
+checking if gcc supports -c -o file.o... (cached) yes
+checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking whether to build shared libraries with -version-info... yes
+checking whether to build shared libraries with -no-undefined... no
+checking whether to build shared libraries with -mimpure-text... no
+checking whether to build shared libraries with PIC... yes
+checking whether to build static libraries with PIC... yes
+checking whether to build shared libraries only... no
+checking whether to build static libraries only... no
+checking for inline... inline
+checking if compiler is DEC/Compaq/HP C... no
+checking if compiler is HP-UX C... no
+checking if compiler is IBM C... no
+checking if compiler is Intel C... no
+checking if compiler is clang... no
+checking if compiler is GNU C... yes
+checking if compiler is LCC... no
+checking if compiler is SGI MIPSpro C... no
+checking if compiler is SGI MIPS C... no
+checking if compiler is SunPro C... no
+checking if compiler is Tiny C... no
+checking if compiler is Watcom C... no
+checking if compiler accepts debug disabling options... yes
+configure: compiler options added: 
+checking if compiler optimizer assumed setting might be used... yes
+checking if compiler accepts optimizer enabling options... yes
+configure: compiler options added: -O2
+checking if compiler accepts strict warning options... yes
+configure: compiler options added: -Wno-system-headers 
+checking if compiler halts on compilation errors... yes
+checking if compiler halts on negative sized arrays... yes
+checking if compiler halts on function prototype mismatch... yes
+checking if compiler supports hiding library internal symbols... yes
+checking for windows.h... no
+checking whether build target is a native Windows one... no
+checking whether build target supports WIN32 file API... no
+checking whether to support http... yes
+checking whether to support ftp... yes
+checking whether to support file... yes
+checking whether to support ldap... yes
+checking whether to support ldaps... yes
+checking whether to support rtsp... yes
+checking whether to support proxies... yes
+checking whether to support dict... yes
+checking whether to support telnet... yes
+checking whether to support tftp... yes
+checking whether to support pop3... yes
+checking whether to support imap... yes
+checking whether to support smtp... yes
+checking whether to support gopher... yes
+checking whether to provide built-in manual... yes
+checking whether to enable generation of C code... yes
+checking whether to use libgcc... no
+checking if X/Open network library is required... no
+checking for gethostbyname... yes
+checking for strcasecmp... yes
+checking for windows.h... (cached) no
+checking for winsock.h... (cached) no
+checking for winsock2.h... (cached) no
+checking for connect in libraries... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking for sys/types.h... (cached) yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking for monotonic clock_gettime... yes
+checking for clock_gettime in libraries... no additional lib required
+checking if monotonic clock_gettime works... yes
+checking for inflateEnd in -lz... no
+checking zlib.h usability... no
+checking zlib.h presence... no
+checking for zlib.h... no
+checking for lber.h... no
+checking for ldap.h... no
+checking for ldapssl.h... no
+checking for ldap_ssl.h... no
+checking for LDAP libraries... cannot find LDAP libraries
+checking whether to enable ipv6... yes
+checking if struct sockaddr_in6 has sin6_scope_id member... yes
+checking if argv can be written to... yes
+checking if Kerberos4 support is requested... no
+checking if SPNEGO support is requested... no
+checking if GSSAPI support is requested... no
+checking whether to enable Windows native SSL/TLS (Windows native builds only)... no
+checking whether to enable iOS/Mac OS X native SSL/TLS... no
+checking for pkg-config... /usr/bin/pkg-config
+checking for openssl options with pkg-config... no
+checking for CRYPTO_lock in -lcrypto... no
+checking for CRYPTO_add_lock in -lcrypto... no
+checking for ssl_version in -laxtls... no
+checking default CA cert bundle/path... /etc/ssl/certs/ca-certificates.crt
+checking for libssh2_channel_open_ex in -lssh2... no
+checking libssh2.h usability... no
+checking libssh2.h presence... no
+checking for libssh2.h... no
+checking for RTMP_Init in -lrtmp... no
+checking whether versioned symbols are wanted... no
+checking whether to enable Windows native IDN (Windows native builds only)... no
+checking whether to build with libidn... (assumed) yes
+checking for pkg-config... (cached) /usr/bin/pkg-config
+checking for libidn options with pkg-config... no
+configure: IDN_LIBS: "-lidn"
+configure: IDN_LDFLAGS: ""
+configure: IDN_CPPFLAGS: ""
+configure: IDN_DIR: ""
+checking if idna_to_ascii_4i can be linked... no
+checking if idna_to_ascii_lz can be linked... no
+checking for ANSI C header files... (cached) yes
+checking for malloc.h... yes
+checking for memory.h... (cached) yes
+checking for sys/types.h... (cached) yes
+checking for sys/time.h... (cached) yes
+checking for sys/select.h... yes
+checking for sys/socket.h... yes
+checking for sys/ioctl.h... yes
+checking for sys/uio.h... yes
+checking for assert.h... yes
+checking for unistd.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for limits.h... yes
+checking for arpa/inet.h... yes
+checking for net/if.h... yes
+checking for netinet/in.h... yes
+checking for sys/un.h... yes
+checking for netinet/tcp.h... yes
+checking for netdb.h... yes
+checking for sys/sockio.h... no
+checking for sys/stat.h... (cached) yes
+checking for sys/param.h... yes
+checking for termios.h... yes
+checking for termio.h... yes
+checking for sgtty.h... yes
+checking for fcntl.h... yes
+checking for alloca.h... yes
+checking for time.h... (cached) yes
+checking for io.h... no
+checking for pwd.h... yes
+checking for utime.h... yes
+checking for sys/utime.h... no
+checking for sys/poll.h... yes
+checking for poll.h... yes
+checking for socket.h... no
+checking for sys/resource.h... yes
+checking for libgen.h... yes
+checking for locale.h... yes
+checking for errno.h... yes
+checking for stdbool.h... yes
+checking for arpa/tftp.h... yes
+checking for sys/filio.h... no
+checking for sys/wait.h... yes
+checking for setjmp.h... yes
+checking for an ANSI C-conforming const... yes
+checking for compiler support of C99 variadic macro style... yes
+checking for compiler support of old gcc variadic macro style... yes
+checking for size_t... yes
+checking whether time.h and sys/time.h may both be included... (cached) yes
+checking for sys/types.h... (cached) yes
+checking for sys/time.h... (cached) yes
+checking for time.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for struct timeval... yes
+checking run-time libs availability... fine
+checking size of size_t... 8
+checking size of long... (cached) 8
+checking size of int... 4
+checking size of short... 2
+checking size of time_t... 8
+checking size of off_t... 8
+checking for long long... yes
+checking if numberLL works... yes
+checking for ssize_t... yes
+checking for bool... yes
+checking for windows.h... (cached) no
+checking for winsock2.h... (cached) no
+checking for ws2tcpip.h... (cached) no
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for curl_socklen_t data type... socklen_t
+checking size of curl_socklen_t... 4
+checking for sys/types.h... (cached) yes
+checking for poll.h... (cached) yes
+checking for sys/poll.h... (cached) yes
+checking for in_addr_t... yes
+checking for struct sockaddr_storage... yes
+checking signal.h usability... yes
+checking signal.h presence... yes
+checking for signal.h... yes
+checking for sig_atomic_t... yes
+checking if sig_atomic_t is already defined as volatile... no
+checking return type of signal handlers... void
+checking for sys/select.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for select... yes
+checking types of args and return type for select... int,fd_set *,struct timeval *,int
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for recv... yes
+checking types of args and return type for recv... int,void *,size_t,int,ssize_t
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for send... yes
+checking types of args and return type for send... int,const void *,size_t,int,ssize_t
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for MSG_NOSIGNAL... yes
+checking for sys/types.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking if alarm can be linked... yes
+checking if alarm is prototyped... yes
+checking if alarm is compilable... yes
+checking if alarm usage allowed... yes
+checking if alarm might be used... yes
+checking for sys/types.h... (cached) yes
+checking for string.h... (cached) yes
+checking for strings.h... (cached) yes
+checking for sys/types.h... (cached) yes
+checking for libgen.h... (cached) yes
+checking if basename can be linked... yes
+checking if basename is prototyped... yes
+checking if basename is compilable... yes
+checking if basename usage allowed... yes
+checking if basename might be used... yes
+checking for sys/types.h... (cached) yes
+checking for socket.h... (cached) no
+checking if closesocket can be linked... no
+checking if closesocket might be used... no
+checking if CloseSocket can be linked... no
+checking if CloseSocket might be used... no
+checking if connect can be linked... yes
+checking if connect is prototyped... yes
+checking if connect is compilable... yes
+checking if connect usage allowed... yes
+checking if connect might be used... yes
+checking for sys/types.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for fcntl.h... (cached) yes
+checking if fcntl can be linked... yes
+checking if fcntl is prototyped... yes
+checking if fcntl is compilable... yes
+checking if fcntl usage allowed... yes
+checking if fcntl might be used... yes
+checking if fcntl O_NONBLOCK is compilable... yes
+checking if fcntl O_NONBLOCK usage allowed... yes
+checking if fcntl O_NONBLOCK might be used... yes
+checking for sys/types.h... (cached) yes
+checking for stdio.h... yes
+checking if fdopen can be linked... yes
+checking if fdopen is prototyped... yes
+checking if fdopen is compilable... yes
+checking if fdopen usage allowed... yes
+checking if fdopen might be used... yes
+checking for sys/types.h... (cached) yes
+checking for netdb.h... (cached) yes
+checking if freeaddrinfo can be linked... yes
+checking if freeaddrinfo is prototyped... yes
+checking if freeaddrinfo is compilable... yes
+checking if freeaddrinfo usage allowed... yes
+checking if freeaddrinfo might be used... yes
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for netinet/in.h... (cached) yes
+checking for ifaddrs.h... yes
+checking if freeifaddrs can be linked... yes
+checking if freeifaddrs is prototyped... yes
+checking if freeifaddrs is compilable... yes
+checking if freeifaddrs usage allowed... yes
+checking if freeifaddrs might be used... yes
+checking for sys/types.h... (cached) yes
+checking for sys/xattr.h... yes
+checking if fsetxattr can be linked... yes
+checking if fsetxattr is prototyped... yes
+checking if fsetxattr takes 5 args.... yes
+checking if fsetxattr is compilable... yes
+checking if fsetxattr usage allowed... yes
+checking if fsetxattr might be used... yes
+checking if ftruncate can be linked... yes
+checking if ftruncate is prototyped... yes
+checking if ftruncate is compilable... yes
+checking if ftruncate usage allowed... yes
+checking if ftruncate might be used... yes
+checking for sys/types.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking if getaddrinfo can be linked... yes
+checking if getaddrinfo is prototyped... yes
+checking if getaddrinfo is compilable... yes
+checking if getaddrinfo seems to work... yes
+checking if getaddrinfo usage allowed... yes
+checking if getaddrinfo might be used... yes
+checking if getaddrinfo is threadsafe... yes
+checking if gai_strerror can be linked... yes
+checking if gai_strerror is prototyped... yes
+checking if gai_strerror is compilable... yes
+checking if gai_strerror usage allowed... yes
+checking if gai_strerror might be used... yes
+checking if gethostbyaddr can be linked... yes
+checking if gethostbyaddr is prototyped... yes
+checking if gethostbyaddr is compilable... yes
+checking if gethostbyaddr usage allowed... yes
+checking if gethostbyaddr might be used... yes
+checking if gethostbyaddr_r can be linked... yes
+checking if gethostbyaddr_r is prototyped... yes
+checking if gethostbyaddr_r takes 5 args.... no
+checking if gethostbyaddr_r takes 7 args.... no
+checking if gethostbyaddr_r takes 8 args.... yes
+checking if gethostbyaddr_r is compilable... yes
+checking if gethostbyaddr_r usage allowed... yes
+checking if gethostbyaddr_r might be used... yes
+checking if gethostbyname can be linked... yes
+checking if gethostbyname is prototyped... yes
+checking if gethostbyname is compilable... yes
+checking if gethostbyname usage allowed... yes
+checking if gethostbyname might be used... yes
+checking if gethostbyname_r can be linked... yes
+checking if gethostbyname_r is prototyped... yes
+checking if gethostbyname_r takes 3 args.... no
+checking if gethostbyname_r takes 5 args.... no
+checking if gethostbyname_r takes 6 args.... yes
+checking if gethostbyname_r is compilable... yes
+checking if gethostbyname_r usage allowed... yes
+checking if gethostbyname_r might be used... yes
+checking if gethostname can be linked... yes
+checking if gethostname is prototyped... yes
+checking if gethostname is compilable... yes
+checking for gethostname arg 2 data type... size_t
+checking if gethostname usage allowed... yes
+checking if gethostname might be used... yes
+checking if getifaddrs can be linked... yes
+checking if getifaddrs is prototyped... yes
+checking if getifaddrs is compilable... yes
+checking if getifaddrs seems to work... yes
+checking if getifaddrs usage allowed... yes
+checking if getifaddrs might be used... yes
+checking if getservbyport_r can be linked... yes
+checking if getservbyport_r is prototyped... yes
+checking if getservbyport_r takes 4 args.... no
+checking if getservbyport_r takes 5 args.... no
+checking if getservbyport_r takes 6 args.... yes
+checking if getservbyport_r is compilable... yes
+checking if getservbyport_r usage allowed... yes
+checking if getservbyport_r might be used... yes
+checking for sys/types.h... (cached) yes
+checking for sys/time.h... (cached) yes
+checking for time.h... (cached) yes
+checking if gmtime_r can be linked... yes
+checking if gmtime_r is prototyped... yes
+checking if gmtime_r is compilable... yes
+checking if gmtime_r seems to work... yes
+checking if gmtime_r usage allowed... yes
+checking if gmtime_r might be used... yes
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for netinet/in.h... (cached) yes
+checking for arpa/inet.h... (cached) yes
+checking if inet_ntoa_r can be linked... no
+checking if inet_ntoa_r might be used... no
+checking if inet_ntop can be linked... yes
+checking if inet_ntop is prototyped... yes
+checking if inet_ntop is compilable... yes
+checking if inet_ntop seems to work... yes
+checking if inet_ntop usage allowed... yes
+checking if inet_ntop might be used... yes
+checking if inet_pton can be linked... yes
+checking if inet_pton is prototyped... yes
+checking if inet_pton is compilable... yes
+checking if inet_pton seems to work... yes
+checking if inet_pton usage allowed... yes
+checking if inet_pton might be used... yes
+checking for sys/types.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for sys/ioctl.h... (cached) yes
+checking for stropts.h... yes
+checking if ioctl can be linked... yes
+checking if ioctl is prototyped... yes
+checking if ioctl is compilable... yes
+checking if ioctl usage allowed... yes
+checking if ioctl might be used... yes
+checking if ioctl FIONBIO is compilable... yes
+checking if ioctl FIONBIO usage allowed... yes
+checking if ioctl FIONBIO might be used... yes
+checking if ioctl SIOCGIFADDR is compilable... yes
+checking if ioctl SIOCGIFADDR usage allowed... yes
+checking if ioctl SIOCGIFADDR might be used... yes
+checking if ioctlsocket can be linked... no
+checking if ioctlsocket might be used... no
+checking if IoctlSocket can be linked... no
+checking if IoctlSocket might be used... no
+checking if localtime_r can be linked... yes
+checking if localtime_r is prototyped... yes
+checking if localtime_r is compilable... yes
+checking if localtime_r seems to work... yes
+checking if localtime_r usage allowed... yes
+checking if localtime_r might be used... yes
+checking if memrchr can be linked... yes
+checking if memrchr is prototyped... no
+checking if memrchr might be used... no
+checking if poll can be linked... yes
+checking if poll is prototyped... yes
+checking if poll is compilable... yes
+checking if poll seems to work... yes
+checking if poll usage allowed... yes
+checking if poll might be used... yes
+checking if setsockopt can be linked... yes
+checking if setsockopt is prototyped... yes
+checking if setsockopt is compilable... yes
+checking if setsockopt usage allowed... yes
+checking if setsockopt might be used... yes
+checking if setsockopt SO_NONBLOCK is compilable... no
+checking if setsockopt SO_NONBLOCK might be used... no
+checking for sys/types.h... (cached) yes
+checking for signal.h... (cached) yes
+checking if sigaction can be linked... yes
+checking if sigaction is prototyped... yes
+checking if sigaction is compilable... yes
+checking if sigaction usage allowed... yes
+checking if sigaction might be used... yes
+checking if siginterrupt can be linked... yes
+checking if siginterrupt is prototyped... yes
+checking if siginterrupt is compilable... yes
+checking if siginterrupt usage allowed... yes
+checking if siginterrupt might be used... yes
+checking if signal can be linked... yes
+checking if signal is prototyped... yes
+checking if signal is compilable... yes
+checking if signal usage allowed... yes
+checking if signal might be used... yes
+checking for sys/types.h... (cached) yes
+checking for setjmp.h... (cached) yes
+checking if sigsetjmp can be linked... no
+checking if sigsetjmp seems a macro... yes
+checking if sigsetjmp is compilable... yes
+checking if sigsetjmp usage allowed... yes
+checking if sigsetjmp might be used... yes
+checking if socket can be linked... yes
+checking if socket is prototyped... yes
+checking if socket is compilable... yes
+checking if socket usage allowed... yes
+checking if socket might be used... yes
+checking if socketpair can be linked... yes
+checking if socketpair is prototyped... yes
+checking if socketpair is compilable... yes
+checking if socketpair usage allowed... yes
+checking if socketpair might be used... yes
+checking if strcasecmp can be linked... yes
+checking if strcasecmp is prototyped... yes
+checking if strcasecmp is compilable... yes
+checking if strcasecmp usage allowed... yes
+checking if strcasecmp might be used... yes
+checking if strcmpi can be linked... no
+checking if strcmpi might be used... no
+checking if strdup can be linked... yes
+checking if strdup is prototyped... yes
+checking if strdup is compilable... yes
+checking if strdup usage allowed... yes
+checking if strdup might be used... yes
+checking if strerror_r can be linked... yes
+checking if strerror_r is prototyped... yes
+checking if strerror_r is compilable... yes
+checking if strerror_r is glibc like... no
+checking if strerror_r is POSIX like... yes
+checking if strerror_r seems to work... yes
+checking if strerror_r usage allowed... yes
+checking if strerror_r might be used... yes
+checking if stricmp can be linked... no
+checking if stricmp might be used... no
+checking if strncasecmp can be linked... yes
+checking if strncasecmp is prototyped... yes
+checking if strncasecmp is compilable... yes
+checking if strncasecmp usage allowed... yes
+checking if strncasecmp might be used... yes
+checking if strncmpi can be linked... no
+checking if strncmpi might be used... no
+checking if strnicmp can be linked... no
+checking if strnicmp might be used... no
+checking if strstr can be linked... yes
+checking if strstr is prototyped... yes
+checking if strstr is compilable... yes
+checking if strstr usage allowed... yes
+checking if strstr might be used... yes
+checking if strtok_r can be linked... yes
+checking if strtok_r is prototyped... yes
+checking if strtok_r is compilable... yes
+checking if strtok_r usage allowed... yes
+checking if strtok_r might be used... yes
+checking if strtoll can be linked... yes
+checking if strtoll is prototyped... yes
+checking if strtoll is compilable... yes
+checking if strtoll usage allowed... yes
+checking if strtoll might be used... yes
+checking for sys/types.h... (cached) yes
+checking for sys/uio.h... (cached) yes
+checking if writev can be linked... yes
+checking if writev is prototyped... yes
+checking if writev is compilable... yes
+checking if writev usage allowed... yes
+checking if writev might be used... yes
+checking for fork... yes
+checking for geteuid... yes
+checking for getpass_r... no
+checking deeper for getpass_r... but still no
+checking for getppid... yes
+checking for getprotobyname... yes
+checking for getpwuid... yes
+checking for getrlimit... yes
+checking for gettimeofday... yes
+checking for inet_addr... yes
+checking for perror... yes
+checking for pipe... yes
+checking for setlocale... yes
+checking for setmode... no
+checking deeper for setmode... but still no
+checking for setrlimit... yes
+checking for uname... yes
+checking for utime... yes
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for netdb.h... (cached) yes
+checking for getnameinfo... yes
+checking types of arguments for getnameinfo... const struct sockaddr *,socklen_t,socklen_t,int
+checking for stdio.h... (cached) yes
+checking for sys/types.h... (cached) yes
+checking for sys/socket.h... (cached) yes
+checking for netdb.h... (cached) yes
+checking for netinet/in.h... (cached) yes
+checking for arpa/inet.h... (cached) yes
+checking for working NI_WITHSCOPEID... no
+checking how to set a socket into non-blocking mode... fcntl O_NONBLOCK
+checking for perl... /usr/bin/perl
+checking for gnroff... no
+checking for nroff... /usr/bin/nroff
+checking how to use *nroff to get plain text from man pages... -man
+checking whether to enable the threaded resolver... no
+checking whether to enable verbose strings... yes
+checking whether to enable SSPI support (Windows native builds only)... no
+checking whether to enable cryptographic authentication methods... yes
+checking whether to enable NTLM delegation to winbind's helper... no
+checking whether to enable TLS-SRP authentication... yes
+checking whether to enable support for cookies... yes
+checking whether hiding of library internal symbols will actually happen... yes
+checking whether to enforce SONAME bump... no
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating docs/Makefile
+config.status: creating docs/examples/Makefile
+config.status: creating docs/libcurl/Makefile
+config.status: creating include/Makefile
+config.status: creating include/curl/Makefile
+config.status: creating src/Makefile
+config.status: creating lib/Makefile
+config.status: creating lib/libcurl.vers
+config.status: creating tests/Makefile
+config.status: creating tests/certs/Makefile
+config.status: creating tests/certs/scripts/Makefile
+config.status: creating tests/data/Makefile
+config.status: creating tests/server/Makefile
+config.status: creating tests/libtest/Makefile
+config.status: creating tests/unit/Makefile
+config.status: creating packages/Makefile
+config.status: creating packages/Win32/Makefile
+config.status: creating packages/Win32/cygwin/Makefile
+config.status: creating packages/Linux/Makefile
+config.status: creating packages/Linux/RPM/Makefile
+config.status: creating packages/Linux/RPM/curl.spec
+config.status: creating packages/Linux/RPM/curl-ssl.spec
+config.status: creating packages/Solaris/Makefile
+config.status: creating packages/EPM/curl.list
+config.status: creating packages/EPM/Makefile
+config.status: creating packages/vms/Makefile
+config.status: creating packages/AIX/Makefile
+config.status: creating packages/AIX/RPM/Makefile
+config.status: creating packages/AIX/RPM/curl.spec
+config.status: creating curl-config
+config.status: creating libcurl.pc
+config.status: creating lib/curl_config.h
+config.status: creating include/curl/curlbuild.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+configure: Configured to build curl/libcurl:
+
+  curl version:     7.32.0
+  Host setup:       x86_64-unknown-linux-gnu
+  Install prefix:   /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL
+  Compiler:         gcc
+  SSL support:      no      (--with-{ssl,gnutls,nss,polarssl,cyassl,axtls,winssl,darwinssl} )
+  SSH support:      no      (--with-libssh2)
+  zlib support:     no      (--with-zlib)
+  krb4 support:     no      (--with-krb4*)
+  GSSAPI support:   no      (--with-gssapi)
+  SPNEGO support:   no      (--with-spnego)
+  TLS-SRP support:  no      (--enable-tls-srp)
+  resolver:         default (--enable-ares / --enable-threaded-resolver)
+  ipv6 support:     enabled
+  IDN support:      no      (--with-{libidn,winidn})
+  Build libcurl:    Shared=yes, Static=yes
+  Built-in manual:  enabled
+  --libcurl option: enabled (--disable-libcurl-option)
+  Verbose errors:   enabled (--disable-verbose)
+  SSPI support:     no      (--enable-sspi)
+  ca cert bundle:   /etc/ssl/certs/ca-certificates.crt
+  ca cert path:     no
+  LDAP support:     no      (--enable-ldap / --with-ldap-lib / --with-lber-lib)
+  LDAPS support:    no      (--enable-ldaps)
+  RTSP support:     enabled
+  RTMP support:     no      (--with-librtmp)
+  metalink support: no      (--with-libmetalink)
+  Protocols:        DICT FILE FTP GOPHER HTTP IMAP POP3 RTSP SMTP TELNET TFTP
+
+Making all in lib
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-file.lo -MD -MP -MF .deps/libcurl_la-file.Tpo -c file.c  -fPIC -DPIC -o .libs/libcurl_la-file.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-file.lo -MD -MP -MF .deps/libcurl_la-file.Tpo -c file.c  -fPIC -DPIC -o libcurl_la-file.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-timeval.lo -MD -MP -MF .deps/libcurl_la-timeval.Tpo -c timeval.c  -fPIC -DPIC -o .libs/libcurl_la-timeval.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-timeval.lo -MD -MP -MF .deps/libcurl_la-timeval.Tpo -c timeval.c  -fPIC -DPIC -o libcurl_la-timeval.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-base64.lo -MD -MP -MF .deps/libcurl_la-base64.Tpo -c base64.c  -fPIC -DPIC -o .libs/libcurl_la-base64.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-base64.lo -MD -MP -MF .deps/libcurl_la-base64.Tpo -c base64.c  -fPIC -DPIC -o libcurl_la-base64.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostip.lo -MD -MP -MF .deps/libcurl_la-hostip.Tpo -c hostip.c  -fPIC -DPIC -o .libs/libcurl_la-hostip.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostip.lo -MD -MP -MF .deps/libcurl_la-hostip.Tpo -c hostip.c  -fPIC -DPIC -o libcurl_la-hostip.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-progress.lo -MD -MP -MF .deps/libcurl_la-progress.Tpo -c progress.c  -fPIC -DPIC -o .libs/libcurl_la-progress.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-progress.lo -MD -MP -MF .deps/libcurl_la-progress.Tpo -c progress.c  -fPIC -DPIC -o libcurl_la-progress.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-formdata.lo -MD -MP -MF .deps/libcurl_la-formdata.Tpo -c formdata.c  -fPIC -DPIC -o .libs/libcurl_la-formdata.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-formdata.lo -MD -MP -MF .deps/libcurl_la-formdata.Tpo -c formdata.c  -fPIC -DPIC -o libcurl_la-formdata.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-cookie.lo -MD -MP -MF .deps/libcurl_la-cookie.Tpo -c cookie.c  -fPIC -DPIC -o .libs/libcurl_la-cookie.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-cookie.lo -MD -MP -MF .deps/libcurl_la-cookie.Tpo -c cookie.c  -fPIC -DPIC -o libcurl_la-cookie.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http.lo -MD -MP -MF .deps/libcurl_la-http.Tpo -c http.c  -fPIC -DPIC -o .libs/libcurl_la-http.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http.lo -MD -MP -MF .deps/libcurl_la-http.Tpo -c http.c  -fPIC -DPIC -o libcurl_la-http.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-sendf.lo -MD -MP -MF .deps/libcurl_la-sendf.Tpo -c sendf.c  -fPIC -DPIC -o .libs/libcurl_la-sendf.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-sendf.lo -MD -MP -MF .deps/libcurl_la-sendf.Tpo -c sendf.c  -fPIC -DPIC -o libcurl_la-sendf.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ftp.lo -MD -MP -MF .deps/libcurl_la-ftp.Tpo -c ftp.c  -fPIC -DPIC -o .libs/libcurl_la-ftp.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ftp.lo -MD -MP -MF .deps/libcurl_la-ftp.Tpo -c ftp.c  -fPIC -DPIC -o libcurl_la-ftp.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-url.lo -MD -MP -MF .deps/libcurl_la-url.Tpo -c url.c  -fPIC -DPIC -o .libs/libcurl_la-url.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-url.lo -MD -MP -MF .deps/libcurl_la-url.Tpo -c url.c  -fPIC -DPIC -o libcurl_la-url.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-dict.lo -MD -MP -MF .deps/libcurl_la-dict.Tpo -c dict.c  -fPIC -DPIC -o .libs/libcurl_la-dict.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-dict.lo -MD -MP -MF .deps/libcurl_la-dict.Tpo -c dict.c  -fPIC -DPIC -o libcurl_la-dict.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-if2ip.lo -MD -MP -MF .deps/libcurl_la-if2ip.Tpo -c if2ip.c  -fPIC -DPIC -o .libs/libcurl_la-if2ip.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-if2ip.lo -MD -MP -MF .deps/libcurl_la-if2ip.Tpo -c if2ip.c  -fPIC -DPIC -o libcurl_la-if2ip.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-speedcheck.lo -MD -MP -MF .deps/libcurl_la-speedcheck.Tpo -c speedcheck.c  -fPIC -DPIC -o .libs/libcurl_la-speedcheck.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-speedcheck.lo -MD -MP -MF .deps/libcurl_la-speedcheck.Tpo -c speedcheck.c  -fPIC -DPIC -o libcurl_la-speedcheck.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ldap.lo -MD -MP -MF .deps/libcurl_la-ldap.Tpo -c ldap.c  -fPIC -DPIC -o .libs/libcurl_la-ldap.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ldap.lo -MD -MP -MF .deps/libcurl_la-ldap.Tpo -c ldap.c  -fPIC -DPIC -o libcurl_la-ldap.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ssluse.lo -MD -MP -MF .deps/libcurl_la-ssluse.Tpo -c ssluse.c  -fPIC -DPIC -o .libs/libcurl_la-ssluse.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ssluse.lo -MD -MP -MF .deps/libcurl_la-ssluse.Tpo -c ssluse.c  -fPIC -DPIC -o libcurl_la-ssluse.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-version.lo -MD -MP -MF .deps/libcurl_la-version.Tpo -c version.c  -fPIC -DPIC -o .libs/libcurl_la-version.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-version.lo -MD -MP -MF .deps/libcurl_la-version.Tpo -c version.c  -fPIC -DPIC -o libcurl_la-version.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-getenv.lo -MD -MP -MF .deps/libcurl_la-getenv.Tpo -c getenv.c  -fPIC -DPIC -o .libs/libcurl_la-getenv.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-getenv.lo -MD -MP -MF .deps/libcurl_la-getenv.Tpo -c getenv.c  -fPIC -DPIC -o libcurl_la-getenv.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-escape.lo -MD -MP -MF .deps/libcurl_la-escape.Tpo -c escape.c  -fPIC -DPIC -o .libs/libcurl_la-escape.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-escape.lo -MD -MP -MF .deps/libcurl_la-escape.Tpo -c escape.c  -fPIC -DPIC -o libcurl_la-escape.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-mprintf.lo -MD -MP -MF .deps/libcurl_la-mprintf.Tpo -c mprintf.c  -fPIC -DPIC -o .libs/libcurl_la-mprintf.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-mprintf.lo -MD -MP -MF .deps/libcurl_la-mprintf.Tpo -c mprintf.c  -fPIC -DPIC -o libcurl_la-mprintf.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-telnet.lo -MD -MP -MF .deps/libcurl_la-telnet.Tpo -c telnet.c  -fPIC -DPIC -o .libs/libcurl_la-telnet.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-telnet.lo -MD -MP -MF .deps/libcurl_la-telnet.Tpo -c telnet.c  -fPIC -DPIC -o libcurl_la-telnet.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-netrc.lo -MD -MP -MF .deps/libcurl_la-netrc.Tpo -c netrc.c  -fPIC -DPIC -o .libs/libcurl_la-netrc.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-netrc.lo -MD -MP -MF .deps/libcurl_la-netrc.Tpo -c netrc.c  -fPIC -DPIC -o libcurl_la-netrc.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-getinfo.lo -MD -MP -MF .deps/libcurl_la-getinfo.Tpo -c getinfo.c  -fPIC -DPIC -o .libs/libcurl_la-getinfo.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-getinfo.lo -MD -MP -MF .deps/libcurl_la-getinfo.Tpo -c getinfo.c  -fPIC -DPIC -o libcurl_la-getinfo.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-transfer.lo -MD -MP -MF .deps/libcurl_la-transfer.Tpo -c transfer.c  -fPIC -DPIC -o .libs/libcurl_la-transfer.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-transfer.lo -MD -MP -MF .deps/libcurl_la-transfer.Tpo -c transfer.c  -fPIC -DPIC -o libcurl_la-transfer.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strequal.lo -MD -MP -MF .deps/libcurl_la-strequal.Tpo -c strequal.c  -fPIC -DPIC -o .libs/libcurl_la-strequal.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strequal.lo -MD -MP -MF .deps/libcurl_la-strequal.Tpo -c strequal.c  -fPIC -DPIC -o libcurl_la-strequal.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-easy.lo -MD -MP -MF .deps/libcurl_la-easy.Tpo -c easy.c  -fPIC -DPIC -o .libs/libcurl_la-easy.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-easy.lo -MD -MP -MF .deps/libcurl_la-easy.Tpo -c easy.c  -fPIC -DPIC -o libcurl_la-easy.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-security.lo -MD -MP -MF .deps/libcurl_la-security.Tpo -c security.c  -fPIC -DPIC -o .libs/libcurl_la-security.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-security.lo -MD -MP -MF .deps/libcurl_la-security.Tpo -c security.c  -fPIC -DPIC -o libcurl_la-security.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-krb4.lo -MD -MP -MF .deps/libcurl_la-krb4.Tpo -c krb4.c  -fPIC -DPIC -o .libs/libcurl_la-krb4.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-krb4.lo -MD -MP -MF .deps/libcurl_la-krb4.Tpo -c krb4.c  -fPIC -DPIC -o libcurl_la-krb4.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_fnmatch.lo -MD -MP -MF .deps/libcurl_la-curl_fnmatch.Tpo -c curl_fnmatch.c  -fPIC -DPIC -o .libs/libcurl_la-curl_fnmatch.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_fnmatch.lo -MD -MP -MF .deps/libcurl_la-curl_fnmatch.Tpo -c curl_fnmatch.c  -fPIC -DPIC -o libcurl_la-curl_fnmatch.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-fileinfo.lo -MD -MP -MF .deps/libcurl_la-fileinfo.Tpo -c fileinfo.c  -fPIC -DPIC -o .libs/libcurl_la-fileinfo.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-fileinfo.lo -MD -MP -MF .deps/libcurl_la-fileinfo.Tpo -c fileinfo.c  -fPIC -DPIC -o libcurl_la-fileinfo.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ftplistparser.lo -MD -MP -MF .deps/libcurl_la-ftplistparser.Tpo -c ftplistparser.c  -fPIC -DPIC -o .libs/libcurl_la-ftplistparser.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ftplistparser.lo -MD -MP -MF .deps/libcurl_la-ftplistparser.Tpo -c ftplistparser.c  -fPIC -DPIC -o libcurl_la-ftplistparser.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-wildcard.lo -MD -MP -MF .deps/libcurl_la-wildcard.Tpo -c wildcard.c  -fPIC -DPIC -o .libs/libcurl_la-wildcard.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-wildcard.lo -MD -MP -MF .deps/libcurl_la-wildcard.Tpo -c wildcard.c  -fPIC -DPIC -o libcurl_la-wildcard.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-krb5.lo -MD -MP -MF .deps/libcurl_la-krb5.Tpo -c krb5.c  -fPIC -DPIC -o .libs/libcurl_la-krb5.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-krb5.lo -MD -MP -MF .deps/libcurl_la-krb5.Tpo -c krb5.c  -fPIC -DPIC -o libcurl_la-krb5.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-memdebug.lo -MD -MP -MF .deps/libcurl_la-memdebug.Tpo -c memdebug.c  -fPIC -DPIC -o .libs/libcurl_la-memdebug.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-memdebug.lo -MD -MP -MF .deps/libcurl_la-memdebug.Tpo -c memdebug.c  -fPIC -DPIC -o libcurl_la-memdebug.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_chunks.lo -MD -MP -MF .deps/libcurl_la-http_chunks.Tpo -c http_chunks.c  -fPIC -DPIC -o .libs/libcurl_la-http_chunks.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_chunks.lo -MD -MP -MF .deps/libcurl_la-http_chunks.Tpo -c http_chunks.c  -fPIC -DPIC -o libcurl_la-http_chunks.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strtok.lo -MD -MP -MF .deps/libcurl_la-strtok.Tpo -c strtok.c  -fPIC -DPIC -o .libs/libcurl_la-strtok.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strtok.lo -MD -MP -MF .deps/libcurl_la-strtok.Tpo -c strtok.c  -fPIC -DPIC -o libcurl_la-strtok.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-connect.lo -MD -MP -MF .deps/libcurl_la-connect.Tpo -c connect.c  -fPIC -DPIC -o .libs/libcurl_la-connect.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-connect.lo -MD -MP -MF .deps/libcurl_la-connect.Tpo -c connect.c  -fPIC -DPIC -o libcurl_la-connect.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-llist.lo -MD -MP -MF .deps/libcurl_la-llist.Tpo -c llist.c  -fPIC -DPIC -o .libs/libcurl_la-llist.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-llist.lo -MD -MP -MF .deps/libcurl_la-llist.Tpo -c llist.c  -fPIC -DPIC -o libcurl_la-llist.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hash.lo -MD -MP -MF .deps/libcurl_la-hash.Tpo -c hash.c  -fPIC -DPIC -o .libs/libcurl_la-hash.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hash.lo -MD -MP -MF .deps/libcurl_la-hash.Tpo -c hash.c  -fPIC -DPIC -o libcurl_la-hash.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-multi.lo -MD -MP -MF .deps/libcurl_la-multi.Tpo -c multi.c  -fPIC -DPIC -o .libs/libcurl_la-multi.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-multi.lo -MD -MP -MF .deps/libcurl_la-multi.Tpo -c multi.c  -fPIC -DPIC -o libcurl_la-multi.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-content_encoding.lo -MD -MP -MF .deps/libcurl_la-content_encoding.Tpo -c content_encoding.c  -fPIC -DPIC -o .libs/libcurl_la-content_encoding.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-content_encoding.lo -MD -MP -MF .deps/libcurl_la-content_encoding.Tpo -c content_encoding.c  -fPIC -DPIC -o libcurl_la-content_encoding.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-share.lo -MD -MP -MF .deps/libcurl_la-share.Tpo -c share.c  -fPIC -DPIC -o .libs/libcurl_la-share.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-share.lo -MD -MP -MF .deps/libcurl_la-share.Tpo -c share.c  -fPIC -DPIC -o libcurl_la-share.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_digest.lo -MD -MP -MF .deps/libcurl_la-http_digest.Tpo -c http_digest.c  -fPIC -DPIC -o .libs/libcurl_la-http_digest.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_digest.lo -MD -MP -MF .deps/libcurl_la-http_digest.Tpo -c http_digest.c  -fPIC -DPIC -o libcurl_la-http_digest.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-md4.lo -MD -MP -MF .deps/libcurl_la-md4.Tpo -c md4.c  -fPIC -DPIC -o .libs/libcurl_la-md4.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-md4.lo -MD -MP -MF .deps/libcurl_la-md4.Tpo -c md4.c  -fPIC -DPIC -o libcurl_la-md4.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-md5.lo -MD -MP -MF .deps/libcurl_la-md5.Tpo -c md5.c  -fPIC -DPIC -o .libs/libcurl_la-md5.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-md5.lo -MD -MP -MF .deps/libcurl_la-md5.Tpo -c md5.c  -fPIC -DPIC -o libcurl_la-md5.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_negotiate.lo -MD -MP -MF .deps/libcurl_la-http_negotiate.Tpo -c http_negotiate.c  -fPIC -DPIC -o .libs/libcurl_la-http_negotiate.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_negotiate.lo -MD -MP -MF .deps/libcurl_la-http_negotiate.Tpo -c http_negotiate.c  -fPIC -DPIC -o libcurl_la-http_negotiate.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-inet_pton.lo -MD -MP -MF .deps/libcurl_la-inet_pton.Tpo -c inet_pton.c  -fPIC -DPIC -o .libs/libcurl_la-inet_pton.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-inet_pton.lo -MD -MP -MF .deps/libcurl_la-inet_pton.Tpo -c inet_pton.c  -fPIC -DPIC -o libcurl_la-inet_pton.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strtoofft.lo -MD -MP -MF .deps/libcurl_la-strtoofft.Tpo -c strtoofft.c  -fPIC -DPIC -o .libs/libcurl_la-strtoofft.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strtoofft.lo -MD -MP -MF .deps/libcurl_la-strtoofft.Tpo -c strtoofft.c  -fPIC -DPIC -o libcurl_la-strtoofft.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strerror.lo -MD -MP -MF .deps/libcurl_la-strerror.Tpo -c strerror.c  -fPIC -DPIC -o .libs/libcurl_la-strerror.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strerror.lo -MD -MP -MF .deps/libcurl_la-strerror.Tpo -c strerror.c  -fPIC -DPIC -o libcurl_la-strerror.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-amigaos.lo -MD -MP -MF .deps/libcurl_la-amigaos.Tpo -c amigaos.c  -fPIC -DPIC -o .libs/libcurl_la-amigaos.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-amigaos.lo -MD -MP -MF .deps/libcurl_la-amigaos.Tpo -c amigaos.c  -fPIC -DPIC -o libcurl_la-amigaos.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostasyn.lo -MD -MP -MF .deps/libcurl_la-hostasyn.Tpo -c hostasyn.c  -fPIC -DPIC -o .libs/libcurl_la-hostasyn.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostasyn.lo -MD -MP -MF .deps/libcurl_la-hostasyn.Tpo -c hostasyn.c  -fPIC -DPIC -o libcurl_la-hostasyn.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostip4.lo -MD -MP -MF .deps/libcurl_la-hostip4.Tpo -c hostip4.c  -fPIC -DPIC -o .libs/libcurl_la-hostip4.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostip4.lo -MD -MP -MF .deps/libcurl_la-hostip4.Tpo -c hostip4.c  -fPIC -DPIC -o libcurl_la-hostip4.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostip6.lo -MD -MP -MF .deps/libcurl_la-hostip6.Tpo -c hostip6.c  -fPIC -DPIC -o .libs/libcurl_la-hostip6.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostip6.lo -MD -MP -MF .deps/libcurl_la-hostip6.Tpo -c hostip6.c  -fPIC -DPIC -o libcurl_la-hostip6.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostsyn.lo -MD -MP -MF .deps/libcurl_la-hostsyn.Tpo -c hostsyn.c  -fPIC -DPIC -o .libs/libcurl_la-hostsyn.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostsyn.lo -MD -MP -MF .deps/libcurl_la-hostsyn.Tpo -c hostsyn.c  -fPIC -DPIC -o libcurl_la-hostsyn.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-inet_ntop.lo -MD -MP -MF .deps/libcurl_la-inet_ntop.Tpo -c inet_ntop.c  -fPIC -DPIC -o .libs/libcurl_la-inet_ntop.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-inet_ntop.lo -MD -MP -MF .deps/libcurl_la-inet_ntop.Tpo -c inet_ntop.c  -fPIC -DPIC -o libcurl_la-inet_ntop.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-parsedate.lo -MD -MP -MF .deps/libcurl_la-parsedate.Tpo -c parsedate.c  -fPIC -DPIC -o .libs/libcurl_la-parsedate.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-parsedate.lo -MD -MP -MF .deps/libcurl_la-parsedate.Tpo -c parsedate.c  -fPIC -DPIC -o libcurl_la-parsedate.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-select.lo -MD -MP -MF .deps/libcurl_la-select.Tpo -c select.c  -fPIC -DPIC -o .libs/libcurl_la-select.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-select.lo -MD -MP -MF .deps/libcurl_la-select.Tpo -c select.c  -fPIC -DPIC -o libcurl_la-select.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-gtls.lo -MD -MP -MF .deps/libcurl_la-gtls.Tpo -c gtls.c  -fPIC -DPIC -o .libs/libcurl_la-gtls.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-gtls.lo -MD -MP -MF .deps/libcurl_la-gtls.Tpo -c gtls.c  -fPIC -DPIC -o libcurl_la-gtls.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-sslgen.lo -MD -MP -MF .deps/libcurl_la-sslgen.Tpo -c sslgen.c  -fPIC -DPIC -o .libs/libcurl_la-sslgen.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-sslgen.lo -MD -MP -MF .deps/libcurl_la-sslgen.Tpo -c sslgen.c  -fPIC -DPIC -o libcurl_la-sslgen.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-tftp.lo -MD -MP -MF .deps/libcurl_la-tftp.Tpo -c tftp.c  -fPIC -DPIC -o .libs/libcurl_la-tftp.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-tftp.lo -MD -MP -MF .deps/libcurl_la-tftp.Tpo -c tftp.c  -fPIC -DPIC -o libcurl_la-tftp.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-splay.lo -MD -MP -MF .deps/libcurl_la-splay.Tpo -c splay.c  -fPIC -DPIC -o .libs/libcurl_la-splay.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-splay.lo -MD -MP -MF .deps/libcurl_la-splay.Tpo -c splay.c  -fPIC -DPIC -o libcurl_la-splay.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strdup.lo -MD -MP -MF .deps/libcurl_la-strdup.Tpo -c strdup.c  -fPIC -DPIC -o .libs/libcurl_la-strdup.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-strdup.lo -MD -MP -MF .deps/libcurl_la-strdup.Tpo -c strdup.c  -fPIC -DPIC -o libcurl_la-strdup.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-socks.lo -MD -MP -MF .deps/libcurl_la-socks.Tpo -c socks.c  -fPIC -DPIC -o .libs/libcurl_la-socks.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-socks.lo -MD -MP -MF .deps/libcurl_la-socks.Tpo -c socks.c  -fPIC -DPIC -o libcurl_la-socks.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ssh.lo -MD -MP -MF .deps/libcurl_la-ssh.Tpo -c ssh.c  -fPIC -DPIC -o .libs/libcurl_la-ssh.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-ssh.lo -MD -MP -MF .deps/libcurl_la-ssh.Tpo -c ssh.c  -fPIC -DPIC -o libcurl_la-ssh.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-nss.lo -MD -MP -MF .deps/libcurl_la-nss.Tpo -c nss.c  -fPIC -DPIC -o .libs/libcurl_la-nss.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-nss.lo -MD -MP -MF .deps/libcurl_la-nss.Tpo -c nss.c  -fPIC -DPIC -o libcurl_la-nss.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-qssl.lo -MD -MP -MF .deps/libcurl_la-qssl.Tpo -c qssl.c  -fPIC -DPIC -o .libs/libcurl_la-qssl.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-qssl.lo -MD -MP -MF .deps/libcurl_la-qssl.Tpo -c qssl.c  -fPIC -DPIC -o libcurl_la-qssl.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-rawstr.lo -MD -MP -MF .deps/libcurl_la-rawstr.Tpo -c rawstr.c  -fPIC -DPIC -o .libs/libcurl_la-rawstr.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-rawstr.lo -MD -MP -MF .deps/libcurl_la-rawstr.Tpo -c rawstr.c  -fPIC -DPIC -o libcurl_la-rawstr.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_addrinfo.lo -MD -MP -MF .deps/libcurl_la-curl_addrinfo.Tpo -c curl_addrinfo.c  -fPIC -DPIC -o .libs/libcurl_la-curl_addrinfo.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_addrinfo.lo -MD -MP -MF .deps/libcurl_la-curl_addrinfo.Tpo -c curl_addrinfo.c  -fPIC -DPIC -o libcurl_la-curl_addrinfo.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-socks_gssapi.lo -MD -MP -MF .deps/libcurl_la-socks_gssapi.Tpo -c socks_gssapi.c  -fPIC -DPIC -o .libs/libcurl_la-socks_gssapi.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-socks_gssapi.lo -MD -MP -MF .deps/libcurl_la-socks_gssapi.Tpo -c socks_gssapi.c  -fPIC -DPIC -o libcurl_la-socks_gssapi.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-socks_sspi.lo -MD -MP -MF .deps/libcurl_la-socks_sspi.Tpo -c socks_sspi.c  -fPIC -DPIC -o .libs/libcurl_la-socks_sspi.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-socks_sspi.lo -MD -MP -MF .deps/libcurl_la-socks_sspi.Tpo -c socks_sspi.c  -fPIC -DPIC -o libcurl_la-socks_sspi.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_sspi.lo -MD -MP -MF .deps/libcurl_la-curl_sspi.Tpo -c curl_sspi.c  -fPIC -DPIC -o .libs/libcurl_la-curl_sspi.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_sspi.lo -MD -MP -MF .deps/libcurl_la-curl_sspi.Tpo -c curl_sspi.c  -fPIC -DPIC -o libcurl_la-curl_sspi.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-slist.lo -MD -MP -MF .deps/libcurl_la-slist.Tpo -c slist.c  -fPIC -DPIC -o .libs/libcurl_la-slist.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-slist.lo -MD -MP -MF .deps/libcurl_la-slist.Tpo -c slist.c  -fPIC -DPIC -o libcurl_la-slist.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-nonblock.lo -MD -MP -MF .deps/libcurl_la-nonblock.Tpo -c nonblock.c  -fPIC -DPIC -o .libs/libcurl_la-nonblock.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-nonblock.lo -MD -MP -MF .deps/libcurl_la-nonblock.Tpo -c nonblock.c  -fPIC -DPIC -o libcurl_la-nonblock.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_memrchr.lo -MD -MP -MF .deps/libcurl_la-curl_memrchr.Tpo -c curl_memrchr.c  -fPIC -DPIC -o .libs/libcurl_la-curl_memrchr.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_memrchr.lo -MD -MP -MF .deps/libcurl_la-curl_memrchr.Tpo -c curl_memrchr.c  -fPIC -DPIC -o libcurl_la-curl_memrchr.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-imap.lo -MD -MP -MF .deps/libcurl_la-imap.Tpo -c imap.c  -fPIC -DPIC -o .libs/libcurl_la-imap.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-imap.lo -MD -MP -MF .deps/libcurl_la-imap.Tpo -c imap.c  -fPIC -DPIC -o libcurl_la-imap.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-pop3.lo -MD -MP -MF .deps/libcurl_la-pop3.Tpo -c pop3.c  -fPIC -DPIC -o .libs/libcurl_la-pop3.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-pop3.lo -MD -MP -MF .deps/libcurl_la-pop3.Tpo -c pop3.c  -fPIC -DPIC -o libcurl_la-pop3.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-smtp.lo -MD -MP -MF .deps/libcurl_la-smtp.Tpo -c smtp.c  -fPIC -DPIC -o .libs/libcurl_la-smtp.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-smtp.lo -MD -MP -MF .deps/libcurl_la-smtp.Tpo -c smtp.c  -fPIC -DPIC -o libcurl_la-smtp.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-pingpong.lo -MD -MP -MF .deps/libcurl_la-pingpong.Tpo -c pingpong.c  -fPIC -DPIC -o .libs/libcurl_la-pingpong.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-pingpong.lo -MD -MP -MF .deps/libcurl_la-pingpong.Tpo -c pingpong.c  -fPIC -DPIC -o libcurl_la-pingpong.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-rtsp.lo -MD -MP -MF .deps/libcurl_la-rtsp.Tpo -c rtsp.c  -fPIC -DPIC -o .libs/libcurl_la-rtsp.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-rtsp.lo -MD -MP -MF .deps/libcurl_la-rtsp.Tpo -c rtsp.c  -fPIC -DPIC -o libcurl_la-rtsp.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_threads.lo -MD -MP -MF .deps/libcurl_la-curl_threads.Tpo -c curl_threads.c  -fPIC -DPIC -o .libs/libcurl_la-curl_threads.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_threads.lo -MD -MP -MF .deps/libcurl_la-curl_threads.Tpo -c curl_threads.c  -fPIC -DPIC -o libcurl_la-curl_threads.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-warnless.lo -MD -MP -MF .deps/libcurl_la-warnless.Tpo -c warnless.c  -fPIC -DPIC -o .libs/libcurl_la-warnless.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-warnless.lo -MD -MP -MF .deps/libcurl_la-warnless.Tpo -c warnless.c  -fPIC -DPIC -o libcurl_la-warnless.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hmac.lo -MD -MP -MF .deps/libcurl_la-hmac.Tpo -c hmac.c  -fPIC -DPIC -o .libs/libcurl_la-hmac.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hmac.lo -MD -MP -MF .deps/libcurl_la-hmac.Tpo -c hmac.c  -fPIC -DPIC -o libcurl_la-hmac.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-polarssl.lo -MD -MP -MF .deps/libcurl_la-polarssl.Tpo -c polarssl.c  -fPIC -DPIC -o .libs/libcurl_la-polarssl.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-polarssl.lo -MD -MP -MF .deps/libcurl_la-polarssl.Tpo -c polarssl.c  -fPIC -DPIC -o libcurl_la-polarssl.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-polarssl_threadlock.lo -MD -MP -MF .deps/libcurl_la-polarssl_threadlock.Tpo -c polarssl_threadlock.c  -fPIC -DPIC -o .libs/libcurl_la-polarssl_threadlock.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-polarssl_threadlock.lo -MD -MP -MF .deps/libcurl_la-polarssl_threadlock.Tpo -c polarssl_threadlock.c  -fPIC -DPIC -o libcurl_la-polarssl_threadlock.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_rtmp.lo -MD -MP -MF .deps/libcurl_la-curl_rtmp.Tpo -c curl_rtmp.c  -fPIC -DPIC -o .libs/libcurl_la-curl_rtmp.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_rtmp.lo -MD -MP -MF .deps/libcurl_la-curl_rtmp.Tpo -c curl_rtmp.c  -fPIC -DPIC -o libcurl_la-curl_rtmp.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-openldap.lo -MD -MP -MF .deps/libcurl_la-openldap.Tpo -c openldap.c  -fPIC -DPIC -o .libs/libcurl_la-openldap.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-openldap.lo -MD -MP -MF .deps/libcurl_la-openldap.Tpo -c openldap.c  -fPIC -DPIC -o libcurl_la-openldap.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_gethostname.lo -MD -MP -MF .deps/libcurl_la-curl_gethostname.Tpo -c curl_gethostname.c  -fPIC -DPIC -o .libs/libcurl_la-curl_gethostname.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_gethostname.lo -MD -MP -MF .deps/libcurl_la-curl_gethostname.Tpo -c curl_gethostname.c  -fPIC -DPIC -o libcurl_la-curl_gethostname.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-gopher.lo -MD -MP -MF .deps/libcurl_la-gopher.Tpo -c gopher.c  -fPIC -DPIC -o .libs/libcurl_la-gopher.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-gopher.lo -MD -MP -MF .deps/libcurl_la-gopher.Tpo -c gopher.c  -fPIC -DPIC -o libcurl_la-gopher.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-axtls.lo -MD -MP -MF .deps/libcurl_la-axtls.Tpo -c axtls.c  -fPIC -DPIC -o .libs/libcurl_la-axtls.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-axtls.lo -MD -MP -MF .deps/libcurl_la-axtls.Tpo -c axtls.c  -fPIC -DPIC -o libcurl_la-axtls.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-idn_win32.lo -MD -MP -MF .deps/libcurl_la-idn_win32.Tpo -c idn_win32.c  -fPIC -DPIC -o .libs/libcurl_la-idn_win32.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-idn_win32.lo -MD -MP -MF .deps/libcurl_la-idn_win32.Tpo -c idn_win32.c  -fPIC -DPIC -o libcurl_la-idn_win32.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_negotiate_sspi.lo -MD -MP -MF .deps/libcurl_la-http_negotiate_sspi.Tpo -c http_negotiate_sspi.c  -fPIC -DPIC -o .libs/libcurl_la-http_negotiate_sspi.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_negotiate_sspi.lo -MD -MP -MF .deps/libcurl_la-http_negotiate_sspi.Tpo -c http_negotiate_sspi.c  -fPIC -DPIC -o libcurl_la-http_negotiate_sspi.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-cyassl.lo -MD -MP -MF .deps/libcurl_la-cyassl.Tpo -c cyassl.c  -fPIC -DPIC -o .libs/libcurl_la-cyassl.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-cyassl.lo -MD -MP -MF .deps/libcurl_la-cyassl.Tpo -c cyassl.c  -fPIC -DPIC -o libcurl_la-cyassl.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_proxy.lo -MD -MP -MF .deps/libcurl_la-http_proxy.Tpo -c http_proxy.c  -fPIC -DPIC -o .libs/libcurl_la-http_proxy.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-http_proxy.lo -MD -MP -MF .deps/libcurl_la-http_proxy.Tpo -c http_proxy.c  -fPIC -DPIC -o libcurl_la-http_proxy.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-non-ascii.lo -MD -MP -MF .deps/libcurl_la-non-ascii.Tpo -c non-ascii.c  -fPIC -DPIC -o .libs/libcurl_la-non-ascii.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-non-ascii.lo -MD -MP -MF .deps/libcurl_la-non-ascii.Tpo -c non-ascii.c  -fPIC -DPIC -o libcurl_la-non-ascii.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-asyn-ares.lo -MD -MP -MF .deps/libcurl_la-asyn-ares.Tpo -c asyn-ares.c  -fPIC -DPIC -o .libs/libcurl_la-asyn-ares.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-asyn-ares.lo -MD -MP -MF .deps/libcurl_la-asyn-ares.Tpo -c asyn-ares.c  -fPIC -DPIC -o libcurl_la-asyn-ares.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-asyn-thread.lo -MD -MP -MF .deps/libcurl_la-asyn-thread.Tpo -c asyn-thread.c  -fPIC -DPIC -o .libs/libcurl_la-asyn-thread.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-asyn-thread.lo -MD -MP -MF .deps/libcurl_la-asyn-thread.Tpo -c asyn-thread.c  -fPIC -DPIC -o libcurl_la-asyn-thread.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_gssapi.lo -MD -MP -MF .deps/libcurl_la-curl_gssapi.Tpo -c curl_gssapi.c  -fPIC -DPIC -o .libs/libcurl_la-curl_gssapi.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_gssapi.lo -MD -MP -MF .deps/libcurl_la-curl_gssapi.Tpo -c curl_gssapi.c  -fPIC -DPIC -o libcurl_la-curl_gssapi.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm.Tpo -c curl_ntlm.c  -fPIC -DPIC -o .libs/libcurl_la-curl_ntlm.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm.Tpo -c curl_ntlm.c  -fPIC -DPIC -o libcurl_la-curl_ntlm.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm_wb.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm_wb.Tpo -c curl_ntlm_wb.c  -fPIC -DPIC -o .libs/libcurl_la-curl_ntlm_wb.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm_wb.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm_wb.Tpo -c curl_ntlm_wb.c  -fPIC -DPIC -o libcurl_la-curl_ntlm_wb.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm_core.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm_core.Tpo -c curl_ntlm_core.c  -fPIC -DPIC -o .libs/libcurl_la-curl_ntlm_core.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm_core.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm_core.Tpo -c curl_ntlm_core.c  -fPIC -DPIC -o libcurl_la-curl_ntlm_core.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm_msgs.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm_msgs.Tpo -c curl_ntlm_msgs.c  -fPIC -DPIC -o .libs/libcurl_la-curl_ntlm_msgs.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_ntlm_msgs.lo -MD -MP -MF .deps/libcurl_la-curl_ntlm_msgs.Tpo -c curl_ntlm_msgs.c  -fPIC -DPIC -o libcurl_la-curl_ntlm_msgs.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_sasl.lo -MD -MP -MF .deps/libcurl_la-curl_sasl.Tpo -c curl_sasl.c  -fPIC -DPIC -o .libs/libcurl_la-curl_sasl.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_sasl.lo -MD -MP -MF .deps/libcurl_la-curl_sasl.Tpo -c curl_sasl.c  -fPIC -DPIC -o libcurl_la-curl_sasl.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_schannel.lo -MD -MP -MF .deps/libcurl_la-curl_schannel.Tpo -c curl_schannel.c  -fPIC -DPIC -o .libs/libcurl_la-curl_schannel.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_schannel.lo -MD -MP -MF .deps/libcurl_la-curl_schannel.Tpo -c curl_schannel.c  -fPIC -DPIC -o libcurl_la-curl_schannel.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_multibyte.lo -MD -MP -MF .deps/libcurl_la-curl_multibyte.Tpo -c curl_multibyte.c  -fPIC -DPIC -o .libs/libcurl_la-curl_multibyte.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_multibyte.lo -MD -MP -MF .deps/libcurl_la-curl_multibyte.Tpo -c curl_multibyte.c  -fPIC -DPIC -o libcurl_la-curl_multibyte.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_darwinssl.lo -MD -MP -MF .deps/libcurl_la-curl_darwinssl.Tpo -c curl_darwinssl.c  -fPIC -DPIC -o .libs/libcurl_la-curl_darwinssl.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-curl_darwinssl.lo -MD -MP -MF .deps/libcurl_la-curl_darwinssl.Tpo -c curl_darwinssl.c  -fPIC -DPIC -o libcurl_la-curl_darwinssl.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostcheck.lo -MD -MP -MF .deps/libcurl_la-hostcheck.Tpo -c hostcheck.c  -fPIC -DPIC -o .libs/libcurl_la-hostcheck.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-hostcheck.lo -MD -MP -MF .deps/libcurl_la-hostcheck.Tpo -c hostcheck.c  -fPIC -DPIC -o libcurl_la-hostcheck.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-bundles.lo -MD -MP -MF .deps/libcurl_la-bundles.Tpo -c bundles.c  -fPIC -DPIC -o .libs/libcurl_la-bundles.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-bundles.lo -MD -MP -MF .deps/libcurl_la-bundles.Tpo -c bundles.c  -fPIC -DPIC -o libcurl_la-bundles.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-conncache.lo -MD -MP -MF .deps/libcurl_la-conncache.Tpo -c conncache.c  -fPIC -DPIC -o .libs/libcurl_la-conncache.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-conncache.lo -MD -MP -MF .deps/libcurl_la-conncache.Tpo -c conncache.c  -fPIC -DPIC -o libcurl_la-conncache.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-pipeline.lo -MD -MP -MF .deps/libcurl_la-pipeline.Tpo -c pipeline.c  -fPIC -DPIC -o .libs/libcurl_la-pipeline.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-pipeline.lo -MD -MP -MF .deps/libcurl_la-pipeline.Tpo -c pipeline.c  -fPIC -DPIC -o libcurl_la-pipeline.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-dotdot.lo -MD -MP -MF .deps/libcurl_la-dotdot.Tpo -c dotdot.c  -fPIC -DPIC -o .libs/libcurl_la-dotdot.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-dotdot.lo -MD -MP -MF .deps/libcurl_la-dotdot.Tpo -c dotdot.c  -fPIC -DPIC -o libcurl_la-dotdot.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-x509asn1.lo -MD -MP -MF .deps/libcurl_la-x509asn1.Tpo -c x509asn1.c  -fPIC -DPIC -o .libs/libcurl_la-x509asn1.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-x509asn1.lo -MD -MP -MF .deps/libcurl_la-x509asn1.Tpo -c x509asn1.c  -fPIC -DPIC -o libcurl_la-x509asn1.o >/dev/null 2>&1
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-gskit.lo -MD -MP -MF .deps/libcurl_la-gskit.Tpo -c gskit.c  -fPIC -DPIC -o .libs/libcurl_la-gskit.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I../include/curl -I../include -I../include -I../lib -I../lib -DBUILDING_LIBCURL -DCURL_HIDDEN_SYMBOLS -fvisibility=hidden -O2 -Wno-system-headers -MT libcurl_la-gskit.lo -MD -MP -MF .deps/libcurl_la-gskit.Tpo -c gskit.c  -fPIC -DPIC -o libcurl_la-gskit.o >/dev/null 2>&1
+libtool: link: gcc -shared  -fPIC -DPIC  .libs/libcurl_la-file.o .libs/libcurl_la-timeval.o .libs/libcurl_la-base64.o .libs/libcurl_la-hostip.o .libs/libcurl_la-progress.o .libs/libcurl_la-formdata.o .libs/libcurl_la-cookie.o .libs/libcurl_la-http.o .libs/libcurl_la-sendf.o .libs/libcurl_la-ftp.o .libs/libcurl_la-url.o .libs/libcurl_la-dict.o .libs/libcurl_la-if2ip.o .libs/libcurl_la-speedcheck.o .libs/libcurl_la-ldap.o .libs/libcurl_la-ssluse.o .libs/libcurl_la-version.o .libs/libcurl_la-getenv.o .libs/libcurl_la-escape.o .libs/libcurl_la-mprintf.o .libs/libcurl_la-telnet.o .libs/libcurl_la-netrc.o .libs/libcurl_la-getinfo.o .libs/libcurl_la-transfer.o .libs/libcurl_la-strequal.o .libs/libcurl_la-easy.o .libs/libcurl_la-security.o .libs/libcurl_la-krb4.o .libs/libcurl_la-curl_fnmatch.o .libs/libcurl_la-fileinfo.o .libs/libcurl_la-ftplistparser.o .libs/libcurl_la-wildcard.o .libs/libcurl_la-krb5.o .libs/libcurl_la-memdebug.o .libs/libcurl_la-http_chunks.o .libs/libcurl_la-strtok.o .libs/libcurl_la-connect.o .libs/libcurl_la-llist.o .libs/libcurl_la-hash.o .libs/libcurl_la-multi.o .libs/libcurl_la-content_encoding.o .libs/libcurl_la-share.o .libs/libcurl_la-http_digest.o .libs/libcurl_la-md4.o .libs/libcurl_la-md5.o .libs/libcurl_la-http_negotiate.o .libs/libcurl_la-inet_pton.o .libs/libcurl_la-strtoofft.o .libs/libcurl_la-strerror.o .libs/libcurl_la-amigaos.o .libs/libcurl_la-hostasyn.o .libs/libcurl_la-hostip4.o .libs/libcurl_la-hostip6.o .libs/libcurl_la-hostsyn.o .libs/libcurl_la-inet_ntop.o .libs/libcurl_la-parsedate.o .libs/libcurl_la-select.o .libs/libcurl_la-gtls.o .libs/libcurl_la-sslgen.o .libs/libcurl_la-tftp.o .libs/libcurl_la-splay.o .libs/libcurl_la-strdup.o .libs/libcurl_la-socks.o .libs/libcurl_la-ssh.o .libs/libcurl_la-nss.o .libs/libcurl_la-qssl.o .libs/libcurl_la-rawstr.o .libs/libcurl_la-curl_addrinfo.o .libs/libcurl_la-socks_gssapi.o .libs/libcurl_la-socks_sspi.o .libs/libcurl_la-curl_sspi.o .libs/libcurl_la-slist.o .libs/libcurl_la-nonblock.o .libs/libcurl_la-curl_memrchr.o .libs/libcurl_la-imap.o .libs/libcurl_la-pop3.o .libs/libcurl_la-smtp.o .libs/libcurl_la-pingpong.o .libs/libcurl_la-rtsp.o .libs/libcurl_la-curl_threads.o .libs/libcurl_la-warnless.o .libs/libcurl_la-hmac.o .libs/libcurl_la-polarssl.o .libs/libcurl_la-polarssl_threadlock.o .libs/libcurl_la-curl_rtmp.o .libs/libcurl_la-openldap.o .libs/libcurl_la-curl_gethostname.o .libs/libcurl_la-gopher.o .libs/libcurl_la-axtls.o .libs/libcurl_la-idn_win32.o .libs/libcurl_la-http_negotiate_sspi.o .libs/libcurl_la-cyassl.o .libs/libcurl_la-http_proxy.o .libs/libcurl_la-non-ascii.o .libs/libcurl_la-asyn-ares.o .libs/libcurl_la-asyn-thread.o .libs/libcurl_la-curl_gssapi.o .libs/libcurl_la-curl_ntlm.o .libs/libcurl_la-curl_ntlm_wb.o .libs/libcurl_la-curl_ntlm_core.o .libs/libcurl_la-curl_ntlm_msgs.o .libs/libcurl_la-curl_sasl.o .libs/libcurl_la-curl_schannel.o .libs/libcurl_la-curl_multibyte.o .libs/libcurl_la-curl_darwinssl.o .libs/libcurl_la-hostcheck.o .libs/libcurl_la-bundles.o .libs/libcurl_la-conncache.o .libs/libcurl_la-pipeline.o .libs/libcurl_la-dotdot.o .libs/libcurl_la-x509asn1.o .libs/libcurl_la-gskit.o    -O2   -Wl,-soname -Wl,libcurl.so.4 -o .libs/libcurl.so.4.3.0
+libtool: link: (cd ".libs" && rm -f "libcurl.so.4" && ln -s "libcurl.so.4.3.0" "libcurl.so.4")
+libtool: link: (cd ".libs" && rm -f "libcurl.so" && ln -s "libcurl.so.4.3.0" "libcurl.so")
+libtool: link: /usr/bin/ar cru .libs/libcurl.a  libcurl_la-file.o libcurl_la-timeval.o libcurl_la-base64.o libcurl_la-hostip.o libcurl_la-progress.o libcurl_la-formdata.o libcurl_la-cookie.o libcurl_la-http.o libcurl_la-sendf.o libcurl_la-ftp.o libcurl_la-url.o libcurl_la-dict.o libcurl_la-if2ip.o libcurl_la-speedcheck.o libcurl_la-ldap.o libcurl_la-ssluse.o libcurl_la-version.o libcurl_la-getenv.o libcurl_la-escape.o libcurl_la-mprintf.o libcurl_la-telnet.o libcurl_la-netrc.o libcurl_la-getinfo.o libcurl_la-transfer.o libcurl_la-strequal.o libcurl_la-easy.o libcurl_la-security.o libcurl_la-krb4.o libcurl_la-curl_fnmatch.o libcurl_la-fileinfo.o libcurl_la-ftplistparser.o libcurl_la-wildcard.o libcurl_la-krb5.o libcurl_la-memdebug.o libcurl_la-http_chunks.o libcurl_la-strtok.o libcurl_la-connect.o libcurl_la-llist.o libcurl_la-hash.o libcurl_la-multi.o libcurl_la-content_encoding.o libcurl_la-share.o libcurl_la-http_digest.o libcurl_la-md4.o libcurl_la-md5.o libcurl_la-http_negotiate.o libcurl_la-inet_pton.o libcurl_la-strtoofft.o libcurl_la-strerror.o libcurl_la-amigaos.o libcurl_la-hostasyn.o libcurl_la-hostip4.o libcurl_la-hostip6.o libcurl_la-hostsyn.o libcurl_la-inet_ntop.o libcurl_la-parsedate.o libcurl_la-select.o libcurl_la-gtls.o libcurl_la-sslgen.o libcurl_la-tftp.o libcurl_la-splay.o libcurl_la-strdup.o libcurl_la-socks.o libcurl_la-ssh.o libcurl_la-nss.o libcurl_la-qssl.o libcurl_la-rawstr.o libcurl_la-curl_addrinfo.o libcurl_la-socks_gssapi.o libcurl_la-socks_sspi.o libcurl_la-curl_sspi.o libcurl_la-slist.o libcurl_la-nonblock.o libcurl_la-curl_memrchr.o libcurl_la-imap.o libcurl_la-pop3.o libcurl_la-smtp.o libcurl_la-pingpong.o libcurl_la-rtsp.o libcurl_la-curl_threads.o libcurl_la-warnless.o libcurl_la-hmac.o libcurl_la-polarssl.o libcurl_la-polarssl_threadlock.o libcurl_la-curl_rtmp.o libcurl_la-openldap.o libcurl_la-curl_gethostname.o libcurl_la-gopher.o libcurl_la-axtls.o libcurl_la-idn_win32.o libcurl_la-http_negotiate_sspi.o libcurl_la-cyassl.o libcurl_la-http_proxy.o libcurl_la-non-ascii.o libcurl_la-asyn-ares.o libcurl_la-asyn-thread.o libcurl_la-curl_gssapi.o libcurl_la-curl_ntlm.o libcurl_la-curl_ntlm_wb.o libcurl_la-curl_ntlm_core.o libcurl_la-curl_ntlm_msgs.o libcurl_la-curl_sasl.o libcurl_la-curl_schannel.o libcurl_la-curl_multibyte.o libcurl_la-curl_darwinssl.o libcurl_la-hostcheck.o libcurl_la-bundles.o libcurl_la-conncache.o libcurl_la-pipeline.o libcurl_la-dotdot.o libcurl_la-x509asn1.o libcurl_la-gskit.o
+libtool: link: ranlib .libs/libcurl.a
+libtool: link: ( cd ".libs" && rm -f "libcurl.la" && ln -s "../libcurl.la" "libcurl.la" )
+Making all in src
+libtool: link: gcc -O2 -Wno-system-headers -o .libs/curl curl-tool_binmode.o curl-tool_bname.o curl-tool_cb_dbg.o curl-tool_cb_hdr.o curl-tool_cb_prg.o curl-tool_cb_rea.o curl-tool_cb_see.o curl-tool_cb_wrt.o curl-tool_cfgable.o curl-tool_convert.o curl-tool_dirhie.o curl-tool_doswin.o curl-tool_easysrc.o curl-tool_formparse.o curl-tool_getparam.o curl-tool_getpass.o curl-tool_help.o curl-tool_helpers.o curl-tool_homedir.o curl-tool_hugehelp.o curl-tool_libinfo.o curl-tool_main.o curl-tool_metalink.o curl-tool_mfiles.o curl-tool_msgs.o curl-tool_operate.o curl-tool_operhlp.o curl-tool_panykey.o curl-tool_paramhlp.o curl-tool_parsecfg.o curl-tool_setopt.o curl-tool_sleep.o curl-tool_urlglob.o curl-tool_util.o curl-tool_vms.o curl-tool_writeenv.o curl-tool_writeout.o curl-tool_xattr.o curl-strtoofft.o curl-strdup.o curl-rawstr.o curl-nonblock.o  ../lib/.libs/libcurl.so -Wl,-rpath -Wl,/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib
+Making all in include
+Making all in curl
+Making install in lib
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib'
+ /bin/bash ../libtool   --mode=install /usr/bin/install -c   libcurl.la '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib'
+libtool: install: /usr/bin/install -c .libs/libcurl.so.4.3.0 /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/libcurl.so.4.3.0
+libtool: install: (cd /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib && { ln -s -f libcurl.so.4.3.0 libcurl.so.4 || { rm -f libcurl.so.4 && ln -s libcurl.so.4.3.0 libcurl.so.4; }; })
+libtool: install: (cd /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib && { ln -s -f libcurl.so.4.3.0 libcurl.so || { rm -f libcurl.so && ln -s libcurl.so.4.3.0 libcurl.so; }; })
+libtool: install: /usr/bin/install -c .libs/libcurl.lai /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/libcurl.la
+libtool: install: /usr/bin/install -c .libs/libcurl.a /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/libcurl.a
+libtool: install: chmod 644 /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/libcurl.a
+libtool: install: ranlib /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/libcurl.a
+libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/sbin" ldconfig -n /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+Making install in src
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/bin'
+  /bin/bash ../libtool   --mode=install /usr/bin/install -c curl '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/bin'
+libtool: install: /usr/bin/install -c .libs/curl /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/bin/curl
+Making install in include
+Making install in curl
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/include/curl'
+ /usr/bin/install -c -m 644 curl.h curlver.h easy.h mprintf.h stdcheaders.h multi.h typecheck-gcc.h curlbuild.h curlrules.h '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/include/curl'
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/bin'
+ /usr/bin/install -c curl-config '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/bin'
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/pkgconfig'
+ /usr/bin/install -c -m 644 libcurl.pc '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/lib/pkgconfig'
+Making install in curl
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/include/curl'
+ /usr/bin/install -c -m 644 curl.h curlver.h easy.h mprintf.h stdcheaders.h multi.h typecheck-gcc.h curlbuild.h curlrules.h '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/include/curl'
+Making install in examples
+Making install in libcurl
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/share/man/man3'
+ /usr/bin/install -c -m 644 curl_easy_cleanup.3 curl_easy_getinfo.3 curl_easy_init.3 curl_easy_perform.3 curl_easy_setopt.3 curl_easy_duphandle.3 curl_formadd.3 curl_formfree.3 curl_getdate.3 curl_getenv.3 curl_slist_append.3 curl_slist_free_all.3 curl_version.3 curl_version_info.3 curl_escape.3 curl_unescape.3 curl_free.3 curl_strequal.3 curl_mprintf.3 curl_global_init.3 curl_global_cleanup.3 curl_multi_add_handle.3 curl_multi_cleanup.3 curl_multi_fdset.3 curl_multi_info_read.3 curl_multi_init.3 curl_multi_perform.3 curl_multi_remove_handle.3 curl_share_cleanup.3 curl_share_init.3 curl_share_setopt.3 libcurl.3 libcurl-easy.3 libcurl-multi.3 libcurl-share.3 libcurl-errors.3 curl_easy_strerror.3 curl_multi_strerror.3 curl_share_strerror.3 curl_global_init_mem.3 '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/share/man/man3'
+ /usr/bin/install -c -m 644 libcurl-tutorial.3 curl_easy_reset.3 curl_easy_escape.3 curl_easy_unescape.3 curl_multi_setopt.3 curl_multi_socket.3 curl_multi_timeout.3 curl_formget.3 curl_multi_assign.3 curl_easy_pause.3 curl_easy_recv.3 curl_easy_send.3 curl_multi_socket_action.3 curl_multi_wait.3 '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/share/man/man3'
+ /bin/mkdir -p '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/share/man/man1'
+ /usr/bin/install -c -m 644 curl.1 curl-config.1 '/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//CURL/share/man/man1'

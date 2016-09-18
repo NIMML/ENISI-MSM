@@ -1,0 +1,146 @@
+#!/bin/sh
+
+# Copyright (c) 1994 - 2010, Lawrence Livermore National Security, LLC.
+# LLNL-CODE-425250.
+# All rights reserved.
+# 
+# This file is part of Silo. For details, see silo.llnl.gov.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the disclaimer below.
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the disclaimer (as noted
+#      below) in the documentation and/or other materials provided with
+#      the distribution.
+#    * Neither the name of the LLNS/LLNL nor the names of its
+#      contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+# 
+# THIS SOFTWARE  IS PROVIDED BY  THE COPYRIGHT HOLDERS  AND CONTRIBUTORS
+# "AS  IS" AND  ANY EXPRESS  OR IMPLIED  WARRANTIES, INCLUDING,  BUT NOT
+# LIMITED TO, THE IMPLIED  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A  PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN  NO  EVENT SHALL  LAWRENCE
+# LIVERMORE  NATIONAL SECURITY, LLC,  THE U.S.  DEPARTMENT OF  ENERGY OR
+# CONTRIBUTORS BE LIABLE FOR  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR  CONSEQUENTIAL DAMAGES  (INCLUDING, BUT NOT  LIMITED TO,
+# PROCUREMENT OF  SUBSTITUTE GOODS  OR SERVICES; LOSS  OF USE,  DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER  IN CONTRACT, STRICT LIABILITY,  OR TORT (INCLUDING
+# NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT  OF THE USE  OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+# This work was produced at Lawrence Livermore National Laboratory under
+# Contract  No.   DE-AC52-07NA27344 with  the  DOE.  Neither the  United
+# States Government  nor Lawrence  Livermore National Security,  LLC nor
+# any of  their employees,  makes any warranty,  express or  implied, or
+# assumes   any   liability   or   responsibility  for   the   accuracy,
+# completeness, or usefulness of any information, apparatus, product, or
+# process  disclosed, or  represents  that its  use  would not  infringe
+# privately-owned   rights.  Any  reference   herein  to   any  specific
+# commercial products,  process, or  services by trade  name, trademark,
+# manufacturer or otherwise does not necessarily constitute or imply its
+# endorsement,  recommendation,   or  favoring  by   the  United  States
+# Government or Lawrence Livermore National Security, LLC. The views and
+# opinions  of authors  expressed  herein do  not  necessarily state  or
+# reflect those  of the United  States Government or  Lawrence Livermore
+# National  Security, LLC,  and shall  not  be used  for advertising  or
+# product endorsement purposes.
+
+# -----------------------------------------------------------------------------
+# Test checksumming capability in silo by generating checksummed data
+# file, copying it, corrupting the copy and then diffing it with browser
+# against the original with and without checksumming turned on during
+# the diff
+#
+# Programmer: Mark C. Miller
+# Creation:   February 20, 2007
+#
+# -----------------------------------------------------------------------------
+
+# Diddle the the directory because Autotest is not at all designed to handle
+# tests the way this one was written
+if test -n "$1"; then
+    topDir=$1
+    if test -e $topDir/../../multi_test; then
+        topDir=$1/../..
+    fi
+else
+    topDir=.
+fi
+
+#
+# Create data with checksums (only on HDF5 driver) and save files
+#
+$topDir/multi_test DB_HDF5 check 1>/dev/null 2>&1
+rm -rf h5_check_files
+mkdir h5_check_files
+mv *.h5 h5_check_files/.
+
+#
+# Create data without checksums
+#
+$topDir/multi_test DB_HDF5 1>/dev/null 2>&1
+
+#
+# Determine the offset of an hdf5 dataset in the silo file.
+# We do this because we can't indescriminently corrupt the file.
+# Silo's checksumming is done only on the dataset objects in
+# the file. So, we have to make sure that we corrupt a dataset.
+# We do this using octal dump (od) and looking for some numbers
+# we expect in a silo object (domain_23/fl). Note that od breaks
+# data up into lines of 16 bytes each. Due to variations in HDF5
+# library, the offset at which the sequence 167 179 323 211 can
+# occur can vary. So, we loop over successive starting points
+# each 4 bytes further down the file until we find one.
+#
+offset=0
+skip=0
+while [[ $offset -eq 0 && $skip -lt 13 ]]; do
+    offset=`od -j $skip -A d4 -t d4 h5_check_files/multi_ucd3d.h5 | tr '\t' ' ' | tr -s ' ' | grep '167 179 323 311' | cut -d' ' -f1`
+    offset=`echo $offset | cut -d' ' -f1`
+    skip=$(expr $skip + 4)
+done
+size=`ls -l h5_check_files/multi_ucd3d.h5 | tr -s ' ' | cut -d' ' -f5`
+
+#
+# Corrupt a checksumed file by splicing together the first
+# part of the original file with the 4 integer zeros (zeros.dat)
+# and the last part of the file (minus the part we've zeroed)
+#
+rm -f multi_ucd3d_corrupt.h5
+head -c $offset h5_check_files/multi_ucd3d.h5 > multi_ucd3d_corrupt.h5
+cat $topDir/zeros.dat >> multi_ucd3d_corrupt.h5
+leftover=`expr $size - $offset - 16`
+tail -c $leftover h5_check_files/multi_ucd3d.h5 >> multi_ucd3d_corrupt.h5
+
+#
+# Now, run browser with checksumming turned on and make sure we
+# detect a checksumming error
+#
+result=0
+brOut=`$topDir/../tools/browser/browser -q -c -e diff multi_ucd3d.h5 multi_ucd3d_corrupt.h5 2>&1`
+if test -z "`echo $brOut | grep 'Checksum failure'`"; then
+    result=1
+fi
+
+#
+# Now, run browser with checksumming not turned on and make sure
+# we just see a diff in the file
+#
+brOut=`$topDir/../tools/browser/browser -q -e diff multi_ucd3d.h5 multi_ucd3d_corrupt.h5`
+# Just look for a large output of characters
+if test ${#brOut} -lt 250; then
+    result=1
+fi
+
+#
+# Cleanup
+#
+#rm -rf h5_check_files
+#rm -f multi_ucd3d_corrupt.h5
+
+exit $result 

@@ -1,0 +1,428 @@
+#!/bin/sh
+# Do a little magic to run perl from anywhere in your path.
+
+lines=`cat $0 | wc -l`
+lines=`expr $lines - 16`
+checksys=`uname -s`
+if [ "$checksys" != "SunOS" ]
+then
+  tail -n $lines $0 > /tmp/visitperl$$
+else
+  tail -$lines $0 > /tmp/visitperl$$
+fi
+echo "__END__" >> /tmp/visitperl$$
+echo "$0 $*" >> /tmp/visitperl$$
+exec perl /tmp/visitperl$$ $0 ${1+"$@"}
+
+unlink $0;
+$0 = shift @ARGV;
+
+#!/usr/bin/perl
+#########################################################################
+# Copyright (c) 1994 - 2010, Lawrence Livermore National Security, LLC.
+# LLNL-CODE-425250.
+# All rights reserved.
+# 
+# This file is part of Silo. For details, see silo.llnl.gov.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the disclaimer below.
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the disclaimer (as noted
+#      below) in the documentation and/or other materials provided with
+#      the distribution.
+#    * Neither the name of the LLNS/LLNL nor the names of its
+#      contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+# 
+# THIS SOFTWARE  IS PROVIDED BY  THE COPYRIGHT HOLDERS  AND CONTRIBUTORS
+# "AS  IS" AND  ANY EXPRESS  OR IMPLIED  WARRANTIES, INCLUDING,  BUT NOT
+# LIMITED TO, THE IMPLIED  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A  PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN  NO  EVENT SHALL  LAWRENCE
+# LIVERMORE  NATIONAL SECURITY, LLC,  THE U.S.  DEPARTMENT OF  ENERGY OR
+# CONTRIBUTORS BE LIABLE FOR  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR  CONSEQUENTIAL DAMAGES  (INCLUDING, BUT NOT  LIMITED TO,
+# PROCUREMENT OF  SUBSTITUTE GOODS  OR SERVICES; LOSS  OF USE,  DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER  IN CONTRACT, STRICT LIABILITY,  OR TORT (INCLUDING
+# NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT  OF THE USE  OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# 
+# This work was produced at Lawrence Livermore National Laboratory under
+# Contract No.  DE-AC52-07NA27344 with the DOE.
+# 
+# Neither the  United States Government nor  Lawrence Livermore National
+# Security, LLC nor any of  their employees, makes any warranty, express
+# or  implied,  or  assumes  any  liability or  responsibility  for  the
+# accuracy, completeness,  or usefulness of  any information, apparatus,
+# product, or  process disclosed, or  represents that its use  would not
+# infringe privately-owned rights.
+# 
+# Any reference herein to  any specific commercial products, process, or
+# services by trade name,  trademark, manufacturer or otherwise does not
+# necessarily  constitute or imply  its endorsement,  recommendation, or
+# favoring  by  the  United  States  Government  or  Lawrence  Livermore
+# National Security,  LLC. The views  and opinions of  authors expressed
+# herein do not necessarily state  or reflect those of the United States
+# Government or Lawrence Livermore National Security, LLC, and shall not
+# be used for advertising or product endorsement purposes.
+#########################################################################
+#
+# Purpose:  Build the `silo.inc' Fortran include file from the
+#           C header files `silo.h' and `silo-f.h' by defining
+#           the public Fortran functions and the DB_* and DBOPT_*
+#           constants.
+#
+# Usage:    Run this script with input redirected from `silo.h'
+#           and output directed to `silo.inc' as in:
+#
+#           mv silo.inc silo.inc~
+#           mkinc < silo.h > silo.inc
+#           cat silo.h silo_f.h | ../../config/mkinc  > silo.inc
+#
+# Programmer:   Robb Matzke, Wed Nov 30 10:44:43 PST 1994
+#
+# Modified:
+#
+#   Robb Matzie, Mon Dec 19 10:45:49 PST 1994
+#   The SDX_ prefix is removed from those #define's.
+#
+#   Sean Ahern, Wed Apr 19 16:07:19 PDT 1995
+#   Added a list of character arrays.
+#
+#   Sean Ahern, Fri Oct 11 12:22:04 PDT 1996
+#   Added parsing of enum datatypes.
+#
+#   Robb Matzke, 12 Mar 1997
+#   The generated files have `-*- fortran -*-' in the first line so
+#   emacsen know the type (since `.inc' isn't too standard).
+#
+#   Robb Matzke, 10 Jun 1997
+#   Added a comma to the stop set for matching enum NAME=VALUE pairs.
+#   Changed a Perl-5 construct to Perl-4.
+#
+#   Eric Brugger, Thu Sep  2 08:28:05 PDT 1999
+#   I modified the script to output Fortran 90 style comments instead
+#   of Fortran 77 style comments.  Sean also changed a couple of lines
+#   to eliminate a run time warning.
+#
+#   Mark C. Miller, Thu Nov  2 14:30:00 PST 2006
+#   Made it handle SILO_VERS_... symbols
+#
+#   Thomas R. Treadway, Thu Oct 11 15:21:03 PDT 2007
+#   Modfied to handle new Fortran name-mangling 
+#
+#   Olivier Cessenat, Sat Sep 25 12:14:45 CEST 2010
+#   Right hand side values computed so that couples (name,value) fit
+#   within 72 characters to hold on a single unwrapped line.
+#
+#   Bob Apthorpe, Sun Jul 28 21:07:21 CDT 2013
+#   Enhanced F77- and F9X-style output. Specifically:
+#   * Better estimate of C string length (fix for Bug #503; see 
+#     https://visitbugs.ornl.gov/issues/503 ). Leading and trailing
+#     delimiters are ignored in length calculation as are escaped
+#     entities (\n, \r, etc.)
+#   * Accepts command-line argument of --f90 to produce F9x-style output
+#     compatible with both fixed- and free-format F9x code
+#   * Improved standards compliance. Changed comment and continuation 
+#     characters to be appropriate for both F77 and F9x. Note that 
+#     Lower-case is an extension to F77 so F77 identifiers have been
+#     upcased
+#   * Converted standalone EXTERNAL and PARAMETER statements to 
+#     attributes of type declarations for F9x. This is a F9x best
+#     practice by putting all variable properties in one place
+#   * Removed line-wrapping code; declarations have been burst into
+#     one per line. This obviates the need for line wrapping and makes
+#     differences in the exposed API clearer between versions.
+#     It's more legible to humans; no complaints from the compiler...
+#
+#########################################################################
+
+
+local (@parameters, @functions);
+local ($sdx) = 0;
+
+local($enum_body) = 0;
+local($brace_level) = 0;
+local(%vals) = ();
+
+# Literal command line option passed to this script
+local($arg0) = '';
+
+# Flag indicating F90 style desired
+local($opt_f90) = 0;
+
+# Fortran comment character; use 'C' for F77, '!' for F90 and later
+local($ccmt) = 'C';
+
+# Get command-line option (if any) to select F77 or F9x+ formatting
+# There are better ways of doing this; just not in Perl4 style as of 2013...
+if (length(@ARGV) >= 1) {
+    if ($ARGV[0] eq '--f90') {
+        $opt_f90 = 1;
+        $arg0 = shift @ARGV;
+        $arg0 .= ' ' ;
+        $ccmt = '!';
+    }
+} 
+
+### Gather the info...
+while (<>) {
+    next if (/NO_FORTRAN_DEFINE/);
+    if (/^#[ \t]*define[ \t]+((SILO_VERS|DB|SDX)(OPT|CSG)?_\w+)[ \t]+([^ \t\n]*)/)
+    {
+        local ($name, $value) = ($1, $4);
+        $sdx=1 if ($name=~/^SDX/);
+        $name =~ s/^SDX_//;
+        if ($value =~ /\(\((char|int|double)\)(.*)\)/) {
+            $value = $2;
+        }
+	if ($name eq "SILO_VERS_TAG")
+	{
+	    next;
+	}
+	if ($value eq "")
+	{
+	    $value = 0;
+	}
+        if ($value eq "1.0e+308") 
+        {
+            $value = "1.0D+308";
+        }
+        if (/FORTRAN STRING/)
+        {
+            push (@strings, join(':',$name,$value));
+        } else {
+            push (@parameters, join(':',$name,$value));
+        }
+    }
+
+    if (/^#[ \t]*define[ \t]+\w+[ \t]+FC_FUNC[ \t]*\([ \t]*(\w+)[ \t,]+\w+/) {
+        push (@functions, $1);
+    }
+
+    # Turn on `enum' handling?
+    $enum_body = $brace_level+1 if /^(typedef\s+)?enum\b/;
+    $brace_level += tr/{/{/;
+    $brace_level -= tr/}/}/;
+
+    # Turn off `enum' handling.  This assumes that the left curly
+    # brace for the enum body is on the same line as `enum'.
+    $enum_body = 0 if $brace_level<$enum_body;
+
+    # The enum body must be indented.  The `VAR=VALUE' form must be used.
+    if ($enum_body && /^\s+(DB_\w+)\s*=\s*([^ \t\n,]+)\s*,?/) {
+       push (@parameters, join (':', $1, $2));
+    }
+}
+
+#
+# Write a Fortran comment describing this file.
+#
+$title = ($sdx?"SDX":"SILO");
+$date = `date`;
+chop($date);
+$user = $ENV{USER};
+print <<"EOF";
+${ccmt}cccccccccccccccccccccccccccccccccccccccccccccccccccccccc -*- fortran -*-
+${ccmt} 
+${ccmt}      $title include file for Fortan applications.
+${ccmt} 
+${ccmt}  Programmer:   $user $date
+${ccmt} 
+${ccmt}  WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+${ccmt}     This file is generated automatically from C header files in the
+${ccmt}     SILO distribution.  Do not make changes to this file manually,
+${ccmt}     as those changes will disappear.
+${ccmt}  WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+${ccmt} 
+${ccmt}  This file was generated by the following commands...
+EOF
+
+if ($sdx) { print <<"EOF";
+${ccmt}        mv sdx.inc sdx.inc~
+${ccmt}        cat sdx.h sdx_server.h | mkinc $arg0> sdx.inc
+${ccmt} 
+${ccmt} cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+
+EOF
+} else { print <<"EOF";
+${ccmt}        mv silo.inc silo.inc~
+${ccmt}        cat silo.h silo_f.h | mkinc $arg0> silo.inc
+${ccmt} 
+${ccmt} cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+
+
+EOF
+}
+
+### Write `external' statements for the functions...
+print "$ccmt...Functions.\n";
+$line = "";
+foreach $var (sort @functions) {
+    if (length($line)+2+length($var)>72) {
+        print "$line\n";
+        $line = "";
+    }
+
+    if ($opt_f90) {
+        $line = "      integer, external :: $var";
+    } else {
+        $line = "      EXTERNAL  " . uc($var);
+    }
+    print "$line\n";
+}
+
+### Write `integer' statements for the functions...
+if (not $opt_f90) {
+    print "\n";
+    $line = "";
+    foreach $var (sort @functions) {
+        print "      INTEGER  " . uc($var) . "\n";
+    }
+}
+
+print "\n\n$ccmt...Parameters.\n";
+
+### Skip separate type and parameter declarations. Better F90 practice
+### is to use attributes (parameter, dimension, etc.) in declarations
+
+if (not $opt_f90) {
+
+### Write `integer' statements for the constants...
+    $line = "";
+    foreach $var (sort @parameters) {
+        local ($name, $value) = split (':', $var);
+        if ($value =~ /\./) {
+            print "      DOUBLE PRECISION " . uc($name) . "\n";
+        } else {
+            print "      INTEGER  " . uc($name) . "\n";
+        }
+    }
+
+### Write `character' statements for the constants...
+    foreach $var (sort @strings) {
+        local ($name, $value) = split (':', $var);
+        local($fstrlen) = 0;
+        local($tmpstr) = $value;
+        if ($tmpstr =~ /^(["'])/) {
+            local($delim) = $1;
+            $tmpstr =~ s/^$delim//;
+            $tmpstr =~ s/$delim$//;
+        }
+        $tmpstr =~ s/\\./*/g;
+        $fstrlen = length($tmpstr);
+
+        $line = '      CHARACTER*' . $fstrlen . '  ' . uc($name) . "\n";
+        print $line;
+    }
+
+    print "\n";
+}
+
+### Write `parameter' statements for the constants...
+### Don't sort these, because some $values may depend on
+### previous parameter statements.
+push(@temparray,@parameters);
+push(@temparray,@strings);
+local($ftype) = '';
+local($fstrlen) = 0;
+foreach $var (@temparray) {
+    local ($name, $value) = split (':', $var);
+    if ($value =~ /^0x[0-9A-F]*/) {
+        $value = hex($value);
+    } elsif ($value =~ /^0[0-7]*/) {
+        $value = oct($value);
+    } elsif ($value =~ /^DB_HDF5_OPTS(.*)/) {
+        local ($foo, $bar) = split ('\(', $value);
+        local ($g1, $g2) = split ( '\)', $bar);
+        $value = "DB_HDF5X+$g1*2048";
+    }
+    # Evaluate the RHS using array %vals:
+    if ($value =~ /^\d*\.?\d*([DE]\+)?\d+$/) {
+      $vals{$name} = $value ;
+    } else {
+      # Let us look at the RHS expression:
+      my $rhs = $value ;
+      my $nhs = "" ;
+      while($rhs =~ /(.*?)(\w+)(.*)/i) {
+         # $nhs .= $1 . '${' . $2 . '}' ;
+         if (exists $vals{$2}) {
+           $nhs .= $1 . $vals{$2} ;
+         } else {
+           # print STDERR "KO var $2\n" ;
+           $nhs .= $1 . $2 ;
+         }
+         $rhs = $3 ;
+      }
+      $nhs .= $rhs ;
+      my $aval = eval("$nhs") ;
+      $vals{$name} = $aval unless (exists $vals{$name}) ;
+      # print STDERR "nhs = $nhs, val=$aval (line=$.:$value)\n" ;
+    }
+    # Replace the old symbolic value with the new perl evaluated one:
+    unless ($name =~ /DB_F77NULL/) {
+	$value = $vals{$name} if (exists $vals{$name}) ;
+    }
+
+    # Why make the line human readable whereas it only needs be compiler compliant ?
+    # $line = sprintf("      parameter (%-25s = %-15s)", $name, $value);
+    # Written in a FORTRAN 77/Fortran 90 manner:
+    if ($opt_f90) {
+        # Determine type of Fortran parameter (F90 declaration)
+        if ($value =~ /['"]/) {
+            local($tmpstr) = $value;
+            if ($tmpstr =~ /^(["'])/) {
+                local($delim) = $1;
+                $tmpstr =~ s/^$delim//;
+                $tmpstr =~ s/$delim$//;
+            }
+            $tmpstr =~ s/\\./*/g;
+            $fstrlen = length($tmpstr);
+
+            $ftype = 'character (len=' . $fstrlen . ')'
+        }
+        elsif ($value =~ /\./) {
+            $ftype = 'real (kind=8)';
+        } else {
+            $ftype = 'integer';
+        }
+        $line = sprintf("      %s, parameter :: %s = %s", $ftype, $name, $value);
+    } else {
+        $line = sprintf("      PARAMETER (%s=%s)", uc($name), $value);
+    }
+
+    if (length($line)>72) {
+        local $off=0;
+        while ($off < length($line)) {
+            if ($opt_f90) {
+                $curline = substr($line, $off, $off+64);
+                if ($off == 0) {
+                    printf "$curline\n";
+                } else {
+                    printf '     &' . $curline . "\n";
+                }
+                $off += 64;
+            } else {
+                $curline = substr($line, $off, $off+64) . '&';
+                if ($off == 0) {
+                    printf "$curline\n";
+                } else {
+                    printf '     &' . $curline . "\n";
+                }
+                $off += 64;
+            }
+        }
+    } else {
+        printf "$line\n";
+    }
+}
+
+print "\n\n" . $ccmt. " End.\n";
+
+exit 0;

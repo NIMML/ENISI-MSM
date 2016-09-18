@@ -1,0 +1,44 @@
+[ 99%] Built target libCOPASISE-core
+[100%] Built target libCOPASISE-static
+[100%] Built target CopasiSE
+Install the project...
+-- Install configuration: ""
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/TutWiz-Step4.html
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/TutWiz-Step5.html
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/TutWiz-Step1.html
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/TutWiz-Step3.html
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/TutWiz-Step2.html
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/TutWiz-Step6.html
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ModelSettingsDialog.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/TimeCourseDialog.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/OutputAssistant.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/PlotCurveSelectionDialog.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ReactionDialog.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ObjectBrowserSelection.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/NewPlotAdded.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ReactionOverviewEmpty.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ReactionOverview.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ObjectBrowserTree.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/ReportDefinitionDialog.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/PlotDefinition.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/doc/html/figures/PlotWindow.png
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/brusselator.sedml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/Olsen2003_peroxidase.cps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/Metabolism-2000Poo.xml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/scan.sedml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/MAPK-HF96-layout.cps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/DimericMWC-stiff.cps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/YeastGlycolysis.gps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/brusselator.cps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/NF-kappaB.sedml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/NF-kappaB.cps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/NF-kappaB-model.xml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/brusselator-model.xml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/CircadianClock.cps
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/Genetic-2000Elo.xml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/examples/oscli.xml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/icons/Copasi.ico
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/icons/CopasiDoc.ico
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/share/copasi/config/MIRIAMResources.xml
+-- Installing: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/bin/CopasiSE
+-- Set runtime path of "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-build/copasi_install/bin/CopasiSE" to ""

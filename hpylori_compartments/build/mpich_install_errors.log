@@ -1,0 +1,244 @@
+configure: WARNING: Your make does not allow comments in target code.
+Using this make may cause problems when building programs.
+You should consider using gnumake instead.
+configure: WARNING: Structures containing long doubles may be aligned differently from structures with floats or longs.  MPICH2 does not handle this case automatically and you should avoid assumed extents for structures containing float types.
+configure: WARNING: Your make does not allow comments in target code.
+Using this make may cause problems when building programs.
+You should consider using gnumake instead.
+configure: WARNING: Your make does not allow comments in target code.
+Using this make may cause problems when building programs.
+You should consider using gnumake instead.
+configure: WARNING: Your make does not allow comments in target code.
+Using this make may cause problems when building programs.
+You should consider using gnumake instead.
+configure: WARNING: File locks may not work with NFS.  See the Installation and
+users manual for instructions on testing and if necessary fixing this
+configure: WARNING: Your make does not allow comments in target code.
+Using this make may cause problems when building programs.
+You should consider using gnumake instead.
+configure: WARNING: " -fvisibility=hidden" has been added to the hwloc CFLAGS
+configure: WARNING: valgrind.h not found
+config.status: WARNING:  'sbin/mpecheckinstall.in' seems to ignore the --datarootdir setting
+configure: WARNING: Could not define Fortran MPI datatypes for C
+config.status: WARNING:  'src/packaging/envmods/mpich2.module.in' seems to ignore the --datarootdir setting
+configure: WARNING: Your make does not allow comments in target code.
+Using this make may cause problems when building programs.
+You should consider using gnumake instead.
+configure: WARNING: Selecting integer*8 as the Fortran type for MPI_Offset
+configure: WARNING: Selecting integer as the Fortran type for MPI_Aint
+ar: `u' modifier ignored since `D' is the default (see `U')
+ar: `u' modifier ignored since `D' is the default (see `U')
+mpe_graphics.c: In function ‘MPE_Update’:
+mpe_graphics.c:755:4: warning: ignoring return value of ‘system’, declared with attribute warn_unused_result [-Wunused-result]
+    system( cmdbuf );
+    ^
+xinit.c: In function ‘XBCaptureWindowToFile’:
+xinit.c:642:5: warning: ignoring return value of ‘system’, declared with attribute warn_unused_result [-Wunused-result]
+     system( cmdbuf );
+     ^
+rlogutil.c: In function ‘RLOG_CreateInputStruct’:
+rlogutil.c:107:2: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+  fread(&length, sizeof(int), 1, pInput->f);
+  ^
+rlogutil.c:159:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&cur_rank, sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:167:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&pInput->pNumEventRecursions[rank_index], sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:180:3: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+   fread(&pInput->ppNumEvents[rank_index][i], sizeof(int), 1, pInput->f);
+   ^
+rlogutil.c: In function ‘RLOG_ModifyEvents’:
+rlogutil.c:456:2: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+  fread(&length, sizeof(int), 1, pInput->f);
+  ^
+rlogutil.c:516:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&cur_rank, sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:524:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&pInput->pNumEventRecursions[rank_index], sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:537:3: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+   fread(&pInput->ppNumEvents[rank_index][i], sizeof(int), 1, pInput->f);
+   ^
+rlogutil.c: In function ‘RLOG_CreateInputStruct’:
+rlogutil.c:107:2: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+  fread(&length, sizeof(int), 1, pInput->f);
+  ^
+rlogutil.c:159:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&cur_rank, sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:167:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&pInput->pNumEventRecursions[rank_index], sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:180:3: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+   fread(&pInput->ppNumEvents[rank_index][i], sizeof(int), 1, pInput->f);
+   ^
+rlogutil.c: In function ‘RLOG_ModifyEvents’:
+rlogutil.c:456:2: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+  fread(&length, sizeof(int), 1, pInput->f);
+  ^
+rlogutil.c:516:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&cur_rank, sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:524:6: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+      fread(&pInput->pNumEventRecursions[rank_index], sizeof(int), 1, pInput->f);
+      ^
+rlogutil.c:537:3: warning: ignoring return value of ‘fread’, declared with attribute warn_unused_result [-Wunused-result]
+   fread(&pInput->ppNumEvents[rank_index][i], sizeof(int), 1, pInput->f);
+   ^
+topology-linux.c: In function ‘hwloc_linux_get_tid_last_cpu_location’:
+topology-linux.c:867:3: warning: ignoring return value of ‘fgets’, declared with attribute warn_unused_result [-Wunused-result]
+   fgets(buf, sizeof(buf), file);
+   ^
+In file included from ./utils/args/args.c:7:0:
+./utils/args/args.c: In function ‘match_arg’:
+./utils/args/args.c:110:69: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+                     HYDU_ERR_SETANDJUMP(status, HYD_GRACEFUL_ABORT, "");
+                                                                     ^
+./include/hydra.h:339:21: note: in definition of macro ‘HYDU_dump_noprefix’
+         fprintf(fp, __VA_ARGS__);               \
+                     ^
+./include/hydra.h:396:13: note: in expansion of macro ‘HYDU_error_printf’
+             HYDU_error_printf(__VA_ARGS__);                             \
+             ^
+./include/hydra.h:407:9: note: in expansion of macro ‘HYDU_ERR_POP’
+         HYDU_ERR_POP(status, __VA_ARGS__);                              \
+         ^
+./utils/args/args.c:110:21: note: in expansion of macro ‘HYDU_ERR_SETANDJUMP’
+                     HYDU_ERR_SETANDJUMP(status, HYD_GRACEFUL_ABORT, "");
+                     ^
+./utils/args/args.c: In function ‘HYDU_parse_array’:
+./utils/args/args.c:137:61: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+             HYDU_ERR_SETANDJUMP(status, HYD_INTERNAL_ERROR, "");
+                                                             ^
+./include/hydra.h:339:21: note: in definition of macro ‘HYDU_dump_noprefix’
+         fprintf(fp, __VA_ARGS__);               \
+                     ^
+./include/hydra.h:396:13: note: in expansion of macro ‘HYDU_error_printf’
+             HYDU_error_printf(__VA_ARGS__);                             \
+             ^
+./include/hydra.h:407:9: note: in expansion of macro ‘HYDU_ERR_POP’
+         HYDU_ERR_POP(status, __VA_ARGS__);                              \
+         ^
+./utils/args/args.c:137:13: note: in expansion of macro ‘HYDU_ERR_SETANDJUMP’
+             HYDU_ERR_SETANDJUMP(status, HYD_INTERNAL_ERROR, "");
+             ^
+./utils/args/args.c: In function ‘HYDU_get_abs_wd’:
+./utils/args/args.c:233:5: warning: ignoring return value of ‘chdir’, declared with attribute warn_unused_result [-Wunused-result]
+     chdir(wd);
+     ^
+./utils/args/args.c:235:5: warning: ignoring return value of ‘chdir’, declared with attribute warn_unused_result [-Wunused-result]
+     chdir(cwd);
+     ^
+In file included from ./utils/string/string.c:7:0:
+./utils/string/string.c: In function ‘HYDU_strsplit’:
+./utils/string/string.c:92:57: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+         HYDU_ERR_SETANDJUMP(status, HYD_INTERNAL_ERROR, "");
+                                                         ^
+./include/hydra.h:339:21: note: in definition of macro ‘HYDU_dump_noprefix’
+         fprintf(fp, __VA_ARGS__);               \
+                     ^
+./include/hydra.h:396:13: note: in expansion of macro ‘HYDU_error_printf’
+             HYDU_error_printf(__VA_ARGS__);                             \
+             ^
+./include/hydra.h:407:9: note: in expansion of macro ‘HYDU_ERR_POP’
+         HYDU_ERR_POP(status, __VA_ARGS__);                              \
+         ^
+./utils/string/string.c:92:9: note: in expansion of macro ‘HYDU_ERR_SETANDJUMP’
+         HYDU_ERR_SETANDJUMP(status, HYD_INTERNAL_ERROR, "");
+         ^
+./tools/topo/hwloc/topo_hwloc.c: In function ‘hwloc_to_hydra_cpuset_dup’:
+./tools/topo/hwloc/topo_hwloc.c:56:9: warning: ‘hwloc_cpuset_isset’ is deprecated [-Wdeprecated-declarations]
+         if (hwloc_cpuset_isset(hwloc_cpuset, i)) {
+         ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:49:56: note: declared here
+ static __hwloc_inline int __hwloc_attribute_deprecated hwloc_cpuset_isset(hwloc_const_bitmap_t bitmap, unsigned index_) { return hwloc_bitmap_isset(bitmap, index_); }
+                                                        ^
+./tools/topo/hwloc/topo_hwloc.c: In function ‘hydra_to_hwloc_cpuset_dup’:
+./tools/topo/hwloc/topo_hwloc.c:70:5: warning: ‘hwloc_cpuset_zero’ is deprecated [-Wdeprecated-declarations]
+     hwloc_cpuset_zero(hwloc_cpuset);
+     ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:36:57: note: declared here
+ static __hwloc_inline void __hwloc_attribute_deprecated hwloc_cpuset_zero(hwloc_bitmap_t bitmap) { hwloc_bitmap_zero(bitmap); }
+                                                         ^
+./tools/topo/hwloc/topo_hwloc.c:73:13: warning: ‘hwloc_cpuset_set’ is deprecated [-Wdeprecated-declarations]
+             hwloc_cpuset_set(hwloc_cpuset, i);
+             ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:44:57: note: declared here
+ static __hwloc_inline void __hwloc_attribute_deprecated hwloc_cpuset_set(hwloc_bitmap_t bitmap, unsigned index_) { hwloc_bitmap_set(bitmap, index_); }
+                                                         ^
+./tools/topo/hwloc/topo_hwloc.c: In function ‘get_cache_nbobjs’:
+./tools/topo/hwloc/topo_hwloc.c:86:5: warning: ‘hwloc_cpuset_compare’ is deprecated [-Wdeprecated-declarations]
+     if (hobj->type == HWLOC_OBJ_CACHE && !hwloc_cpuset_compare(hobj->cpuset, cpuset))
+     ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:65:56: note: declared here
+ static __hwloc_inline int __hwloc_attribute_deprecated hwloc_cpuset_compare(hwloc_const_bitmap_t bitmap1, hwloc_const_bitmap_t bitmap2) { return hwloc_bitmap_compare(bitmap1, bitmap2); }
+                                                        ^
+./tools/topo/hwloc/topo_hwloc.c: In function ‘load_cache_objs’:
+./tools/topo/hwloc/topo_hwloc.c:100:5: warning: ‘hwloc_cpuset_compare’ is deprecated [-Wdeprecated-declarations]
+     if (hobj->type == HWLOC_OBJ_CACHE && !hwloc_cpuset_compare(hobj->cpuset, cpuset)) {
+     ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:65:56: note: declared here
+ static __hwloc_inline int __hwloc_attribute_deprecated hwloc_cpuset_compare(hwloc_const_bitmap_t bitmap1, hwloc_const_bitmap_t bitmap2) { return hwloc_bitmap_compare(bitmap1, bitmap2); }
+                                                        ^
+./tools/topo/hwloc/topo_hwloc.c: In function ‘HYDT_topo_hwloc_bind’:
+./tools/topo/hwloc/topo_hwloc.c:329:5: warning: ‘hwloc_cpuset_alloc’ is deprecated [-Wdeprecated-declarations]
+     hwloc_cpuset_t hwloc_cpuset = hwloc_cpuset_alloc();
+     ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:29:67: note: declared here
+ static __hwloc_inline hwloc_bitmap_t __hwloc_attribute_deprecated hwloc_cpuset_alloc(void) { return hwloc_bitmap_alloc(); }
+                                                                   ^
+./tools/topo/hwloc/topo_hwloc.c:337:5: warning: ‘hwloc_cpuset_free’ is deprecated [-Wdeprecated-declarations]
+     hwloc_cpuset_free(hwloc_cpuset);
+     ^
+In file included from ./tools/topo/hwloc/hwloc/include/hwloc.h:35:0,
+                 from ./tools/topo/hwloc/topo_hwloc.h:14,
+                 from ./tools/topo/hwloc/topo_hwloc.c:13:
+./tools/topo/hwloc/hwloc/include/hwloc/cpuset.h:30:57: note: declared here
+ static __hwloc_inline void __hwloc_attribute_deprecated hwloc_cpuset_free(hwloc_bitmap_t bitmap) { hwloc_bitmap_free(bitmap); }
+                                                         ^
+./pm/pmiserv/pmip_cb.c: In function ‘parse_exec_params’:
+./pm/pmiserv/pmip_cb.c:853:9: warning: null argument where non-null required (argument 1) [-Wnonnull]
+         HYD_pmcd_pmip.user_global.ckpointlib = HYDU_strdup(HYDRA_DEFAULT_CKPOINTLIB);
+         ^
+./pm/pmiserv/pmip_cb.c:853:9: warning: null argument where non-null required (argument 2) [-Wnonnull]
+In file included from ./include/hydra_server.h:10:0,
+                 from ./ui/mpich/utils.c:7:
+./ui/mpich/utils.c: In function ‘info_fn’:
+./ui/mpich/utils.c:1098:53: warning: zero-length gnu_printf format string [-Wformat-zero-length]
+     HYDU_ERR_SETANDJUMP(status, HYD_GRACEFUL_ABORT, "");
+                                                     ^
+./include/hydra.h:339:21: note: in definition of macro ‘HYDU_dump_noprefix’
+         fprintf(fp, __VA_ARGS__);               \
+                     ^
+./include/hydra.h:396:13: note: in expansion of macro ‘HYDU_error_printf’
+             HYDU_error_printf(__VA_ARGS__);                             \
+             ^
+./include/hydra.h:407:9: note: in expansion of macro ‘HYDU_ERR_POP’
+         HYDU_ERR_POP(status, __VA_ARGS__);                              \
+         ^
+./ui/mpich/utils.c:1098:5: note: in expansion of macro ‘HYDU_ERR_SETANDJUMP’
+     HYDU_ERR_SETANDJUMP(status, HYD_GRACEFUL_ABORT, "");
+     ^
+libtool: install: warning: remember to run `libtool --finish /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//MPICH/lib'
+libtool: install: warning: remember to run `libtool --finish /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//MPICH/lib'

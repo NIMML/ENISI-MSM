@@ -1,0 +1,17 @@
+--- /home/ec2-user/bv_silo.sh	2015-07-17 20:20:33.096143652 +0000
++++ bv_support/bv_silo.sh	2015-07-17 20:22:40.484284530 +0000
+@@ -46,11 +46,11 @@
+ 
+ function bv_silo_info
+ {
+-export SILO_VERSION=${SILO_VERSION:-"4.10.1"}
++export SILO_VERSION=${SILO_VERSION:-"4.10.2"}
+ export SILO_FILE=${SILO_FILE:-"silo-${SILO_VERSION}.tar.gz"}
+-export SILO_COMPATIBILITY_VERSION=${SILO_COMPATIBILITY_VERSION:-"4.10.1"}
++export SILO_COMPATIBILITY_VERSION=${SILO_COMPATIBILITY_VERSION:-"4.10.2"}
+ export SILO_BUILD_DIR=${SILO_BUILD_DIR:-"silo-${SILO_VERSION}"}
+-export SILO_URL=${SILO_URL:-https://wci.llnl.gov/codes/silo/silo-${SILO_VERSION}}
++export SILO_URL=${SILO_URL:-https://wci.llnl.gov/content/assets/docs/simulation/computer-codes/silo/silo-${SILO_VERSION}}
+ export SILO_MD5_CHECKSUM="29e6cdf25e98aef96e1f541167839c6f"
+ export SILO_SHA256_CHECKSUM="8549167d1315ab27d3752ee463c45a6919d68a3bdad4acc8389a1d5f73071028"
+ }

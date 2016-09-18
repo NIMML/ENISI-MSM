@@ -1,0 +1,5 @@
+encoding.lo: encoding.c /usr/include/stdc-predef.h SZconfig.h
+
+/usr/include/stdc-predef.h:
+
+SZconfig.h:

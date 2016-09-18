@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_copasi"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_copasi.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_copasi-complete.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-install.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-mkdir.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-download.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-update.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-patch.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-configure.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi-stamp/project_copasi-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"project_copasi"
+		],
+		"name" : "project_copasi"
+	}
+}

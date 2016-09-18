@@ -1,0 +1,1 @@
+/usr/bin/cc   -fPIC -fPIC   CMakeFiles/arithchk.dir/arithchk.c.o  -o arithchk -rdynamic -lm 

@@ -1,0 +1,5 @@
+The following directories will be automatically tested
+
+ss_simple
+ss_simple2
+param_est1

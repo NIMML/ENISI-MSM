@@ -1,0 +1,18 @@
+# @r1654-???
+
+4 compartment spaces for HP model:
+* lumen
+* epithelium
+* lamina propia
+* gastric lymph node
+
+# @r1628:1651
+
+Benchmarking class
+
+# @r1602:1626
+
+Ability to generate VisIt-compatible Silo files. 
+
+Fixed bug in model that prevented Bacteria from dying and cytokine levels from
+changing/increasing.

@@ -1,0 +1,195 @@
+/* Begin CVS Header
+  $Source: /Volumes/Home/Users/shoops/cvs/copasi_dev/copasi/function/CEvaluationNodeObject.h,v $
+  $Revision: 1.29 $
+  $Name:  $
+  $Author: shoops $
+  $Date: 2012/05/17 18:11:30 $
+  End CVS Header */
+
+// Copyright (C) 2012 - 2010 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., University of Heidelberg, and The University
+// of Manchester.
+// All rights reserved.
+
+// Copyright (C) 2008 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc., EML Research, gGmbH, University of Heidelberg,
+// and The University of Manchester.
+// All rights reserved.
+
+// Copyright (C) 2001 - 2007 by Pedro Mendes, Virginia Tech Intellectual
+// Properties, Inc. and EML Research, gGmbH.
+// All rights reserved.
+
+#ifndef COPASI_CEvaluationNodeObject
+#define COPASI_CEvaluationNodeObject
+
+#include "report/CCopasiObjectName.h"
+
+class CRegisteredObjectName;
+class CCopasiDataModel;
+
+/**
+ * This is class for nodes presenting numbers used in an evaluation trees
+ */
+class CEvaluationNodeObject : public CEvaluationNode
+{
+public:
+  /**
+   * Enumeration of possible node types.
+   * The typing of variables must be handled by the tree.
+   */
+  enum SubType
+  {
+    INVALID = 0x00FFFFFF,
+    CN = 0x00000000,
+    POINTER = 0x00000001
+  };
+
+  // Operations
+private:
+  /**
+   * Default constructor
+   */
+  CEvaluationNodeObject();
+
+public:
+  /**
+   * Default constructor
+   * @param const SubType & subType
+   * @param const Data & data
+   */
+  CEvaluationNodeObject(const SubType & subType,
+                        const Data & data);
+
+  /**
+   * Specific constructor
+   * @param const Data & data
+   */
+  CEvaluationNodeObject(const C_FLOAT64 * pValue);
+
+  /**
+   * Copy constructor
+   * @param const CEvaluationNodeObject & src
+   */
+  CEvaluationNodeObject(const CEvaluationNodeObject & src);
+
+  /**
+   * Destructor
+   */
+  virtual ~CEvaluationNodeObject();
+
+  /**
+   * Compile a node;
+   * @param const CEvaluationTree * pTree
+   * @return bool success;
+   */
+  virtual bool compile(const CEvaluationTree * pTree);
+
+  /**
+   * Retrieve the value of the node.
+   * @return const Data & value
+   */
+  virtual const Data & getData() const;
+
+  /**
+   * Set the data of the Node.
+   * @param const Data & data
+   * @return bool success
+   */
+  virtual bool setData(const Data & data);
+
+  /**
+   * Retrieve the infix value of the node and its eventual child nodes.
+   * @return const Data & value
+   */
+  virtual std::string getInfix(const std::vector< std::string > & children) const;
+
+  /**
+   * Retrieve the display string of the node and its eventual child nodes.
+   * @return const Data & value
+   */
+  virtual std::string getDisplayString(const std::vector< std::string > & children) const;
+
+  /**
+   * Retrieve the display string of the node and its eventual child nodes in C.
+   * @return const Data & value
+   */
+  virtual std::string getCCodeString(const std::vector< std::string > & children) const;
+
+  /**
+   * Retrieve the display string of the node and its eventual child nodes in
+   * Berkeley Madonna format.
+   * @return const Data & value
+   */
+  virtual std::string getBerkeleyMadonnaString(const std::vector< std::string > & children) const;
+
+  /**
+   * Retrieve the display string of the node and its eventual child nodes in
+   * XPPAUT format.
+   * @return const Data & value
+   */
+  virtual std::string getXPPString(const std::vector< std::string > & children) const;
+
+  /**
+   * Creates a new CEvaluationNodeCall from an ASTNode and the given children
+   * @param const ASTNode* pNode
+   * @param const std::vector< CEvaluationNode * > & children
+   * @return CEvaluationNode * pCretedNode
+   */
+  static CEvaluationNode * fromAST(const ASTNode * pASTNode, const std::vector< CEvaluationNode * > & children);
+
+  /**
+   * Converts this node to an ASTNode.
+   * @return ASTNode the resulting ASTNode.
+   */
+  virtual ASTNode* toAST(const CCopasiDataModel* pDataModel) const;
+
+  /**
+   * Retrieve the CN of the referred object.
+   * @return const CRegisteredObjectName & objectCN
+   */
+  const CRegisteredObjectName & getObjectCN() const;
+
+  /**
+   * Retrieve the pointer to the referred object interface
+   * @return const CObjectInterface * pObjectInterface
+   */
+  const CObjectInterface * getObjectInterfacePtr() const;
+
+  /**
+   * Retrieve the pointer to the value of the referred object
+   * @return const C_FLOAT64 * pObjectValue
+   */
+  const C_FLOAT64 * getObjectValuePtr() const;
+
+  /**
+   * Set the pointer to the value of the referred object
+   * @param C_FLOAT64 * pObjectValue
+   */
+  void setObjectValuePtr(C_FLOAT64 * pObjectValue);
+
+  /**
+   * Build the MathML string
+   * @param const std::vector< std::string > & children
+   * @param bool expand = true
+   * @param const std::vector< std::vector< std::string > > & variables
+   * @return std::string MMLString
+   */
+  virtual std::string getMMLString(const std::vector< std::string > & children,
+                                   bool expand,
+                                   const std::vector< std::vector< std::string > > & variables) const;
+
+  //Attributes
+private:
+  /**
+   * Pointer to the object
+   */
+  const CObjectInterface * mpObject;
+
+  /**
+   * The registered object name to track eventual renaming.
+   */
+  CRegisteredObjectName mRegisteredObjectCN;
+};
+
+#endif // COPASI_CEvaluationNodeObject

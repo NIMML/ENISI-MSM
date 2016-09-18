@@ -1,0 +1,11 @@
+--- original/SharedDiscreteSpace.h	2013-02-08 11:07:03.000000000 -0500
++++ SharedDiscreteSpace.h	2016-04-04 12:33:32.784127811 -0400
+@@ -402,6 +402,8 @@
+     agentsToPush[ W_rank].insert( W_set.begin(),  W_set.end());
+   }
+ 
++  agentsToPush.erase(SharedBaseGrid<T, GPTransformer, Adder, int>::rank);
++  
+ }
+ 
+ 

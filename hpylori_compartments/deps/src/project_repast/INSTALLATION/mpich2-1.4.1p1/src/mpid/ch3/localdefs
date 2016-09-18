@@ -1,0 +1,6 @@
+#! /bin/sh
+# See if there are any definitions from the channel
+if test -s src/mpid/ch3/channels/nemesis/localdefs ; then
+    . src/mpid/ch3/channels/nemesis/localdefs
+fi
+LIBS="$LIBS "

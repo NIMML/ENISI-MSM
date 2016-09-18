@@ -1,0 +1,7 @@
+Patching hdf5
+Configuring HDF5 . . .
+SZip requested.  Configuring HDF5 with SZip support.
+Invoking command to configure HDF5
+./configure CXX="g++" CC="gcc"         CFLAGS=" -m64 -fPIC  -O2" CXXFLAGS=" -m64 -fPIC  -O2"                  --prefix="/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/hdf5/1.8.7/linux-x86_64_gcc-5.4"         --with-szlib=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4 --enable-shared --disable-static 
+Making HDF5 . . .
+Installing HDF5 . . .

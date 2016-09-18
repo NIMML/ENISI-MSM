@@ -1,0 +1,170 @@
+space.x = 30 nm
+
+# HPylori.concentration = 0.0
+# Bacteria.concentration = 0.0
+# EpithelialCell.concentration = 0.0
+# Dendritics.concentration = 0.0
+# Tcell.concentration = 0.0
+# macrophages.concentration = 0.0
+
+HPylori.concentration = 100.0
+Bacteria.concentration = 10.0
+EpithelialCell.concentration = 1.0
+Dendritics.concentration = 1.5
+Tcell.concentration = 10.0
+macrophages.concentration = 0.125
+
+Tcell.ODE = MSM_CD4.cps
+macrophages.ODE = MregDiff.cps
+
+cell.speed = 10 µm/min mesenchymal cells move slower (~<1 µm/min)
+
+# compartments
+lumen.space.x = space.x
+lumen.space.y = 30 nm
+lumen.border.y.low = REFLECT
+lumen.border.y.high = epithilium
+lumen.Bacteria.concentration = Bacteria.concentration
+lumen.HPylori.concentration = HPylori.concentration
+
+epithilium.space.x = space.x
+epithilium.space.y = 1 nm
+epithilium.border.y.low = lumen
+epithilium.border.y.high = lamina_propria
+epithilium.EpithelialCell.concentration = EpithelialCell.concentration
+epithilium.Dendritics.concentration = 0.1
+lamina_propria.space.x = space.x
+lamina_propria.space.y = 30 nm
+lamina_propria.border.y.low = epithilium
+lamina_propria.border.y.high = gastric_lymph_node
+
+# Yongguo used these values to make the model fit the data.
+# They don't have any inherent meaning otherwise
+lamina_propria.eIL6.initialValue = 10
+lamina_propria.eIL6.diffusion = 0.6
+lamina_propria.eIL6.degradation = 0.05
+
+lamina_propria.eTGFb.initialValue = 50
+lamina_propria.eTGFb.diffusion = 0.6
+lamina_propria.eTGFb.degradation = 0.02
+
+lamina_propria.eIL12.initialValue = 20
+lamina_propria.eIL12.diffusion = 0.6
+lamina_propria.eIL12.degradation = 0.02
+
+lamina_propria.eIL17.initialValue = 0.4
+lamina_propria.eIL17.diffusion = 0.6
+lamina_propria.eIL17.degradation = 0.02
+
+lamina_propria.eIL10.initialValue = 0.4
+lamina_propria.eIL10.diffusion = 0.6
+lamina_propria.eIL10.degradation = 0.02
+
+lamina_propria.eIFNg.initialValue = 0.3
+lamina_propria.eIFNg.diffusion = 0.6
+lamina_propria.eIFNg.degradation = 0.02
+
+lamina_propria.Dendritics.concentration = Dendritics.concentration
+lamina_propria.Tcell.concentration = Tcell.concentration
+lamina_propria.Bacteria.concentration = 0
+lamina_propria.HPylori.concentration = 0
+lamina_propria.macrophages.concentration = macrophages.concentration
+
+#gastric_lymph_node
+gastric_lymph_node.space.x = space.x
+gastric_lymph_node.space.y = 30 nm
+gastric_lymph_node.border.y.low = lamina_propria
+gastric_lymph_node.border.y.high = REFLECT
+gastric_lymph_node.Dendritics.concentration = Dendritics.concentration
+gastric_lymph_node.Tcell.concentration = Tcell.concentration
+
+gastric_lymph_node.eTGFb.initialValue = 50
+gastric_lymph_node.eTGFb.diffusion = 0.6
+gastric_lymph_node.eTGFb.degradation = 0.02
+
+gastric_lymph_node.eIL12.initialValue = 10
+gastric_lymph_node.eIL12.diffusion = 0.6
+gastric_lymph_node.eIL12.degradation = 0.02
+
+gastric_lymph_node.eIL17.initialValue = 0.5
+gastric_lymph_node.eIL17.diffusion = 0.6
+gastric_lymph_node.eIL17.degradation = 0.02
+
+gastric_lymph_node.eIL10.initialValue = 0.4
+gastric_lymph_node.eIL10.diffusion = 0.6
+gastric_lymph_node.eIL10.degradation = 0.02
+
+gastric_lymph_node.eIFNg.initialValue = 0.4
+gastric_lymph_node.eIFNg.diffusion = 0.6
+gastric_lymph_node.eIFNg.degradation = 0.02
+
+# Parameter rules
+#### From COPASI ####
+p_rule10a =  1 l^2/#*d
+p_rule10b =  1 l^2/#*d
+p_rule10a_infectiousBacteriaConcentration = 0
+p_rule10b_cytokineConcentration = 0
+p_EpiProliferation = 0.6
+p_EpiCellDeath = p_EpiProliferation
+p_rule12 = 0 l^2/#*d
+
+p_rule18 = 0.65 l^2/#*d
+p_rule19 = 0.05 l^2/#*d
+p_rule20 = 0.6 l^2/#*d
+p_rule21 = 0.5 l^2/#*d
+p_rule22 = 0.5 l/#*d
+p_rule23 = 0.7 l/#*d
+p_rule24 = 0.7 l/d
+p_rule26 = 0.2 l/d
+p_rule27 = 0.3 l/d
+p_rule29 = 2 l/d
+p_rule30 = 3 l/#*d
+p_rule31 = 0.15 l/d
+p_rule31a = 0.75 l/#
+p_rule32 = 0.7 l/d
+p_rule33 = 0.7 l/d
+p_rule35 = 0.55 l/#*d
+p_rule36 =  0.6 l/#*d
+p_rule37 = 0.05 l/#*d
+p_rule38 = 0.05 l/#*d
+p_rule39 = 0.1 l^2/#*d
+p_rule40 = 0.15 #/l*d
+p_rule53 = 0.2 l/#*d
+p_rule55a = 0.05 l^2/#*d
+p_rule55b = 0.1 l^2/#*d
+p_BacteriaKill = 0.7 l^2/(#*d)
+p_BacteriaDeath = 0.35 1/(#*d)
+p_BacteriaLPProl = 0.2 #/(l*d)
+p_BacteriaLumProl = 0.5 #/(l*d)
+p_rule1 = 0.45 l^2/(#^2*d)
+p_rule1_damagedEpithelialCellConcentration = 0.01
+p_rule3 = 0.55 l^2/(#^2*d)
+p_rule4a = 0.2 #/(l*d)
+p_rule4b = 0.5 #/(l*d)
+p_rule5 = 0.7 l^2/(#*d)
+p_HPyloriDeath = 0.35 l/(#*d)
+p_rule17a = 0.8 l^2/(#^2*d)
+p_rule17b = 0.3 l^2/(#^2*d)
+p_rule48a = 0.4 l^2/(#*d)
+p_rule48b = 0.75 l^2/(#*d)
+p_DCDeath = 0.2 l/(#*d)
+p_rule15 = 0.5 l/(d)
+p_rule34 = 0.5 l^2/(#^2*d)
+p_rule51a = 0.7 l/d
+p_rule51b = 0.7 l/d
+p_rule52 = 0.7 l/d
+p_rule42 = 0.9 l/(#*d)
+p_MinfDiff = 0.3 l/(#*d)
+p_rule13 = 0.4 #/d
+p_rule28a = 0.2 l/(#*d)
+p_rule28b = 0.2 l/(#*d)
+p_IFNg = 0.5
+p_IL10 = 0.5
+p_IL17 = 0.5
+#### Arbitrary ####
+p_iDCEpitheliumDistance = 2
+p_iDCLPDistance = 2
+p_mDCGLNDistance = 2
+neardistance_border = 2
+
+

@@ -1,0 +1,3 @@
+repository='external project URL'
+module='https://sourceforge.net/projects/repast/files/Repast%20HPC/Repast%20HPC%202.0/RHPC_2.0.tar.gz/download'
+tag=''

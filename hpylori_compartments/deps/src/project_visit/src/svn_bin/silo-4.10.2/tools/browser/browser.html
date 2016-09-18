@@ -1,0 +1,1386 @@
+<html lang="en">
+<head>
+<title>Silo Browser User Manual</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Silo Browser User Manual">
+<meta name="generator" content="makeinfo 4.13">
+<link title="Top" rel="top" href="#Top">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home" title="Texinfo Homepage">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<style type="text/css"><!--
+  pre.display { font-family:inherit }
+  pre.format  { font-family:inherit }
+  pre.smalldisplay { font-family:inherit; font-size:smaller }
+  pre.smallformat  { font-family:inherit; font-size:smaller }
+  pre.smallexample { font-size:smaller }
+  pre.smalllisp    { font-size:smaller }
+  span.sc    { font-variant:small-caps }
+  span.roman { font-family:serif; font-weight:normal; } 
+  span.sansserif { font-family:sans-serif; font-weight:normal; } 
+--></style>
+</head>
+<body>
+<h1 class="settitle">Silo Browser User Manual</h1>
+<div class="node">
+<a name="Top"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Copying">Copying</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
+
+</div>
+
+<h2 class="unnumbered">The Silo Browser User Manual</h2>
+
+<p>This document describes the Silo file browser, an application program
+built on the Silo library for interactive viewing of Silo database
+files.
+
+<ul class="menu">
+<li><a accesskey="1" href="#Copying">Copying</a>:                      Copyright information. 
+<li><a accesskey="2" href="#Invocation">Invocation</a>:                   Invoking the browser. 
+<li><a accesskey="3" href="#Syntax">Syntax</a>:                       Command Syntax. 
+<li><a accesskey="4" href="#Functions">Functions</a>:                    Builtin Functions. 
+<li><a accesskey="5" href="#Operators">Operators</a>:                    Browser operators. 
+<li><a accesskey="6" href="#Internal-Variables">Internal Variables</a>:           Controlling the browser personality. 
+<li><a accesskey="7" href="#Startup-File">Startup File</a>:                 Browser initialization. 
+<li><a accesskey="8" href="#Editing">Editing</a>:                      Changing the values of objects. 
+<li><a accesskey="9" href="#Paging">Paging</a>:                       Long output is paginated. 
+<li><a href="#Redirection">Redirection</a>:                  Sending output to a file or command. 
+<li><a href="#Interrupts">Interrupts</a>:                   Interrupting a long-running command. 
+<li><a href="#Examples">Examples</a>:                     Some simple examples. 
+</ul>
+
+<!-- =========================================================================== -->
+<!-- =========================================================================== -->
+<!-- =========================================================================== -->
+<div class="node">
+<a name="Copying"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Invocation">Invocation</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Top">Top</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="unnumbered">Copyright</h2>
+
+<p>Copyright &copy; (c) 1994 - 2010, Lawrence Livermore National Security, LLC. 
+LLNL-CODE-425250. 
+All rights reserved.
+
+   <p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+   <p>* Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the disclaimer below. 
+   * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the disclaimer (as noted
+     below) in the documentation and/or other materials provided with
+     the distribution. 
+   * Neither the name of the LLNS/LLNL nor the names of its
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+
+   <p>THIS SOFTWARE  IS PROVIDED BY  THE COPYRIGHT HOLDERS  AND CONTRIBUTORS
+"AS  IS" AND  ANY EXPRESS  OR IMPLIED  WARRANTIES, INCLUDING,  BUT NOT
+LIMITED TO, THE IMPLIED  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A  PARTICULAR  PURPOSE ARE  DISCLAIMED.  IN  NO  EVENT SHALL  LAWRENCE
+LIVERMORE  NATIONAL SECURITY, LLC,  THE U.S.  DEPARTMENT OF  ENERGY OR
+CONTRIBUTORS BE LIABLE FOR  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR  CONSEQUENTIAL DAMAGES  (INCLUDING, BUT NOT  LIMITED TO,
+PROCUREMENT OF  SUBSTITUTE GOODS  OR SERVICES; LOSS  OF USE,  DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER  IN CONTRACT, STRICT LIABILITY,  OR TORT (INCLUDING
+NEGLIGENCE OR  OTHERWISE) ARISING IN  ANY WAY OUT  OF THE USE  OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+   <p>This work was produced at Lawrence Livermore National Laboratory under
+Contract No.  DE-AC52-07NA27344 with the DOE.
+
+   <p>Neither the  United States Government nor  Lawrence Livermore National
+Security, LLC nor any of  their employees, makes any warranty, express
+or  implied,  or  assumes  any  liability or  responsibility  for  the
+accuracy, completeness,  or usefulness of  any information, apparatus,
+product, or  process disclosed, or  represents that its use  would not
+infringe privately-owned rights.
+
+   <p>Any reference herein to  any specific commercial products, process, or
+services by trade name,  trademark, manufacturer or otherwise does not
+necessarily  constitute or imply  its endorsement,  recommendation, or
+favoring  by  the  United  States  Government  or  Lawrence  Livermore
+National Security,  LLC. The views  and opinions of  authors expressed
+herein do not necessarily state  or reflect those of the United States
+Government or Lawrence Livermore National Security, LLC, and shall not
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Invocation"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Syntax">Syntax</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Copying">Copying</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">1 The Browser Command Line</h2>
+
+<p>The schnauzer is a small terrier with a wiry coat; the browser is a
+utility built on Silo for reading scientific database files.  The
+browser command line is
+
+   <p><code>browser</code> <b>[</b><var>switches</var><b>]</b> <b>[</b><code>--</code><b>]</b>
+<b>[</b><var>files</var><b>]...</b>
+
+   <p>The browser recognizes the following command line switches.  Single
+letter switches that don't require an argument can be grouped together
+(so &lsquo;<samp><span class="samp">-l -q</span></samp>&rsquo; is the same as &lsquo;<samp><span class="samp">-lq</span></samp>&rsquo;). When a single-letter switch
+takes an argument the argument can appear either immediately after the
+letter or as the next argument such as &lsquo;<samp><span class="samp">-l3</span></samp>&rsquo; or &lsquo;<samp><span class="samp">-l 3</span></samp>&rsquo;. Long
+format switches are introduced by double hyphens and if they take an
+argument it must follow an equal sign such as &lsquo;<samp><span class="samp">--eval=exit</span></samp>&rsquo;. 
+Command-line options take effect before the initialization file is read,
+but also override any settings made in that file.
+
+   <p>Invoking the browser with the switch &lsquo;<samp><span class="samp">--help</span></samp>&rsquo; will show a complete
+list of command-line switches and their descriptions.
+
+     <dl>
+<dt><code>-A </code><var>tolerance</var><dt><code>--absolute=</code><var>tolerance</var><dd>All absolute differencing tolerances are set to <var>tolerance</var>, a
+floating point number. All variables of the form &lsquo;<samp><span class="samp">$diff_*_abs</span></samp>&rsquo; are
+set to the specified tolerance.
+
+     <br><dt><code>-R </code><var>tolerance</var><dt><code>--absolute=</code><var>tolerance</var><dd>All relative differencing tolerances are set to <var>tolerance</var>, a
+floating point number.  All variables of the form &lsquo;<samp><span class="samp">$diff_*_rel</span></samp>&rsquo; are
+set to the specified tolerance.
+
+     <br><dt><code>-V</code><dt><code>--version</code><dd>Prints the browser version number. If no other switches or files are
+specified then the browser will exit after printing the version number.
+
+     <br><dt><code>-d </code><var>words</var><dt><code>--diff=</code><var>words</var><dd>This switch controls the behavior of the <code>diff</code> function of the
+browser. The <var>words</var> should be a comma-separated list of key words
+which will be assigned to the <code>$diff</code> browser variable. See its
+documentation for details.
+
+     <br><dt><code>-e </code><var>expression</var><dt><code>--eval=</code><var>expression</var><dd>The browser expression is evaluated and the result is printed on the
+standard output stream.  More than one expression can be given to the
+browser by using multiple switches.  The expressions will be evaluated
+in the order given after the initialization file is read.  When a
+&lsquo;<samp><span class="samp">-e</span></samp>&rsquo; switch is present the browser exits after all expressions are
+processed instead of going into interactive mode. If standard output is
+a terminal then the browser pages the output in the normal way (see
+below).  If the interrupt character is pressed when an expression is
+being evaluated, the browser aborts<a rel="footnote" href="#fn-1" name="fnd-1"><sup>1</sup></a>.
+
+     <br><dt><code>-E </code><var>list</var><dt><code>--exclude=</code><var>list</var><dd>The browser <code>$exclude</code> variable is set to the comma-separated list
+of names and/or datatypes supplied as an argument to this switch. The
+switch may appear more than once. The names in the <code>$exclude</code> list
+will be excluded from recursive <code>diff</code> operations. See
+documentation for <code>$exclude</code> for details.
+
+     <br><dt><code>-f </code><var>initfile</var><dt><code>--file=</code><var>initfile</var><dd>When the browser begins execution it attempts to read the file
+<samp><span class="file">.browser_rc</span></samp> in the user's home directory.  If that file isn't
+readable then it tries to read a system-wide browser initialization
+file.  The &lsquo;<samp><span class="samp">-f</span></samp>&rsquo; command line switch causes the browser to try to
+read the specified file instead.  To prevent the browser from reading
+any initialization file, say &lsquo;<samp><span class="samp">-f /dev/null</span></samp>&rsquo; (internal browser
+variables are still initialized to default values).  The initialization
+file is opened after the database(s) and therefore can contain commands
+that reference the database(s).
+
+     <br><dt><code>-h</code><dt><code>--help</code><dd>Prints a browser usage message. If this is the only switch and no file
+names are specified then the browser will exit after showing the usage
+message.  The usage message will be paged if printed to a terminal.
+
+     <br><dt><code>-l </code><b>[</b><var>value</var><b>]</b><dt><code>--lowlevel</code><b>[</b><code>=</code><var>value</var><b>]</b><dd>This switch assigns an integer value to the <code>$lowlevel</code> browser
+variable, which causes the browser to load database objects as type
+<code>DBobject</code> even if the object is some other composite Silo datatype
+like <code>DBquadvar</code>. If <var>value</var> is specified then it will be
+assigned to the <code>$lowlevel</code> variable; otherwise the value &lsquo;<samp><span class="samp">1</span></samp>&rsquo;
+is assigned.
+
+     <br><dt><code>-c </code><b>[</b><var>value</var><b>]</b><dt><code>--checksums</code><b>[</b><code>=</code><var>value</var><b>]</b><dd>This switch assigns an integer value to the <code>$checksums</code> browser
+variable, which controls browser's use of checksums during read.
+
+     <br><dt><code>-n </code><var>lines</var><dt><code>--height=</code><var>lines</var><dd>The browser pages interactive output to prevent it from scrolling off
+the top of the screen. It normally decides how tall the window is by
+making <code>ioctl</code> calls, but this switch can be used to override that
+choice. The setting is valid only until the browser receives a
+<code>SIGWINCH</code> signal and queries the terminal size.
+
+     <br><dt><code>-q</code><dt><code>--quiet</code><dd>This option causes the browser to be less verbose than normal. This sets
+the <code>$verbosity</code> variable to zero.
+
+     <br><dt><code>-o</code><dt><code>--obase=</code><var>format</var><dd>This switch sets the internal variable <code>$obase</code> to <var>format</var>,
+which should be &lsquo;<samp><span class="samp">16</span></samp>&rsquo; for hexadecimal, &lsquo;<samp><span class="samp">8</span></samp>&rsquo; for octal, &lsquo;<samp><span class="samp">2</span></samp>&rsquo;
+for binary, or anything else for the default decimal format. It controls
+how integer, floating-point, character, and string data are
+displayed. The default is that these types of data are displayed with a
+type-dependent <code>printf</code> format string which is user defined (e.g.,
+<code>$fmt_int</code>).
+
+     <br><dt><code>-r </code><b>[</b><var>boolean</var><b>]</b><dt><code>--rdonly</code><b>[</b><code>=</code><var>boolean</var><b>]</b><dd>This option assigns a boolean value to the <code>$rdonly</code> browser
+variable, which causes the browser to open all subsequent files in
+read-only mode. Files that only have Unix read permission are always
+opened in read-only mode, but the browser issues a warning if the user
+had asked for read-write permission.  If no argument is given for this
+switch then true is assumed. The default if this switch does not appear
+is false.
+
+     <br><dt><code>-s </code><b>[</b><var>boolean</var><b>]</b><dt><code>--single</code><b>[</b><code>=</code><var>boolean</var><b>]</b><dd>This option causes the browser to call <code>DBForceSingle</code> with a value
+of one or zero depending on whether the argument is true or false. If no
+argument is given then it is assumed to be true.  Calling
+<code>DBForceSingle</code> with a non-zero value causes most drivers to return
+floating point data with the C <code>float</code> type rather than the default
+<code>double</code> type.
+
+     <br><dt><code>-v</code><dt><code>--verbose</code><dd>This option causes the browser to be more verbose than normal. This sets
+the <code>$verbosity</code> variable to two.
+
+     <br><dt><code>-w </code><var>columns</var><dt><code>--width=</code><var>columns</var><dd>The browser normally breaks lines to prevent them from wrapping around
+from the right margin to the next line. It decides how many columns are
+appropriate by making <code>ioctl</code> calls, but this switch overrides that
+choice.
+
+     <br><dt><code>--debug</code><b>[</b><code>=</code><var>boolean</var><b>]</b><dd>Tells Silo to display the names of the Silo API functions as they are
+called. This switch is probably only useful to those who debug the browser.
+
+   </dl>
+
+   <p>If Silo database file names are specified then the files are opened in
+the order specified and associated with file symbols <code>$1</code>,
+<code>$2</code>, etc. These are opened before the initialization file is read,
+which happens before any <code>--eval</code> statements are executed. However,
+the command-line options are reevaluated after the initialization file
+is read.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Syntax"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Functions">Functions</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Invocation">Invocation</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">2 Command Syntax</h2>
+
+<p>The browser command syntax is quite simple, consisting of function
+calls, operators, atoms, and lists. Comments begin with a hash mark and
+continue to the end of the line (except in strings). White space is
+generally ignored except as a token separator. Statements can be
+continued across multiple lines, but a backslash must escape the
+linefeed if the partial statement looks syntactically complete.
+
+   <p>A function call is a parenthetical expression where the first element is
+the name of the function and the subsequent elements are the arguments
+to that function.  Most functions evaluate all their arguments but
+others evaluate only some (or none). For example, the <code>Assign</code>
+function doesn't evaluate its first argument, but rather assignes the
+evaluated second argument to the l-value specified by the first
+argument. The parentheses can be omitted from around the top-level
+function call. Say &lsquo;<samp><span class="samp">help func</span></samp>&rsquo; (or &lsquo;<samp><span class="samp">(help func)</span></samp>&rsquo;) for a list
+of all functions.
+
+   <p>Most browser operators are infix, binary operators. They take two
+operands, one on each side of the operator, and call some function which
+is bound to the operator. For example the expression &lsquo;<samp><span class="samp">foo=1</span></samp>&rsquo; is
+equivalent to &lsquo;<samp><span class="samp">(Assign foo 1)</span></samp>&rsquo;. The &lsquo;<samp><span class="samp">{}</span></samp>&rsquo; operator takes any
+number of arguments which appear between the open and close curly
+braces. Say &lsquo;<samp><span class="samp">help operators</span></samp>&rsquo; for a list of all operators.
+
+   <p>The browser has three types of atoms: strings, numbers, and symbols. A
+string is a sequence of characters enclosed in single or double
+quotes. The normal C escaping mechanism can be used for special
+characters within the string. A single quote has no special significance
+in a double-quoted string and vice versa.  Numbers are positive or
+negative sequences of decimal digits with an optional embedded decimal
+point and trailing exponent. An exponent consists of the letter `e' or
+`E' followed by an optional sign and one or more decimal digits.  A
+symbol is any sequence of alphanumeric characters and may also include
+dollar signs, hyphens, underscores, and various other characters
+(although their use is discouraged).
+
+   <p>A list consists of zero or more atoms or lists enclosed in
+parentheses. Evaluation of the list results in the browser looking up
+the functional value of the first member of the list and calling that
+function with the subsequent list members as arguments. Evaluation of
+the list can be suppressed by using curly braces instead of parentheses
+(e.g., &lsquo;<samp><span class="samp">{1 3 5}</span></samp>&rsquo; is equivalent to &lsquo;<samp><span class="samp">(Quote 1 3 5)')</span></samp>&rsquo;.
+
+   <p>The browser reads commands interactively from its standard input. If
+available, the GNU readline library is used allowing the user to edit
+commands as they are entered using Emacs or vi editing commands. To
+quote from the readline library (documentation is available at
+<samp><span class="file">http://www.cs.utah.edu/csinfo/texinfo/texinfo.html</span></samp>):
+
+   <blockquote>
+Often during an interactive session you type in a long line of text,
+only to notice that the first word on the line is misspelled.  The
+Readline library gives you a set of commands for manipulating the text
+as you type it in, allowing you to just fix your typo, and not forcing
+you to retype the majority of the line.  Using these editing commands,
+you move the cursor to the place that needs correction, and delete or
+insert the text of the corrections.  Then, when you are satisfied with
+the line, you simply press &lt;RETURN&gt;.  You do not have to be at the
+end of the line to press &lt;RETURN&gt;; the entire line is accepted
+regardless of the location of the cursor within the line. 
+</blockquote>
+
+   <p>The readline library default mode is Emacs.  If you prefer <code>vi</code> key
+bindings, then create a file called <samp><span class="file">.inputrc</span></samp> in your home
+directory with the single line &lsquo;<samp><span class="samp">set editing-mode vi</span></samp>&rsquo;.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Functions"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Operators">Operators</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Syntax">Syntax</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">3 Builtin Functions</h2>
+
+<p>Some of the browser functions have more than one form and are overloaded
+to do various things depending on the number of actual arguments
+supplied. Arguments shown between &lsquo;<samp><span class="samp">[</span></samp>&rsquo; and &lsquo;<samp><span class="samp">]</span></samp>&rsquo; are optional.
+
+     <dl>
+<dt><code>array </code><var>dimensions</var> <b>...</b> <var>basetype</var><dd>Creates a new array datatype. The arguments are the size of the array in
+each dimension and the datatype of the array elements. The array size
+arguments can be either integers or strings that look like comma- and/or
+space-separated integers. Browser arrays use C element ordering.
+
+     <br><dt><code>cd </code><var>dirname</var> <b>[</b><var>filesym</var><b>]</b><dd>Each file has a current working directory (CWD) which is initially set
+to the root directory (<samp><span class="file">/</span></samp>). This command will set the CWD to some
+other directory. The first argument is the name of the new CWD. If the
+name contains special characters it should be enclosed in quotes to
+protect it from the parser. If the name is relative (doesn't start with
+a &lsquo;<samp><span class="samp">/</span></samp>&rsquo;) then the name is looked up with respect to the current
+CWD. The second optional argument is the file or list of files whose CWD
+is being set (default is the file represented by the browser variable
+&lsquo;<samp><span class="samp">$1</span></samp>&rsquo;).  The <var>dirname</var> is a string; it is not interpreted by the
+browser and thus a command like &lsquo;<samp><span class="samp">cd $1.domain_0.angle_walls</span></samp>&rsquo; will
+fail while &lsquo;<samp><span class="samp">cd domain_0/angle_walls $1</span></samp>&rsquo; would work.
+
+     <br><dt><code>close </code><var>filesym</var> <b>...</b><dd>Closes the database files associated with the specified file symbols. 
+If objects exist in the browser memory which are associated with the
+database then the database will be held open until those objects no
+longer exist, but the file symbol will be freed so another file can
+immediately be associated with that symbol. This command is equivalent
+to &lsquo;<samp><var>filesym</var><span class="samp">=nil</span></samp>&rsquo; (except with extra sanity checks).
+
+     <br><dt><code>diff </code><var>objects...</var><dd>Calculates the differences between its arguments similar to the Unix
+<code>diff</code> command. If called with an even number of arguments the
+argument list is split in half and each argument from the first half is
+compared with the corresponding argument of the second half. If called
+with no arguments then the argument list will be the SILO files from the
+command-line (&lsquo;<samp><span class="samp">$1</span></samp>&rsquo;, &lsquo;<samp><span class="samp">$2</span></samp>&rsquo;, <i>etc.</i>).  If called with just one
+argument which is an object from the silo file &lsquo;<samp><span class="samp">$1</span></samp>&rsquo; then that
+object will be compared to an object with the same name from file
+&lsquo;<samp><span class="samp">$2</span></samp>&rsquo;.  The behavior is influenced by the &lsquo;<samp><span class="samp">$diff</span></samp>&rsquo; browser
+variable. In general, if no differences are found then no output is
+produced.
+
+     <br><dt><code>end</code><dd>See <code>exit</code>.
+
+     <br><dt><code>exit </code><b>[</b><var>status</var><b>]</b><dd>Exits the browser with the specified <var>status</var>, an integer constant. 
+If no exit status is supplied then zero (success) is assumed. Typing the
+end of file character (usually control-d) at the beginning of a line
+also invokes this command, causing a zero (success) exit.
+
+     <br><dt><code>file </code><var>filename</var><dd>The Silo database <var>filename</var> is opened and returned but not
+associated with any symbol.  Therefore, as soon as nothing refers to the
+file, it is closed.  One common use of this function is with the
+<code>ls</code> or <code>diff</code> commands which can take file objects as
+arguments.  For instance, the command &lsquo;<samp><span class="samp">ls (file curv2d.pdb)</span></samp>&rsquo; opens
+the <samp><span class="file">curv2d.pdb</span></samp> file and lists the root directory and &lsquo;<samp><span class="samp">ls
+(cd dirname (file curv2d.pdb))</span></samp>&rsquo; lists the contents of the <var>dirname</var>
+directory of <samp><span class="file">curv2d.pdb</span></samp>.  The file is open for read-write mode
+unless the <code>$rdonly</code> browser variable has a non-nil value or the
+file has only read permission.
+
+     <br><dt><code>help </code><b>[</b><var>topic</var><b>]</b> <b>[</b><var>docstring</var><b>]</b><dd>Shows documentation for various parts of the browser. When invoked
+without arguments it will display a table of contents of <code>help</code>
+subcommands. With one argument it will display documentation for a help
+category (e.g., <code>help run</code>), a browser internal variable (e.g.,
+<code>help $diff</code>), a function (e.g., <code>help diff</code>), a command-line
+switch (e.g., <code>help --diff</code>), an operator (e.g., <code>help
+"op="</code>), or the documentation string associated with the specified
+symbol. When invoked with a string argument it will print all help
+categories which contain the specified string (e.g., <code>help
+"diff"</code>). When called with two arguments it assigns the second argument
+as the documentation property of the first argument, which must be a
+symbol or string.
+
+     <br><dt><code>include </code><var>filename</var><dd>Causes the specified file to be parsed and evaluated. This is often
+useful in user-private initialization files, <samp><span class="file">~/.browser_rc</span></samp>, where
+the user wants to augment the actions that would normally happen in the
+system-wide browser initialization file. The user-private file should
+contain the line &lsquo;<samp><span class="samp">include $pubinit</span></samp>&rsquo;.
+
+     <br><dt><code>ls </code><b>[</b><var>filesym</var><b>]</b> <b>[</b><var>objnames</var><b>...]</b><dd>This command lists the contents of the current working directory.  If no
+file is specified then the file associated with &lsquo;<samp><span class="samp">$1</span></samp>&rsquo; is used. If a
+list of files is specified (e.g., &lsquo;<samp><span class="samp">$*</span></samp>&rsquo;) then a listing is produced
+for each of those files. If object names are supplied, then only those
+objects are listed.  The object names can include the normal Unix
+filename wild cards &lsquo;<samp><span class="samp">*</span></samp>&rsquo;, &lsquo;<samp><span class="samp">?</span></samp>&rsquo;, and &lsquo;<samp><span class="samp">[]</span></samp>&rsquo; (object names with
+&lsquo;<samp><span class="samp">[]</span></samp>&rsquo; wild cards require quotes so the &lsquo;<samp><span class="samp">[</span></samp>&rsquo; and &lsquo;<samp><span class="samp">]</span></samp>&rsquo; are not
+intrepretted as array selectors). Wild card matching is not available if
+the <code>fnmatch</code> function was not available when the browser was
+compiled.  If a single object name is supplied and that object is a
+directory, then the contents of that directory appear.  An alternative
+(and shorter) way to list the contents of a subdirectory is to type the
+name of the subdirectory on a line by itself (for instance,
+&lsquo;<samp><span class="samp">dir1</span></samp>&rsquo;).
+
+     <br><dt><dd>Another way to list a directory is to just type the name of the
+directory at the prompt (you can use &lsquo;<samp><span class="samp">.</span></samp>&rsquo; as the current working
+directory).  So saying &lsquo;<samp><span class="samp">$2.dir</span></samp>&rsquo; is the same as saying &lsquo;<samp><span class="samp">ls $2
+dir</span></samp>&rsquo; and &lsquo;<samp><span class="samp">$2..</span></samp>&rsquo; is the same as &lsquo;<samp><span class="samp">ls $2</span></samp>&rsquo; or &lsquo;<samp><span class="samp">ls $2 .</span></samp>&rsquo;.
+
+     <br><dt><code>noprint</code><dd>See <code>print</code>.
+
+     <br><dt><code>open </code><var>filename</var> <b>[</b><var>filesym</var><b>]</b><dd>The Silo database <var>filename</var> is opened and associated with the
+specified file symbol.  Any database previously associated with
+<var>filesym</var> will be closed as soon as all objects associated with that
+file are freed.  If <var>filesym</var> is omitted then &lsquo;<samp><span class="samp">$1</span></samp>&rsquo; is used. 
+This command is equivalent to &lsquo;<samp><var>filesym</var><span class="samp"> =
+</span><var>filename</var></samp>&rsquo;. Files are open in read-write mode unless the
+<code>$rdonly</code> browser variable has a non-nil value or the file has only
+read permission.
+
+     <br><dt><b>[</b><code>no</code><b>]</b><code>print </code><var>expression</var> <b>...</b><dd>Evaluates the expressions and prints (or suppresses) the result of each
+one.  The <code>print</code> command is normally not used because the browser
+prints all non-null expressions by default.  However, a <code>noprint</code>
+can be used to prevent the default output.
+
+     <br><dt><code>pwd </code><b>[</b><var>filesym</var><b>]</b><dd>Prints the current working directory for the database associated with
+the specified file symbol, list of files, or &lsquo;<samp><span class="samp">$1</span></samp>&rsquo;. This command
+also prints the name of the database.  This command is usually not used
+because a file symbol appearing by itself causes the database name and
+current working directory to be displayed.
+
+     <br><dt><code>quit</code><dd>See <code>exit</code>.
+
+     <br><dt><code>typeof </code><var>expression</var><dd>The type of a Silo expression is printed.  For Silo database objects the
+type which is printed is fully qualified and bound to actual values. In
+contrast, printing the actual named type shows the unbound values.  For
+example, if &lsquo;<samp><span class="samp">d</span></samp>&rsquo; is a Silo quadvar object, then &lsquo;<samp><span class="samp">typeof d.dims</span></samp>&rsquo;
+might show &lsquo;<samp><span class="samp">[3] int</span></samp>&rsquo; while &lsquo;<samp><span class="samp">print DBquadvar.dims</span></samp>&rsquo; displays
+&lsquo;<samp><span class="samp">[self.ndims] int</span></samp>&rsquo;.
+
+   </dl>
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Operators"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Internal-Variables">Internal Variables</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Functions">Functions</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">4 Operators</h2>
+
+<p>A browser expression is composed of terms and operators. The following
+operators are supported and overloaded depending on the number and type
+of arguments.
+
+     <dl>
+<dt><var>symbol </var><code>=</code><var> value</var><dd>Assigns a value to a browser internal variable or a database object.  If
+<var>symbol</var> is an internal variable and <var>value</var> is the word
+&lsquo;<samp><span class="samp">nil</span></samp>&rsquo; then the symbol loses its variable value.
+
+     <br><dt><var>filesym </var><code>.</code><var> varname</var><dd>The variable or directory with the name <var>varname</var> is loaded from the
+database associated with the specified file symbol and the Silo data
+object is returned.  The variable name must be enclosed in quotes unless
+it looks like a symbol and does not conflict with a browser internal
+variable. If <var>filesym</var> is &lsquo;<samp><span class="samp">$1</span></samp>&rsquo; and the variable name is not
+enclosed in quotes and is not the name of an internal browser variable,
+then the file symbol and dot can be omitted.  Thus &lsquo;<samp><span class="samp">$1.quadmesh</span></samp>&rsquo;
+can be written as just &lsquo;<samp><span class="samp">quadmesh</span></samp>&rsquo;.
+
+     <br><dt><var>sdo </var><code>.</code><var> fieldname</var><dd>If <var>sdo</var> is some Silo data object which has a structured type, then
+this expression returns a new Silo data object which is the specified
+field of the <var>sdo</var> structure.  For instance, a quadmesh &lsquo;<samp><span class="samp">qm</span></samp>&rsquo;
+has a field named &lsquo;<samp><span class="samp">dims</span></samp>&rsquo; which holds the dimensions of the mesh. 
+The expression &lsquo;<samp><span class="samp">qm.dims</span></samp>&rsquo; returns just the dimensions.
+
+     <br><dt><var>list </var><code>.</code><var> anything</var><dd>If the first argument is a list then the dot operator is applied to each
+member of the list and the result is a list of the results.
+
+     <br><dt><var>sdo </var><code>[</code><var> elmtnum </var><code>]</code><dd>If <var>sdo</var> is some Silo data object which has an array type, then this
+expression returns the single specified element of that array.  The
+first element of an array is number zero.  For instance,
+&lsquo;<samp><span class="samp">qm.dims[0]</span></samp>&rsquo; returns the size of the first mesh dimension.
+
+     <br><dt><var>sdo </var><code>[</code><var> min </var><code>:</code><var> max </var><code>]</code><dd>If <var>sdo</var> is some Silo data object which has an array type, then this
+expression returns a sub-array with elements <var>min</var> through
+<var>max</var>, inclusive.  Thus, &lsquo;<samp><span class="samp">qm.dims[0:2]</span></samp>&rsquo; are the first three
+mesh dimensions.
+
+     <br><dt><var>sdo </var><code>[</code><var> expr1</var><code>,</code><var> expr2</var><code>,</code><var> ... </var><code>]</code><dd>If <var>sdo</var> is some Silo data object which has an array type, and
+<var>expr</var> are element numbers or ranges, then one <var>expr</var> is applied
+to each array dimension in turn, automatically skipping over pointers. 
+For instance, if a quadvar &lsquo;<samp><span class="samp">qv</span></samp>&rsquo; has a &lsquo;<samp><span class="samp">vals</span></samp>&rsquo; of type
+&lsquo;<samp><span class="samp">*[2] *[36000] float</span></samp>&rsquo; then the expression &lsquo;<samp><span class="samp">qv.vals[0,100:199]</span></samp>&rsquo;
+will be an object consisting of the second 100 values of the first
+variable.  (The expression &lsquo;<samp><span class="samp">qv.vals[0][100:199]</span></samp>&rsquo; would result in an
+error message because &lsquo;<samp><span class="samp">qv.vals[0]</span></samp>&rsquo; returns an object with the type
+&lsquo;<samp><span class="samp">[1] *[36000] float</span></samp>&rsquo; to which is then applied the &lsquo;<samp><span class="samp">[100:199]</span></samp>&rsquo;
+that is invalid because the array only has one element.)
+
+     <br><dt><var>expr </var><code>|</code><var> command</var><dd>The expression <var>expr</var> has its output redirected to the shell
+command <var>command</var>.
+
+     <br><dt><var>expr </var><code>&gt;</code><var> file</var><dd>The expression <var>expr</var> has its output redirected to the file
+<var>file</var>, which is created or truncated.
+
+     <br><dt><var>expr </var><code>&gt;&gt;</code><var> file</var><dd>The expression <var>expr</var> has its output appended to the file
+<var>file</var>, which is created if it doesn't exist.
+
+     <br><dt><code>{</code><var> expressions </var><code>}</code><dd>This operator takes zero or more operands occurring between the curly
+braces (optionally separated by commas) and returns a list of those
+unevaluated operands. If only one operand is given then that operand is
+returned unevluated and not in a list.
+
+     <br><dt><var>minimum </var><code>:</code><var> maximum</var><dd>The range operator is used to construct a range object which represents
+all integers between <var>minimum</var> and <var>maximum</var>, inclusive.
+
+   </dl>
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Internal-Variables"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Startup-File">Startup File</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Operators">Operators</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">5 Internal Variables</h2>
+
+<p>Certain aspects of the browser can be configured by setting browser
+variables with the &lsquo;<samp><span class="samp">=</span></samp>&rsquo; operator described above.  The current value
+of an internal variable can be displayed by typing the variable's name. 
+The variables are initialized with default values when the browser
+starts and may then be overridden by command-line options, the
+initialization file, or interactively. All predefined browser variables
+begin with a dollar sign.
+
+<ul class="menu">
+<li><a accesskey="1" href="#Differencing-Variables">Differencing Variables</a>
+<li><a accesskey="2" href="#Output-Variables">Output Variables</a>
+<li><a accesskey="3" href="#File-Variables">File Variables</a>
+</ul>
+
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Differencing-Variables"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Output-Variables">Output Variables</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Internal-Variables">Internal Variables</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Internal-Variables">Internal Variables</a>
+
+</div>
+
+<h3 class="section">5.1 Differencing Variables</h3>
+
+<p>These variables affect the operation of the <code>diff</code> function.
+
+     <dl>
+<dt><code>$diff</code><dd>This variable's value is a list of symbols which control the details of
+the <code>diff</code> function. The default is <code>$diff = {detail,
+two_column}</code>. This variable is set by the &lsquo;<samp><span class="samp">--diff</span></samp>&rsquo; command-line
+switch.
+
+          <dl>
+<dt><code>detail</code><dd>This is the default, which causes the <code>diff</code> function to report all
+details about detected differences.
+
+          <br><dt><code>brief</code><dd>If this word is present then <code>diff</code> doesn't actually display any
+data. The output will consist of a single line for each file object
+which differs between file A and file B.  This option allows some
+short circuiting of the work required for the <code>detail</code> mode.
+
+          <br><dt><code>summary</code><dd>This key word causes <code>diff</code> to report by a single line of output
+when the two operands of the <code>diff</code> function are different. No
+output is produced if they are the same. This option allows some short
+circuiting of the work required for the <code>brief</code> mode.
+
+          <br><dt><code>ignore_additions</code><dd>If this is specified then <code>diff</code> will not report differences due to
+data appearing in file B but not in file A.
+
+          <br><dt><code>ignore_deletions</code><dd>If this is specified then <code>diff</code> will not report differences due to
+data appearing in file A but not in file B.
+
+          <br><dt><code>two_column</code><dd>If this is specified then the output will list differences side-by-side
+instead of one after the other (that is, output will resemble
+<code>pdbdiff</code> instead of <code>diff</code>). This setting is only applicable
+for detailed output. 
+</dl>
+
+     <br><dt><code>$exclude</code><dd>The <code>diff</code> function normally recurses into directories and compares
+the contents of those directories. However, the <code>$exclude</code> variable
+can be a list of character strings which specify object names and/or
+types which should be excluded from recursive comparison.  The object
+names may include shell wildcards such as &lsquo;<samp><span class="samp">*</span></samp>&rsquo;, &lsquo;<samp><span class="samp">?</span></samp>&rsquo;, and
+&lsquo;<samp><span class="samp">[]</span></samp>&rsquo;. If a name pattern is relative (doesn't start with a slash) it
+will be compared to the base name of the objects about to be
+differenced; but if the name pattern is absolute (begins with a slash)
+it will be compared to the full path names of the objects being
+differenced. If the <code>$exclude</code> string begins with the string
+&lsquo;<samp><span class="samp">type:</span></samp>&rsquo; then the following part should be one of the object types
+printed by the <code>ls</code> function.  A difference operation between two
+objects is suppressed if either object matches any of the strings stored
+in the <code>$exclude</code> list.
+
+     <p>For example, to prevent <code>diff</code> from comparing any objects with the
+base name &lsquo;<samp><span class="samp">cycle</span></samp>&rsquo;, or any objects whose full name is
+&lsquo;<samp><span class="samp">/VM/typelist</span></samp>&rsquo;, or any objects whose name ends with &lsquo;<samp><span class="samp">_list</span></samp>&rsquo;,
+or any object of type &lsquo;<samp><span class="samp">obj</span></samp>&rsquo; one would issue the following browser
+command:
+
+     <pre class="example">          &gt; $exclude = {"cycle", "/VM/typelist", "*_list", "type:obj"}
+</pre>
+     <p class="noindent">or invoke the browser with the switch
+     <pre class="example">          --exclude='cycle,/VM/typelist,*_list,type:obj'
+</pre>
+     <br><dt><code>$diff_int8_abs</code><dt><code>$diff_int8_rel</code><dt><code>$diff_short_abs</code><dt><code>$diff_short_rel</code><dt><code>$diff_int_abs</code><dt><code>$diff_int_rel</code><dt><code>$diff_long_abs</code><dt><code>$diff_long_rel</code><dt><code>$diff_float_abs</code><dt><code>$diff_float_rel</code><dt><code>$diff_double_abs</code><dt><code>$diff_double_rel</code><dd>These variables control how the <code>diff</code> function determines whether
+two numeric values are the same or different. The ones that end with
+&lsquo;<samp><span class="samp">_abs</span></samp>&rsquo; specify the maximum absolute difference allowed between two
+values <var>a</var> and <var>b</var>.  The <code>diff</code> command considers <var>a</var>
+and <var>b</var> to be different if &lsquo;<samp><span class="samp">|</span><var>a</var><span class="samp">-</span><var>b</var><span class="samp">|&gt;</span><var>abs</var></samp>&rsquo;. 
+The variables that end with &lsquo;<samp><span class="samp">_rel</span></samp>&rsquo; specify the maximum absolute
+difference relative to the mean of two values.  The <code>diff</code> command
+considers <var>a</var> and <var>b</var> to be different if
+&lsquo;<samp><span class="samp">|</span><var>a</var><span class="samp">-</span><var>b</var><span class="samp">|/|</span><var>a</var><span class="samp">+</span><var>b</var><span class="samp">| &gt; </span><var>rel</var><span class="samp">/2</span></samp>&rsquo;.
+
+     <p>If both tests are performed then <var>a</var> and <var>b</var> are considered
+different if either test indicates they are different. If an <var>abs</var> or
+<var>rel</var> parameter is not defined (or has a non-positive value) then
+the corresponding test is not performed. If neither test is performed
+then an exact comparison is used.
+
+     <p>All <code>diff</code> variables have a default value of zero and are set by
+the &lsquo;<samp><span class="samp">--absolute</span></samp>&rsquo; and &lsquo;<samp><span class="samp">--relative</span></samp>&rsquo; command-line switches. 
+</dl>
+
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Output-Variables"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#File-Variables">File Variables</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Differencing-Variables">Differencing Variables</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Internal-Variables">Internal Variables</a>
+
+</div>
+
+<h3 class="section">5.2 Output Variables</h3>
+
+     <dl>
+<dt><code>$height</code><dd>The height of the output terminal in lines. If set to a positive value
+then the browser will pause after each screenful of interactive output
+(redirected output is unaffected by this setting). This variable is set
+by the &lsquo;<samp><span class="samp">--height</span></samp>&rsquo; command-line switch and is reset whenever the
+browser receives a window size change signal (<code>SIGWINCH</code>).
+
+     <br><dt><code>$width</code><dd>The width of the output terminal in characters. The browser will try not
+to print data which would wrap from one line to the next. This variable
+is set by the &lsquo;<samp><span class="samp">--width</span></samp>&rsquo; command-line switch and is reset whenever
+the browser receives a window size change signal (<code>SIGWINCH</code>).
+
+     <br><dt><code>$verbosity</code><dd>This variable is set by the &lsquo;<samp><span class="samp">--quiet</span></samp>&rsquo; and &lsquo;<samp><span class="samp">--verbose</span></samp>&rsquo;
+switches. The &lsquo;<samp><span class="samp">--quiet</span></samp>&rsquo; sets it to zero while &lsquo;<samp><span class="samp">--verbose</span></samp>&rsquo; sets
+it to two (the default is one). Changing its value at runtime changes
+the amount of chatter produced by the browser.
+
+     <br><dt><code>$truncate</code><dd>If this variable holds a non-negative integer value <var>N</var>, then the
+browser shows only <var>N</var> values of each array; otherwise all values of
+an array are displayed. Values which are omitted are indicated by a
+string such as &lsquo;<samp><span class="samp">...(2000 values omitted)...</span></samp>&rsquo; appearing at the point
+where the values were omitted. Truncation is disabled (all values are
+printed) by setting this variable to nil (its default).
+
+     <br><dt><code>$trailing</code><dd>If this variable holds a positive integer value and &lsquo;<samp><span class="samp">$truncate</span></samp>&rsquo;
+has a non-negative integer value, then up to <var>n</var> of the printed
+array values will come from the end of the array rather than the
+beginning. The default value is 50.
+
+     <br><dt><code>$fmt_double</code><dd>This variable holds a <code>printf</code> format string which is used to
+format C <code>double</code> values.  The default value is &lsquo;<samp><span class="samp">%1.10g</span></samp>&rsquo;.
+
+     <br><dt><code>$fmt_float</code><dd>This variable holds a <code>printf</code> format string which is used to
+format C <code>float</code> values.  The default value is &lsquo;<samp><span class="samp">%1.5g</span></samp>&rsquo;.
+
+     <br><dt><code>$fmt_int</code><dd>This variable holds a <code>printf</code> format string which is used to
+format integer values.  The default value is &lsquo;<samp><span class="samp">%d</span></samp>&rsquo;.
+
+     <br><dt><code>$fmt_long</code><dd>This variable holds a <code>printf</code> format string which is used to
+format long integer values.  The default value is &lsquo;<samp><span class="samp">(long)%ld</span></samp>&rsquo;.
+
+     <br><dt><code>$fmt_null</code><dd>This variable holds a <code>printf</code> format string which is printed for
+null character strings.  The default value is &lsquo;<samp><span class="samp">(null)</span></samp>&rsquo;.
+
+     <br><dt><code>$fmt_int8</code><dd>This variable holds a <code>printf</code> format string which is used to
+format 8-bit integer values.  The default is &lsquo;<samp><span class="samp">(int8)%d</span></samp>&rsquo; but people
+often like to change it to &lsquo;<samp><span class="samp">`%c'</span></samp>&rsquo; to see the ASCII equivalent. Be
+warned that output of non-printable ASCII characters in this manner may
+not work if the terminal emulator interprets them as commands.
+
+     <br><dt><code>$fmt_short</code><dd>This vairable holds a <code>printf</code> format string which is used to
+format short integer values.  The default value is &lsquo;<samp><span class="samp">(short)%d</span></samp>&rsquo;.
+
+     <br><dt><code>$fmt_string</code><dd>This variable holds a <code>printf</code> format string which is used to
+format character string values.  The default value is
+&lsquo;<samp><span class="samp">\"%s\"</span></samp>&rsquo;.
+
+     <br><dt><code>$obase Output of primitive data (integer, character, string, and</code><dd>floating-point), by default, uses the <code>$fmt_</code> variables described
+above. However, by setting this variable to 16, 8, or 2 it is possible
+to display primitive data in hexadecimal, octal, or binary format.
+
+</dl>
+
+<!-- ====================================================================== -->
+<div class="node">
+<a name="File-Variables"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Output-Variables">Output Variables</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Internal-Variables">Internal Variables</a>
+
+</div>
+
+<h3 class="section">5.3 File Variables</h3>
+
+     <dl>
+<dt><code>$pubinit</code><dd>This variable holds the name of the public initialization file and is
+intended to be used as the first argument to the `include' function in a
+user-private initialization file.
+
+     <br><dt><code>$lowlevel</code><dd>If this variable has any true value (nil, zero, and the empty string are
+considered false), then the browser reads objects as type
+<code>DBobject</code> even if that object has some other datatype such as
+<code>DBquadvar</code>.  This variable is set by the &lsquo;<samp><span class="samp">-l</span></samp>&rsquo; command-line
+option and is useful for debugging the low layers of Silo. The default
+value is zero.
+
+     <p>If the value is two or higher then the Silo definition of <code>DBobject</code>
+is used and the values of the <code>comp_names</code> and <code>pdb_names</code>
+arrays become part of the object.
+
+     <p>If the value is one or two then the browser translates the Silo
+<code>DBobject</code> structure into a structure which is more user friendly
+by adding additional members to the object structure. Each member has a
+name from the <code>comp_names</code> array and a value based on the
+corresponding member of the <code>pdb_names</code> array<a rel="footnote" href="#fn-2" name="fnd-2"><sup>2</sup></a>.
+
+     <br><dt><code>$checksums</code><dd>If this variable has any true value (nil, zero, and the empty string are
+considered false), and the database being read includes checksums, then
+the browser performs checksum checks during read. Note that currently,
+the only Silo driver that supports checksums is the HDF5 driver.
+
+     <p>If checksum checks are disabled, then if browser encounters corrupt data,
+it will not know it. In particular, if checksums are disabled, the diff
+operator can wind up reporting corrupted data as diffs. If checksums are
+enabled, however, and the database being read includes checksums, then
+browser will report errors when it encounters corrupt data and fail to
+read the associated Silo object. See the associated Silo call
+<code>DBSetEnableChecksums()</code> for more information.
+
+     <br><dt><code>$rdonly</code><dd>If this variable has any true value (nil, zero, and the empty string are
+considered false), then the browser opens files in read-only mode
+instead of read-write mode.  Editing will not work on a file open for
+reading only. 
+</dl>
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Startup-File"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Editing">Editing</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Internal-Variables">Internal Variables</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">6 Initializing the Browser</h2>
+
+<p>When the browser starts, it looks for a file called <samp><span class="file">.browser_rc</span></samp>
+in the user's home directory or a file called
+<samp><span class="file">/usr/local/include/browser_rc</span></samp><a rel="footnote" href="#fn-3" name="fnd-3"><sup>3</sup></a>.  However, an
+alternate startup file can be specified with the &lsquo;<samp><span class="samp">--file</span></samp>&rsquo; browser
+command-line switch.  The browser reads and executes each command found
+in the startup file.
+
+   <p>The startup file should contain an assignment to the
+<code>$browser_version</code> variable which will be used to check that the
+version of the startup file is appropriate for the browser being
+run. Mismatched version numbers result in a rather verbose warning
+message (provided that the browser was even able to process the startup
+file).
+
+   <p>The <code>$browser_version</code> number should be assigned some real constant
+like &lsquo;<samp><span class="samp">3.004</span></samp>&rsquo; where &lsquo;<samp><span class="samp">3</span></samp>&rsquo; is the browser major version number and
+&lsquo;<samp><span class="samp">004</span></samp>&rsquo; is the browser minor version number.  To determine what
+version number to specify, invoke the browser as &lsquo;<samp><span class="samp">browser
+--version</span></samp>&rsquo;.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Editing"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Paging">Paging</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Startup-File">Startup File</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">7 Editing Database Objects</h2>
+
+<p>The &lsquo;<samp><span class="samp">=</span></samp>&rsquo; operator can be used to set the value of an internal
+browser variable or to change the value of a database object.  If the
+left hand side of the &lsquo;<samp><span class="samp">=</span></samp>&rsquo; is an internal variable, then the value
+of the internal variable is changed. Otherwise if the left hand side is
+a database object, its value is changed.  Otherwise, a new internal
+variable is created and assigned an initial value.
+
+   <p>The browser can change values for objects of type <code>DBobject</code> (most
+objects are of this type if the browser is running in low-level mode) or
+objects under the &lsquo;<samp><span class="samp">var(s)</span></samp>&rsquo; category in a directory listing.
+
+   <p>When changing the value of a string database object like
+&lsquo;<samp><span class="samp">_fileinfo</span></samp>&rsquo;, the new value will be truncated to the same length as
+the old value because of limitations in the underlying Silo database
+drivers.  This does not apply to string fields of a <code>DBobject</code>.
+
+   <p>Assigning a scalar value to an array or slice of an array results in all
+selected elements of the array to be set to the same value.  For
+instance, if the type of &lsquo;<samp><span class="samp">u_data</span></samp>&rsquo; is &lsquo;<samp><span class="samp">[31, 41, 31] float</span></samp>&rsquo; then
+the statement `u_data[5]=0' sets all elements of &ldquo;row&rdquo; five to zero.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Paging"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Redirection">Redirection</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Editing">Editing</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">8 Paging</h2>
+
+<p>The browser keeps track of how many lines of output have been displayed
+for the currently executing command and temporarily pauses that command
+whenever output is about to scroll off the top of the screen.  The
+height and width of the screen is determined by the browser making
+certain <code>ioctl</code> calls at startup and each time it gets a
+<code>SIGWINCH</code> signal.  The initial values can be set with
+&lsquo;<samp><span class="samp">--height</span></samp>&rsquo; and &lsquo;<samp><span class="samp">--width</span></samp>&rsquo; command-line switches.  If the
+appropriate <code>ioctl</code> is not available then the values of environment
+variables <code>LINES</code> and <code>COLUMNS</code> will be used. If all else
+fails then the browser uses zero for the number of lines (that is, no
+paging of output) and 80 for the number of columns.
+
+   <p>When the browser pauses the output, the message &lsquo;<samp><span class="samp">more? ('q' to
+quit)</span></samp>&rsquo; is displayed. The following user responses are recognized:
+
+     <dl>
+<dt><b>Quit</b><dd>Cancels the command and returns to the browser prompt. This is
+equivalent to the browser receiving a <code>SIGPIPE</code> signal.
+
+     <br><dt><b>Continue</b><dd>Pressing the EOF key (usually control-&lsquo;<samp><span class="samp">d</span></samp>&rsquo;) causes the command to
+continue without being paged. Output will simply scroll off the screen).
+
+     <br><dt><b>Next Diff</b><dd>Pressing &lsquo;<samp><span class="samp">n</span></samp>&rsquo; causes output to be suspended until the next file
+difference report or the next non-diff command.
+
+     <br><dt><b>Interrupt</b><dd>Pressing the interrupt key (usually control-&lsquo;<samp><span class="samp">c</span></samp>&rsquo;) causes the command
+to be interrupted as usual. 
+</dl>
+
+   <p>Output redirected to a file or command is not paged.  If the user is not
+satisfied with the limited paging ability of the browser, the output
+from a command can be redirected to the pager of the user's choice using
+output redirection.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Redirection"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Interrupts">Interrupts</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Paging">Paging</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">9 Redirection</h2>
+
+<p>Output from any browser command can be redirected to a file or shell
+command by appending a redirection character and file name or shell
+command to the end of the command.
+
+   <p>To save the output of a command in a file, destroying the previous
+contents of the file if any, append a &lsquo;<samp><span class="samp">&gt;</span></samp>&rsquo; and the name of the
+file.  Unless the file name looks like a browser symbol it must be
+enclosed in quotes.  For instance, &lsquo;<samp><span class="samp">quadvar3d &gt; saved</span></samp>&rsquo; saves the
+value of Silo database variable &lsquo;<samp><span class="samp">quadvar</span></samp>&rsquo; in a text file named
+<samp><span class="file">saved</span></samp>.
+
+   <p>To append the output of a command to a file, append a &lsquo;<samp><span class="samp">&gt;&gt;</span></samp>&rsquo; and the
+file name to the end of the command.  Unless the file name looks like a
+browser symbol it must be enclosed in quotes.  For example, &lsquo;<samp><span class="samp">typeof
+quadvar3d &gt;&gt; saved</span></samp>&rsquo; appends type information to the <samp><span class="file">saved</span></samp> file.
+
+   <p>To send the output of a browser command to the standard input of a shell
+command, follow the browser command with a &lsquo;<samp><span class="samp">|</span></samp>&rsquo; followed by the
+shell command in quotes.  The quotes are not necessary if the shell
+command is a single symbol.  Since paging is disabled when output is to
+a shell command, one way to display a result without paging is to pipe
+the output through the &lsquo;<samp><span class="samp">cat</span></samp>&rsquo; command like &lsquo;<samp><span class="samp">d | cat</span></samp>&rsquo;.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Interrupts"></a>
+<p><hr>
+Next:&nbsp;<a rel="next" accesskey="n" href="#Examples">Examples</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Redirection">Redirection</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">10 Interrupts</h2>
+
+<p>Since some commands may require a long time to execute or produce a huge
+amount of output, the user may want to abort the command before it
+finishes.  If the output is paged interactively to the screen then
+pressing &lsquo;<samp><span class="samp">q</span></samp>&rsquo; at the &lsquo;<samp><span class="samp">more?</span></samp>&rsquo;  prompt accomplishes
+this.  Otherwise the user can press the interrupt character (usually
+control-c) and the browser command will be immediately terminated and
+the browser will prompt for the next command.  If the interrupt
+character is typed during command input the browser itself terminates.
+
+   <p>If output from a browser command is being piped into a shell command and
+the shell command exits (or closes its standard input) before the
+browser command is finished, the browser command gets the <code>SIGPIPE</code>
+signal and terminates.
+
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<!-- ====================================================================== -->
+<div class="node">
+<a name="Examples"></a>
+<p><hr>
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#Interrupts">Interrupts</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
+
+</div>
+
+<h2 class="chapter">11 Examples</h2>
+
+<p>This chapter contains some sample output from the browser.
+
+   <p>Normally, you will specify the name of a database file on the browser
+command-line<a rel="footnote" href="#fn-4" name="fnd-4"><sup>4</sup></a> like in the following
+example, and sometimes it's convenient to open multiple files at the
+same time.  Each file name listed on the command-line is given an
+identifier like &lsquo;<samp><span class="samp">$1</span></samp>&rsquo;, &lsquo;<samp><span class="samp">$2</span></samp>&rsquo;, etc., and most of the browser
+commands operate on file &lsquo;<samp><span class="samp">$1</span></samp>&rsquo; by default.
+
+<pre class="example">     % <b>browser rect3d.pdb</b>
+     INFO: opening `rect3d.pdb' as $1
+</pre>
+   <p>The <code>ls</code> command is similar to the Unix <code>ls</code> command in that
+it lists the contents of the current working directory.  The heading
+fields on the left of the equal signs apply until the next heading.  The
+headings are the same as those used by MeshTV.  To list the contents of
+some subdirectory, say &lsquo;<samp><span class="samp">ls</span></samp>&rsquo;, &lsquo;<samp><span class="samp">ls dir1</span></samp>&rsquo;,
+&lsquo;<samp><span class="samp">print dir1</span></samp>&rsquo;, or just &lsquo;<samp><span class="samp">dir1</span></samp>&rsquo;.
+
+<pre class="example">     &gt; <b>ls</b>
+     qmesh(s)          = quadmesh3d
+     
+     qvar(s)           = d                      p
+                       = t                      u
+                       = v                      w
+     
+     mat(s)            = mat1
+     
+     var(s)            = _fileinfo              _meshtv_defvars
+                       = _meshtvinfo            cycle
+                       = d_data                 d_dims
+                       = d_maxindex             dtime
+                       = mat1_dims              mat1_matlist
+                       = mat1_matnos            mat1_mix_mat
+                       = mat1_mix_next          mat1_mix_vf
+                       = mat1_mix_zone          p_data
+                       = p_dims                 p_maxindex
+                       = quadmesh3d_align_nodal quadmesh3d_align_zonal
+                       = quadmesh3d_coord0      quadmesh3d_coord1
+                       = quadmesh3d_coord2      quadmesh3d_dims
+                       = quadmesh3d_max_extents quadmesh3d_max_index_n
+                       = quadmesh3d_max_index_z quadmesh3d_min_extents
+                       = quadmesh3d_min_index   quadmesh3d_zonedims
+                       = t_data                 t_dims
+                       = t_maxindex             time
+                       = u_data                 u_dims
+                       = u_maxindex             v_data
+                       = v_dims                 v_maxindex
+                       = w_data                 w_dims
+                       = w_maxindex
+</pre>
+   <p>To keep the size of these examples small, we've specified that at most
+50 values should be printed from each array and that 25 of those values
+should be from the end of the array (and the other 25, from the
+beginning).  To truncate everything say &lsquo;<samp><span class="samp">$truncate=0</span></samp>&rsquo; and to turn
+truncating off say &lsquo;<samp><span class="samp">$truncate=nil</span></samp>&rsquo;.
+
+<pre class="example">     &gt; <b>$truncate = 50</b>
+                       = 50
+     &gt; <b>$trailing = 25</b>
+                       = 25
+</pre>
+   <p>The user can ask for the type of any object, including types built into
+the browser.  If the object is a structured type (like in this example)
+then the type of each component of that structure is printed.
+
+<pre class="example">     &gt; <b>typeof d</b>
+                       = struct DBquadvar {
+     id                =    +0 int
+     name              =    +4 string
+     units             =    +8 string
+     label             =    +12 string
+     cycle             =    +16 int
+     time              =    +20 float
+     dtime             =    +24 double
+     meshid            =    +32 int
+     datatype          =    +40 int (DBdatatype)
+     nels              =    +44 int
+     nvals             =    +48 int
+     ndims             =    +52 int
+     dims              =    +56 [3] int
+     major_order       =    +68 int (array order)
+     stride            =    +72 [3] int
+     min_index         =    +84 [3] int
+     max_index         =    +96 [3] int
+     origin            =    +108 int
+     align             =    +112 [3] float
+     mixlen            =    +128 int
+     use_specmf        =    +132 int (on/off)
+     mixvals           =    +124 *[1] *[0] float
+     vals              =    +36 *[1] *[36000] float
+                       = }
+</pre>
+   <p>An integer following a plus sign indicates that the type corresponds to
+a byte offset from the beginning of the innermost enclosing structure
+or array.
+
+   <p>A &lsquo;<samp><span class="samp">*</span></samp>&rsquo; means the object is a pointer to whatever type
+follows<a rel="footnote" href="#fn-5" name="fnd-5"><sup>5</sup></a>.
+
+   <p>A list of array dimensions between &lsquo;<samp><span class="samp">[</span></samp>&rsquo; and &lsquo;<samp><span class="samp">]</span></samp>&rsquo; mean that the
+object is an array and each element of the array is the type that
+follows the &lsquo;<samp><span class="samp">]</span></samp>&rsquo;.
+
+   <p>The final name is always one of the browser integral types &lsquo;<samp><span class="samp">string</span></samp>&rsquo;
+(same as the C &lsquo;<samp><span class="samp">char*</span></samp>&rsquo;), &lsquo;<samp><span class="samp">short</span></samp>&rsquo;, &lsquo;<samp><span class="samp">int</span></samp>&rsquo;, &lsquo;<samp><span class="samp">long</span></samp>&rsquo;,
+&lsquo;<samp><span class="samp">float</span></samp>&rsquo;, or &lsquo;<samp><span class="samp">double</span></samp>&rsquo;.  If the integral type name is followed
+by parentheses then the parentheses contain the name of an underlying C
+&lsquo;<samp><span class="samp">enum</span></samp>&rsquo; type or a set of related C preprocessor constants.
+
+   <p>Some data objects override one or more standard class methods.  Such
+objects will have flags like &lsquo;<samp><span class="samp">__</span><var>flag</var><span class="samp">__</span></samp>&rsquo; which appear inside
+the object type.
+
+   <p>One can also ask for the Silo definition of a named data type like
+&lsquo;<samp><span class="samp">DBquadvar</span></samp>&rsquo;.  This prints the definition of the Silo
+&lsquo;<samp><span class="samp">DBquadvar</span></samp>&rsquo; structure which is the same as printed above for the
+type of &lsquo;<samp><span class="samp">d</span></samp>&rsquo; except that array sizes and some primitive types are
+not bound to actual values yet<a rel="footnote" href="#fn-6" name="fnd-6"><sup>6</sup></a>.
+
+<pre class="example">     &gt; <b>DBquadvar</b>
+                       = struct DBquadvar {
+     id                =    +0 int
+     name              =    +4 string
+     units             =    +8 string
+     label             =    +12 string
+     cycle             =    +16 int
+     time              =    +20 float
+     dtime             =    +24 double
+     meshid            =    +32 int
+     datatype          =    +40 int (DBdatatype)
+     nels              =    +44 int
+     nvals             =    +48 int
+     ndims             =    +52 int
+     dims              =    +56 [self.ndims] int
+     major_order       =    +68 int (array order)
+     stride            =    +72 [self.ndims] int
+     min_index         =    +84 [self.ndims] int
+     max_index         =    +96 [self.ndims] int
+     origin            =    +108 int
+     align             =    +112 [self.ndims] float
+     mixlen            =    +128 int
+     use_specmf        =    +132 int (on/off)
+     mixvals           =    +124 *[self.nvals] *[self.mixlen]
+     mixvals           =    self.datatype
+     vals              =    +36 *[self.nvals] *[self.nels] self.datatype
+                       = }
+</pre>
+   <p>Giving just the name of the Silo object is short for &lsquo;<samp><span class="samp">print $1.d</span></samp>&rsquo;. 
+Notice that the &lsquo;<samp><span class="samp">vals</span></samp>&rsquo; array has been truncated as requested and
+that <var>mixvals</var> has no value. The subscripts in the labels to the
+left of the equal sign correspond to the first value on that line (an
+entire array in the case of &lsquo;<samp><span class="samp">vals[0]</span></samp>&rsquo;.
+
+   <p>One can also ask for tye type of a single structure component by typing the
+command &lsquo;<samp><span class="samp">DBquadvar.vals</span></samp>&rsquo;.
+
+<pre class="example">     &gt; <b>d</b>
+                       = DBquadvar: struct
+     id                =    0
+     name              =    "d"
+     units             =    (null)
+     label             =    (null)
+     cycle             =    48
+     time              =    4.80000
+     dtime             =    4.8000000000
+     meshid            =    0
+     datatype          =    float
+     nels              =    36000
+     nvals             =    1
+     ndims             =    3
+     dims[0]           =    {30, 40, 30}
+     major_order       =    row major
+     stride[0]         =    {1, 30, 1200}
+     min_index[0]      =    {0, 0, 0}
+     max_index[0]      =    {29, 39, 29}
+     origin            =    0
+     align[0]          =    {0.50000, 0.50000, 0.50000}
+     mixlen            =    0
+     use_specmf        =    off
+     mixvals           =    NULL
+     vals[0]           =    {{0.83957, 0.82083, 0.80304, 0.78626, 0.77056,
+     vals[0, 5]        =    0.75601, 0.74266, 0.73059, 0.71987, 0.71055,
+     vals[0, 10]       =    0.70269, 0.69633, 0.69153, 0.68831, 0.68669,
+     vals[0, 15]       =    0.68669, 0.68831, 0.69153, 0.69633, 0.70269,
+     vals[0, 20]       =    0.71055, 0.71987, 0.73059, 0.74266, 0.75601,
+     vals[0, 25]       =    ...(35950 values omitted)..., 0.75601,
+     vals[0, 35976]    =    0.74266, 0.73059, 0.71987, 0.71055, 0.70269,
+     vals[0, 35981]    =    0.69633, 0.69153, 0.68831, 0.68669, 0.68669,
+     vals[0, 35986]    =    0.68831, 0.69153, 0.69633, 0.70269, 0.71055,
+     vals[0, 35991]    =    0.71987, 0.73059, 0.74266, 0.75601, 0.77056,
+     vals[0, 35996]    =    0.78626, 0.80304, 0.82083, 0.83957}}
+</pre>
+   <p>The browser does not attempt to be efficient about loading objects from
+the database into memory since the underlying Silo library makes it
+difficult to do so.  However, if one says &lsquo;<samp><span class="samp">$lowlevel=1</span></samp>&rsquo; then the
+browser uses lower-level Silo functions to read the file.  As a result,
+less data is moved from disk to memory.
+
+<pre class="example">     &gt; <b>$lowlevel=1</b>
+                       = 1
+     &gt; <b>d</b>
+                       = struct
+     name              =    "d"
+     type              =    "quadvar"
+     meshid            =    "quadmesh"
+     align             =    "/quadmesh_align_zonal"
+     dims              =    "/d_dims"
+     max_index         =    "/d_maxindex"
+     value0            =    "/d_data"
+     ndims             =    3
+     nvals             =    1
+     nels              =    36000
+     origin            =    0
+     datatype          =    19
+     mixlen            =    0
+     major_order       =    0
+     cycle             =    48
+     time              =    "/time"
+     dtime             =    "/dtime"
+     min_index         =    "/quadmesh_min_index"
+     use_specmf        =    -1000
+</pre>
+   <p>Now we'll decrease the number of values printed and increase the
+precision that's displayed for &lsquo;<samp><span class="samp">float</span></samp>&rsquo; values.
+
+<pre class="example">     &gt; <b>$truncate = 12</b>
+                       = 12
+     &gt; <b>$trailing = 6</b>
+                       = 6
+     &gt; <b>$fmt_float = "%1.15f"</b>
+                       = "%1.15f"
+     &gt; <b>d.vals[0]</b>
+     [0]               = {0.839570403099060, 0.820833325386047,
+     [2]               = 0.803043246269226, 0.786264479160309,
+     [4]               = 0.770563006401062, 0.756006062030792,
+     [6]               = ...(35988 values omitted)...,
+     [35994]           = 0.756006062030792, 0.770563066005707,
+     [35996]           = 0.786264479160309, 0.803043246269226,
+     [35998]           = 0.820833325386047, 0.839570462703705}
+</pre>
+   <p>The &lsquo;<samp><span class="samp">diff</span></samp>&rsquo; command compares two objects and reports differences
+between them.  The output is in groups of differences where the group is
+delimited at the beginning and end by a line of stars.  The first half
+of the group displays (part of) the first argument to &lsquo;<samp><span class="samp">diff</span></samp>&rsquo; while
+the part of the group after the line of dashes displays (part of) the
+second argument.  Subobjects that differ only partially (&lsquo;<samp><span class="samp">stride</span></samp>&rsquo; in
+this case) appear separately before those which completely differ.  The
+array truncating parameters apply to each array segment individually.
+
+<pre class="example">     &gt; <b>diff d p</b>
+     ***************
+     stride[1]         = {30, 1200}
+     ---------------
+     stride[1]         = {31, 1271}
+     ***************
+     ***************
+     name              = "d"
+     nels              = 36000
+     dims[0]           = {30, 40, 30}
+     max_index[0]      = {29, 39, 29}
+     vals[0]           = {{0.839570403099060, 0.820833325386047,
+     vals[0, 2]        = 0.803043246269226, 0.786264479160309,
+     vals[0, 4]        = 0.770563006401062, 0.756006062030792,
+     vals[0, 6]        = ...(35988 values omitted)...,
+     vals[0, 35994]    = 0.756006062030792, 0.770563066005707,
+     vals[0, 35996]    = 0.786264479160309, 0.803043246269226,
+     vals[0, 35998]    = 0.820833325386047, 0.839570462703705}}
+     ---------------
+     name              = "p"
+     nels              = 39401
+     dims[0]           = {31, 41, 31}
+     max_index[0]      = {30, 40, 30}
+     vals[0]           = {{1.190943479537964, 1.218125700950623,
+     vals[0, 2]        = 1.245107889175415, 1.271674990653992,
+     vals[0, 4]        = 1.297584056854248, 1.322565793991089,
+     vals[0, 6]        = ...(39389 values omitted)...,
+     vals[0, 39395]    = 0.000000000000000, 0.000000000000000,
+     vals[0, 39397]    = 0.000000000000000, 0.000000000000000,
+     vals[0, 39399]    = 0.000000000000000, 0.000000000000000}}
+     ***************
+</pre>
+   <p>A compound array is composed of zero or more subarrays.  A subarray can
+be printed by saying something like &lsquo;<samp><span class="samp">carray.b</span></samp>&rsquo;, but a subarray is
+also printed by saying just &lsquo;<samp><span class="samp">b</span></samp>&rsquo; as long as &lsquo;<samp><span class="samp">b</span></samp>&rsquo; is not some
+other type of object and &lsquo;<samp><span class="samp">b</span></samp>&rsquo; exists in exactly one compound array.
+
+<pre class="example">     &gt; <b>carray</b>
+                       = struct
+     name              =    "carray"
+     id                =    0
+     nelems            =    3
+     nvalues           =    18
+     datatype          =    float
+     a[0]              =    {0.00000, 0.34185, 0.64252, 0.86576}
+     b[0]              =    {0.98468, 0.98496, 0.86656, 0.64374, 0.34335,
+     b[5]              =    0.00159}
+     c[0]              =    {-0.34036, -0.64130, -0.86496, -0.98441,
+     c[4]              =    -0.98523, -0.86735, -0.64495, -0.34485}
+     
+     &gt; <b>b</b>
+     [0]               = {0.98468, 0.98496, 0.86656, 0.64374, 0.34335,
+     [5]               = 0.00159}
+     
+     &gt; <b>b[2]</b>
+     [2]               = {0.86656}
+</pre>
+   <p>If the file is opened for reading and writing (the default) then
+variables can be given new values.  The new values are written back to
+the file immediately.
+
+<pre class="example">     &gt; <b>_fileinfo</b>
+                       = "3D rectilinear test file"
+     &gt; <b>_fileinfo = "testing"</b>
+                       = "testing"
+     &gt; <b>_fileinfo</b>
+                       = "testing"
+</pre>
+   <p>A scalar variable assigned to an array (or slice of an array) sets all
+the elements of that array (or slice) to the specified value.  A list of
+values enclosed in curly braces can be assigned to an array (or slice of
+an array) causing each element of the array (or slice) to be set to one
+of the listed values.
+
+<pre class="example">     &gt; <b>typeof v_data</b>
+                       = [31, 41, 31] float
+     &gt; <b>v_data = 0</b>
+                       = 0
+     &gt; <b>v_data[0, 0, 2:4]</b>
+                       = {0, 0, 0}
+     &gt; <b>v_data[0, 0, 2:4] = {0.111, 0.222, 0.333}</b>
+                       = {0.111, 0.222, 0.333}
+     &gt; <b>v_data</b>
+     [0, 0, 0]         = {0, 0, 0.111, 0.222, 0.333, 0,
+     [0, 0, 6]         = ...(39389 values omitted)..., 0, 0, 0,
+     [30, 40, 28]      = 0, 0, 0}
+</pre>
+   <p>Pressing control-c during a browser command aborts the command, but
+pressing control-c when the browser is asking for input aborts the
+browser.  It is more polite to press control-d or type &lsquo;<samp><span class="samp">exit</span></samp>&rsquo;
+instead since this gives the browser a chance to properly close database
+files.
+
+<pre class="example">     &gt; <b>$truncate = nil</b>
+     &gt; <b>d &gt;data_file</b>
+     <b>control-c</b>
+     
+     Command aborted.
+     &gt; <b>control-c</b>
+     %
+</pre>
+   <div class="footnote">
+<hr>
+<a name="texinfo-footnotes-in-document"></a><h4>Footnotes</h4><p class="footnote"><small>[<a name="fn-1" href="#fnd-1">1</a>]</small> In contrast, pressing the
+interrupt character during an interactive browser command aborts the
+command but not the browser.</p>
+
+   <p class="footnote"><small>[<a name="fn-2" href="#fnd-2">2</a>]</small> Changes
+should not be made to the <code>comp_names</code> or <code>pdb_names</code> arrays
+since the Silo <code>DBobject</code> is regenerated from the user-friendly
+fields before being saved back to the file.</p>
+
+   <p class="footnote"><small>[<a name="fn-3" href="#fnd-3">3</a>]</small> The path name may be
+different depending on how the browser was compiled.</p>
+
+   <p class="footnote"><small>[<a name="fn-4" href="#fnd-4">4</a>]</small> Opening a file on the command line is the same as
+saying &lsquo;<samp><span class="samp">open "rect3d.pdb" $1</span></samp>&rsquo; interactively.</p>
+
+   <p class="footnote"><small>[<a name="fn-5" href="#fnd-5">5</a>]</small>  Whether or not something is a pointer is generally not
+important to using the browser: a 1d array of pointers to 1d arrays of
+integers can be treated like a ragged-edge 2d array of integers.</p>
+
+   <p class="footnote"><small>[<a name="fn-6" href="#fnd-6">6</a>]</small> The word &lsquo;<samp><span class="samp">self</span></samp>&rsquo; refers to the
+object corresponding to the innermost structure which incloses the
+&lsquo;<samp><span class="samp">self</span></samp>&rsquo;.</p>
+
+   <hr></div>
+
+</body></html>
+

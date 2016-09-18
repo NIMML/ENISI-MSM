@@ -1,0 +1,11 @@
+--- original/SharedBaseGrid.cpp	2013-02-08 11:07:03.000000000 -0500
++++ SharedBaseGrid.cpp	2016-04-05 09:28:35.765484301 -0400
+@@ -103,7 +103,7 @@
+ 	return GridDimensions(Point<double> (origins), Point<double> (extents));
+ }
+ 
+-int CartTopology::getRank(vector<int>& loc, int rowAdj, int colAdj) {
++int CartTopology::getRank(const vector<int>& loc, int rowAdj, int colAdj) {
+ 	int* coord = new int[2];
+ 	coord[0] = loc[0] + rowAdj;
+ 	coord[1] = loc[1] + colAdj;

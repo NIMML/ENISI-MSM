@@ -1,0 +1,15 @@
+/home/ariana/workspace/enisi/hpylori_compartments/build/CMakeFiles/test.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/CMakeFiles/edit_cache.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/CMakeFiles/rebuild_cache.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/test.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/edit_cache.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/rebuild_cache.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_copasi_deps.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_repast.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_visit.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_copasi.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/src/CMakeFiles/test.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/src/CMakeFiles/ENISI.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/src/CMakeFiles/main.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/src/CMakeFiles/edit_cache.dir
+/home/ariana/workspace/enisi/hpylori_compartments/build/src/CMakeFiles/rebuild_cache.dir

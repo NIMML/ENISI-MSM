@@ -1,0 +1,4 @@
+Makefile
+*.xcodeproj
+build
+function.build

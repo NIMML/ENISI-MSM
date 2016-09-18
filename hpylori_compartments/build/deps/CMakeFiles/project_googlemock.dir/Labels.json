@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_googlemock"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_googlemock.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/build/deps/CMakeFiles/project_googlemock-complete.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-install.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-mkdir.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-download.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-update.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-patch.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-configure.rule"
+		},
+		{
+			"file" : "/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_googlemock-stamp/project_googlemock-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"project_googlemock"
+		],
+		"name" : "project_googlemock"
+	}
+}

@@ -1,0 +1,3 @@
+repository='external project URL'
+module='http://portal.nersc.gov/project/visit/releases/2.9.2/visit2.9.2.tar.gz'
+tag=''

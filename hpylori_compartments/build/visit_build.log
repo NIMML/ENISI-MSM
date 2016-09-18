@@ -1,0 +1,68 @@
+Processing bsd license.
+Setting VisIt info...
+executing group no-thirdparty
+[build_visit invocation arguments] --no-thirdparty --console --no-visit --szip --hdf5 --zlib --silo
+Fortran support for thirdparty libraries disabled.
+enabling any dependent libraries
+initializing module variables
+initialize module variables for hdf5
+Checking for files . . .
+Checking optional 3rd party libs
+Checking for hdf5-1.8.7
+Downloading hdf5-1.8.7.tar.gz . . .
+Download succeeded: http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8.7/src/hdf5-1.8.7.tar.gz
+Checking for silo-4.10.2
+Downloading silo-4.10.2.tar.gz . . .
+Download succeeded: https://wci.llnl.gov/content/assets/docs/simulation/computer-codes/silo/silo-4.10.2/silo-4.10.2.tar.gz
+Checking for szip-2.1
+Checking for zlib-1.2.7
+building required libraries
+building optional libraries
+library hdf5 depends on szip zlib
+Building SZIP (~2 minutes)
+Unzipping/Untarring szip-2.1.tar.gz . . .
+Configuring SZIP . . .
+Invoking command to configure SZIP
+./configure CXX="g++" CC="gcc" LIBS="-lm"         CFLAGS=" -m64 -fPIC  -O2" CXXFLAGS=" -m64 -fPIC  -O2"         --prefix="/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4" 
+Building SZIP . . . (~1 minutes)
+Installing SZIP . . .
+Done with SZIP
+Done building SZIP
+Building ZLIB (~1 minute)
+Unzipping/Untarring zlib-1.2.7.tar.gz . . .
+Configuring ZLIB . . .
+Invoking command to configure ZLIB
+env CXX=g++ CC=gcc ./configure         --prefix=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/zlib/1.2.7/linux-x86_64_gcc-5.4 
+Building ZLIB . . . (~1 minute)
+Installing ZLIB
+Done with ZLIB
+Done building ZLIB
+Building HDF5 (~15 minutes)
+Unzipping/Untarring hdf5-1.8.7.tar.gz . . .
+Patching hdf5
+Configuring HDF5 . . .
+SZip requested.  Configuring HDF5 with SZip support.
+Invoking command to configure HDF5
+./configure CXX="g++" CC="gcc"         CFLAGS=" -m64 -fPIC  -O2" CXXFLAGS=" -m64 -fPIC  -O2"                  --prefix="/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/hdf5/1.8.7/linux-x86_64_gcc-5.4"         --with-szlib=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4 --enable-shared --disable-static 
+Making HDF5 . . .
+Installing HDF5 . . .
+Done with HDF5
+Done building HDF5
+library silo depends on hdf5 szip zlib
+hdf5 is already installed, skipping
+szip is already installed, skipping
+zlib is already installed, skipping
+Building Silo (~2 minutes)
+Unzipping/Untarring silo-4.10.2.tar.gz . . .
+Configuring Silo . . .
+Invoking command to configure Silo
+./configure CXX="g++" CC="gcc"         CFLAGS=" -m64 -fPIC  -O2" CXXFLAGS=" -m64 -fPIC  -O2"         --disable-fortran         --prefix="/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/silo/4.10.2/linux-x86_64_gcc-5.4"         --with-hdf5=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/hdf5/1.8.7/linux-x86_64_gcc-5.4/include,/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/hdf5/1.8.7/linux-x86_64_gcc-5.4/lib --with-szlib=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4 --disable-silex --enable-shared         --enable-install-lite-headers --without-readline         --with-zlib=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/zlib/1.2.7/linux-x86_64_gcc-5.4/include,/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/zlib/1.2.7/linux-x86_64_gcc-5.4/lib 
+Building Silo . . . (~2 minutes)
+Installing Silo
+Done with Silo
+Done building Silo
+szip already installed, skipping
+zlib already installed, skipping
+Creating host.conf
+Creating herbst-Lenovo-B40-80.cmake
+Finished!
