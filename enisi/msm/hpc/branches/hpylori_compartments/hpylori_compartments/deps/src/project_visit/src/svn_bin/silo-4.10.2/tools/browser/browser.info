@@ -1,0 +1,1374 @@
+This is browser.info, produced by makeinfo version 4.13 from
+browser.texi.
+
+This file documents the Silo browser.
+
+   Copyright (c) 1994 - 2010, Lawrence Livermore National Security, LLC.
+LLNL-CODE-425250.  All rights reserved.
+
+
+File: browser.info,  Node: Top,  Next: Copying,  Up: (dir)
+
+The Silo Browser User Manual
+****************************
+
+This document describes the Silo file browser, an application program
+built on the Silo library for interactive viewing of Silo database
+files.
+
+* Menu:
+
+* Copying::                     Copyright information.
+* Invocation::                  Invoking the browser.
+* Syntax::                      Command Syntax.
+* Functions::                   Builtin Functions.
+* Operators::                   Browser operators.
+* Internal Variables::          Controlling the browser personality.
+* Startup File::                Browser initialization.
+* Editing::                     Changing the values of objects.
+* Paging::                      Long output is paginated.
+* Redirection::                 Sending output to a file or command.
+* Interrupts::                  Interrupting a long-running command.
+* Examples::                    Some simple examples.
+
+
+File: browser.info,  Node: Copying,  Next: Invocation,  Prev: Top,  Up: Top
+
+Copyright
+*********
+
+Copyright (C) (c) 1994 - 2010, Lawrence Livermore National Security,
+LLC.  LLNL-CODE-425250.  All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+   * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the disclaimer below.     *
+Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the disclaimer (as noted
+below) in the documentation and/or other materials provided with
+the distribution.     * Neither the name of the LLNS/LLNL nor the names
+of its      contributors may be used to endorse or promote products
+derived      from this software without specific prior written
+permission.
+
+   THIS SOFTWARE  IS PROVIDED BY  THE COPYRIGHT HOLDERS  AND
+CONTRIBUTORS "AS  IS" AND  ANY EXPRESS  OR IMPLIED  WARRANTIES,
+INCLUDING,  BUT NOT LIMITED TO, THE IMPLIED  WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A  PARTICULAR  PURPOSE ARE  DISCLAIMED.
+IN  NO  EVENT SHALL  LAWRENCE LIVERMORE  NATIONAL SECURITY, LLC,  THE
+U.S.  DEPARTMENT OF  ENERGY OR CONTRIBUTORS BE LIABLE FOR  ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR  CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT  LIMITED TO, PROCUREMENT OF  SUBSTITUTE GOODS  OR
+SERVICES; LOSS  OF USE,  DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER  IN CONTRACT,
+STRICT LIABILITY,  OR TORT (INCLUDING NEGLIGENCE OR  OTHERWISE) ARISING
+IN  ANY WAY OUT  OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+   This work was produced at Lawrence Livermore National Laboratory
+under Contract No.  DE-AC52-07NA27344 with the DOE.
+
+   Neither the  United States Government nor  Lawrence Livermore
+National Security, LLC nor any of  their employees, makes any warranty,
+express or  implied,  or  assumes  any  liability or  responsibility
+for  the accuracy, completeness,  or usefulness of  any information,
+apparatus, product, or  process disclosed, or  represents that its use
+would not infringe privately-owned rights.
+
+   Any reference herein to  any specific commercial products, process,
+or services by trade name,  trademark, manufacturer or otherwise does
+not necessarily  constitute or imply  its endorsement,  recommendation,
+or favoring  by  the  United  States  Government  or  Lawrence
+Livermore National Security,  LLC. The views  and opinions of  authors
+expressed herein do not necessarily state  or reflect those of the
+United States Government or Lawrence Livermore National Security, LLC,
+and shall not
+
+
+File: browser.info,  Node: Invocation,  Next: Syntax,  Prev: Copying,  Up: Top
+
+1 The Browser Command Line
+**************************
+
+The schnauzer is a small terrier with a wiry coat; the browser is a
+utility built on Silo for reading scientific database files.  The
+browser command line is
+
+   `browser' [SWITCHES] [`--'] [FILES]...
+
+   The browser recognizes the following command line switches.  Single
+letter switches that don't require an argument can be grouped together
+(so `-l -q' is the same as `-lq'). When a single-letter switch takes an
+argument the argument can appear either immediately after the letter or
+as the next argument such as `-l3' or `-l 3'. Long format switches are
+introduced by double hyphens and if they take an argument it must
+follow an equal sign such as `--eval=exit'.  Command-line options take
+effect before the initialization file is read, but also override any
+settings made in that file.
+
+   Invoking the browser with the switch `--help' will show a complete
+list of command-line switches and their descriptions.
+
+`-A TOLERANCE'
+`--absolute=TOLERANCE'
+     All absolute differencing tolerances are set to TOLERANCE, a
+     floating point number. All variables of the form `$diff_*_abs' are
+     set to the specified tolerance.
+
+`-R TOLERANCE'
+`--absolute=TOLERANCE'
+     All relative differencing tolerances are set to TOLERANCE, a
+     floating point number.  All variables of the form `$diff_*_rel' are
+     set to the specified tolerance.
+
+`-V'
+`--version'
+     Prints the browser version number. If no other switches or files
+     are specified then the browser will exit after printing the
+     version number.
+
+`-d WORDS'
+`--diff=WORDS'
+     This switch controls the behavior of the `diff' function of the
+     browser. The WORDS should be a comma-separated list of key words
+     which will be assigned to the `$diff' browser variable. See its
+     documentation for details.
+
+`-e EXPRESSION'
+`--eval=EXPRESSION'
+     The browser expression is evaluated and the result is printed on
+     the standard output stream.  More than one expression can be given
+     to the browser by using multiple switches.  The expressions will
+     be evaluated in the order given after the initialization file is
+     read.  When a `-e' switch is present the browser exits after all
+     expressions are processed instead of going into interactive mode.
+     If standard output is a terminal then the browser pages the output
+     in the normal way (see below).  If the interrupt character is
+     pressed when an expression is being evaluated, the browser
+     aborts(1).
+
+`-E LIST'
+`--exclude=LIST'
+     The browser `$exclude' variable is set to the comma-separated list
+     of names and/or datatypes supplied as an argument to this switch.
+     The switch may appear more than once. The names in the `$exclude'
+     list will be excluded from recursive `diff' operations. See
+     documentation for `$exclude' for details.
+
+`-f INITFILE'
+`--file=INITFILE'
+     When the browser begins execution it attempts to read the file
+     `.browser_rc' in the user's home directory.  If that file isn't
+     readable then it tries to read a system-wide browser initialization
+     file.  The `-f' command line switch causes the browser to try to
+     read the specified file instead.  To prevent the browser from
+     reading any initialization file, say `-f /dev/null' (internal
+     browser variables are still initialized to default values).  The
+     initialization file is opened after the database(s) and therefore
+     can contain commands that reference the database(s).
+
+`-h'
+`--help'
+     Prints a browser usage message. If this is the only switch and no
+     file names are specified then the browser will exit after showing
+     the usage message.  The usage message will be paged if printed to
+     a terminal.
+
+`-l [VALUE]'
+`--lowlevel[=VALUE]'
+     This switch assigns an integer value to the `$lowlevel' browser
+     variable, which causes the browser to load database objects as type
+     `DBobject' even if the object is some other composite Silo datatype
+     like `DBquadvar'. If VALUE is specified then it will be assigned
+     to the `$lowlevel' variable; otherwise the value `1' is assigned.
+
+`-c [VALUE]'
+`--checksums[=VALUE]'
+     This switch assigns an integer value to the `$checksums' browser
+     variable, which controls browser's use of checksums during read.
+
+`-n LINES'
+`--height=LINES'
+     The browser pages interactive output to prevent it from scrolling
+     off the top of the screen. It normally decides how tall the window
+     is by making `ioctl' calls, but this switch can be used to
+     override that choice. The setting is valid only until the browser
+     receives a `SIGWINCH' signal and queries the terminal size.
+
+`-q'
+`--quiet'
+     This option causes the browser to be less verbose than normal.
+     This sets the `$verbosity' variable to zero.
+
+`-o'
+`--obase=FORMAT'
+     This switch sets the internal variable `$obase' to FORMAT, which
+     should be `16' for hexadecimal, `8' for octal, `2' for binary, or
+     anything else for the default decimal format. It controls how
+     integer, floating-point, character, and string data are displayed.
+     The default is that these types of data are displayed with a
+     type-dependent `printf' format string which is user defined (e.g.,
+     `$fmt_int').
+
+`-r [BOOLEAN]'
+`--rdonly[=BOOLEAN]'
+     This option assigns a boolean value to the `$rdonly' browser
+     variable, which causes the browser to open all subsequent files in
+     read-only mode. Files that only have Unix read permission are
+     always opened in read-only mode, but the browser issues a warning
+     if the user had asked for read-write permission.  If no argument
+     is given for this switch then true is assumed. The default if this
+     switch does not appear is false.
+
+`-s [BOOLEAN]'
+`--single[=BOOLEAN]'
+     This option causes the browser to call `DBForceSingle' with a value
+     of one or zero depending on whether the argument is true or false.
+     If no argument is given then it is assumed to be true.  Calling
+     `DBForceSingle' with a non-zero value causes most drivers to return
+     floating point data with the C `float' type rather than the default
+     `double' type.
+
+`-v'
+`--verbose'
+     This option causes the browser to be more verbose than normal.
+     This sets the `$verbosity' variable to two.
+
+`-w COLUMNS'
+`--width=COLUMNS'
+     The browser normally breaks lines to prevent them from wrapping
+     around from the right margin to the next line. It decides how many
+     columns are appropriate by making `ioctl' calls, but this switch
+     overrides that choice.
+
+`--debug[=BOOLEAN]'
+     Tells Silo to display the names of the Silo API functions as they
+     are called. This switch is probably only useful to those who debug
+     the browser.
+
+
+   If Silo database file names are specified then the files are opened
+in the order specified and associated with file symbols `$1', `$2',
+etc. These are opened before the initialization file is read, which
+happens before any `--eval' statements are executed. However, the
+command-line options are reevaluated after the initialization file is
+read.
+
+   ---------- Footnotes ----------
+
+   (1) In contrast, pressing the interrupt character during an
+interactive browser command aborts the command but not the browser.
+
+
+File: browser.info,  Node: Syntax,  Next: Functions,  Prev: Invocation,  Up: Top
+
+2 Command Syntax
+****************
+
+The browser command syntax is quite simple, consisting of function
+calls, operators, atoms, and lists. Comments begin with a hash mark and
+continue to the end of the line (except in strings). White space is
+generally ignored except as a token separator. Statements can be
+continued across multiple lines, but a backslash must escape the
+linefeed if the partial statement looks syntactically complete.
+
+   A function call is a parenthetical expression where the first
+element is the name of the function and the subsequent elements are the
+arguments to that function.  Most functions evaluate all their
+arguments but others evaluate only some (or none). For example, the
+`Assign' function doesn't evaluate its first argument, but rather
+assignes the evaluated second argument to the l-value specified by the
+first argument. The parentheses can be omitted from around the top-level
+function call. Say `help func' (or `(help func)') for a list of all
+functions.
+
+   Most browser operators are infix, binary operators. They take two
+operands, one on each side of the operator, and call some function which
+is bound to the operator. For example the expression `foo=1' is
+equivalent to `(Assign foo 1)'. The `{}' operator takes any number of
+arguments which appear between the open and close curly braces. Say
+`help operators' for a list of all operators.
+
+   The browser has three types of atoms: strings, numbers, and symbols.
+A string is a sequence of characters enclosed in single or double
+quotes. The normal C escaping mechanism can be used for special
+characters within the string. A single quote has no special significance
+in a double-quoted string and vice versa.  Numbers are positive or
+negative sequences of decimal digits with an optional embedded decimal
+point and trailing exponent. An exponent consists of the letter `e' or
+`E' followed by an optional sign and one or more decimal digits.  A
+symbol is any sequence of alphanumeric characters and may also include
+dollar signs, hyphens, underscores, and various other characters
+(although their use is discouraged).
+
+   A list consists of zero or more atoms or lists enclosed in
+parentheses. Evaluation of the list results in the browser looking up
+the functional value of the first member of the list and calling that
+function with the subsequent list members as arguments. Evaluation of
+the list can be suppressed by using curly braces instead of parentheses
+(e.g., `{1 3 5}' is equivalent to `(Quote 1 3 5)')'.
+
+   The browser reads commands interactively from its standard input. If
+available, the GNU readline library is used allowing the user to edit
+commands as they are entered using Emacs or vi editing commands. To
+quote from the readline library (documentation is available at
+`http://www.cs.utah.edu/csinfo/texinfo/texinfo.html'):
+
+     Often during an interactive session you type in a long line of
+     text, only to notice that the first word on the line is
+     misspelled.  The Readline library gives you a set of commands for
+     manipulating the text as you type it in, allowing you to just fix
+     your typo, and not forcing you to retype the majority of the line.
+     Using these editing commands, you move the cursor to the place
+     that needs correction, and delete or insert the text of the
+     corrections.  Then, when you are satisfied with the line, you
+     simply press <RETURN>.  You do not have to be at the end of the
+     line to press <RETURN>; the entire line is accepted regardless of
+     the location of the cursor within the line.
+
+   The readline library default mode is Emacs.  If you prefer `vi' key
+bindings, then create a file called `.inputrc' in your home directory
+with the single line `set editing-mode vi'.
+
+
+File: browser.info,  Node: Functions,  Next: Operators,  Prev: Syntax,  Up: Top
+
+3 Builtin Functions
+*******************
+
+Some of the browser functions have more than one form and are overloaded
+to do various things depending on the number of actual arguments
+supplied. Arguments shown between `[' and `]' are optional.
+
+`array DIMENSIONS ... BASETYPE'
+     Creates a new array datatype. The arguments are the size of the
+     array in each dimension and the datatype of the array elements.
+     The array size arguments can be either integers or strings that
+     look like comma- and/or space-separated integers. Browser arrays
+     use C element ordering.
+
+`cd DIRNAME [FILESYM]'
+     Each file has a current working directory (CWD) which is initially
+     set to the root directory (`/'). This command will set the CWD to
+     some other directory. The first argument is the name of the new
+     CWD. If the name contains special characters it should be enclosed
+     in quotes to protect it from the parser. If the name is relative
+     (doesn't start with a `/') then the name is looked up with respect
+     to the current CWD. The second optional argument is the file or
+     list of files whose CWD is being set (default is the file
+     represented by the browser variable `$1').  The DIRNAME is a
+     string; it is not interpreted by the browser and thus a command
+     like `cd $1.domain_0.angle_walls' will fail while `cd
+     domain_0/angle_walls $1' would work.
+
+`close FILESYM ...'
+     Closes the database files associated with the specified file
+     symbols.  If objects exist in the browser memory which are
+     associated with the database then the database will be held open
+     until those objects no longer exist, but the file symbol will be
+     freed so another file can immediately be associated with that
+     symbol. This command is equivalent to `FILESYM=nil' (except with
+     extra sanity checks).
+
+`diff OBJECTS...'
+     Calculates the differences between its arguments similar to the
+     Unix `diff' command. If called with an even number of arguments the
+     argument list is split in half and each argument from the first
+     half is compared with the corresponding argument of the second
+     half. If called with no arguments then the argument list will be
+     the SILO files from the command-line (`$1', `$2', etc.).  If
+     called with just one argument which is an object from the silo
+     file `$1' then that object will be compared to an object with the
+     same name from file `$2'.  The behavior is influenced by the
+     `$diff' browser variable. In general, if no differences are found
+     then no output is produced.
+
+`end'
+     See `exit'.
+
+`exit [STATUS]'
+     Exits the browser with the specified STATUS, an integer constant.
+     If no exit status is supplied then zero (success) is assumed.
+     Typing the end of file character (usually control-d) at the
+     beginning of a line also invokes this command, causing a zero
+     (success) exit.
+
+`file FILENAME'
+     The Silo database FILENAME is opened and returned but not
+     associated with any symbol.  Therefore, as soon as nothing refers
+     to the file, it is closed.  One common use of this function is
+     with the `ls' or `diff' commands which can take file objects as
+     arguments.  For instance, the command `ls (file curv2d.pdb)' opens
+     the `curv2d.pdb' file and lists the root directory and `ls (cd
+     dirname (file curv2d.pdb))' lists the contents of the DIRNAME
+     directory of `curv2d.pdb'.  The file is open for read-write mode
+     unless the `$rdonly' browser variable has a non-nil value or the
+     file has only read permission.
+
+`help [TOPIC] [DOCSTRING]'
+     Shows documentation for various parts of the browser. When invoked
+     without arguments it will display a table of contents of `help'
+     subcommands. With one argument it will display documentation for a
+     help category (e.g., `help run'), a browser internal variable
+     (e.g., `help $diff'), a function (e.g., `help diff'), a
+     command-line switch (e.g., `help --diff'), an operator (e.g., `help
+     "op="'), or the documentation string associated with the specified
+     symbol. When invoked with a string argument it will print all help
+     categories which contain the specified string (e.g., `help
+     "diff"'). When called with two arguments it assigns the second
+     argument as the documentation property of the first argument,
+     which must be a symbol or string.
+
+`include FILENAME'
+     Causes the specified file to be parsed and evaluated. This is often
+     useful in user-private initialization files, `~/.browser_rc', where
+     the user wants to augment the actions that would normally happen
+     in the system-wide browser initialization file. The user-private
+     file should contain the line `include $pubinit'.
+
+`ls [FILESYM] [OBJNAMES...]'
+     This command lists the contents of the current working directory.
+     If no file is specified then the file associated with `$1' is
+     used. If a list of files is specified (e.g., `$*') then a listing
+     is produced for each of those files. If object names are supplied,
+     then only those objects are listed.  The object names can include
+     the normal Unix filename wild cards `*', `?', and `[]' (object
+     names with `[]' wild cards require quotes so the `[' and `]' are
+     not intrepretted as array selectors). Wild card matching is not
+     available if the `fnmatch' function was not available when the
+     browser was compiled.  If a single object name is supplied and
+     that object is a directory, then the contents of that directory
+     appear.  An alternative (and shorter) way to list the contents of
+     a subdirectory is to type the name of the subdirectory on a line
+     by itself (for instance, `dir1').
+
+`'
+     Another way to list a directory is to just type the name of the
+     directory at the prompt (you can use `.' as the current working
+     directory).  So saying `$2.dir' is the same as saying `ls $2 dir'
+     and `$2..' is the same as `ls $2' or `ls $2 .'.
+
+`noprint'
+     See `print'.
+
+`open FILENAME [FILESYM]'
+     The Silo database FILENAME is opened and associated with the
+     specified file symbol.  Any database previously associated with
+     FILESYM will be closed as soon as all objects associated with that
+     file are freed.  If FILESYM is omitted then `$1' is used.  This
+     command is equivalent to `FILESYM = FILENAME'. Files are open in
+     read-write mode unless the `$rdonly' browser variable has a
+     non-nil value or the file has only read permission.
+
+`[no]print EXPRESSION ...'
+     Evaluates the expressions and prints (or suppresses) the result of
+     each one.  The `print' command is normally not used because the
+     browser prints all non-null expressions by default.  However, a
+     `noprint' can be used to prevent the default output.
+
+`pwd [FILESYM]'
+     Prints the current working directory for the database associated
+     with the specified file symbol, list of files, or `$1'. This
+     command also prints the name of the database.  This command is
+     usually not used because a file symbol appearing by itself causes
+     the database name and current working directory to be displayed.
+
+`quit'
+     See `exit'.
+
+`typeof EXPRESSION'
+     The type of a Silo expression is printed.  For Silo database
+     objects the type which is printed is fully qualified and bound to
+     actual values. In contrast, printing the actual named type shows
+     the unbound values.  For example, if `d' is a Silo quadvar object,
+     then `typeof d.dims' might show `[3] int' while `print
+     DBquadvar.dims' displays `[self.ndims] int'.
+
+
+
+File: browser.info,  Node: Operators,  Next: Internal Variables,  Prev: Functions,  Up: Top
+
+4 Operators
+***********
+
+A browser expression is composed of terms and operators. The following
+operators are supported and overloaded depending on the number and type
+of arguments.
+
+SYMBOL `=' VALUE
+     Assigns a value to a browser internal variable or a database
+     object.  If SYMBOL is an internal variable and VALUE is the word
+     `nil' then the symbol loses its variable value.
+
+FILESYM `.' VARNAME
+     The variable or directory with the name VARNAME is loaded from the
+     database associated with the specified file symbol and the Silo
+     data object is returned.  The variable name must be enclosed in
+     quotes unless it looks like a symbol and does not conflict with a
+     browser internal variable. If FILESYM is `$1' and the variable
+     name is not enclosed in quotes and is not the name of an internal
+     browser variable, then the file symbol and dot can be omitted.
+     Thus `$1.quadmesh' can be written as just `quadmesh'.
+
+SDO `.' FIELDNAME
+     If SDO is some Silo data object which has a structured type, then
+     this expression returns a new Silo data object which is the
+     specified field of the SDO structure.  For instance, a quadmesh
+     `qm' has a field named `dims' which holds the dimensions of the
+     mesh.  The expression `qm.dims' returns just the dimensions.
+
+LIST `.' ANYTHING
+     If the first argument is a list then the dot operator is applied
+     to each member of the list and the result is a list of the results.
+
+SDO `[' ELMTNUM `]'
+     If SDO is some Silo data object which has an array type, then this
+     expression returns the single specified element of that array.  The
+     first element of an array is number zero.  For instance,
+     `qm.dims[0]' returns the size of the first mesh dimension.
+
+SDO `[' MIN `:' MAX `]'
+     If SDO is some Silo data object which has an array type, then this
+     expression returns a sub-array with elements MIN through MAX,
+     inclusive.  Thus, `qm.dims[0:2]' are the first three mesh
+     dimensions.
+
+SDO `[' EXPR1`,' EXPR2`,' ... `]'
+     If SDO is some Silo data object which has an array type, and EXPR
+     are element numbers or ranges, then one EXPR is applied to each
+     array dimension in turn, automatically skipping over pointers.
+     For instance, if a quadvar `qv' has a `vals' of type `*[2]
+     *[36000] float' then the expression `qv.vals[0,100:199]' will be
+     an object consisting of the second 100 values of the first
+     variable.  (The expression `qv.vals[0][100:199]' would result in an
+     error message because `qv.vals[0]' returns an object with the type
+     `[1] *[36000] float' to which is then applied the `[100:199]' that
+     is invalid because the array only has one element.)
+
+EXPR `|' COMMAND
+     The expression EXPR has its output redirected to the shell command
+     COMMAND.
+
+EXPR `>' FILE
+     The expression EXPR has its output redirected to the file FILE,
+     which is created or truncated.
+
+EXPR `>>' FILE
+     The expression EXPR has its output appended to the file FILE,
+     which is created if it doesn't exist.
+
+`{' EXPRESSIONS `}'
+     This operator takes zero or more operands occurring between the
+     curly braces (optionally separated by commas) and returns a list
+     of those unevaluated operands. If only one operand is given then
+     that operand is returned unevluated and not in a list.
+
+MINIMUM `:' MAXIMUM
+     The range operator is used to construct a range object which
+     represents all integers between MINIMUM and MAXIMUM, inclusive.
+
+
+
+File: browser.info,  Node: Internal Variables,  Next: Startup File,  Prev: Operators,  Up: Top
+
+5 Internal Variables
+********************
+
+Certain aspects of the browser can be configured by setting browser
+variables with the `=' operator described above.  The current value of
+an internal variable can be displayed by typing the variable's name.
+The variables are initialized with default values when the browser
+starts and may then be overridden by command-line options, the
+initialization file, or interactively. All predefined browser variables
+begin with a dollar sign.
+
+* Menu:
+
+* Differencing Variables::
+* Output Variables::
+* File Variables::
+
+
+File: browser.info,  Node: Differencing Variables,  Next: Output Variables,  Prev: Internal Variables,  Up: Internal Variables
+
+5.1 Differencing Variables
+==========================
+
+These variables affect the operation of the `diff' function.
+
+`$diff'
+     This variable's value is a list of symbols which control the
+     details of the `diff' function. The default is `$diff = {detail,
+     two_column}'. This variable is set by the `--diff' command-line
+     switch.
+
+    `detail'
+          This is the default, which causes the `diff' function to
+          report all details about detected differences.
+
+    `brief'
+          If this word is present then `diff' doesn't actually display
+          any data. The output will consist of a single line for each
+          file object which differs between file A and file B.  This
+          option allows some short circuiting of the work required for
+          the `detail' mode.
+
+    `summary'
+          This key word causes `diff' to report by a single line of
+          output when the two operands of the `diff' function are
+          different. No output is produced if they are the same. This
+          option allows some short circuiting of the work required for
+          the `brief' mode.
+
+    `ignore_additions'
+          If this is specified then `diff' will not report differences
+          due to data appearing in file B but not in file A.
+
+    `ignore_deletions'
+          If this is specified then `diff' will not report differences
+          due to data appearing in file A but not in file B.
+
+    `two_column'
+          If this is specified then the output will list differences
+          side-by-side instead of one after the other (that is, output
+          will resemble `pdbdiff' instead of `diff'). This setting is
+          only applicable for detailed output.
+
+`$exclude'
+     The `diff' function normally recurses into directories and compares
+     the contents of those directories. However, the `$exclude' variable
+     can be a list of character strings which specify object names
+     and/or types which should be excluded from recursive comparison.
+     The object names may include shell wildcards such as `*', `?', and
+     `[]'. If a name pattern is relative (doesn't start with a slash) it
+     will be compared to the base name of the objects about to be
+     differenced; but if the name pattern is absolute (begins with a
+     slash) it will be compared to the full path names of the objects
+     being differenced. If the `$exclude' string begins with the string
+     `type:' then the following part should be one of the object types
+     printed by the `ls' function.  A difference operation between two
+     objects is suppressed if either object matches any of the strings
+     stored in the `$exclude' list.
+
+     For example, to prevent `diff' from comparing any objects with the
+     base name `cycle', or any objects whose full name is
+     `/VM/typelist', or any objects whose name ends with `_list', or
+     any object of type `obj' one would issue the following browser
+     command:
+
+          > $exclude = {"cycle", "/VM/typelist", "*_list", "type:obj"}
+
+     or invoke the browser with the switch
+          --exclude='cycle,/VM/typelist,*_list,type:obj'
+
+`$diff_int8_abs'
+`$diff_int8_rel'
+`$diff_short_abs'
+`$diff_short_rel'
+`$diff_int_abs'
+`$diff_int_rel'
+`$diff_long_abs'
+`$diff_long_rel'
+`$diff_float_abs'
+`$diff_float_rel'
+`$diff_double_abs'
+`$diff_double_rel'
+     These variables control how the `diff' function determines whether
+     two numeric values are the same or different. The ones that end
+     with `_abs' specify the maximum absolute difference allowed
+     between two values A and B.  The `diff' command considers A and B
+     to be different if `|A-B|>ABS'.  The variables that end with
+     `_rel' specify the maximum absolute difference relative to the
+     mean of two values.  The `diff' command considers A and B to be
+     different if `|A-B|/|A+B| > REL/2'.
+
+     If both tests are performed then A and B are considered different
+     if either test indicates they are different. If an ABS or REL
+     parameter is not defined (or has a non-positive value) then the
+     corresponding test is not performed. If neither test is performed
+     then an exact comparison is used.
+
+     All `diff' variables have a default value of zero and are set by
+     the `--absolute' and `--relative' command-line switches.
+
+
+File: browser.info,  Node: Output Variables,  Next: File Variables,  Prev: Differencing Variables,  Up: Internal Variables
+
+5.2 Output Variables
+====================
+
+`$height'
+     The height of the output terminal in lines. If set to a positive
+     value then the browser will pause after each screenful of
+     interactive output (redirected output is unaffected by this
+     setting). This variable is set by the `--height' command-line
+     switch and is reset whenever the browser receives a window size
+     change signal (`SIGWINCH').
+
+`$width'
+     The width of the output terminal in characters. The browser will
+     try not to print data which would wrap from one line to the next.
+     This variable is set by the `--width' command-line switch and is
+     reset whenever the browser receives a window size change signal
+     (`SIGWINCH').
+
+`$verbosity'
+     This variable is set by the `--quiet' and `--verbose' switches.
+     The `--quiet' sets it to zero while `--verbose' sets it to two
+     (the default is one). Changing its value at runtime changes the
+     amount of chatter produced by the browser.
+
+`$truncate'
+     If this variable holds a non-negative integer value N, then the
+     browser shows only N values of each array; otherwise all values of
+     an array are displayed. Values which are omitted are indicated by a
+     string such as `...(2000 values omitted)...' appearing at the point
+     where the values were omitted. Truncation is disabled (all values
+     are printed) by setting this variable to nil (its default).
+
+`$trailing'
+     If this variable holds a positive integer value and `$truncate'
+     has a non-negative integer value, then up to N of the printed
+     array values will come from the end of the array rather than the
+     beginning. The default value is 50.
+
+`$fmt_double'
+     This variable holds a `printf' format string which is used to
+     format C `double' values.  The default value is `%1.10g'.
+
+`$fmt_float'
+     This variable holds a `printf' format string which is used to
+     format C `float' values.  The default value is `%1.5g'.
+
+`$fmt_int'
+     This variable holds a `printf' format string which is used to
+     format integer values.  The default value is `%d'.
+
+`$fmt_long'
+     This variable holds a `printf' format string which is used to
+     format long integer values.  The default value is `(long)%ld'.
+
+`$fmt_null'
+     This variable holds a `printf' format string which is printed for
+     null character strings.  The default value is `(null)'.
+
+`$fmt_int8'
+     This variable holds a `printf' format string which is used to
+     format 8-bit integer values.  The default is `(int8)%d' but people
+     often like to change it to ``%c'' to see the ASCII equivalent. Be
+     warned that output of non-printable ASCII characters in this
+     manner may not work if the terminal emulator interprets them as
+     commands.
+
+`$fmt_short'
+     This vairable holds a `printf' format string which is used to
+     format short integer values.  The default value is `(short)%d'.
+
+`$fmt_string'
+     This variable holds a `printf' format string which is used to
+     format character string values.  The default value is `\"%s\"'.
+
+`$obase Output of primitive data (integer, character, string, and'
+     floating-point), by default, uses the `$fmt_' variables described
+     above. However, by setting this variable to 16, 8, or 2 it is
+     possible to display primitive data in hexadecimal, octal, or
+     binary format.
+
+
+
+File: browser.info,  Node: File Variables,  Prev: Output Variables,  Up: Internal Variables
+
+5.3 File Variables
+==================
+
+`$pubinit'
+     This variable holds the name of the public initialization file and
+     is intended to be used as the first argument to the `include'
+     function in a user-private initialization file.
+
+`$lowlevel'
+     If this variable has any true value (nil, zero, and the empty
+     string are considered false), then the browser reads objects as
+     type `DBobject' even if that object has some other datatype such as
+     `DBquadvar'.  This variable is set by the `-l' command-line option
+     and is useful for debugging the low layers of Silo. The default
+     value is zero.
+
+     If the value is two or higher then the Silo definition of
+     `DBobject' is used and the values of the `comp_names' and
+     `pdb_names' arrays become part of the object.
+
+     If the value is one or two then the browser translates the Silo
+     `DBobject' structure into a structure which is more user friendly
+     by adding additional members to the object structure. Each member
+     has a name from the `comp_names' array and a value based on the
+     corresponding member of the `pdb_names' array(1).
+
+`$checksums'
+     If this variable has any true value (nil, zero, and the empty
+     string are considered false), and the database being read includes
+     checksums, then the browser performs checksum checks during read.
+     Note that currently, the only Silo driver that supports checksums
+     is the HDF5 driver.
+
+     If checksum checks are disabled, then if browser encounters
+     corrupt data, it will not know it. In particular, if checksums are
+     disabled, the diff operator can wind up reporting corrupted data
+     as diffs. If checksums are enabled, however, and the database
+     being read includes checksums, then browser will report errors
+     when it encounters corrupt data and fail to read the associated
+     Silo object. See the associated Silo call `DBSetEnableChecksums()'
+     for more information.
+
+`$rdonly'
+     If this variable has any true value (nil, zero, and the empty
+     string are considered false), then the browser opens files in
+     read-only mode instead of read-write mode.  Editing will not work
+     on a file open for reading only.
+
+   ---------- Footnotes ----------
+
+   (1) Changes should not be made to the `comp_names' or `pdb_names'
+arrays since the Silo `DBobject' is regenerated from the user-friendly
+fields before being saved back to the file.
+
+
+File: browser.info,  Node: Startup File,  Next: Editing,  Prev: Internal Variables,  Up: Top
+
+6 Initializing the Browser
+**************************
+
+When the browser starts, it looks for a file called `.browser_rc' in
+the user's home directory or a file called
+`/usr/local/include/browser_rc'(1).  However, an alternate startup file
+can be specified with the `--file' browser command-line switch.  The
+browser reads and executes each command found in the startup file.
+
+   The startup file should contain an assignment to the
+`$browser_version' variable which will be used to check that the
+version of the startup file is appropriate for the browser being run.
+Mismatched version numbers result in a rather verbose warning message
+(provided that the browser was even able to process the startup file).
+
+   The `$browser_version' number should be assigned some real constant
+like `3.004' where `3' is the browser major version number and `004' is
+the browser minor version number.  To determine what version number to
+specify, invoke the browser as `browser --version'.
+
+   ---------- Footnotes ----------
+
+   (1) The path name may be different depending on how the browser was
+compiled.
+
+
+File: browser.info,  Node: Editing,  Next: Paging,  Prev: Startup File,  Up: Top
+
+7 Editing Database Objects
+**************************
+
+The `=' operator can be used to set the value of an internal browser
+variable or to change the value of a database object.  If the left hand
+side of the `=' is an internal variable, then the value of the internal
+variable is changed. Otherwise if the left hand side is a database
+object, its value is changed.  Otherwise, a new internal variable is
+created and assigned an initial value.
+
+   The browser can change values for objects of type `DBobject' (most
+objects are of this type if the browser is running in low-level mode) or
+objects under the `var(s)' category in a directory listing.
+
+   When changing the value of a string database object like
+`_fileinfo', the new value will be truncated to the same length as the
+old value because of limitations in the underlying Silo database
+drivers.  This does not apply to string fields of a `DBobject'.
+
+   Assigning a scalar value to an array or slice of an array results in
+all selected elements of the array to be set to the same value.  For
+instance, if the type of `u_data' is `[31, 41, 31] float' then the
+statement `u_data[5]=0' sets all elements of "row" five to zero.
+
+
+File: browser.info,  Node: Paging,  Next: Redirection,  Prev: Editing,  Up: Top
+
+8 Paging
+********
+
+The browser keeps track of how many lines of output have been displayed
+for the currently executing command and temporarily pauses that command
+whenever output is about to scroll off the top of the screen.  The
+height and width of the screen is determined by the browser making
+certain `ioctl' calls at startup and each time it gets a `SIGWINCH'
+signal.  The initial values can be set with `--height' and `--width'
+command-line switches.  If the appropriate `ioctl' is not available
+then the values of environment variables `LINES' and `COLUMNS' will be
+used. If all else fails then the browser uses zero for the number of
+lines (that is, no paging of output) and 80 for the number of columns.
+
+   When the browser pauses the output, the message `more? ('q' to
+quit)' is displayed. The following user responses are recognized:
+
+Quit
+     Cancels the command and returns to the browser prompt. This is
+     equivalent to the browser receiving a `SIGPIPE' signal.
+
+Continue
+     Pressing the EOF key (usually control-`d') causes the command to
+     continue without being paged. Output will simply scroll off the
+     screen).
+
+Next Diff
+     Pressing `n' causes output to be suspended until the next file
+     difference report or the next non-diff command.
+
+Interrupt
+     Pressing the interrupt key (usually control-`c') causes the command
+     to be interrupted as usual.
+
+   Output redirected to a file or command is not paged.  If the user is
+not satisfied with the limited paging ability of the browser, the output
+from a command can be redirected to the pager of the user's choice using
+output redirection.
+
+
+File: browser.info,  Node: Redirection,  Next: Interrupts,  Prev: Paging,  Up: Top
+
+9 Redirection
+*************
+
+Output from any browser command can be redirected to a file or shell
+command by appending a redirection character and file name or shell
+command to the end of the command.
+
+   To save the output of a command in a file, destroying the previous
+contents of the file if any, append a `>' and the name of the file.
+Unless the file name looks like a browser symbol it must be enclosed in
+quotes.  For instance, `quadvar3d > saved' saves the value of Silo
+database variable `quadvar' in a text file named `saved'.
+
+   To append the output of a command to a file, append a `>>' and the
+file name to the end of the command.  Unless the file name looks like a
+browser symbol it must be enclosed in quotes.  For example, `typeof
+quadvar3d >> saved' appends type information to the `saved' file.
+
+   To send the output of a browser command to the standard input of a
+shell command, follow the browser command with a `|' followed by the
+shell command in quotes.  The quotes are not necessary if the shell
+command is a single symbol.  Since paging is disabled when output is to
+a shell command, one way to display a result without paging is to pipe
+the output through the `cat' command like `d | cat'.
+
+
+File: browser.info,  Node: Interrupts,  Next: Examples,  Prev: Redirection,  Up: Top
+
+10 Interrupts
+*************
+
+Since some commands may require a long time to execute or produce a huge
+amount of output, the user may want to abort the command before it
+finishes.  If the output is paged interactively to the screen then
+pressing `q' at the `more?'  prompt accomplishes this.  Otherwise the
+user can press the interrupt character (usually control-c) and the
+browser command will be immediately terminated and the browser will
+prompt for the next command.  If the interrupt character is typed
+during command input the browser itself terminates.
+
+   If output from a browser command is being piped into a shell command
+and the shell command exits (or closes its standard input) before the
+browser command is finished, the browser command gets the `SIGPIPE'
+signal and terminates.
+
+
+File: browser.info,  Node: Examples,  Prev: Interrupts,  Up: Top
+
+11 Examples
+***********
+
+This chapter contains some sample output from the browser.
+
+   Normally, you will specify the name of a database file on the browser
+command-line(1) like in the following example, and sometimes it's
+convenient to open multiple files at the same time.  Each file name
+listed on the command-line is given an identifier like `$1', `$2',
+etc., and most of the browser commands operate on file `$1' by default.
+
+     % browser rect3d.pdb
+     INFO: opening `rect3d.pdb' as $1
+
+   The `ls' command is similar to the Unix `ls' command in that it
+lists the contents of the current working directory.  The heading
+fields on the left of the equal signs apply until the next heading.  The
+headings are the same as those used by MeshTV.  To list the contents of
+some subdirectory, say `ls', `ls dir1', `print dir1', or just `dir1'.
+
+     > ls
+     qmesh(s)          = quadmesh3d
+
+     qvar(s)           = d                      p
+                       = t                      u
+                       = v                      w
+
+     mat(s)            = mat1
+
+     var(s)            = _fileinfo              _meshtv_defvars
+                       = _meshtvinfo            cycle
+                       = d_data                 d_dims
+                       = d_maxindex             dtime
+                       = mat1_dims              mat1_matlist
+                       = mat1_matnos            mat1_mix_mat
+                       = mat1_mix_next          mat1_mix_vf
+                       = mat1_mix_zone          p_data
+                       = p_dims                 p_maxindex
+                       = quadmesh3d_align_nodal quadmesh3d_align_zonal
+                       = quadmesh3d_coord0      quadmesh3d_coord1
+                       = quadmesh3d_coord2      quadmesh3d_dims
+                       = quadmesh3d_max_extents quadmesh3d_max_index_n
+                       = quadmesh3d_max_index_z quadmesh3d_min_extents
+                       = quadmesh3d_min_index   quadmesh3d_zonedims
+                       = t_data                 t_dims
+                       = t_maxindex             time
+                       = u_data                 u_dims
+                       = u_maxindex             v_data
+                       = v_dims                 v_maxindex
+                       = w_data                 w_dims
+                       = w_maxindex
+
+   To keep the size of these examples small, we've specified that at
+most 50 values should be printed from each array and that 25 of those
+values should be from the end of the array (and the other 25, from the
+beginning).  To truncate everything say `$truncate=0' and to turn
+truncating off say `$truncate=nil'.
+
+     > $truncate = 50
+                       = 50
+     > $trailing = 25
+                       = 25
+
+   The user can ask for the type of any object, including types built
+into the browser.  If the object is a structured type (like in this
+example) then the type of each component of that structure is printed.
+
+     > typeof d
+                       = struct DBquadvar {
+     id                =    +0 int
+     name              =    +4 string
+     units             =    +8 string
+     label             =    +12 string
+     cycle             =    +16 int
+     time              =    +20 float
+     dtime             =    +24 double
+     meshid            =    +32 int
+     datatype          =    +40 int (DBdatatype)
+     nels              =    +44 int
+     nvals             =    +48 int
+     ndims             =    +52 int
+     dims              =    +56 [3] int
+     major_order       =    +68 int (array order)
+     stride            =    +72 [3] int
+     min_index         =    +84 [3] int
+     max_index         =    +96 [3] int
+     origin            =    +108 int
+     align             =    +112 [3] float
+     mixlen            =    +128 int
+     use_specmf        =    +132 int (on/off)
+     mixvals           =    +124 *[1] *[0] float
+     vals              =    +36 *[1] *[36000] float
+                       = }
+
+   An integer following a plus sign indicates that the type corresponds
+to a byte offset from the beginning of the innermost enclosing structure
+or array.
+
+   A `*' means the object is a pointer to whatever type follows(2).
+
+   A list of array dimensions between `[' and `]' mean that the object
+is an array and each element of the array is the type that follows the
+`]'.
+
+   The final name is always one of the browser integral types `string'
+(same as the C `char*'), `short', `int', `long', `float', or `double'.
+If the integral type name is followed by parentheses then the
+parentheses contain the name of an underlying C `enum' type or a set of
+related C preprocessor constants.
+
+   Some data objects override one or more standard class methods.  Such
+objects will have flags like `__FLAG__' which appear inside the object
+type.
+
+   One can also ask for the Silo definition of a named data type like
+`DBquadvar'.  This prints the definition of the Silo `DBquadvar'
+structure which is the same as printed above for the type of `d' except
+that array sizes and some primitive types are not bound to actual
+values yet(3).
+
+     > DBquadvar
+                       = struct DBquadvar {
+     id                =    +0 int
+     name              =    +4 string
+     units             =    +8 string
+     label             =    +12 string
+     cycle             =    +16 int
+     time              =    +20 float
+     dtime             =    +24 double
+     meshid            =    +32 int
+     datatype          =    +40 int (DBdatatype)
+     nels              =    +44 int
+     nvals             =    +48 int
+     ndims             =    +52 int
+     dims              =    +56 [self.ndims] int
+     major_order       =    +68 int (array order)
+     stride            =    +72 [self.ndims] int
+     min_index         =    +84 [self.ndims] int
+     max_index         =    +96 [self.ndims] int
+     origin            =    +108 int
+     align             =    +112 [self.ndims] float
+     mixlen            =    +128 int
+     use_specmf        =    +132 int (on/off)
+     mixvals           =    +124 *[self.nvals] *[self.mixlen]
+     mixvals           =    self.datatype
+     vals              =    +36 *[self.nvals] *[self.nels] self.datatype
+                       = }
+
+   Giving just the name of the Silo object is short for `print $1.d'.
+Notice that the `vals' array has been truncated as requested and that
+MIXVALS has no value. The subscripts in the labels to the left of the
+equal sign correspond to the first value on that line (an entire array
+in the case of `vals[0]'.
+
+   One can also ask for tye type of a single structure component by
+typing the command `DBquadvar.vals'.
+
+     > d
+                       = DBquadvar: struct
+     id                =    0
+     name              =    "d"
+     units             =    (null)
+     label             =    (null)
+     cycle             =    48
+     time              =    4.80000
+     dtime             =    4.8000000000
+     meshid            =    0
+     datatype          =    float
+     nels              =    36000
+     nvals             =    1
+     ndims             =    3
+     dims[0]           =    {30, 40, 30}
+     major_order       =    row major
+     stride[0]         =    {1, 30, 1200}
+     min_index[0]      =    {0, 0, 0}
+     max_index[0]      =    {29, 39, 29}
+     origin            =    0
+     align[0]          =    {0.50000, 0.50000, 0.50000}
+     mixlen            =    0
+     use_specmf        =    off
+     mixvals           =    NULL
+     vals[0]           =    {{0.83957, 0.82083, 0.80304, 0.78626, 0.77056,
+     vals[0, 5]        =    0.75601, 0.74266, 0.73059, 0.71987, 0.71055,
+     vals[0, 10]       =    0.70269, 0.69633, 0.69153, 0.68831, 0.68669,
+     vals[0, 15]       =    0.68669, 0.68831, 0.69153, 0.69633, 0.70269,
+     vals[0, 20]       =    0.71055, 0.71987, 0.73059, 0.74266, 0.75601,
+     vals[0, 25]       =    ...(35950 values omitted)..., 0.75601,
+     vals[0, 35976]    =    0.74266, 0.73059, 0.71987, 0.71055, 0.70269,
+     vals[0, 35981]    =    0.69633, 0.69153, 0.68831, 0.68669, 0.68669,
+     vals[0, 35986]    =    0.68831, 0.69153, 0.69633, 0.70269, 0.71055,
+     vals[0, 35991]    =    0.71987, 0.73059, 0.74266, 0.75601, 0.77056,
+     vals[0, 35996]    =    0.78626, 0.80304, 0.82083, 0.83957}}
+
+   The browser does not attempt to be efficient about loading objects
+from the database into memory since the underlying Silo library makes it
+difficult to do so.  However, if one says `$lowlevel=1' then the
+browser uses lower-level Silo functions to read the file.  As a result,
+less data is moved from disk to memory.
+
+     > $lowlevel=1
+                       = 1
+     > d
+                       = struct
+     name              =    "d"
+     type              =    "quadvar"
+     meshid            =    "quadmesh"
+     align             =    "/quadmesh_align_zonal"
+     dims              =    "/d_dims"
+     max_index         =    "/d_maxindex"
+     value0            =    "/d_data"
+     ndims             =    3
+     nvals             =    1
+     nels              =    36000
+     origin            =    0
+     datatype          =    19
+     mixlen            =    0
+     major_order       =    0
+     cycle             =    48
+     time              =    "/time"
+     dtime             =    "/dtime"
+     min_index         =    "/quadmesh_min_index"
+     use_specmf        =    -1000
+
+   Now we'll decrease the number of values printed and increase the
+precision that's displayed for `float' values.
+
+     > $truncate = 12
+                       = 12
+     > $trailing = 6
+                       = 6
+     > $fmt_float = "%1.15f"
+                       = "%1.15f"
+     > d.vals[0]
+     [0]               = {0.839570403099060, 0.820833325386047,
+     [2]               = 0.803043246269226, 0.786264479160309,
+     [4]               = 0.770563006401062, 0.756006062030792,
+     [6]               = ...(35988 values omitted)...,
+     [35994]           = 0.756006062030792, 0.770563066005707,
+     [35996]           = 0.786264479160309, 0.803043246269226,
+     [35998]           = 0.820833325386047, 0.839570462703705}
+
+   The `diff' command compares two objects and reports differences
+between them.  The output is in groups of differences where the group is
+delimited at the beginning and end by a line of stars.  The first half
+of the group displays (part of) the first argument to `diff' while the
+part of the group after the line of dashes displays (part of) the
+second argument.  Subobjects that differ only partially (`stride' in
+this case) appear separately before those which completely differ.  The
+array truncating parameters apply to each array segment individually.
+
+     > diff d p
+     ***************
+     stride[1]         = {30, 1200}
+     ---------------
+     stride[1]         = {31, 1271}
+     ***************
+     ***************
+     name              = "d"
+     nels              = 36000
+     dims[0]           = {30, 40, 30}
+     max_index[0]      = {29, 39, 29}
+     vals[0]           = {{0.839570403099060, 0.820833325386047,
+     vals[0, 2]        = 0.803043246269226, 0.786264479160309,
+     vals[0, 4]        = 0.770563006401062, 0.756006062030792,
+     vals[0, 6]        = ...(35988 values omitted)...,
+     vals[0, 35994]    = 0.756006062030792, 0.770563066005707,
+     vals[0, 35996]    = 0.786264479160309, 0.803043246269226,
+     vals[0, 35998]    = 0.820833325386047, 0.839570462703705}}
+     ---------------
+     name              = "p"
+     nels              = 39401
+     dims[0]           = {31, 41, 31}
+     max_index[0]      = {30, 40, 30}
+     vals[0]           = {{1.190943479537964, 1.218125700950623,
+     vals[0, 2]        = 1.245107889175415, 1.271674990653992,
+     vals[0, 4]        = 1.297584056854248, 1.322565793991089,
+     vals[0, 6]        = ...(39389 values omitted)...,
+     vals[0, 39395]    = 0.000000000000000, 0.000000000000000,
+     vals[0, 39397]    = 0.000000000000000, 0.000000000000000,
+     vals[0, 39399]    = 0.000000000000000, 0.000000000000000}}
+     ***************
+
+   A compound array is composed of zero or more subarrays.  A subarray
+can be printed by saying something like `carray.b', but a subarray is
+also printed by saying just `b' as long as `b' is not some other type
+of object and `b' exists in exactly one compound array.
+
+     > carray
+                       = struct
+     name              =    "carray"
+     id                =    0
+     nelems            =    3
+     nvalues           =    18
+     datatype          =    float
+     a[0]              =    {0.00000, 0.34185, 0.64252, 0.86576}
+     b[0]              =    {0.98468, 0.98496, 0.86656, 0.64374, 0.34335,
+     b[5]              =    0.00159}
+     c[0]              =    {-0.34036, -0.64130, -0.86496, -0.98441,
+     c[4]              =    -0.98523, -0.86735, -0.64495, -0.34485}
+
+     > b
+     [0]               = {0.98468, 0.98496, 0.86656, 0.64374, 0.34335,
+     [5]               = 0.00159}
+
+     > b[2]
+     [2]               = {0.86656}
+
+   If the file is opened for reading and writing (the default) then
+variables can be given new values.  The new values are written back to
+the file immediately.
+
+     > _fileinfo
+                       = "3D rectilinear test file"
+     > _fileinfo = "testing"
+                       = "testing"
+     > _fileinfo
+                       = "testing"
+
+   A scalar variable assigned to an array (or slice of an array) sets
+all the elements of that array (or slice) to the specified value.  A
+list of values enclosed in curly braces can be assigned to an array (or
+slice of an array) causing each element of the array (or slice) to be
+set to one of the listed values.
+
+     > typeof v_data
+                       = [31, 41, 31] float
+     > v_data = 0
+                       = 0
+     > v_data[0, 0, 2:4]
+                       = {0, 0, 0}
+     > v_data[0, 0, 2:4] = {0.111, 0.222, 0.333}
+                       = {0.111, 0.222, 0.333}
+     > v_data
+     [0, 0, 0]         = {0, 0, 0.111, 0.222, 0.333, 0,
+     [0, 0, 6]         = ...(39389 values omitted)..., 0, 0, 0,
+     [30, 40, 28]      = 0, 0, 0}
+
+   Pressing control-c during a browser command aborts the command, but
+pressing control-c when the browser is asking for input aborts the
+browser.  It is more polite to press control-d or type `exit' instead
+since this gives the browser a chance to properly close database files.
+
+     > $truncate = nil
+     > d >data_file
+     control-c
+
+     Command aborted.
+     > control-c
+     %
+
+   ---------- Footnotes ----------
+
+   (1) Opening a file on the command line is the same as saying `open
+"rect3d.pdb" $1' interactively.
+
+   (2)  Whether or not something is a pointer is generally not
+important to using the browser: a 1d array of pointers to 1d arrays of
+integers can be treated like a ragged-edge 2d array of integers.
+
+   (3) The word `self' refers to the object corresponding to the
+innermost structure which incloses the `self'.
+
+
+
+Tag Table:
+Node: Top229
+Node: Copying1203
+Node: Invocation3961
+Ref: Invocation-Footnote-111228
+Node: Syntax11360
+Node: Functions15202
+Node: Operators22925
+Node: Internal Variables26547
+Node: Differencing Variables27202
+Node: Output Variables31646
+Node: File Variables35148
+Ref: File Variables-Footnote-137504
+Node: Startup File37689
+Ref: Startup File-Footnote-138797
+Node: Editing38879
+Node: Paging40146
+Node: Redirection41862
+Node: Interrupts43167
+Node: Examples44049
+Ref: Examples-Footnote-158650
+Ref: Examples-Footnote-258753
+Ref: Examples-Footnote-358953
+
+End Tag Table

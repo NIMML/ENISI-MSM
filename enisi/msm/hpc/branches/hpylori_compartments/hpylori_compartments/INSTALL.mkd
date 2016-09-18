@@ -1,0 +1,100 @@
+# DEPENDENCIES
+Although the ENISI MSM build is mostly automated, there are a few software
+packages and a library needed by the system that aren't built by default.
+Installation is system-dependent, but a few common examples have been
+included.
+
+## Homebrew (Mac OSX only)
+
+  Linux users can skip this step. Download it via http://brew.sh. All
+  OSX-specific package installation commands assume homebrew is installed.
+
+## cmake
+
+Required by ENISI MSM
+
+  Mac OSX: `brew install cmake`
+  CentOS: `sudo yum install cmake`
+  Ubuntu: `sudo apt-get install cmake`
+
+## wget
+
+Required by the VisIt installer
+
+  Mac OSX: `brew install wget`
+  CentOS: `sudo yum install wget`
+  Ubuntu: `sudo apt-get install wget`
+
+## zlib
+
+Compression library needed by Silo
+
+  CentOS: `sudo yum install zlib-devel`
+  Ubuntu: `sudo apt-get install zlib1g-dev`
+
+
+The remaining dependencies are automatically downloaded and built by the cmake
+system. Follow the instructions under BUILDING ENISI MSM in the README file. 
+
+*NOTE:*
+The instructions listed below are no longer necessary and intended as
+*reference only*.
+
+# Repast HPC
+
+Download link:
+    http://sourceforge.net/projects/repast/files/Repast%20HPC/Repast%20HPC%202.0/RHPC_2.0.tar.gz/download
+
+Commands:
+    cd $RHPC_DIR/INSTALLATION
+    ./install.sh mpich
+    ./install.sh boost
+    ./install.sh netcdf-netcpp
+    ./install.sh lcurl
+    ./install.sh rhpc
+
+# VisIt
+
+Download link:
+    http://portal.nersc.gov/project/visit/releases/2.9.2/visit2.9.2.tar.gz
+
+Commands:
+    cd $VISIT_DIR/src/svn_bin/bv_support/
+
+    patch bv_silo.sh < $ENISI_MSM_DIR/patches/bv_silo.patch
+    patch bv_hdf5.sh < $ENISI_MSM_DIR/patches/bv_hdf5.patch
+
+    cd ../
+    ./build_visit --no-thirdparty --console --no-visit --szip --hdf5 --silo
+
+Silo libraries should build in
+    $VISIT_DIR/src/svn_bin/visit/silo/4.10.2/$PLATFORM
+
+# COPASI Dependencies
+Commands:
+    git clone https://github.com/copasi/copasi-dependencies
+    cd copasi-dependencies
+  Depending on the platform, run one of the following scripts:
+    ./createOSX.sh
+  or
+    ./createLinux.sh
+
+# COPASI
+Commands:
+    git clone https://github.com/copasi/COPASI
+    mkdir build_copasi
+    cd build_copasi
+    cmake -DBUILD_GUI=OFF -DCMAKE_INSTALL_PREFIX=~/copasi \
+      -DCOPASI_DEPENDENCY_DIR=../copasi-dependencies/bin ../COPASI
+    make
+    make install
+
+# Google Mock
+    wget http://googletest.googlecode.com/files/gmock-1.7.0.zip
+    unzip gmock-1.7.0.zip
+    cd gmock-1.7.0
+    ./configure
+    make
+    sudo cp -a include/gtest /usr/include
+    sudo cp -a lib/.libs/* /usr/lib/
+

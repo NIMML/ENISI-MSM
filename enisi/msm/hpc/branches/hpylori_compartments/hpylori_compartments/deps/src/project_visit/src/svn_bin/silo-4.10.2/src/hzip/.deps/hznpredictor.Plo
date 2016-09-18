@@ -1,0 +1,8 @@
+hznpredictor.lo: hznpredictor.cpp /usr/include/stdc-predef.h \
+ hznpredictor.h hznpredictor.inl
+
+/usr/include/stdc-predef.h:
+
+hznpredictor.h:
+
+hznpredictor.inl:

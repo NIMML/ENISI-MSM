@@ -1,0 +1,6 @@
+CQRDFListViewWidget.h
+CQRDFListViewWidget.cpp
+Makefile
+moc_*.cpp
+ui_*.h
+*.xcodeproj

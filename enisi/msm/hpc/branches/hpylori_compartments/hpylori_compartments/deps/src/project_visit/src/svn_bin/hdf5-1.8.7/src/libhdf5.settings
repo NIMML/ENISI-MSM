@@ -1,0 +1,63 @@
+	    SUMMARY OF THE HDF5 CONFIGURATION
+	    =================================
+
+General Information:
+-------------------
+		   HDF5 Version: 1.8.7
+		  Configured on: Wed Sep 14 10:04:12 EDT 2016
+		  Configured by: ariana@herbst-Lenovo-B40-80
+		 Configure mode: production
+		    Host system: x86_64-unknown-linux-gnu
+	      Uname information: Linux herbst-Lenovo-B40-80 4.4.0-36-generic #55-Ubuntu SMP Thu Aug 11 18:01:55 UTC 2016 x86_64 x86_64 x86_64 GNU/Linux
+		       Byte sex: little-endian
+		      Libraries: 
+	     Installation point: /home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/hdf5/1.8.7/linux-x86_64_gcc-5.4
+
+Compiling Options:
+------------------
+               Compilation Mode: production
+                     C Compiler: /usr/bin/gcc
+                         CFLAGS:  -m64 -fPIC  -O2
+                      H5_CFLAGS:   -ansi -pedantic -Wall -W -Wundef -Wshadow -Wpointer-arith -Wbad-function-cast -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls -Wnested-externs -Winline -O -fomit-frame-pointer -finline-functions
+                      AM_CFLAGS: 
+                       CPPFLAGS: 
+                    H5_CPPFLAGS: -D_POSIX_SOURCE   -DNDEBUG -UH5_DEBUG_API
+                    AM_CPPFLAGS: -I/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4/include -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_BSD_SOURCE 
+               Shared C Library: yes
+               Static C Library: no
+  Statically Linked Executables: no
+                        LDFLAGS: 
+                     H5_LDFLAGS: 
+                     AM_LDFLAGS:  -L/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4/lib
+ 	 	Extra libraries:  -lsz -lm 
+ 		       Archiver: ar
+ 		 	 Ranlib: ranlib
+ 	      Debugged Packages: 
+		    API Tracing: no
+
+Languages:
+----------
+                        Fortran: no
+
+                            C++: no
+
+Features:
+---------
+                  Parallel HDF5: no
+             High Level library: yes
+                   Threadsafety: no
+            Default API Mapping: v18
+ With Deprecated Public Symbols: yes
+         I/O filters (external): szip(encoder)
+         I/O filters (internal): shuffle,fletcher32,nbit,scaleoffset
+                            MPE: no
+                     Direct VFD: no
+                        dmalloc: no
+Clear file buffers before write: yes
+           Using memory checker: no
+         Function Stack Tracing: no
+                           GPFS: no
+      Strict File Format Checks: no
+   Optimization Instrumentation: no
+       Large File Support (LFS): yes
+             H5dump Packed Bits: yes

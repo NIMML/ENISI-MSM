@@ -1,0 +1,13 @@
+* Add MacrophageGroup act() rules
+* MacrophageGroup class
+* Make all CellGroup subclasses pass their class name into the constructor
+* instead of each defining a classname() method
+* H.P agent should pass completely through epithelium (not linger inside it)
+-------
+* Confirm transferStateTo() is properly defined in AgentGroup, then eliminate
+  call in TcellGroup & cast in CellGroupSyncTest
+* Move CellGroupSyncTest::act() into CellLayer::act()
+* Change AgentGroupPackage agent from ENISIAgent to AgentGroup
+* Epithelial damage (lesion) indicator (?)
+TRUNK SPECIFIC
+* Copy szip into VisIt build

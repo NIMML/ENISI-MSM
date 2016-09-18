@@ -1,0 +1,568 @@
+#!/bin/sh 
+#######################################################################
+#
+# build-3rdparty-closed - Build and install 3rd party libraries.
+#
+# Author: Thomas Treadway
+# Date: Fri Nov 30 13:26:50 PST 2007
+#
+# Usage:
+#     build-3rdparty-closed
+#
+# This script will build and install szip-2.1 and hdf5-1.6.1 libraries.
+# To change or upgrade szip or hdf5 release:
+# 1) untar the szip/hdf5 distribution in /usr/gapps/silo/szip/src/ or
+# /usr/gapps/silo/hdf5/src/. This should be done on both the BDivision
+# and LC /usr/gapps directories.
+# 2) change the value of the variable SZIPRELEASE or HDF5RELEASE
+# to be the release number
+# 3) run ./build-3rdparty-closed in both the BDivision and then the LC
+# servers
+#
+# Modifications:
+# Thomas R. Treadway, Fri Dec  7 16:03:39 PST 2007
+# Added hdfonly commnad option, will skip the szip build.
+# Added bservers and lcservers for B Division or LC server build.
+#
+#######################################################################
+#
+TOPDIR="/usr/gapps/silo"
+SZIPRELEASE=2.1
+HDF5RELEASE=1.6.6
+QTRELEASE=3.3.8
+lcun=$USER
+bdun=$USER
+bdhost="vader"
+skipszip="no"
+MAKE=gmake
+MAKEOPTS=""
+export TOPDIR MAKE MAKEOPTS SZIPRELEASE HDF5RELEASE QTRELEASE
+export lcun bdun bdhost skipszip
+
+usage() {
+  printf "Usage: %s [-lc-username <lc-username>] [-bdiv-username <username>] [-bdiv-host <hostname>] [hdf5only] [all|localhost|sunset|purple|uv|gauss|lilac|rhea|bgl]" $0
+  printf "\n"
+  printf "Silo 3rd party library installing script. Assumes a tarball exist in\n"
+  printf "/usr/gapps/silo/szip/src/szip-$SZIPRELEASE, and\n"
+  printf "/usr/gapps/silo/hdf5/src/hdf5-$HDF5RELEASE.\n"
+  printf "Log files are stored at ./ARCH.log\n"
+  printf "You may want to run this script from the LC network.\n"
+}
+
+stdbuild() {
+    ssh ${HOSTS} "/bin/sh" << EOF > ${ARCH}.log 2>&1 &
+    $*
+    umask 002
+    if [ "$skipszip" = "no" ] ; then
+      mkdir $TOPDIR/szip/src/$ARCH
+      cd $TOPDIR/szip/src/$ARCH
+      $TOPDIR/szip/src/szip-$SZIPRELEASE/configure $CONFOPTS \
+      --prefix=$TOPDIR/szip/$SZIPRELEASE/$ARCH \
+      --disable-shared
+      $MAKE $MAKEOPTS install
+      chmod -R a+rX,ug+w $TOPDIR/szip/$SZIPRELEASE/$ARCH
+      chgrp -R visit $TOPDIR/szip/$SZIPRELEASE/$ARCH
+      cd $TOPDIR/szip/src
+      rm -rf $TOPDIR/szip/src/$ARCH
+    fi
+    mkdir $TOPDIR/hdf5/src/$ARCH
+    cd $TOPDIR/hdf5/src/$ARCH
+    $TOPDIR/hdf5/src/hdf5-$HDF5RELEASE/configure $CONFOPTS \
+    --prefix=$TOPDIR/hdf5/$HDF5RELEASE/$ARCH \
+    --with-szlib=$TOPDIR/szip/$SZIPRELEASE/$ARCH \
+    --disable-shared
+    if [ "$POSTCONFCMDS" != "" ]; then
+        echo "prevent an empty if-clause" > /dev/null 
+        $POSTCONFCMDS
+    fi
+    $MAKE $MAKEOPTS -j 4 install
+    chmod -R a+rX,ug+w $TOPDIR/hdf5/$HDF5RELEASE/$ARCH
+    chgrp -R visit $TOPDIR/hdf5/$HDF5RELEASE/$ARCH
+    cd $TOPDIR/hdf5/src
+    rm -rf $TOPDIR/hdf5/src/$ARCH
+EOF
+}
+
+stdbuild_nobg() {
+    ssh ${HOSTS} "/bin/sh" << EOF > ${ARCH}.log 2>&1
+    $*
+    umask 002
+    if [ "$skipszip" = "no" ] ; then
+      mkdir $TOPDIR/szip/src/$ARCH
+      cd $TOPDIR/szip/src/$ARCH
+      $TOPDIR/szip/src/szip-$SZIPRELEASE/configure $CONFOPTS \
+      --prefix=$TOPDIR/szip/$SZIPRELEASE/$ARCH \
+      --disable-shared
+      $MAKE $MAKEOPTS install
+      chmod -R a+rX,ug+w $TOPDIR/szip/$SZIPRELEASE/$ARCH
+      chgrp -R visit $TOPDIR/szip/$SZIPRELEASE/$ARCH
+      cd $TOPDIR/szip/src
+      rm -rf $TOPDIR/szip/src/$ARCH
+    fi
+    mkdir $TOPDIR/hdf5/src/$ARCH
+    cd $TOPDIR/hdf5/src/$ARCH
+    $TOPDIR/hdf5/src/hdf5-$HDF5RELEASE/configure $CONFOPTS \
+    --prefix=$TOPDIR/hdf5/$HDF5RELEASE/$ARCH \
+    --with-szlib=$TOPDIR/szip/$SZIPRELEASE/$ARCH \
+    --disable-shared
+    if [ "$POSTCONFCMDS" != "" ]; then
+        echo "prevent an empty if-clause" > /dev/null 
+        $POSTCONFCMDS
+    fi
+    $MAKE $MAKEOPTS -j 4 install
+    chmod -R a+rX,ug+w $TOPDIR/hdf5/$HDF5RELEASE/$ARCH
+    chgrp -R visit $TOPDIR/hdf5/$HDF5RELEASE/$ARCH
+    cd $TOPDIR/hdf5/src
+#    rm -rf $TOPDIR/hdf5/src/$ARCH
+EOF
+}
+
+localhost() {
+    localhostgcc
+    localhostpgc
+    localhosticc
+}
+localhostgcc() {
+    HOSTS="$bdun@${bdhost}"
+    ARCH="i386-pc-linux-gcc-3.2.3"
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 CFLAGS=\"-fPIC -O2\" \
+CXXFLAGS=\"-fPIC -O2\" FFLAGS=-Wno-globals F77FLAGS=-Wno-globals \
+FCFLAGS=-Wno-globals"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/atria/bin:\
+/usr/lib/jre/bin:/sbin:/usr/sbin:/opt/bin:/usr/local/apps/bin:\
+/usr/security/bin" \
+    "LD_LIBRARY_PATH=/usr/lib:/lib" \
+    "export PATH LD_LIBRARY_PATH"
+}
+#
+localhostpgc() {
+    HOSTS="$bdun@${bdhost}"
+    ARCH="i386-pc-linux-pgc-6.2"
+    CONFOPTS="CC=pgcc CXX=pgCC FC=\"pgf77 -g77libs\" \
+CFLAGS=\"-fPIC -O2\" CXXFLAGS=\"-fPIC -O2\""
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/atria/bin:\
+/sbin:/usr/sbin:/opt/bin:/usr/local/apps/bin:/usr/local/pgi/linux86/6.2/bin:\
+/usr/security/bin" \
+    "LD_LIBRARY_PATH=/usr/lib:/lib:/usr/local/pgi/linux86/lib" \
+    "LM_LICENSE_FILE=/usr/local/flexlm/licenses/license.dat:\
+7128@helios.llnl.gov:7127@helios.llnl.gov" \
+    "export PATH LD_LIBRARY_PATH LM_LICENSE_FILE"
+}
+#
+localhosticc() {
+    HOSTS="$bdun@${bdhost}"
+    ARCH="i386-pc-linux-icc-8.1"
+    CONFOPTS="CC=icc CXX=icc FC=ifort LDFLAGS=-lstdc++ \
+CFLAGS=\"-fPIC -O2\" CXXFLAGS=\"-fPIC -O2\""
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/usr/atria/bin:\
+/usr/lib/jre/bin:/sbin:/usr/sbin:/opt/bin:/usr/local/apps/bin:\
+/usr/local/pgi/linux86/6.0/bin:/usr/security/bin:\
+/usr/local/intel/compiler81/bin" \
+    "LD_LIBRARY_PATH=/usr/lib:/lib:/usr/local/intel/compiler81/lib" \
+    "INTEL_LICENSE_FILE=7127@helios.llnl.gov" \
+    "LM_LICENSE_FILE=/usr/local/flexlm/licenses/license.dat:\
+7128@helios.llnl.gov:7127@helios.llnl.gov" \
+    "export PATH LD_LIBRARY_PATH INTEL_LICENSE_FILE LM_LICENSE_FILE" \
+    ". /usr/local/intel/compiler81/bin/iccvars.sh"
+}
+#
+sunset() {
+    sunsetgcc
+    sunsetcc
+}
+sunsetgcc() {
+    HOSTS=$bdun@sunset
+    ARCH="sparc-sun-solaris-gcc-2.95"
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 \
+FFLAGS=-Wno-globals F77FLAGS=-Wno-globals FCFLAGS=-Wno-globals"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/bin:/bin:/usr/local/apps/bin:/usr/local/bin:/usr/ccs/bin:\
+/opt/SUNWspro/bin:/usr/ucb:/etc:/usr/openwin/bin:/usr/dt/bin:/usr/java/bin" \
+    "LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/lib" \
+    "export PATH LD_LIBRARY_PATH"
+}
+#
+sunsetcc() {
+    HOSTS=$bdun@sunset
+    ARCH="sparc-sun-solaris-cc-5.2"
+    CONFOPTS="CC=c89 CXX=CC FC=f77 F77=f77"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/bin:/bin:/usr/local/apps/bin:/usr/local/bin:/usr/ccs/bin:\
+/opt/SUNWspro/bin:/usr/ucb:/etc:/usr/openwin/bin:/usr/dt/bin:/usr/java/bin" \
+    "LD_LIBRARY_PATH=/usr/local/lib:/usr/lib:/lib" \
+    "export PATH LD_LIBRARY_PATH"
+}
+
+purple() {
+    purple64
+    purple32
+    purple64gcc
+    purple32gcc
+}
+purple64() {
+    HOSTS=$lcun@purple
+    ARCH="aix_5_64_fed"
+    CONFOPTS="CC=xlc CXX=xlC FC=xlf F77=xlf \
+CFLAGS=-q64 LDFLAGS=-q64 AR=\"ar -X64\""
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/usr/bin:/usr/sbin:/usr/ucb:\
+/usr/local/gnu/bin:/usr/local/scripts:/usr/apps/bin:/usr/gapps/bin" \
+    "OBJECT_MODE=64" \
+    "export PATH OBJECT_MODE"
+}
+#
+purple32() {
+    HOSTS=$lcun@purple
+    ARCH="aix_5_ll"
+    CONFOPTS="CC=xlc CXX=xlC FC=xlf F77=xlf \
+CFLAGS=-q32 LDFLAGS=-q32 AR=\"ar -X32\""
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/usr/bin:/usr/sbin:/usr/ucb:\
+/usr/local/gnu/bin:/usr/local/scripts:/usr/apps/bin:/usr/gapps/bin" \
+    "OBJECT_MODE=32" \
+    "export PATH OBJECT_MODE"
+}
+#
+purplegcc() {
+  purplegcc32
+  purplegcc64
+}
+purple64gcc() {
+    HOSTS=$lcun@purple
+    ARCH="aix_5_64_fed-gcc"
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 \
+CFLAGS=\"-maix64 -mminimal-toc\" LDFLAGS=-maix64 AR=\"ar -X64\""
+    MAKEOPTS="-i"
+    export HOSTS ARCH CONFOPTS MAKEOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/usr/bin:/usr/sbin:/usr/ucb:\
+/usr/local/gnu/bin:/usr/local/scripts:/usr/apps/bin:/usr/gapps/bin" \
+    "OBJECT_MODE=64" \
+    "export PATH OBJECT_MODE"
+}
+#
+purple32gcc() {
+    HOSTS=$lcun@purple
+    ARCH="aix_5_ll-gcc"
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 \
+CFLAGS=\"-maix32 -mminimal-toc\" LDFLAGS=-maix32 AR=\"ar -X32\""
+    MAKEOPTS="-i"
+    export HOSTS ARCH CONFOPTS MAKEOPTS
+    stdbuild \
+    "PATH=/usr/local/bin:/usr/bin:/usr/sbin:/usr/ucb:\
+/usr/local/gnu/bin:/usr/local/scripts:/usr/apps/bin:/usr/gapps/bin" \
+    "OBJECT_MODE=32" \
+    "export PATH OBJECT_MODE"
+}
+
+lilac() {
+    lilacgcc
+    lilacicc
+}
+lilacgcc() {
+    HOSTS=$lcun@lilac
+    ARCH=chaos_3_x86_elan3
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/intel/compiler91/bin:/usr/local/bin:/bin:/usr/bin:\
+/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "export PATH"
+}
+#
+lilacicc() {
+    HOSTS=$lcun@lilac
+    ARCH=chaos_3_x86_elan3-icc
+    CONFOPTS="CC=icc CXX=icc FC=ifort LDFLAGS=-lstdc++ \
+CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/intel/compiler100_025/bin:/usr/local/bin:/bin:\
+/usr/bin:/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "LD_LIBRARY_PATH=/usr/local/intel/compiler100_025/lib" \
+    "INTEL_LICENSE_FILE=${INTEL_LICENSE_FILE}:\
+/usr/local/intel/compiler100_025/licenses:/opt/intel/licenses" \
+    "export PATH LD_LIBRARY_PATH INTEL_LICENSE_FILE"
+}
+#
+gauss() {
+    gaussgcc
+    gaussicc
+}
+gaussgcc() {
+    HOSTS=$lcun@gauss
+    ARCH=chaos_3_x86_64_ib-gcc
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/intel/compiler91/bin:/usr/local/bin:/bin:/usr/bin:\
+/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "export PATH"
+}
+#
+gaussicc() {
+    HOSTS=$lcun@gauss
+    ARCH=chaos_3_x86_64_ib-icc
+    CONFOPTS="CC=icc CXX=icc FC=ifort LDFLAGS=-lstdc++ \
+CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/intel/compiler100_025/bin:/usr/local/bin:/bin:\
+/usr/bin:/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "LD_LIBRARY_PATH=/usr/local/intel/compiler100_025/lib" \
+    "INTEL_LICENSE_FILE=${INTEL_LICENSE_FILE}:\
+/usr/local/intel/compiler100_025/licenses:/opt/intel/licenses" \
+    "export PATH LD_LIBRARY_PATH INTEL_LICENSE_FILE"
+}
+#
+rhea() {
+    rheagcc
+    rheaicc
+    rheapc
+    rheapgc
+}
+rheagcc() {
+    HOSTS=$lcun@rhea
+    ARCH=chaos_3_x86_64-gcc-3.4.4
+    CONFOPTS="CC=gcc CXX=g++ FC=g77 F77=g77 CFLAGS=-fPIC CXXFLAGS=-fPIC \
+FFLAGS=-Wno-globals F77FLAGS=-Wno-globals FCFLAGS=-Wno-globals"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/intel/compiler91/bin:/usr/local/bin:/bin:/usr/bin:\
+/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "export PATH"
+}
+#
+rheaicc() {
+    HOSTS=$lcun@rhea
+    ARCH=chaos_3_x86_64-icc-10.0
+    CONFOPTS="CC=icc CXX=icc FC=ifort F77=ifort LDFLAGS=-lstdc++ \
+CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/local/intel/compiler100_025/bin:/usr/local/bin:/bin:/usr/bin:\
+/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin:/usr/kerberos/bin" \
+    "LD_LIBRARY_PATH=/usr/local/intel/compiler100_025/lib" \
+    "INTEL_LICENSE_FILE=${INTEL_LICENSE_FILE}:\
+/usr/local/intel/compiler100_025/licenses:/opt/intel/licenses" \
+    "export PATH LD_LIBRARY_PATH INTEL_LICENSE_FILE"
+}
+#
+rheapc() {
+    HOSTS=$lcun@rhea
+    ARCH=chaos_3_x86_64-pc-2.4
+    CONFOPTS="CC=pathcc CXX=pathCC FC=pathf90 F77=pathf90 \
+CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/global/tools/RSI/bin:\
+/usr/local/tools/pathscale/pathscale-2.4/bin2:/usr/local/bin:/bin:/usr/bin:\
+/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin:/usr/kerberos/bin" \
+    "LM_LICENSE_FILE=/usr/local/etc/license.client" \
+    "PATHSCALE_SUBSCRIPTION_DAEMON=license1ocf.llnl.gov" \
+    "export PATH LM_LICENSE_FILE PATHSCALE_SUBSCRIPTION_DAEMON"
+}
+#
+rheapgc() {
+    HOSTS=$lcun@rhea
+    ARCH=chaos_3_x86_64-pgc-6.2
+  CONFOPTS=" CC=pgcc CXX=pgCC FC=\"pgf77 -g77libs\" CFLAGS=-fPIC CXXFLAGS=-fPIC"
+    export HOSTS ARCH CONFOPTS
+    stdbuild \
+    "PATH=/usr/global/tools/RSI/bin:\
+/usr/local/tools/pgi6.23/linux86-64/6.2/bin:/usr/local/bin:/bin:/usr/bin:\
+/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin:/usr/kerberos/bin" \
+    "LM_LICENSE_FILE=/usr/local/etc/license.client" \
+    "export PATH LM_LICENSE_FILE"
+}
+#
+bgl() {
+    bglxlc
+    bglblrts_xlc
+    rm -rf $TOPDIR/hdf5/src/sles_9_ppc64*
+}
+
+bglxlc() {
+    HOSTS=${lcun}@bgl
+    ARCH=sles_9_ppc64-xlc
+    CONFOPTS="CC=/opt/ibmcmp/vacpp/bg/8.0/bin/xlc FC=xlf \
+    CXX=/opt/ibmcmp/vacpp/bg/8.0/bin/xlC \
+    CFLAGS=\"-O -qlanglvl=extended -qmaxmem=64000\" \
+    CXXFLAGS=\"-O -qlanglvl=extended -qmaxmem=64000\" "
+    export HOSTS ARCH CONFOPTS
+    stdbuild_nobg \
+    "PATH=/opt/ibmcmp/vacpp/bg/8.0/bin:/opt/ibmcmp/xlf/bg/10.1/bin:/usr/local/bin:\
+/bin:/usr/bin:/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "export PATH"
+    cp $TOPDIR/hdf5/src/$ARCH/src/H5Tinit.c $TOPDIR/hdf5/src/.
+}
+
+bglblrts_xlc() {
+    HOSTS=${lcun}@bgl
+    ARCH=sles_9_ppc64-blrts_xlc
+    POSTCONFCMDS="cp $TOPDIR/hdf5/src/H5Tinit.c $TOPDIR/hdf5/src/$ARCH/src/."
+    CONFOPTS="CC=/opt/ibmcmp/vacpp/bg/8.0/bin/blrts_xlc FC=blrts_xlf \
+    CXX=/opt/ibmcmp/vacpp/bg/8.0/bin/blrts_xlC \
+    CFLAGS=\"-O -qlanglvl=extended -qmaxmem=64000\" \
+    CXXFLAGS=\"-O -qlanglvl=extended -qmaxmem=64000\" \
+    `grep ^ac_cv_sizeof $TOPDIR/hdf5/src/sles_9_ppc64-xlc/config.log | tr '\n' ' ' ` \
+    --disable-stream-vfd"
+    export HOSTS ARCH CONFOPTS POSTCONFCMDS
+    stdbuild_nobg \
+    "PATH=/opt/ibmcmp/vacpp/bg/8.0/bin:/opt/ibmcmp/xlf/bg/10.1/bin:/usr/local/bin:\
+/bin:/usr/bin:/usr/bin/X11:/usr/lib/mpi/bin:/usr/apps/bin:/usr/gapps/bin" \
+    "export PATH"
+}
+
+umask 002
+if [ "$1" = "-lc-username" ] ; then
+   lcun=$2
+   shift 2
+fi
+if [ "$1" = "-bdiv-username" ] ; then
+    bdun=$2
+    shift 2
+fi
+if [ "$1" = "-bdiv-host" ] ; then
+    bdhost=$2
+    shift 2
+fi
+
+if [ $# -lt 1 ] ; then
+  localhost
+  sunset
+  purple
+  gauss 
+  lilac
+  rhea
+  bgl
+else
+ while [ "$*" != "" ]
+ do 
+  case $1 in
+    bser*|-bser*)
+      localhost
+      sunset
+      shift;;
+    lcser*|-lcser*)
+      purple
+      uv
+      gauss 
+      lilac
+      rhea
+      bgl
+      shift;;
+    hdf*|-hdf*)
+      skipszip="yes"
+      shift;;
+    skip*|-skip*)
+      skipszip="yes"
+      shift;;
+    all|-a*)
+      localhost
+      sunset
+      purple
+      gauss 
+      lilac
+      rhea
+      bgl
+      shift;;
+    local*pgc|-local*pgc)
+      localhostpgc
+      shift;;
+    local*icc|-local*icc)
+      localhosticc
+      shift;;
+    local*gcc|-local*gcc)
+      localhostgcc
+      shift;;
+    localhost|-lo*)
+      localhost
+      shift;;
+    sun*gcc|-sun*gcc)
+      sunsetgcc
+      shift;;
+    sun*cc|-sun*cc)
+      sunsetcc
+      shift;;
+    sun*|-sun*)
+      sunset
+      shift;;
+    purple32|-pu*32)
+      purple32
+      shift;;
+    purple64|-pu*64)
+      purple64
+      shift;;
+    purple|-pu*)
+      purple
+      shift;;
+    uv32|-uv*32)
+      uv32
+      shift;;
+    uv64|-uv*64)
+      uv64
+      shift;;
+    uv|-uv*)
+      uv
+      shift;;
+    sccc|-sccc)
+      sccc
+      shift;;
+    sc|-sc)
+      sc
+      shift;;
+    gaus*icc|-gs*icc)
+      gaussicc
+      shift;;
+    gaus*gcc|-gs*gcc)
+      gaussgcc
+      shift;;
+    gaus*|-gs*)
+      gauss
+      shift;;
+    rhea*icc|-rh*icc)
+      rheaicc
+      shift;;
+    rhea*gcc|-rh*gcc)
+      rheagcc
+      shift;;
+    rhea*|-rh*)
+      rhea
+      shift;;
+    lil*|-li*)
+      lilac
+      shift;;
+    slic*icc|-sl*icc)
+      slicicc
+      shift;;
+    slic*gcc|-sl*gcc)
+      slicgcc
+      shift;;
+    slic*|-sl*)
+      slic
+      shift;;
+    bgltest|-bgltest)
+      bgltest
+      shift;;
+    bgl|-bgl)
+      bgl
+      shift;;
+    sh*|-sh*)
+      shar
+      shift;;
+    *)
+      shift;;
+  esac
+ done
+fi

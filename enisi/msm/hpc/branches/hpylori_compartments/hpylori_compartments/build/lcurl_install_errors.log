@@ -1,0 +1,5 @@
+configure: WARNING: Cannot find libraries for LDAP support: LDAP disabled
+configure: WARNING: SSL disabled, you will not be able to use HTTPS, FTPS, NTLM and more.
+configure: WARNING: Use --with-ssl, --with-gnutls, --with-polarssl, --with-cyassl, --with-nss, --with-axtls, --with-winssl, or --with-darwinssl to address this.
+configure: WARNING: Cannot find libraries for IDN support: IDN disabled
+/usr/bin/ar: `u' modifier ignored since `D' is the default (see `U')

@@ -1,0 +1,4 @@
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi/copasi/function/CEvaluationNodeOperator.cpp: In member function ‘virtual CEvaluationNode* CEvaluationNodeOperator::simplifyNode(const std::vector<CEvaluationNode*>&) const’:
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi/copasi/function/CEvaluationNodeOperator.cpp:1019:22: warning: converting ‘false’ to pointer type ‘CEvaluationNode*’ [-Wconversion-null]
+               return false;
+                      ^

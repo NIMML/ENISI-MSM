@@ -1,0 +1,5 @@
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/lib/libzlib.a
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/zconf.h
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/zlib.h
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/zlib/zconf.h
+/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/zlib/zlib.h
