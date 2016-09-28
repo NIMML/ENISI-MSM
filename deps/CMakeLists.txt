@@ -7,7 +7,7 @@ set(REPAST_SRC_DIR ${REPAST_DIR}/src/repast_hpc)
 ExternalProject_Add(project_repast
   DOWNLOAD_DIR      ${DEPS_DIR}
   LOG_DOWNLOAD 1   # Wrap download in script to log output
-  URL http://sourceforge.net/projects/repast/files/Repast%20HPC/Repast%20HPC%202.0/RHPC_2.0.tar.gz/download
+  URL https://sourceforge.net/projects/repast/files/Repast%20HPC/Repast%20HPC%202.0/RHPC_2.0.tar.gz/download
   PREFIX ${DEPS_DIR}
   CONFIGURE_COMMAND ""
 
@@ -86,7 +86,7 @@ ExternalProject_Add(project_copasi
   DOWNLOAD_DIR      ${DEPS_DIR}
   LOG_DOWNLOAD 1   # Wrap download in script to log output
   GIT_REPOSITORY https://github.com/copasi/COPASI
-  GIT_TAG Version-4.16
+  GIT_TAG Build-104
   PREFIX ${DEPS_DIR}
 
   UPDATE_COMMAND "" # Prevent a GIT PULL request
@@ -113,21 +113,3 @@ ExternalProject_Add(project_copasi
 
 add_dependencies(project_copasi project_copasi_deps)
 
-ExternalProject_Add(project_googlemock
-  DOWNLOAD_DIR      ${DEPS_DIR}
-  LOG_DOWNLOAD 1   # Wrap download in script to log output
-  URL http://googlemock.googlecode.com/files/gmock-1.7.0.zip
-  PREFIX ${DEPS_DIR}
-
-  #--Configure step-----------------
-  LOG_CONFIGURE 1  # Wrap configure in script to log output
-  CONFIGURE_COMMAND ./configure
-
-  #--Build step-----------------
-  LOG_BUILD 1      # Wrap build in script to log output
-  BUILD_IN_SOURCE 1 # Use source dir for build dir
-  BUILD_COMMAND make
-
-  #--Install step-----------------
-  INSTALL_COMMAND ""
-)
