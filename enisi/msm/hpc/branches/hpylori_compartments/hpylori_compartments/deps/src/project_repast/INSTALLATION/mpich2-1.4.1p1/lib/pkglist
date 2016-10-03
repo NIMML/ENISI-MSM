@@ -1,7 +1,0 @@
- src/mpid/ch3  src/mpi/romio src/pmi/simple src/pm/hydra src/mpe2 
-gcc    -O2
-c++   -O2
-  
-  
- '--prefix=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_repast/ext//MPICH' '--disable-f77' '--disable-fc'
- 

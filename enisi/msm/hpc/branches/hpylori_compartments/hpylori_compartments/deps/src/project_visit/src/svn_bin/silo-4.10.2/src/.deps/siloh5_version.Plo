@@ -1,6 +1,0 @@
-siloh5_version.lo: siloh5_version.c /usr/include/stdc-predef.h \
- libsiloh5.settings
-
-/usr/include/stdc-predef.h:
-
-libsiloh5.settings:

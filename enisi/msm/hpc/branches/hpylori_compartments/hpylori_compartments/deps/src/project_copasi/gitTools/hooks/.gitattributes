@@ -1,3 +1,0 @@
-post-commit eol=lf
-post-merge eol=lf
-pre-commit eol=lf

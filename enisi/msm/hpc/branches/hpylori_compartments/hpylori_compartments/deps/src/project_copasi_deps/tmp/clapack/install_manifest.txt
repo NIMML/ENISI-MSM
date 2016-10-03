@@ -1,7 +1,0 @@
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/blaswrap.h
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/f2c.h
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/lapack.h
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/include/clapack.h
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/lib/libf2c.a
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/lib/libblas.a
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin/lib/liblapack.a

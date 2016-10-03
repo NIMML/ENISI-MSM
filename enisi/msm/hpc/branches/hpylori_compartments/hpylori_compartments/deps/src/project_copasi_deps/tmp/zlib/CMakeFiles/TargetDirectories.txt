@@ -1,7 +1,0 @@
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/install.dir
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/list_install_components.dir
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/rebuild_cache.dir
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/zlib.dir
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/edit_cache.dir
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/install/strip.dir
-/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/tmp/zlib/CMakeFiles/install/local.dir

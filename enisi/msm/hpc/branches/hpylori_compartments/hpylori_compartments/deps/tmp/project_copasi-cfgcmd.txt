@@ -1,1 +1,0 @@
-cmd='cmake;-DBUILD_GUI=OFF;-DCMAKE_INSTALL_PREFIX=./copasi_install;-DCOPASI_DEPENDENCY_DIR=/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_copasi_deps/bin;../project_copasi;&>;/home/ariana/workspace/enisi/hpylori_compartments/build/project_copasi-configure.log'
