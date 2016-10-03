@@ -1,5 +1,0 @@
-*.dylib
-*.so
-/copasi_wrapper.cpp
-/COPASI.py
-/unexported_symbols.list

@@ -1,1 +1,0 @@
-../../QvisSpectrumBar.C

@@ -1,4 +1,0 @@
-Invoking command to configure SZIP
-./configure CXX="g++" CC="gcc" LIBS="-lm"         CFLAGS=" -m64 -fPIC  -O2" CXXFLAGS=" -m64 -fPIC  -O2"         --prefix="/home/ariana/workspace/enisi/hpylori_compartments/deps/src/project_visit/src/svn_bin/visit/szip/2.1/linux-x86_64_gcc-5.4" 
-Building SZIP . . . (~1 minutes)
-Installing SZIP . . .
