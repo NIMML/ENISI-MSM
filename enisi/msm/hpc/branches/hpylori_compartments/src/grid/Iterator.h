@@ -19,7 +19,7 @@ private:
   Iterator();
 public:
   Iterator(const repast::GridDimensions & dimensions);
-  Iterator(const repast::Point< int > & origin, repast::Point< int > & extents);
+  Iterator(const repast::Point< int > & origin, const repast::Point< int > & extents);
   ~Iterator();
   bool next(const size_t coodinate = 0);
   const repast::Point< int > & operator *();

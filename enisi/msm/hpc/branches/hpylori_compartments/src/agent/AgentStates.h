@@ -45,7 +45,7 @@ public:
 class HPyloriState
 {
 public:
-  enum State {NAIVE, DEAD, KEEP_AT_END};
+  enum State {NAIVE, KEEP_AT_END};
   static Agent::Type Type;
 };
 
