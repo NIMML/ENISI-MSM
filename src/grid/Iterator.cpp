@@ -23,7 +23,7 @@ Iterator::Iterator(const repast::GridDimensions & dimensions):
   mCurrent = mOrigin;
 }
 
-Iterator::Iterator(const repast::Point< int > & origin, const repast::Point< int > & extents):
+Iterator::Iterator(const repast::Point< int > & origin, repast::Point< int > & extents):
   mOrigin(origin),
   mExtents(extents),
   mCurrent(origin)

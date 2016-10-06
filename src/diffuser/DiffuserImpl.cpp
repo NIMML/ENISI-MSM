@@ -19,12 +19,13 @@ DiffuserImpl::DiffuserImpl(Compartment * pCompartment) :
   mpCompartment(pCompartment),
   mCytokines(pCompartment->getCytokines()),
   mDeltaT(1.0),
-  mDeltaSpace(pCompartment->getScale()),
-  mShape(mpDiffuserData->getLocalValues()->shape()),
+  mShape(std::vector< int >(mpCompartment->spaceDimensions().dimensionCount(), 2)),
   mpNewValues(NULL),
   mpCurrentValues(NULL),
   mpDiffuserData(mpCompartment->getDiffuserData())
 {
+  mShape = mpDiffuserData->getLocalValues()->shape();
+
   mpCurrentValues = mpDiffuserData->getLocalValues();
   mpNewValues = new DenseMatrix< std::vector< double > >(mShape, std::vector< double >(pCompartment->getCytokines().size(), 0.0));
 
@@ -90,9 +91,6 @@ void DiffuserImpl::computeVals1D(const double & deltaT)
 
 void DiffuserImpl::computeVals2D(const double & deltaT)
 {
-  double InvDeltaX2 = 1.0 / (mDeltaSpace[0]*mDeltaSpace[0]);
-  double InvDeltaY2 = 1.0 / (mDeltaSpace[1]*mDeltaSpace[1]);
-
   *mpNewValues = *mpCurrentValues;
 
   Iterator itNorth(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
@@ -154,15 +152,8 @@ void DiffuserImpl::computeVals2D(const double & deltaT)
 
       for (; it != end; ++it, ++itOldValueNE, ++itOldValueN, ++itOldValueNW, ++itOldValueE, ++itOldValue, ++itOldValueW, ++itOldValueSE, ++itOldValueS, ++itOldValueSW, ++itNewValue)
         {
-          double AverageN = (*itOldValueNE + *itOldValueNW + 2.0 * *itOldValueN) * 0.25;
-          double AverageS = (*itOldValueSE + *itOldValueSW + 2.0 * *itOldValueS) * 0.25;
-          double AverageE = (*itOldValueNE + *itOldValueSE + 2.0 * *itOldValueE) * 0.25;
-          double AverageW = (*itOldValueNW + *itOldValueSW + 2.0 * *itOldValueW) * 0.25;
-
-          double X = (AverageE + AverageW - 2.0 * *itOldValue) * InvDeltaX2;
-          double Y = (AverageN + AverageS - 2.0 * *itOldValue) * InvDeltaY2;
-
-          *itNewValue += deltaT * ((*it)->getDiffusion() * (X + Y) - (*it)->getDegradation() * *itOldValue);
+          double Average = (*itOldValueNE + *itOldValueNW + *itOldValueSE + *itOldValueSW + 4.0 * (*itOldValueN + *itOldValueE + *itOldValueW  + *itOldValueS)) * 0.3;
+          *itNewValue = deltaT * (*it)->getDiffusion() * Average + (1.0 - deltaT * ((*it)->getDegradation() + 6.0 * (*it)->getDiffusion())) * *itOldValue;
         }
 
       do
@@ -239,135 +230,6 @@ void DiffuserImpl::diffuse(const double & deltaT)
       // mpDiffuserData->write(LocalFile::instance(mpCompartment->getName())->stream(), "\t", mpCompartment);
     }
 }
-
-void DiffuserImpl::calculateGradients(DenseMatrix< std::vector< std::vector< double > > > & gradients) const
-{
-  {
-    switch (mShape.dimensionCount())
-    {
-      case 1:
-        computeGradients1D(gradients);
-        break;
-
-      case 2:
-        computeGradients2D(gradients);
-        break;
-
-      case 3:
-        computeGradients3D(gradients);
-        break;
-    }
-  }
-}
-
-void DiffuserImpl::computeGradients1D(DenseMatrix< std::vector< std::vector< double > > > & /* gradients */) const
-{}
-
-void DiffuserImpl::computeGradients2D(DenseMatrix< std::vector< std::vector< double > > > & gradients) const
-{
-  double InvDelta2X = 0.5 / mDeltaSpace[0];
-  double InvDelta2Y = 0.5 / mDeltaSpace[1];
-
-  Iterator itNorth(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
-
-  std::vector< double > * pOldValueNE = &mpCurrentValues->operator [](*itNorth);
-  itNorth.next();
-  std::vector< double > * pOldValueN = &mpCurrentValues->operator [](*itNorth);
-  itNorth.next();
-  std::vector< double > * pOldValueNW = &mpCurrentValues->operator [](*itNorth);
-
-  Iterator itPoint(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
-  itPoint.next(1); // Move 1 row down
-
-  std::vector< double > * pOldValueE = &mpCurrentValues->operator [](*itPoint);
-  itPoint.next();
-  std::vector< double > * pOldValue = &mpCurrentValues->operator [](*itPoint);
-  std::vector< std::vector < double > > * pGradient = &gradients[*itPoint];
-  itPoint.next();
-  std::vector< double > * pOldValueW = &mpCurrentValues->operator [](*itPoint);
-
-  Iterator itSouth(repast::Point< int >(std::vector< int >(mShape.dimensionCount(), 0)), mShape);
-  itSouth.next(1); itSouth.next(1); // Move 2 rows down
-
-  std::vector< double > * pOldValueSE = &mpCurrentValues->operator [](*itSouth);
-  itSouth.next();
-  std::vector< double > * pOldValueS = &mpCurrentValues->operator [](*itSouth);
-  itSouth.next();
-  std::vector< double > * pOldValueSW = &mpCurrentValues->operator [](*itSouth);
-
-  while (itSouth)
-    {
-      std::vector< Cytokine * >::const_iterator it = mCytokines.begin();
-      std::vector< Cytokine * >::const_iterator end = mCytokines.end();
-
-      std::vector< double >::const_iterator itOldValueE = pOldValueE->begin();
-      std::vector< double >::const_iterator itOldValue = pOldValue->begin();
-      std::vector< double >::const_iterator itOldValueW = pOldValueW->begin();
-      std::vector< std::vector < double > >::iterator itGradient = pGradient->begin();
-
-      // Boundaries are marked by NaN values;
-      if (std::isnan(*itOldValueE)) itOldValueE = itOldValue;
-      if (std::isnan(*itOldValueW)) itOldValueW = itOldValue;
-
-      std::vector< double >::const_iterator itOldValueNE = pOldValueNE->begin();
-      std::vector< double >::const_iterator itOldValueN = pOldValueN->begin();
-      std::vector< double >::const_iterator itOldValueNW = pOldValueNW->begin();
-
-      // Boundaries are marked by NaN values;
-      if (std::isnan(*itOldValueN)) itOldValueN = itOldValue;
-      if (std::isnan(*itOldValueNE)) itOldValueNE = itOldValueE;
-      if (std::isnan(*itOldValueNE)) itOldValueNE = itOldValueN;
-      if (std::isnan(*itOldValueNW)) itOldValueNW = itOldValueW;
-      if (std::isnan(*itOldValueNW)) itOldValueNW = itOldValueN;
-
-      std::vector< double >::const_iterator itOldValueSE = pOldValueSE->begin();
-      std::vector< double >::const_iterator itOldValueS = pOldValueS->begin();
-      std::vector< double >::const_iterator itOldValueSW = pOldValueSW->begin();
-
-      for (; it != end; ++it, ++itOldValueNE, ++itOldValueN, ++itOldValueNW, ++itOldValueE, ++itOldValue, ++itOldValueW, ++itOldValueSE, ++itOldValueS, ++itOldValueSW, ++itGradient)
-        {
-          double AverageN = (*itOldValueNE + *itOldValueNW + 2.0 * *itOldValueN) * 0.25;
-          double AverageS = (*itOldValueSE + *itOldValueSW + 2.0 * *itOldValueS) * 0.25;
-          double AverageE = (*itOldValueNE + *itOldValueSE + 2.0 * *itOldValueE) * 0.25;
-          double AverageW = (*itOldValueNW + *itOldValueSW + 2.0 * *itOldValueW) * 0.25;
-
-          itGradient->operator [](0) = (AverageE + AverageW) * InvDelta2X;
-          itGradient->operator [](1) = (AverageN + AverageS) * InvDelta2Y;
-        }
-
-      do
-        {
-          pGradient = &gradients[*itPoint];
-
-          itPoint.next();
-
-          pOldValueE = pOldValue;
-          pOldValue = pOldValueW;
-          pOldValueW = &mpCurrentValues->operator [](*itPoint);
-
-          itNorth.next();
-
-          pOldValueNE = pOldValueN;
-          pOldValueN = pOldValueNW;
-          pOldValueNW = &mpCurrentValues->operator [](*itNorth);
-
-          itSouth.next();
-
-          if (!itSouth)
-            {
-              break;
-            }
-
-          pOldValueSE = pOldValueS;
-          pOldValueS = pOldValueSW;
-          pOldValueSW = &mpCurrentValues->operator [](*itSouth);
-        }
-      while(itPoint->getX() == 0 || itPoint->getX() == 1);
-    }
-}
-
-void DiffuserImpl::computeGradients3D(DenseMatrix< std::vector< std::vector< double > > > & /* gradients */) const
-{}
 
 #ifdef XXXX
   /* this is being based on

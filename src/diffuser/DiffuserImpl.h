@@ -36,7 +36,6 @@ public:
   ~DiffuserImpl();
 
   void diffuse(const double & deltaT);
-  void calculateGradients(DenseMatrix< std::vector< std::vector< double > > > & gradients) const;
 
 protected:
   void computeVals(const double & deltaT);
@@ -44,15 +43,10 @@ protected:
   void computeVals2D(const double & deltaT);
   void computeVals3D(const double & deltaT);
 
-  void computeGradients1D(DenseMatrix< std::vector< std::vector< double > > > & gradients) const;
-  void computeGradients2D(DenseMatrix< std::vector< std::vector< double > > > & gradients) const;
-  void computeGradients3D(DenseMatrix< std::vector< std::vector< double > > > & gradients) const;
-
 private:
   Compartment * mpCompartment;
   const std::vector< Cytokine * > & mCytokines;
   double mDeltaT;
-  std::vector< double > mDeltaSpace;
 
   repast::Point< int > mShape;
 

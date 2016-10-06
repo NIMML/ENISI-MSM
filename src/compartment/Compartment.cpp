@@ -48,7 +48,6 @@ Compartment::Compartment(const Type & type):
   mpDiffuserValues(NULL),
   mGroups(),
   mpDiffuser(NULL),
-  mpCytokineGradients(NULL),
   mNoLocalAgents(false)
 {
   std::string Name = Names[mType];
@@ -269,11 +268,6 @@ int Compartment::spaceToGrid(const Borders::Coodinate &coordinate, const double 
 std::vector< int > Compartment::spaceToGrid(const std::vector< double > & space) const
 {
   return mpLayer->spaceToGrid(space);
-}
-
-std::vector< double > Compartment::getScale() const
-{
-  return mpLayer->getScale();
 }
 
 void Compartment::getLocation(const repast::AgentId & id, std::vector<double> & Location) const
@@ -646,57 +640,6 @@ double & Compartment::cytokineValue(const std::string & name, const repast::Poin
   return cytokineValue(name, Location);
 }
 
-const std::vector< std::vector< double > > & Compartment::cytokineGradients(const repast::Point< int > & pt) const
-{
-  if (mpCytokineGradients != NULL)
-    {
-      return mpCytokineGradients->operator [](pt);
-    }
-
-  static std::vector< std::vector< double > > NaN(mCytokines.size(), std::vector< double >(2, std::numeric_limits< double >::quiet_NaN()));
-  return NaN;
-}
-
-
-const std::vector< double > & Compartment::cytokineGradient(const std::string & name, const repast::Point< int > & pt) const
-{
-  std::vector< int > Location = pt.coords();
-  // LocalFile::debug() << name << "(" << getName() << "): (" << Location[Borders::X] << ", " << Location[Borders::Y] << ") -> ";
-
-  Compartment * pTarget = transform(Location);
-
-  if (pTarget == this)
-    {
-      // LocalFile::debug() << "(" << Location[Borders::X] << ", " << Location[Borders::Y] << ")" << std::endl;
-
-      return cytokineGradients(Location)[mCytokineMap.find(name)->second];
-    }
-  else if (pTarget != NULL)
-    {
-      // LocalFile::debug() << name << "(" << pTarget->getName() << "): (" << Location[Borders::X] << ", " << Location[Borders::Y] << ")" << std::endl;
-
-      return pTarget->cytokineGradient(name, Location);
-    }
-
-
-  throw std::runtime_error("cytokine gradient not found: unable to determine target compartment");
-
-  static std::vector< double > NaN(2, std::numeric_limits< double >::quiet_NaN());
-  return NaN;
-}
-
-const std::vector< double > & Compartment::cytokineGradient(const std::string & name, const repast::Point< int > & pt, const int & xOffset, const int & yOffset) const
-{
-  std::vector< int > Location = pt.coords();
-  // LocalFile::debug() << name << "(" << getName() << "): (" << Location[Borders::X] << ", " << Location[Borders::Y] << ") + (" << xOffset << ", " << yOffset << ")" << std::endl;
-
-  Location[Borders::X] += xOffset;
-  Location[Borders::Y] += yOffset;
-
-  return cytokineGradient(name, Location);
-}
-
-
 void Compartment::initializeDiffuserData()
 {
   if (mNoLocalAgents) return;
@@ -728,17 +671,6 @@ void Compartment::initializeDiffuserData()
     {
       mpDiffuser = new DiffuserImpl(this);
     }
-
-  /*
-  if (mpCytokineGradients == NULL)
-    {
-      mpCytokineGradients =
-        new DenseMatrix< std::vector< std::vector< double > > >(mpDiffuserValues->getLocalValues()->shape(),
-                                                                std::vector< std::vector < double > >(mCytokines.size(),
-                                                                                                      std::vector< double >(mSpaceDimensions.dimensionCount(),
-                                                                                                                            std::numeric_limits< double >::quiet_NaN())));
-    }
-   */
 }
 
 SharedValueLayer * Compartment::getDiffuserData()
@@ -1241,7 +1173,6 @@ void Compartment::diffuse()
     {
       mpDiffuser->diffuse(1.0); // TODO CRITICAL determine step size;
       synchronizeDiffuser();
-      // mpDiffuser->calculateGradients(*mpCytokineGradients);
     }
 }
 
