@@ -66,6 +66,9 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
   for (; it != end; ++it)
     {
       Agent * pAgent = *it;
+      HPyloriState::State state = (HPyloriState::State) pAgent->getState();
+
+      if (state == HPyloriState::DEAD) continue;
 
       /* move HPylori across epithelial border if in contact with damaged Epithelial cell *Rule 3*/
       if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
