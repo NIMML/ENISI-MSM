@@ -63,6 +63,8 @@ public:
   int spaceToGrid(const Borders::Coodinate &coordinate, const double & space) const;
   std::vector<int> spaceToGrid(const std::vector<double> & space) const;
 
+  std::vector< double > getScale() const;
+
   void getLocation(const repast::AgentId & id, std::vector<double> & Location) const;
   bool moveTo(const repast::AgentId &id, repast::Point< double > &pt);
   bool moveTo(const repast::AgentId &id, std::vector< double > &newLocation);
@@ -85,6 +87,10 @@ public:
   double & cytokineValue(const std::string & name, const repast::Point< int > & pt);
   double & cytokineValue(const std::string & name, const repast::Point< int > & pt, const int & xOffset, const int & yOffset);
   std::vector< double > & cytokineValues(const repast::Point< int > & pt);
+
+  const std::vector< double > & cytokineGradient(const std::string & name, const repast::Point< int > & pt) const;
+  const std::vector< double > & cytokineGradient(const std::string & name, const repast::Point< int > & pt, const int & xOffset, const int & yOffset) const;
+  const std::vector< std::vector< double > > & cytokineGradients(const repast::Point< int > & pt) const;
 
   void initializeDiffuserData();
   SharedValueLayer * getDiffuserData();
@@ -157,6 +163,7 @@ private:
   SharedValueLayer * mpDiffuserValues;
   std::vector< GroupInterface * > mGroups;
   DiffuserImpl * mpDiffuser;
+  DenseMatrix< std::vector< std::vector< double > > > *mpCytokineGradients;
 
   bool mNoLocalAgents;
 

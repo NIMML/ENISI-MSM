@@ -193,7 +193,7 @@ public:
 
   int spaceToGrid(const Borders::Coodinate & coordinate, const double & space) const
   {
-    return floor(space * mSpace2Grid[coordinate].scale);
+    return floor(mSpace2Grid[coordinate].grid + (space - mSpace2Grid[coordinate].space) * mSpace2Grid[coordinate].scale);
   }
 
   std::vector< int > spaceToGrid(const std::vector< double > & space) const
@@ -207,7 +207,7 @@ public:
 
     for (; itSpace != endSpace; ++itSpace, ++itConversion, ++itGrid)
       {
-        *itGrid = floor(itConversion->grid + itConversion->scale * (*itSpace - itConversion->space));
+        *itGrid = floor(itConversion->grid + (*itSpace - itConversion->space) * itConversion->scale);
       }
 
     return Grid;
@@ -215,7 +215,7 @@ public:
 
   double gridToSpace(const Borders::Coodinate &coordinate, const int & grid) const
   {
-    return grid / mSpace2Grid[coordinate].scale;
+    return mSpace2Grid[coordinate].space + (grid - mSpace2Grid[coordinate].grid) / mSpace2Grid[coordinate].scale;
   }
 
   std::vector< double > gridToSpace(const std::vector< int > & grid) const
@@ -233,6 +233,22 @@ public:
       }
 
     return Space;
+  }
+
+  std::vector< double > getScale() const
+  {
+    std::vector< double > Scale(mpSpace->dimensions().dimensionCount(), 1.0);
+
+    std::vector< double >::iterator itScale = Scale.begin();
+    std::vector< double >::iterator endScale = Scale.end();
+    typename std::vector< Space2Grid >::const_iterator itConversion = mSpace2Grid.begin();
+
+    for (; itScale != endScale; ++itScale, ++itConversion)
+      {
+        *itScale /= itConversion->scale;
+      }
+
+    return Scale;
   }
 
   void getLocation(const repast::AgentId & id, std::vector<double> & loc) const
