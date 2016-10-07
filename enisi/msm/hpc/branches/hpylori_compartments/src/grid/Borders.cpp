@@ -299,6 +299,7 @@ void Borders::transform(std::vector<int>& pt) const
 
   std::vector<int>::iterator it = pt.begin();
   std::vector<int>::iterator end = pt.end();
+  int tmp;
 
   for (; it != end; ++it, ++itType, ++itOrigin, ++itExtend)
     {
@@ -309,11 +310,16 @@ void Borders::transform(std::vector<int>& pt) const
           switch (Type[LOW])
           {
             case REFLECT:
-              *it = *itOrigin + *itOrigin - *it;
+              tmp = fmod(*itOrigin - *it, 2.0 * *itExtend);
+
+              if (tmp < *itExtend)
+                *it = *itOrigin + tmp;
+              else
+                *it = *itOrigin + 2.0 * *itExtend - tmp;
               break;
 
             case WRAP:
-              *it += *itExtend;
+              *it = *itOrigin + *itExtend - fmod(*itOrigin - *it, *itExtend);
               break;
 
             case STICKY:
@@ -329,11 +335,17 @@ void Borders::transform(std::vector<int>& pt) const
           switch (Type[HIGH])
           {
             case REFLECT:
-              *it = *itOrigin + *itOrigin + *itExtend + *itExtend - *it;
+              tmp = fmod(*it - *itOrigin - *itExtend, 2.0 * *itExtend);
+
+              if (tmp < *itExtend)
+                *it = *itOrigin + *itExtend - tmp;
+              else
+                *it = *itOrigin + tmp - *itExtend;
+
               break;
 
             case WRAP:
-              *it -= *itExtend;
+              *it = *itOrigin + fmod(*it - *itOrigin - *itExtend, *itExtend);
               break;
 
             case STICKY:
@@ -356,6 +368,7 @@ void Borders::transform(std::vector<double>& pt) const
 
   std::vector<double>::iterator it = pt.begin();
   std::vector<double>::iterator end = pt.end();
+  double tmp;
 
   for (; it != end; ++it, ++itType, ++itOrigin, ++itExtend)
     {
@@ -366,11 +379,17 @@ void Borders::transform(std::vector<double>& pt) const
           switch (Type[LOW])
           {
             case REFLECT:
-              *it = *itOrigin + *itOrigin - *it;
+              tmp = fmod(*itOrigin - *it, 2.0 * *itExtend);
+
+              if (tmp < *itExtend)
+                *it = *itOrigin + tmp;
+              else
+                *it = *itOrigin + 2.0 * *itExtend - tmp;
+
               break;
 
             case WRAP:
-              *it += *itExtend;
+              *it = *itOrigin + *itExtend - fmod(*itOrigin - *it, *itExtend);
               break;
 
             case STICKY:
@@ -386,11 +405,17 @@ void Borders::transform(std::vector<double>& pt) const
           switch (Type[HIGH])
           {
             case REFLECT:
-              *it = *itOrigin + *itOrigin + *itExtend + *itExtend - *it;
+              tmp = fmod(*it - *itOrigin - *itExtend, 2.0 * *itExtend);
+
+              if (tmp < *itExtend)
+                *it = *itOrigin + *itExtend - tmp;
+              else
+                *it = *itOrigin + tmp - *itExtend;
+
               break;
 
             case WRAP:
-              *it -= *itExtend;
+              *it = *itOrigin + fmod(*it - *itOrigin - *itExtend, *itExtend);
               break;
 
             case STICKY:
@@ -403,8 +428,6 @@ void Borders::transform(std::vector<double>& pt) const
         }
     }
 }
-
-
 
 void Borders::translate(const std::vector<int>& in, std::vector<int>& out, const std::vector<int>& move) const
 {
