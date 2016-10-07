@@ -412,7 +412,7 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
 
   std::vector< Borders::BoundState > BoundState(2);
 
-  if (!mpSpaceBorders->boundsCheck(Location, &BoundState))
+  while (!mpSpaceBorders->boundsCheck(Location, &BoundState))
     {
       // We are at the compartment boundaries;
       // Since this is a random move we reflect at the compartment border
@@ -428,11 +428,11 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
           switch (*itState)
             {
               case Borders::OUT_LOW:
-                *itLocation = mSpaceDimensions.origin(i) - fmod(mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::LOW), mSpaceDimensions.extents(i));
+                *itLocation = mSpaceDimensions.origin(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::LOW);
                 break;
 
               case Borders::OUT_HIGH:
-                *itLocation = mSpaceDimensions.origin(i) + mSpaceDimensions.extents(i) - fmod(mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::HIGH), mSpaceDimensions.extents(i));
+                *itLocation = mSpaceDimensions.origin(i) + mSpaceDimensions.extents(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::HIGH);
                 break;
 
               case Borders::INBOUND:
