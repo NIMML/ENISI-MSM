@@ -412,12 +412,13 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
 
   std::vector< Borders::BoundState > BoundState(2);
 
-  while (!mpSpaceBorders->boundsCheck(Location, &BoundState))
+  if (!mpSpaceBorders->boundsCheck(Location, &BoundState))
     {
       // We are at the compartment boundaries;
       // Since this is a random move we reflect at the compartment border
 
       size_t i = Borders::X;
+      double tmp;
 
       std::vector<Borders::BoundState>::const_iterator itState = BoundState.begin();
       std::vector<Borders::BoundState>::const_iterator endState = BoundState.end();
@@ -428,11 +429,23 @@ bool Compartment::moveRandom(const repast::AgentId &id, const double & maxSpeed)
           switch (*itState)
             {
               case Borders::OUT_LOW:
-                *itLocation = mSpaceDimensions.origin(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::LOW);
+                tmp = fmod(mSpaceDimensions.origin(i) - *itLocation, 2.0 * mSpaceDimensions.extents(i));
+
+                if (tmp < mSpaceDimensions.extents(i))
+                  *itLocation = mSpaceDimensions.origin(i) + tmp;
+                else
+                  *itLocation = mSpaceDimensions.origin(i) + 2.0 * mSpaceDimensions.extents(i) - tmp;
+
                 break;
 
               case Borders::OUT_HIGH:
-                *itLocation = mSpaceDimensions.origin(i) + mSpaceDimensions.extents(i) - mpSpaceBorders->distanceFromBorder(Location, (Borders::Coodinate) i, Borders::HIGH);
+                tmp = fmod(*itLocation - mSpaceDimensions.origin(i) - mSpaceDimensions.extents(i), 2.0 * mSpaceDimensions.extents(i));
+
+                if (tmp < mSpaceDimensions.extents(i))
+                  *itLocation = mSpaceDimensions.origin(i) + mSpaceDimensions.extents(i) - tmp;
+                else
+                  *itLocation = mSpaceDimensions.origin(i) + tmp - mSpaceDimensions.extents(i);
+
                 break;
 
               case Borders::INBOUND:
