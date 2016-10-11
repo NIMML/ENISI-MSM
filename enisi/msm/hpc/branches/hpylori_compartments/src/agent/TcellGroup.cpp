@@ -42,6 +42,9 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
   pModel->getValue("p_rule53", p_rule53);
   pModel->getValue("p_rule55a", p_rule55a);
   pModel->getValue("p_rule55b", p_rule55b);
+  pModel->getValue("p_naiveTcelldeath",p_naiveTcelldeath);
+
+
   //pModel->getValue("p_rule56", p_rule56);
   pModel->getValue("neardistane_border", neardistane_border);
   pModel->getValue("p_IL17", p_IL17);
@@ -104,7 +107,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	  {
 	    LocalFile::debug() << pt << std::endl;
 	  }
-
 	double dIFNg = odeModel.getConcentration("dIFNg");
 	double dIL17 = odeModel.getConcentration("dIL17");
 	double dIL10 = odeModel.getConcentration("dIL10");
@@ -121,8 +123,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
-
-
 	/*LocalFile::debug() << "eDCConcentration			      		="<< eDCConcentration 					<< std::endl;
 	LocalFile::debug() << "tDCConcentration				 		="<< tDCConcentration 					<< std::endl;
 	LocalFile::debug() << "damagedEpithelialCellConcentration	="<< damagedEpithelialCellConcentration << std::endl;
@@ -130,7 +130,6 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	LocalFile::debug() << "th17Concentration			  	  	="<< th17Concentration 					<< std::endl;*/
 	//LocalFile::debug() << "th1Concentration			      =" << th1Concentration << std::endl;
 	//LocalFile::debug() << "immatureDentritics		      =" << immatureDentritics << std::endl;
-
 	std::vector< Agent * >::iterator it = Tcells.begin();
 	std::vector< Agent * >::iterator end = Tcells.end();
 
@@ -203,34 +202,43 @@ for (; it != end; ++it)
                 //pAgent->setState(newState);
                 //LocalFile::debug() << "I am here 12" << std::endl;
               }
+            if (p_naiveTcelldeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+            {
+            	mpCompartment->removeAgent(pAgent); /*Rule naiveTcelldeath*- Naive T cell can die in LP*/
+            	continue;
+            }
           }
         if (state == TcellState::TH17)
           {
-            if  ((tDCConcentration > ENISI::Threshold)
-                && (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-              {
-                newState = TcellState::iTREG; /*Rule 36*/
-                //pAgent->setState(newState);
-                //LocalFile::debug() << "I am here 7" << std::endl;
-              }
-            else if ((itregConcentration > ENISI::Threshold)
-                && (p_rule35 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-              {
-                newState = TcellState::iTREG; /*Rule 35*/
-                //pAgent->setState(newState);
-                //LocalFile::debug() << "I am here 8" << std::endl;
-              }
-
-            /*if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< 0.5 //TODO - CRITICAL Determine this value
+        	if  ((tDCConcentration > ENISI::Threshold)
+        			&& (p_rule36 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        	{
+        		newState = TcellState::iTREG; /*Rule 36*/
+        		//pAgent->setState(newState);
+        		//LocalFile::debug() << "I am here 7" << std::endl;
+        	}
+        	else if (p_rule24 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        	{
+        		mpCompartment->removeAgent(pAgent); /*Rule 24*- TH17 can die in GLN*/
+        		continue;
+        	}
+        	else if ((itregConcentration > ENISI::Threshold)
+        			&& (p_rule35 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        	{
+        		newState = TcellState::iTREG; /*Rule 35*/
+        		//pAgent->setState(newState);
+        		//LocalFile::debug() << "I am here 8" << std::endl;
+        	}
+        	/*if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW))< 0.5 //TODO - CRITICAL Determine this value
 					        && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-			        {
-			          Rule 32 - Movement of Th17 from GLN to LP
-				        std::vector<double> Location;
+			{
+			    Rule 32 - Movement of Th17 from GLN to LP
+				std::vector<double> Location;
                 mpCompartment->getLocation(pAgent->getId(), Location);
                 Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
                 mpCompartment->moveTo(pAgent->getId(), Location);
                 continue;
-              }*/
+            }*/
           }
         if (state == TcellState::iTREG)
           {
@@ -248,6 +256,11 @@ for (; it != end; ++it)
                 //pAgent->setState(newState);
                 //LocalFile::debug() << "I am here 10" << std::endl;
               }
+            else if (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+			  {
+				mpCompartment->removeAgent(pAgent); /*Rule 26*- iTREG can die in GLN*/
+				continue;
+			  }
           }
         if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5
             && state == TcellState::iTREG
@@ -259,7 +272,6 @@ for (; it != end; ++it)
             mpCompartment->moveTo(pAgent->getId(), Location);
             continue;
           }
-
         if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5
             && state == TcellState::TH17
             && (p_rule32 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
@@ -281,6 +293,14 @@ for (; it != end; ++it)
             mpCompartment->moveTo(pAgent->getId(), Location);
             continue;
           }
+        if (state == TcellState::TH1)
+        {
+        	if (p_rule27 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        	{
+        		mpCompartment->removeAgent(pAgent); /*Rule 27*- Th1 can die in LP*/
+        		continue;
+        	}
+        }
       }// end of the Compartment Type = Compartment::GLN
     if (mpCompartment->getType() == Compartment::lamina_propria)
       {
@@ -292,7 +312,6 @@ for (; it != end; ++it)
             // TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
             // addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
           }
-
         if (state == TcellState::NAIVE)
           {
             if ((mpCompartment->cytokineValue("eIL10", pt) > p_rule31a * mpCompartment->cytokineValue("eIFNg", pt))
@@ -302,8 +321,12 @@ for (; it != end; ++it)
                 newState = TcellState::Tr; //Rule 31: if nT is in contact with regulatory macrophages, and if IL10> a* IFNg, then nT -> Tr
                 //LocalFile::debug() << "I am here 0" << std::endl;
               }
+            if (p_naiveTcelldeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+            {
+            	mpCompartment->removeAgent(pAgent); /*Rule naiveTcelldeath*- Naive T cell can die in LP*/
+            	continue;
+            }
           }
-
         if (state == TcellState::iTREG)
           {
             if ((th1Concentration > ENISI::Threshold)
@@ -339,7 +362,6 @@ for (; it != end; ++it)
                 //LocalFile::debug() << "I am here 13" << std::endl;
               }
           }
-
         if (state == TcellState::TH17)
           {
             if (p_rule24 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
@@ -361,7 +383,6 @@ for (; it != end; ++it)
                 //LocalFile::debug() << "I am here 4" << std::endl;
               }
           }
-
         if (state == TcellState::TH1)
           {
             if (p_rule27 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
@@ -370,7 +391,14 @@ for (; it != end; ++it)
                 continue;
               }
           }
-
+        if (state == TcellState::Tr)
+        {
+        	if (p_rule27 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        	{
+        		mpCompartment->removeAgent(pAgent); /*Rule death of Tr cells*- Tr cells die in LP*/
+        		continue;
+        	}
+        }
         /*if (state == TcellState::TH17)
           {
             if (itregConcentration > ENISI::Threshold
