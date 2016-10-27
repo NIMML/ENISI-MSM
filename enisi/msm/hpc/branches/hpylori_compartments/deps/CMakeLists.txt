@@ -7,7 +7,7 @@ set(REPAST_SRC_DIR ${REPAST_DIR}/src/repast_hpc)
 ExternalProject_Add(project_repast
   DOWNLOAD_DIR      ${DEPS_DIR}
   LOG_DOWNLOAD 1   # Wrap download in script to log output
-  URL https://sourceforge.net/projects/repast/files/Repast%20HPC/Repast%20HPC%202.0/RHPC_2.0.tar.gz/download
+  DOWNLOAD_COMMAND  tar -C src/project_repast -xvf RHPC_2.0.tar.gz --strip-components=2
   PREFIX ${DEPS_DIR}
   CONFIGURE_COMMAND ""
 
@@ -27,31 +27,31 @@ ExternalProject_Add(project_repast
     -P ${DEPS_DIR}/project_repast.cmake
 )
 
-ExternalProject_Add(project_visit
-  DOWNLOAD_DIR      ${DEPS_DIR}
-  LOG_DOWNLOAD 1   # Wrap download in script to log output
-  URL http://portal.nersc.gov/project/visit/releases/2.9.2/visit2.9.2.tar.gz
-  PREFIX ${DEPS_DIR}
-  CONFIGURE_COMMAND ""
-
-  PATCH_COMMAND ${CMAKE_COMMAND} -DBUILD_STEP=patch
-    -DVISIT_SVN_BIN_DIR=${VISIT_SVN_BIN_DIR}
-    -DPATCH_DIR=${PROJECT_SOURCE_DIR}/patches
-    -DLOG_DIR=${CMAKE_BINARY_DIR}
-    -P ${DEPS_DIR}/project_visit.cmake
-
-  #--Build step-----------------
-  BUILD_IN_SOURCE 1 # Use source dir for build dir
-
-  BUILD_COMMAND cmake  -DBUILD_STEP=build
-    -DDEPS_DIR=${DEPS_DIR}
-    -DVISIT_DIR=${VISIT_DIR}
-    -DVISIT_SVN_BIN_DIR=${VISIT_SVN_BIN_DIR}
-    -DLOG_DIR=${CMAKE_BINARY_DIR}
-    -P ${DEPS_DIR}/project_visit.cmake
-
-  INSTALL_COMMAND ""
-)
+# ExternalProject_Add(project_visit
+#   DOWNLOAD_DIR      ${DEPS_DIR}
+#   LOG_DOWNLOAD 1   # Wrap download in script to log output
+#   URL http://portal.nersc.gov/project/visit/releases/2.9.2/visit2.9.2.tar.gz
+#   PREFIX ${DEPS_DIR}
+#   CONFIGURE_COMMAND ""
+# 
+#   PATCH_COMMAND ${CMAKE_COMMAND} -DBUILD_STEP=patch
+#     -DVISIT_SVN_BIN_DIR=${VISIT_SVN_BIN_DIR}
+#     -DPATCH_DIR=${PROJECT_SOURCE_DIR}/patches
+#     -DLOG_DIR=${CMAKE_BINARY_DIR}
+#     -P ${DEPS_DIR}/project_visit.cmake
+# 
+#   #--Build step-----------------
+#   BUILD_IN_SOURCE 1 # Use source dir for build dir
+# 
+#   BUILD_COMMAND cmake  -DBUILD_STEP=build
+#     -DDEPS_DIR=${DEPS_DIR}
+#     -DVISIT_DIR=${VISIT_DIR}
+#     -DVISIT_SVN_BIN_DIR=${VISIT_SVN_BIN_DIR}
+#     -DLOG_DIR=${CMAKE_BINAY_DIR}
+#     -P ${DEPS_DIR}/project_visit.cmake
+# 
+#   INSTALL_COMMAND ""
+# )
 
 #ExternalProject_Add_Step(project_visit after_install
   #COMMAND cmake -DBUILD_STEP=get_visit_platform.sh -DVISIT_DIR=${VISIT_DIR}
