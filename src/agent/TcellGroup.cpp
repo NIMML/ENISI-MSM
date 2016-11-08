@@ -256,7 +256,7 @@ for (; it != end; ++it)
                 //pAgent->setState(newState);
                 //LocalFile::debug() << "I am here 10" << std::endl;
               }
-            else if (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+            if (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 			  {
 				mpCompartment->removeAgent(pAgent); /*Rule 26*- iTREG can die in GLN*/
 				continue;
@@ -350,18 +350,17 @@ for (; it != end; ++it)
                 //pAgent->setState(newState);
                 //LocalFile::debug() << "I am here 4" << std::endl;
               }
-            else if (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	    else if (damagedEpithelialCellConcentration > ENISI::Threshold 
+		&& (p_rule18 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	      {
+		newState = TcellState::TH17; 
+	      }
+            if (p_rule26 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
               {
                 mpCompartment->removeAgent(pAgent); /*Rule 26*- iTREG can die in LP*/
                 continue;
               }
-            else if (damagedEpithelialCellConcentration  > ENISI::Threshold
-                && (p_rule18> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
-              {
-                newState = TcellState::TH17; /*Rule 18* - //This rule requires the state transition when iTREG is in contact with Edamaged at 'Epithelium and LaminaPropria' membrane*/
-                //LocalFile::debug() << "I am here 13" << std::endl;
-              }
-          }
+	}
         if (state == TcellState::TH17)
           {
             if (p_rule24 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) {
