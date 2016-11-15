@@ -12,6 +12,15 @@ if ("${ENISI_MSM_DEPENDENCY_DIR}" STREQUAL "")
 --------------------------------------------------------------------------------")
 endif()
 
+if(NOT EXISTS "${ENISI_MSM_DEPENDENCY_DIR}/include/copasi/copasi.h")
+  message (FATAL_ERROR 
+"--------------------------------------------------------------------------------
+    The director ${ENISI_MSM_DEPENDENCY_DIR} does not contain the required files.
+    Please specify the directory containing the required build dependecies with:
+    -DENISI_MSM_DEPENDENCY_DIR=<...>
+--------------------------------------------------------------------------------")
+endif()
+
 if (EXISTS "${ENISI_MSM_DEPENDENCY_DIR}/bin/mpicxx")
   set(MPI_CXX_COMPILER "${ENISI_MSM_DEPENDENCY_DIR}/bin/mpicxx")
   set(MPI_CXX_COMPILE_FLAGS "")
