@@ -43,6 +43,10 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
   pModel->getValue("p_rule55a", p_rule55a);
   pModel->getValue("p_rule55b", p_rule55b);
   pModel->getValue("p_naiveTcelldeath",p_naiveTcelldeath);
+  pModel->getValue("Th1cap",Th1cap);
+  pModel->getValue("Th17cap",Th17cap);
+  pModel->getValue("iTregcap",iTregcap);
+
 
 
   //pModel->getValue("p_rule56", p_rule56);
@@ -172,14 +176,16 @@ for (; it != end; ++it)
           {
             if (eDCConcentration  > ENISI::Threshold)
               {
-                if (p_rule39 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+                if (p_rule39 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && eDCConcentration *
+		    repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() * Th1cap > th1Concentration)
                   {
                     newState = TcellState::TH1; /*Rule 39*/
                     //pAgent->setState(newState);
                     //LocalFile::debug() << "I am here 11" << std::endl;
                   }
                 else if (p_rule55a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-                    && (dIL17 > p_IL17))
+                    && (dIL17 > p_IL17) && eDCConcentration *
+		    repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() * Th17cap > th17Concentration)
                   {
 //LocalFile::debug() << ">>> eDC changed nT to Th17" << std::endl;
                     newState = TcellState::TH17;
@@ -187,7 +193,8 @@ for (; it != end; ++it)
                     mpCompartment->cytokineValue("eIL17", pt) += dIL17;
                   }
                 else if (p_rule55b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-                    && (dIFNg > p_IFNg))
+                    && (dIFNg > p_IFNg) && eDCConcentration *
+		    repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() * Th1cap > th1Concentration)
                   {
                     newState = TcellState::TH1;
                     //pAgent->setState(newState);
@@ -196,7 +203,8 @@ for (; it != end; ++it)
                   }
               }
             if ((tDCConcentration > ENISI::Threshold)
-                && (p_rule53 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+                && (p_rule53 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && tDCConcentration *
+		    repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() * iTregcap > itregConcentration)
               {
                 newState = TcellState::iTREG; /*Rule 53*/
                 //pAgent->setState(newState);
