@@ -48,6 +48,7 @@ private:
   double Th1cap;
   double Th17cap;
   double iTregcap;
+  double TotalTcellcap;
   //double p_rule56;/*Rule 56 parameter*/
   double neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
