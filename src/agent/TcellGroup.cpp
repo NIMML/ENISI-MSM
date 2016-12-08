@@ -46,7 +46,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations
   pModel->getValue("Th1cap",Th1cap);
   pModel->getValue("Th17cap",Th17cap);
   pModel->getValue("iTregcap",iTregcap);
-
+  pModel->getValue("TotalTcellcap",TotalTcellcap);
 
 
   //pModel->getValue("p_rule56", p_rule56);
@@ -165,7 +165,8 @@ for (; it != end; ++it)
 	}*/
     if (mpCompartment->getType() == Compartment::gastric_lymph_node)
       {
-        if (p_rule40 / naiveTConcentration > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        if (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() 
+	   && TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration))
           {
             mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -312,7 +313,8 @@ for (; it != end; ++it)
       }// end of the Compartment Type = Compartment::GLN
     if (mpCompartment->getType() == Compartment::lamina_propria)
       {
-        if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+	   && TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration))
           {
             mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
