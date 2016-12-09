@@ -430,6 +430,7 @@ for (; it != end; ++it)
     if (state == TcellState::Tr || state == TcellState::iTREG) {
         //Rule 30, If T cell state is Tr then release IL10 [or iTREG]
         mpCompartment->cytokineValue("eIL10", pt) += dIL10; // production based on ODE for IL10
+	LocalFile::debug() << "IL10 cytokine release" << dIL10 << std::endl
     }
     if (state == TcellState::TH17)
       { //Rule 29 If T cell state is TH1, then release IFNg
