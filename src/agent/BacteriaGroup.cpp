@@ -60,7 +60,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
 	
-  Concentration MinfConcentration;
+  Concentration MacrophageConcentration;
   concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
   double MinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
 
