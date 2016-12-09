@@ -30,6 +30,7 @@ protected:
 private:
   double p_rule42;
   double p_MinfDiff;
+  double p_MregDiff;
   double p_rule13;
   double p_rule28a;
   double p_rule28b;
