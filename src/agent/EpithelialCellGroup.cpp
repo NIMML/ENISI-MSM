@@ -114,6 +114,10 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
               //pAgent->setState(newState);
             }
+	      if (p_rule10b > Random)
+	      {
+		       newState = EpithelialCellState::DAMAGED; //Random damage of epithelial cells
+	      }
         }
 
       if (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
