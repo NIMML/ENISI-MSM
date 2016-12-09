@@ -25,6 +25,7 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
   pModel->getValue("p_rule12", p_rule12);
   pModel->getValue("p_rule10a_infectiousBacteriaConcentration", p_rule10a_infectiousBacteriaConcentration);
   pModel->getValue("p_rule10b_cytokineConcentration", p_rule10b_cytokineConcentration);
+  pModel->getValue("p_rule10b_random" ,p_rule10b_random);
 }
 
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
@@ -114,7 +115,7 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
               //pAgent->setState(newState);
             }
-	      if (p_rule10b > Random)
+	      if (p_rule10b_random > Random)
 	      {
 		       newState = EpithelialCellState::DAMAGED; //Random damage of epithelial cells
 	      }
