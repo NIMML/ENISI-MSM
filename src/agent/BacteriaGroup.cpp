@@ -34,6 +34,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > Tcells;
   std::vector< Agent * > Bacteria;
   std::vector< Agent * > EpithelialCells;
+  std::vector< Agent * > Macrophages;
 
   mpCompartment->getAgents(pt, Agent::Bacteria, Bacteria);
 
@@ -47,6 +48,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   else if (mpCompartment->getType() == Compartment::lamina_propria)
     {
 	  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+	  mpCompartment->getAgents(pt, Agent::Macrophage, Macrophages);
       if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
         {
           mpCompartment->getAgents(pt, 0, -1, Agent::EpithelialCell, EpithelialCells);
@@ -57,6 +59,10 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   concentrations(Agent::Tcell, Tcells, TcellConcentration);
   double th1Concentration = TcellConcentration[TcellState::TH1];
   double th17Concentration = TcellConcentration[TcellState::TH17];
+	
+  Concentration MinfConcentration;
+  concentrations(Agent::Macrophage, Macrophages, MacrophageConcentration);
+  double MinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
 
   Concentration EpithelialCellConcentration;
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
@@ -104,7 +110,8 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       if ((newState == BacteriaState::INFECTIOUS)
           && (damagedEpithelialCellConcentration > ENISI::Threshold
               || th1Concentration > ENISI::Threshold
-              || th17Concentration > ENISI::Threshold)
+              || th17Concentration > ENISI::Threshold
+	      || MinfConcentration > ENISI::Threshold)
           && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
     	  //LocalFile::debug() << "# Bacteria dies nearby damaged E cell" << std::endl ;
           mpCompartment->removeAgent(pAgent);
