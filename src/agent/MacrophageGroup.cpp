@@ -30,6 +30,7 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment,
 
   pModel->getValue("p_rule42", p_rule42);
   pModel->getValue("p_MinfDiff", p_MinfDiff);
+  pModel->getValue("p_MregDiff", p_MregDiff);
   pModel->getValue("p_rule13", p_rule13);
   pModel->getValue("p_rule28a", p_rule28a);
   pModel->getValue("p_rule28b", p_rule28b);
@@ -147,6 +148,13 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
                       mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
                       HPylori.pop_back();
                   }
+		  if (p_MregDiff > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
+                      LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
+                      newState = MacrophageState::REGULATORY;
+                      pAgent->setState(newState);
+                      mpCompartment->removeAgent(HPylori[HPylori.size() - 1]);
+                      HPylori.pop_back();
+                  }
                   /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
                   else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
                       LocalFile::debug() << "*** Macrophage transit to INFLAMMATORY" << std::endl;
@@ -181,8 +189,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       if (state == MacrophageState::INFLAMMATORY){
           mpCompartment->cytokineValue("eIFNg", pt) += 7;
 
-          if ((macrophageregConcentration > 0)
-              && (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          if ((macrophageregConcentration > ENISI::Threshold)
+              || (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               LocalFile::debug() << "*** Macrophage_Inflamatory dies naturally" << std::endl;
               mpCompartment->removeAgent(pAgent);
               continue;
