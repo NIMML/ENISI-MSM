@@ -167,7 +167,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
                 }
           }
       }//End of monocyte conditions
-      else if (state == MacrophageState::REGULATORY){
+      if (state == MacrophageState::REGULATORY){
           if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
               && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
               /* set initial concentrations */
@@ -178,7 +178,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
           mpCompartment->cytokineValue("eIL10", pt) += 7;
 
-          if ((macrophageinfConcentration > 0)
+          if ((macrophageregConcentration > ENISI::Threshold)
               && (p_rule28a > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               LocalFile::debug() << "*** Macrophage_Regulatory dies naturally" << std::endl;
               mpCompartment->removeAgent(pAgent);
@@ -186,10 +186,10 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
           }
       }
 
-      if (state == MacrophageState::INFLAMMATORY){
+     if (state == MacrophageState::INFLAMMATORY){
           mpCompartment->cytokineValue("eIFNg", pt) += 7;
 
-          if ((macrophageregConcentration > ENISI::Threshold)
+          if ((macrophageinfConcentration > ENISI::Threshold)
               || (p_rule28b > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               LocalFile::debug() << "*** Macrophage_Inflamatory dies naturally" << std::endl;
               mpCompartment->removeAgent(pAgent);
