@@ -34,6 +34,7 @@ private:
   double p_rule13;
   double p_rule28a;
   double p_rule28b;
+  double p_Monocytedeath;
 };
 
 } // namespace ENISI
