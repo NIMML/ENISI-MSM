@@ -34,6 +34,7 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment,
   pModel->getValue("p_rule13", p_rule13);
   pModel->getValue("p_rule28a", p_rule28a);
   pModel->getValue("p_rule28b", p_rule28b);
+  pModel->getValue("p_Monocytedeath", p_Monocytedeath);
 }
 
 MacrophageGroup::~MacrophageGroup()
@@ -165,6 +166,11 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
                       HPylori.pop_back();
                   }
                 }
+          }
+	       if (p_Monocytedeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
+              LocalFile::debug() << "*** Monocytes dies naturally" << std::endl;
+              mpCompartment->removeAgent(pAgent);
+              continue;
           }
       }//End of monocyte conditions
       if (state == MacrophageState::REGULATORY){
