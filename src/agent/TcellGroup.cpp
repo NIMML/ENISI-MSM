@@ -23,25 +23,25 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::NAIVE));
     }
 	  
-  size_t LocalCount = mpCompartment->localCount(Th1Concentrations);
+ LocalCount = mpCompartment->localCount(Th1Concentrations);
   for (size_t i = 0; i < LocalCount; i++)
     {
-      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::Th1));
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::TH1));
     }  
 
-  size_t LocalCount = mpCompartment->localCount(Th17Concentrations);
+ LocalCount = mpCompartment->localCount(Th17Concentrations);
   for (size_t i = 0; i < LocalCount; i++)
     {
-      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::Th17));
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::TH17));
     } 
   
-  size_t LocalCount = mpCompartment->localCount(iTregConcentrations);	  
+  LocalCount = mpCompartment->localCount(iTregConcentrations);	  
   for (size_t i = 0; i < LocalCount; i++)
     {
-      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::iTreg));
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::iTREG));
     } 
 
-  size_t LocalCount = mpCompartment->localCount(TrConcentrations);
+  LocalCount = mpCompartment->localCount(TrConcentrations);
   for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::Tr));
