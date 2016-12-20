@@ -10,9 +10,9 @@ using namespace ENISI;
 
 TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentrations,
 		                        const double & Th1Concentrations, 
-		       			const double & Th17Concentration,
-                                 	const double & iTregConcentration,
-					const double & TrConcentration):
+		       			const double & Th17Concentrations,
+                                 	const double & iTregConcentrations,
+					const double & TrConcentrations):
   GroupInterface(pCompartment)
 {	   
    // size_t LocalCount = mpCompartment->localCount(monocyteConcentration);
