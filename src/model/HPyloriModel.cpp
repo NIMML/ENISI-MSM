@@ -82,6 +82,7 @@ void HPModel::initialize_lamina_propria()
   double concentration3;
 
   if (!mpProperties->getValue("lamina_propria.Tcell.naive.concentration", concentration3)) concentration3 = 0;
+  
   double concentration4;
 
   if (!mpProperties->getValue("lamina_propria.Tcell.Th1.concentration", concentration4)) concentration4 = 0;
@@ -131,8 +132,8 @@ void HPModel::initialize_gastric_lymph_node()
   if (!mpProperties->getValue("gastric_lymph_node.Dendritics.concentration", concentration)) concentration = 0;
   new DendriticsGroup(mp_gastric_lymph_node, concentration);
 
-  if (!mpProperties->getValue("gastric_lymph_node.Tcell.concentration", concentration)) concentration = 0;
-  new TcellGroup(mp_gastric_lymph_node, concentration);
+ // if (!mpProperties->getValue("gastric_lymph_node.Tcell.concentration", concentration)) concentration = 0;
+ // new TcellGroup(mp_gastric_lymph_node, concentration);
   
   double concentration3;
 
@@ -152,6 +153,7 @@ void HPModel::initialize_gastric_lymph_node()
   double concentration7;
 
   if (!mpProperties->getValue("gastric_lymph_node.Tr.concentration", concentration7)) concentration7 = 0;
+  
   new TcellGroup(mp_lamina_propria, concentration, concentration3, concentration4, concentration5, concentration6, concentration7);
   
   
