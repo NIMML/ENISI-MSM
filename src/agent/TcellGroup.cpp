@@ -8,15 +8,45 @@
 
 using namespace ENISI;
 
-TcellGroup::TcellGroup(Compartment * pCompartment, const double & concentrations) :
+TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentrations,
+		                        const double & Th1Concentrations, 
+		       			const double & Th17Concentration,
+                                 	const double & iTregConcentration,
+					const double & TrConcentration):
   GroupInterface(pCompartment)
-{
-  size_t LocalCount = mpCompartment->localCount(concentrations);
-
+{	   
+   // size_t LocalCount = mpCompartment->localCount(monocyteConcentration);
+	  
+  size_t LocalCount = mpCompartment->localCount(NaiveTConcentrations);
   for (size_t i = 0; i < LocalCount; i++)
     {
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::NAIVE));
     }
+	  
+  size_t LocalCount = mpCompartment->localCount(Th1Concentrations);
+  for (size_t i = 0; i < LocalCount; i++)
+    {
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::Th1));
+    }  
+
+  size_t LocalCount = mpCompartment->localCount(Th17Concentrations);
+  for (size_t i = 0; i < LocalCount; i++)
+    {
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::Th17));
+    } 
+  
+  size_t LocalCount = mpCompartment->localCount(iTregConcentrations);	  
+  for (size_t i = 0; i < LocalCount; i++)
+    {
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::iTreg));
+    } 
+
+  size_t LocalCount = mpCompartment->localCount(TrConcentrations);
+  for (size_t i = 0; i < LocalCount; i++)
+    {
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::Tcell, TcellState::Tr));
+    }
+	  
   const Properties * pModel = Properties::instance(Properties::model);
 
   pModel->getValue("p_rule18", p_rule18);
