@@ -14,10 +14,10 @@ class TcellGroup: public GroupInterface
 public:
  // TcellGroup(Compartment * pCompartment, const double & concentrations);
   TcellGroup(Compartment * pCompartment, const double & NaiveTConcentrations, 
-		                                                 const double & Th1Concentrations, 
-		       			                                     const double & Th17Concentration,
-                                 	                   const double & iTregConcentration,
-					                                           const double & TrConcentration);
+		                         const double & Th1Concentrations, 
+		       			 const double & Th17Concentration,
+                                 	 const double & iTregConcentration,
+					 const double & TrConcentration);
   
   
   virtual std::string classname() const {return "TcellGroup";}
