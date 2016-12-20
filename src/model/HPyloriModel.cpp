@@ -77,7 +77,7 @@ void HPModel::initialize_lamina_propria()
   new DendriticsGroup(mp_lamina_propria, concentration);
 
   if (!mpProperties->getValue("lamina_propria.Tcell.concentration", concentration)) concentration = 0;
-  new TcellGroup(mp_lamina_propria, concentration);
+  //new TcellGroup(mp_lamina_propria, concentration);
   
   double concentration3;
 
