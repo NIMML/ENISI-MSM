@@ -15,9 +15,9 @@ public:
  // TcellGroup(Compartment * pCompartment, const double & concentrations);
   TcellGroup(Compartment * pCompartment, const double & NaiveTConcentrations, 
 		                         const double & Th1Concentrations, 
-		       			 const double & Th17Concentration,
-                                 	 const double & iTregConcentration,
-					 const double & TrConcentration);
+		       			 const double & Th17Concentrations,
+                                 	 const double & iTregConcentrations,
+					 const double & TrConcentrations);
   
   
   virtual std::string classname() const {return "TcellGroup";}
