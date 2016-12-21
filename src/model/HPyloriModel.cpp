@@ -154,7 +154,7 @@ void HPModel::initialize_gastric_lymph_node()
 
   if (!mpProperties->getValue("gastric_lymph_node.Tr.concentration", concentration7)) concentration7 = 0;
   
-  new TcellGroup(mp_lamina_propria, concentration3, concentration4, concentration5, concentration6, concentration7);
+  new TcellGroup(mp_gastric_lymph_node, concentration3, concentration4, concentration5, concentration6, concentration7);
   
   
   mp_gastric_lymph_node->addCytokine("eIL6");
