@@ -73,11 +73,12 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_rule55a", p_rule55a);
   pModel->getValue("p_rule55b", p_rule55b);
   pModel->getValue("p_naiveTcelldeath",p_naiveTcelldeath);
-  pModel->getValue("Th1cap",Th1cap);
-  pModel->getValue("Th17cap",Th17cap);
-  pModel->getValue("iTregcap",iTregcap);
-  pModel->getValue("TotalTcellcap",TotalTcellcap);
-
+  pModel->getValue("p_Th1cap",p_Th1cap);
+  pModel->getValue("p_Th17cap",p_Th17cap);
+  pModel->getValue("p_iTregcap",p_iTregcap);
+  pModel->getValue("p_Trcap",p_Trcap);	  
+  pModel->getValue("p_TotalTcellcap",p_TotalTcellcap);  
+  pModel->getValue("p_nTcap",p_nTcap);
 
   //pModel->getValue("p_rule56", p_rule56);
   pModel->getValue("neardistane_border", neardistane_border);
@@ -196,7 +197,7 @@ for (; it != end; ++it)
     if (mpCompartment->getType() == Compartment::gastric_lymph_node)
       {
         if (p_rule40 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() 
-	   && TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration))
+	   && p_TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
           {
             mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -343,15 +344,15 @@ for (; it != end; ++it)
       }// end of the Compartment Type = Compartment::GLN
     if (mpCompartment->getType() == Compartment::lamina_propria)
       {
-        if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+       /*if (p_rule41 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
 	   && TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration))
           {
             mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
             continue;
             // TODO CRITICAL Proliferation can always happen it is not condition dependent - FIXED
-            // addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria */
-          }
+            addCellAt(TcellState::NAIVE, loc); /*Rule 41* - nT can 'proliferate' when in contact with nT in Propria 
+	    }*/
         if (state == TcellState::NAIVE)
           {
             if ((mpCompartment->cytokineValue("eIL10", pt) > p_rule31a * mpCompartment->cytokineValue("eIFNg", pt))
@@ -365,6 +366,12 @@ for (; it != end; ++it)
             {
             	mpCompartment->removeAgent(pAgent); /*Rule naiveTcelldeath*- Naive T cell can die in LP*/
             	continue;
+            }
+	    if (p_nTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+            {
+            	mpCompartment->getLocation(pAgent->getId(), Location);
+		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+		continue;
             }
           }
         if (state == TcellState::iTREG)
@@ -400,6 +407,14 @@ for (; it != end; ++it)
                 mpCompartment->removeAgent(pAgent); /*Rule 26*- iTREG can die in LP*/
                 continue;
               }
+	    if (p_iTregcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		&& p_TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+              {
+            	mpCompartment->getLocation(pAgent->getId(), Location);
+		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+		continue;
+              }
+		
 	}
         if (state == TcellState::TH17)
           {
@@ -407,6 +422,13 @@ for (; it != end; ++it)
                 mpCompartment->removeAgent(pAgent); /*Rule 24*- TH17 can die in LP*/
                 continue;
             }
+	    if (p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		&& p_TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+              {
+            	mpCompartment->getLocation(pAgent->getId(), Location);
+		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+		continue;
+              }
             else if ((tDCConcentration  > ENISI::Threshold)
                 && (p_rule23 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
@@ -429,6 +451,13 @@ for (; it != end; ++it)
                 mpCompartment->removeAgent(pAgent); /*Rule 27*- Th1 can die in LP*/
                 continue;
               }
+	    if (p_Th1cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		&& p_TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+              {
+            	mpCompartment->getLocation(pAgent->getId(), Location);
+		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+		continue;
+              }
           }
         if (state == TcellState::Tr)
         {
@@ -437,6 +466,13 @@ for (; it != end; ++it)
         		mpCompartment->removeAgent(pAgent); /*Rule death of Tr cells*- Tr cells die in LP*/
         		continue;
         	}
+		if (p_Trcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		&& p_TotalTcellcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+              {
+            	mpCompartment->getLocation(pAgent->getId(), Location);
+		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
+		continue;
+              }
         }
         /*if (state == TcellState::TH17)
           {
