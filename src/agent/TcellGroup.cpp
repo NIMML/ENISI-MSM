@@ -232,8 +232,7 @@ for (; it != end; ++it)
                   }
               }// End of naive eDC loop 
             if ((tDCConcentration > ENISI::Threshold)
-                && (p_rule53 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) && tDCConcentration *
-		    repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() * iTregcap > itregConcentration)
+                && (p_rule53 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::iTREG; /*Rule 53*/
                 //pAgent->setState(newState);
