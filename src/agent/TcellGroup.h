@@ -52,10 +52,12 @@ private:
   double p_rule55a;/*Rule 55a parameter*/
   double p_rule55b;/*Rule 55b parameter*/
   double p_naiveTcelldeath;
-  double Th1cap;
-  double Th17cap;
-  double iTregcap;
-  double TotalTcellcap;
+  double p_Th1cap;
+  double p_Th17cap;
+  double p_iTregcap;
+  double p_nTcap;
+  double p_Trcap;
+  double p_TotalTcellcap;
   //double p_rule56;/*Rule 56 parameter*/
   double neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
