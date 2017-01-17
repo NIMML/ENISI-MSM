@@ -82,23 +82,7 @@ void HPModel::initialize_lamina_propria()
   double concentration3;
 
   if (!mpProperties->getValue("lamina_propria.Tcell.naive.concentration", concentration3)) concentration3 = 0;
-  
-  double concentration4;
-
-  if (!mpProperties->getValue("lamina_propria.Tcell.Th1.concentration", concentration4)) concentration4 = 0;
-  
-  double concentration5;
-
-  if (!mpProperties->getValue("lamina_propria.Tcell.Th17.concentration", concentration5)) concentration5 = 0;
-  
-  double concentration6;
-
-  if (!mpProperties->getValue("lamina_propria.Tcell.iTreg.concentration", concentration6)) concentration6 = 0;
-  
-  double concentration7;
-
-  if (!mpProperties->getValue("lamina_propria.Tcell.Tr.concentration", concentration7)) concentration7 = 0;
-  new TcellGroup(mp_lamina_propria, concentration3, concentration4, concentration5, concentration6, concentration7);
+  new TcellGroup(mp_lamina_propria, concentration3);
  
   if (!mpProperties->getValue("lamina_propria.HPylori.concentration", concentration)) concentration = 0;
   new HPyloriGroup(mp_lamina_propria, concentration);
@@ -138,23 +122,8 @@ void HPModel::initialize_gastric_lymph_node()
   double concentration3;
 
   if (!mpProperties->getValue("gastric_lymph_node.Tcell.naive.concentration", concentration3)) concentration3 = 0;
-  double concentration4;
-
-  if (!mpProperties->getValue("gastric_lymph_node.Tcell.Th1.concentration", concentration4)) concentration4 = 0;
-  
-  double concentration5;
-
-  if (!mpProperties->getValue("gastric_lymph_node.Tcell.Th17.concentration", concentration5)) concentration5 = 0;
-  
-  double concentration6;
-
-  if (!mpProperties->getValue("gastric_lymph_node.Tcell.iTreg.concentration", concentration6)) concentration6 = 0;
-  
-  double concentration7;
-
-  if (!mpProperties->getValue("gastric_lymph_node.Tr.concentration", concentration7)) concentration7 = 0;
-  
-  new TcellGroup(mp_gastric_lymph_node, concentration3, concentration4, concentration5, concentration6, concentration7);
+   
+  new TcellGroup(mp_gastric_lymph_node, concentration3);
   
   
   mp_gastric_lymph_node->addCytokine("eIL6");
