@@ -31,7 +31,6 @@ private:
   double  p_Th1death;
   double  p_Trdeath;
   double  p_nTtoTr;
-  double  p_nTtoTh1 ;
   double  p_nTtoiTreg;
   double  p_nTtoTh17;
   double  p_nTtoTh1;
