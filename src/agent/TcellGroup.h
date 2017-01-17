@@ -52,8 +52,7 @@ private:
   double  p_Trcap;
   double  p_Th1cyto;	
   double  p_Th17cyto;
-  double  p_iTregcyto;
-  double  p_Trcyto;	
+  double  p_TroriTregcyto;	
   //double p_rule56;/*Rule 56 parameter*/
   double neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
 
