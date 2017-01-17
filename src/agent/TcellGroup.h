@@ -28,7 +28,8 @@ private:
   double  p_Th17death;
   double  p_naiveTcelldeath;
   double  p_iTregdeath;
-  double  p_Th1death7;
+  double  p_Th1death;
+  double  p_Trdeath;
   double  p_nTtoTr;
   double  p_nTtoTh1 ;
   double  p_nTtoiTreg;
@@ -41,9 +42,9 @@ private:
   double  p_iTregtoTh17;
   double  p_Th17move;
   double  p_iTregmove;
-  double  p_iTh1move;
+  double  p_Th1move;
   double  p_allTpro;
-  double  p_TotalTcap  ;
+  double  p_TotalTcap;
   double  p_nTcap;
   double  p_Th1cap;
   double  p_Th17cap;
