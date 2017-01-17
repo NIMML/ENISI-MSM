@@ -25,7 +25,8 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_Th17death", p_Th17death);
   pModel->getValue("p_naiveTcelldeath",p_naiveTcelldeath);
   pModel->getValue("p_iTregdeath", p_iTregdeath);
-  pModel->getValue("p_Th1death7", p_Th1death);
+  pModel->getValue("p_Th1death", p_Th1death);
+  pModel->getValue("p_Trdeath", p_Trdeath);	  
   pModel->getValue("p_nTtoTr", p_nTtoTr);
   pModel->getValue("p_nTtoTh1 ", p_nTtoTh1);
   pModel->getValue("p_nTtoiTreg", p_nTtoiTreg);
@@ -38,7 +39,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_iTregtoTh17", p_iTregtoTh17);
   pModel->getValue("p_Th17move", p_Th17move);
   pModel->getValue("p_iTregmove", p_iTregmove);
-  pModel->getValue("p_iTh1move", p_iTh1move);
+  pModel->getValue("p_Th1move", p_iTh1move);
   pModel->getValue("p_allTpro", p_allTpro); 
   pModel->getValue("p_TotalTcap",p_TotalTcap);  
   pModel->getValue("p_nTcap",p_nTcap);
@@ -48,8 +49,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_Trcap",p_Trcap);	  
   pModel->getValue("p_Th1cyto",p_Th1cyto);	
   pModel->getValue("p_Th17cyto",p_Th17cyto);
-  pModel->getValue("p_iTregcyto",p_iTregcyto);
-   pModel->getValue("p_Trcyto",p_Trcyto);	
+  pModel->getValue("p_TroriTregcyto",p_TroriTregcyto);	
   //pModel->getValue("p_rule56", p_rule56);
   pModel->getValue("neardistane_border", neardistane_border);
   pModel->getValue("p_IL17", p_IL17);
