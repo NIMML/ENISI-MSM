@@ -39,7 +39,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_iTregtoTh17", p_iTregtoTh17);
   pModel->getValue("p_Th17move", p_Th17move);
   pModel->getValue("p_iTregmove", p_iTregmove);
-  pModel->getValue("p_Th1move", p_iTh1move);
+  pModel->getValue("p_Th1move", p_Th1move);
   pModel->getValue("p_allTpro", p_allTpro); 
   pModel->getValue("p_TotalTcap",p_TotalTcap);  
   pModel->getValue("p_nTcap",p_nTcap);
@@ -468,7 +468,7 @@ for (; it != end; ++it)
 	LocalFile::debug() << "IL10 cytokine release" << dIL10 << std::endl ;
       }
     if (state == TcellState::TH17 
-	&& pTh17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	&& p_Th17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
       { //Rule 29 If T cell state is TH1, then release IFNg
         mpCompartment->cytokineValue("eIL17", pt) += dIL17; //production based on ODE for IL17
       }
