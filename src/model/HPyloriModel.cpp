@@ -79,9 +79,7 @@ void HPModel::initialize_lamina_propria()
   //if (!mpProperties->getValue("lamina_propria.Tcell.concentration", concentration)) concentration = 0;
   //new TcellGroup(mp_lamina_propria, concentration);
   
-  double concentration3;
-
-  if (!mpProperties->getValue("lamina_propria.Tcell.naive.concentration", concentration3)) concentration3 = 0;
+  if (!mpProperties->getValue("lamina_propria.Tcell.naive.concentration", concentration)) concentration = 0;
   new TcellGroup(mp_lamina_propria, concentration3);
  
   if (!mpProperties->getValue("lamina_propria.HPylori.concentration", concentration)) concentration = 0;
@@ -119,11 +117,9 @@ void HPModel::initialize_gastric_lymph_node()
  // if (!mpProperties->getValue("gastric_lymph_node.Tcell.concentration", concentration)) concentration = 0;
  // new TcellGroup(mp_gastric_lymph_node, concentration);
   
-  double concentration3;
-
-  if (!mpProperties->getValue("gastric_lymph_node.Tcell.naive.concentration", concentration3)) concentration3 = 0;
+  if (!mpProperties->getValue("gastric_lymph_node.Tcell.naive.concentration", concentration)) concentration = 0;
    
-  new TcellGroup(mp_gastric_lymph_node, concentration3);
+  new TcellGroup(mp_gastric_lymph_node, concentration);
   
   
   mp_gastric_lymph_node->addCytokine("eIL6");
