@@ -34,8 +34,8 @@ private:
   double p_iDCmoveEpitoLP;
   double p_DCEpitoLP;
   double p_DCbasal;
+  double p_DCLPtoGLN;
   
-
 };
 
 } // namespace ENISI
