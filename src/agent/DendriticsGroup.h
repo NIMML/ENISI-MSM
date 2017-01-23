@@ -22,19 +22,19 @@ protected:
   virtual void write(const repast::Point<int> & pt);
 
 private:
-  double p_rule17a;
-  double p_rule17b;
-  double p_rule48a;
-  double p_rule48b;
+  double p_iDCtoeDCLP;
+  double p_iDCtotDCLP;
+  double p_iDCtoeDCE;
+  double p_iDCtotDCE;
   double p_DCDeath;
-  double p_rule15;
-  double p_rule34;
-  double p_rule51a;
-  double p_rule51b;
-  double p_rule52;
-  double p_iDCEpitheliumDistance;
-  double p_iDCLPDistance;
-  double p_mDCGLNDistance;
+  double p_iDCrep;
+  double p_eDCcyto;
+  double p_tDCcyto;
+  double p_iDCmoveLPtoEpi;
+  double p_iDCmoveEpitoLP;
+  double p_DCEpitoLP;
+  double p_DCbasal;
+  
 
 };
 
