@@ -94,14 +94,14 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
   double IL10 = mpCompartment->cytokineValue("eIL10", pt);
+  double TGFb = mpCompartment->cytokineValue("eTGFb", pt);
 
   MacrophageODE1 & odeModel = MacrophageODE1::getInstance();
   odeModel.setInitialConcentration("IFNg", IFNg);
   odeModel.setInitialConcentration("IL10", IL10);
-
   /* run time course */
   odeModel.runTimeCourse();
-
+	
   double Mreg = odeModel.getConcentration("Mreg");
   /*identify states of HPylori counted -- naive name should be changed to LIVE*/
   std::vector< Agent * >::iterator it = Macrophages.begin();
@@ -119,15 +119,18 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       /*get concentration of IFNg and IL10 for COPASI input*/
       LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
       /* if no bacteria is around macrophage, then stays immature */
-      if (state == MacrophageState::MONOCYTE){
-          if ((damagedEpithelialCellConcentration > 0 || eDendriticsConcentration > 0)
-              && (p_rule13 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+      if (state == MacrophageState::MONOCYTE)
+      {
+          if ((damagedEpithelialCellConcentration >  ENISI::Threshold  || eDendriticsConcentration >  ENISI::Threshold )
+              && (p_monorep> repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())) 
+	  {
               LocalFile::debug() << "*** Macrophage proliferates" << std::endl;
               mpCompartment->getLocation(pAgent->getId(), Location);
               mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
           }
           if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
-              && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())){
+              && (p_rule42 > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()))
+	  {
         	  LocalFile::debug() << "HPylori or Infectious bacteria in LP" << std::endl;
               /* set initial concentrations */
               /* NOTE: IFNg and IL10 provide good Mreg variation between values 0 and 10 */
@@ -142,7 +145,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 					  mpCompartment->getLocation(pAgent->getId(), Location);
 					  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
 				  }*/
-                  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()){
+                  if (Mreg > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())
+		  {
                       LocalFile::debug() << "*** Macrophage transit to REGULATORY" << std::endl;
                       newState = MacrophageState::REGULATORY;
                       pAgent->setState(newState);
