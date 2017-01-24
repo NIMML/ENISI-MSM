@@ -28,13 +28,16 @@ protected:
   virtual void write(const repast::Point<int> & pt);
 
 private:
-  double p_rule42;
   double p_MinfDiff;
   double p_MregDiff;
-  double p_rule13;
-  double p_rule28a;
-  double p_rule28b;
+  double p_monorep;
+  double p_Mregdeath;
+  double p_Minfdeath;
   double p_Monocytedeath;
+  double p_Mregcap;
+  double p_Mregcyto;
+  double p_Minfcyto;
+  double p_HPregenv;
 };
 
 } // namespace ENISI
