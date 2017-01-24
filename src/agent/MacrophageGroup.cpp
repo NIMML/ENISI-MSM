@@ -120,7 +120,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
       {
           if ((damagedEpithelialCellConcentration > ENISI::Threshold  || eDendriticsConcentration > ENISI::Threshold )
               && p_monorep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-	      && pMregcap > monosConcentration* repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) 
+	      && p_Mregcap > monosConcentration* repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) 
 	  {       
               mpCompartment->getLocation(pAgent->getId(), Location);
               mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
@@ -165,7 +165,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
               continue;
           }
 	  if (p_Mregcap > monosConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-	      && pmonorep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	      && p_monorep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 	  {
 	    mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);	  		  
