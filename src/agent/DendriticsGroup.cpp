@@ -180,7 +180,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
            *  1 is arbitrary * Rule 17 and Rule 48*/
           if (mpCompartment->getType() == Compartment::lamina_propria
-              &&(liveHPyloriConcentration * p_iDCtotDCLP > tolegenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              &&(liveHPyloriConcentration * p_iDCtotDCLP > tolerogenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               newState = DendriticState::TOLEROGENIC;
               pAgent->setState(newState);
               continue;
@@ -195,7 +195,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 	       && mpCompartment->getType() == Compartment::lamina_propria)
 	    {
 	      mpCompartment->getLocation(pAgent->getId(), Location);
-	      mpCompartment->addAgent(new Agent(Agent::Dendritics, pAgent->getState()), Location);
+	      mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
 	    }
         }
       if (state == DendriticState::EFFECTOR)
@@ -213,7 +213,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
             }//movement from LP to GLN
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
         		  && mpCompartment->getType() == Compartment::epithilium
-        		  && (p_DCepitoLP > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        		  && (p_DCEpitoLP > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
@@ -251,7 +251,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
             }//movement from LP to GLN
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)) < 1.5 //TODO - CRITICAL Determine this value
         		  && mpCompartment->getType() == Compartment::epithilium
-        		  && (p_DCepitoLP > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        		  && (p_DCEpitoLP > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
