@@ -80,17 +80,13 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
   double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
-    //double damagedEpithelialCellConcentration = 1000;
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+  double monosConcentration = MacrophageConcentration[MacrophageState::MONOCYTE] + MacrophageConcentration[MacrophageState::INFLAMMATORY] + MacrophageConcentration[MacrophageState::REGULATORY];
 
   LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
-  //LocalFile::debug() << "*** eDendriticsConcentration	= " << eDendriticsConcentration << std::endl;
-  //LocalFile::debug() << "*** damagedEpithelialCellConcentration	= " << damagedEpithelialCellConcentration << std::endl;
-  //LocalFile::debug() << "*** macrophageregConcentration	= " << macrophageregConcentration << std::endl;
-  //LocalFile::debug() << "*** infectiousBacteriaConcentration	= " << infectiousBacteriaConcentration << std::endl;
 
   double IFNg = mpCompartment->cytokineValue("eIFNg", pt);
   double IL10 = mpCompartment->cytokineValue("eIL10", pt);
@@ -103,22 +99,14 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   odeModel.runTimeCourse();
 	
   double Mreg = odeModel.getConcentration("Mreg");
-  /*identify states of HPylori counted -- naive name should be changed to LIVE*/
   std::vector< Agent * >::iterator it = Macrophages.begin();
   std::vector< Agent * >::iterator end = Macrophages.end();
 
   for (; it != end; ++it){
       Agent * pAgent = *it;
       MacrophageState::State state = (MacrophageState::State) pAgent->getState();
-
       MacrophageState::State newState = state;
-
-      // double tolegenicBacteriaConcentration = BacteriaConcentration[BacteriaState::TOLEROGENIC];
-      //      LocalFile::debug() << "Microphage::infectiousBacteriaConcentration=" << infectiousBacteriaConcentration << std::endl;
-
-      /*get concentration of IFNg and IL10 for COPASI input*/
-      LocalFile::debug() << " ++ HPylori.size() = " << HPylori.size() << std::endl;
-      /* if no bacteria is around macrophage, then stays immature */
+    
       if (state == MacrophageState::MONOCYTE)
       {
           if ((damagedEpithelialCellConcentration >  ENISI::Threshold  || eDendriticsConcentration >  ENISI::Threshold )
