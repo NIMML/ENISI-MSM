@@ -80,7 +80,7 @@ void HPModel::initialize_lamina_propria()
   //new TcellGroup(mp_lamina_propria, concentration);
   
   if (!mpProperties->getValue("lamina_propria.Tcell.naive.concentration", concentration)) concentration = 0;
-  new TcellGroup(mp_lamina_propria, concentration3);
+  new TcellGroup(mp_lamina_propria, concentration);
  
   if (!mpProperties->getValue("lamina_propria.HPylori.concentration", concentration)) concentration = 0;
   new HPyloriGroup(mp_lamina_propria, concentration);
