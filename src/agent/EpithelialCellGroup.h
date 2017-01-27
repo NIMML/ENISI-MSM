@@ -22,12 +22,12 @@ protected:
 private:
   double p_EpiCellDeath;//Rule 11
   double p_EpiProliferation;//Rule 8
-  double p_rule10a;
-  double p_rule10b;
-  double p_rule12;//Rule 12
-  double p_rule10a_infectiousBacteriaConcentration;
-  double p_rule10b_cytokineConcentration;
-  double p_rule10b_random;
+  double p_epith1damage;
+  double p_epith17damage;
+  double p_epiIL10h;//Rule 12
+  double p_epiinfbactdamage;
+  double p_epicyto;
+  double p_randomdam;
 };
 
 } // namespace ENISI
