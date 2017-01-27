@@ -185,8 +185,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               pAgent->setState(newState);
               continue;
           }
-          if ((damagedEpithelialCellConcentration > ENISI::Threshold || eDendriticsConcentration > ENISI::Threshold)
-              && (p_iDCrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          if (damagedEpithelialCellConcentration > ENISI::Threshold
+              && p_iDCrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               mpCompartment->getLocation(pAgent->getId(), Location);
               mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
@@ -222,8 +222,8 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               continue;
             }//movement from epithilium to LP
 	   if (p_eDCcyto > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()
-	                  && (mpCompartment->getType() == Compartment::lamina_propria)
-		          || (mpCompartment->getType() == Compartment::gastric_lymph_node))
+	                  && mpCompartment->getType() == Compartment::lamina_propria
+		          || mpCompartment->getType() == Compartment::gastric_lymph_node)
   	    {
               mpCompartment->cytokineValue("eIL6", pt) += 7; 
               mpCompartment->cytokineValue("eIL12",pt) += 7;
@@ -234,8 +234,6 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 		continue;
 	    } 
         }      //End of Effector DC
-      // TODO We should use the production from the ODE model.
-// int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
  if (state == DendriticState::TOLEROGENIC)
         {
           if ((mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
@@ -273,8 +271,6 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
         } //End of Tolerogenic DC
   }//END of for
 }// End of act()
-
-// virtual
 void DendriticsGroup::move()
 {
   // TODO CRITICAL Determine the maximum speed
