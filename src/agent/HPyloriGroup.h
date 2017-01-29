@@ -20,10 +20,10 @@ protected:
   virtual void write(const repast::Point<int> & pt);
 
 private:
-  double p_rule3;
-  double p_rule4a;
-  double p_rule4b;
-  double p_rule5;
+  double p_HPepitoLP;
+  double p_HPyloricap;
+  double p_HPylorirep;
+  double p_HPdeathduetoTcells;
   double p_HPyloriDeath;
 };
 
