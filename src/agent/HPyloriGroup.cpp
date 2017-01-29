@@ -13,10 +13,10 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const double & concentrat
       mpCompartment->addAgentToRandomLocation(new Agent(Agent::HPylori, HPyloriState::NAIVE));
     }
   const Properties * pModel = Properties::instance(Properties::model);
-	pModel->getValue("p_rule3", p_rule3);
-	pModel->getValue("p_rule4a", p_rule4a);
-	pModel->getValue("p_rule4b", p_rule4b);
-	pModel->getValue("p_rule5", p_rule5);
+	pModel->getValue("p_HPepitoLP", p_HPepitoLP);
+	pModel->getValue("p_HPylorirep", p_HPylorirep);
+	pModel->getValue("p_HPyloricap", p_HPyloricap);
+	pModel->getValue("p_HPdeathduetoTcells", p_HPdeathduetoTcells);
 	pModel->getValue("p_HPyloriDeath", p_HPyloriDeath);
 }
 
@@ -54,7 +54,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
 
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
-  double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
+  double HPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
 
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
@@ -71,7 +71,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
       if (state == HPyloriState::DEAD) continue;
 
       /* move HPylori across epithelial border if in contact with damaged Epithelial cell *Rule 3*/
-      if ((p_rule3 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+      if ((p_HPepitoLP > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
           && damagedEpithelialCellConcentration
           && mpCompartment->getType() == Compartment::lumen){
           std::vector< double > Location;
@@ -86,7 +86,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
       if ((damagedEpithelialCellConcentration > ENISI::Threshold
            || th1Concentration > ENISI::Threshold
            || th17Concentration > ENISI::Threshold) &&
-          (p_rule5 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          (p_HPdeathduetoTcells > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
           // newState = HPyloriState::DEAD;
           mpCompartment->removeAgent(pAgent);
           continue;
@@ -98,13 +98,15 @@ void HPyloriGroup::act(const repast::Point<int> & pt){
         }
 
       if (mpCompartment->getType() == Compartment::lamina_propria
-          && (p_rule4a / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+          && p_HPyloricap > HPyloriConcentration 
+	  && p_HPylorirep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
 
       if (mpCompartment->getType() == Compartment::lumen
-          && (p_rule4b / HPyloriConcentraion > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+	  && p_HPyloricap > HPyloriConcentration
+          && p_HPylorirep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()){
           mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::HPylori, pAgent->getState()), Location);
         }
