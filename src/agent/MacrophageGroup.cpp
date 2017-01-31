@@ -184,8 +184,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 		  }
 		  if (p_Mregcyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		  {
-			  mpCompartment->cytokineValue("eIL10", pt) += 5;
-			  mpCompartment->cytokineValue("eTGFb", pt) += 2;
+			  mpCompartment->cytokineValue("eIL10", pt) += 7;
+			  //mpCompartment->cytokineValue("eTGFb", pt) += 2;
 		  }
 		  if (p_Mregdeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		  {
