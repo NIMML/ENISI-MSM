@@ -37,7 +37,7 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment,
   pModel->getValue("p_Mregcap", p_Mregcap); 
   pModel->getValue("p_Mregcyto", p_Mregcyto);
   pModel->getValue("p_Minfcyto", p_Minfcyto); 
-  pModel->getValue("p_Minfcap", p_Minfcap);
+  pModel->getValue("p_MinfCap", p_MinfCap);
   pModel->getValue("p_HPregenv", p_HPregenv);
   }
 
