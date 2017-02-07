@@ -37,7 +37,7 @@ private:
   double p_Mregcap;
   double p_Mregcyto;
   double p_Minfcyto;
-  double p_Minfcap;
+  double p_MinfCap;
   double p_HPregenv;
 };
 
