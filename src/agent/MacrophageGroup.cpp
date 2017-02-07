@@ -120,7 +120,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 	  {
 		  if ((damagedEpithelialCellConcentration > ENISI::Threshold  || eDendriticsConcentration > ENISI::Threshold )
 				  && p_monorep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-				  && p_Mregcap > monosConcentration* repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+				  && p_Mregcap > monosConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		  {
 			  mpCompartment->getLocation(pAgent->getId(), Location);
 			  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
@@ -169,6 +169,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 		  {
 			  mpCompartment->getLocation(pAgent->getId(), Location);
 			  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+			  continue;
 		  }
 	  }//End of monocyte conditions
 	  if (state == MacrophageState::REGULATORY)
@@ -181,6 +182,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  LocalFile::debug() << "Regulatory macrophage proliferates" << std::endl;
 			  mpCompartment->getLocation(pAgent->getId(), Location);
 			  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+			  continue;
 		  }
 		  if (p_Mregcyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		  {
@@ -199,8 +201,16 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 		  if (p_Minfcyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		  {
 			  mpCompartment->cytokineValue("eIFNg", pt) += 7;
-		  }
-		  if (p_Minfdeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		  }		 
+		  if ((damagedEpithelialCellConcentration > ENISI::Threshold || macrophageinfConcentration > ENISI::Threshold) 
+		      && p_monorep > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next() 
+		      && p_MinfCap > monosConcentration * repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next())
+		  {
+			  mpCompartment->getLocation(pAgent->getId(), Location);
+			  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
+			  continue;
+		  }		  		
+	           if (p_Minfdeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		  {
 			  //    LocalFile::debug() << "*** Macrophage_Inflamatory dies naturally" << std::endl;
 			  mpCompartment->removeAgent(pAgent);
@@ -209,7 +219,6 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 	  }
   }//END of for
 }//END of act()
-
 // virtual
 void MacrophageGroup::move(){
   // TODO CRITICAL Determine the maximum speed
