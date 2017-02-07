@@ -174,8 +174,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 				  && (tolerogenicBacteriaConcentration * p_iDCtoeDCLP > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
           {
               newState = DendriticState::EFFECTOR;
-              pAgent->setState(newState);
-              continue;
+              pAgent->setState(newState);            
           }
           /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
            *  1 is arbitrary * Rule 17 and Rule 48*/
@@ -183,20 +182,26 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               &&(liveHPyloriConcentration * p_iDCtotDCLP > tolerogenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               newState = DendriticState::TOLEROGENIC;
               pAgent->setState(newState);
-              continue;
           }
           if (damagedEpithelialCellConcentration > ENISI::Threshold
               && p_iDCrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               mpCompartment->getLocation(pAgent->getId(), Location);
               mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
+	      continue;
             }
 	  if (p_DCbasal > dcConcentration 
 	       && mpCompartment->getType() == Compartment::lamina_propria)
 	    {
 	      mpCompartment->getLocation(pAgent->getId(), Location);
 	      mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
+	      continue;
 	    }
+	  if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	    {
+		mpCompartment->removeAgent(pAgent);
+		continue;
+	    } 
         }
       if (state == DendriticState::EFFECTOR)
         {
@@ -226,7 +231,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
 		          || mpCompartment->getType() == Compartment::gastric_lymph_node)
   	    {
               mpCompartment->cytokineValue("eIL6", pt) += 7; 
-              mpCompartment->cytokineValue("eIL12",pt) += 7;
+              mpCompartment->cytokineValue("eIL12",pt) += 7;	  
             } 
 	   if ((p_DCDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
 	    {
