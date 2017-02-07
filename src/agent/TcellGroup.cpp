@@ -126,7 +126,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double th17Concentration = TcellConcentration[TcellState::TH17]; //Rules 22, 23, 36-39 when Th17 is in contact
 	double itregConcentration = TcellConcentration[TcellState::iTREG]; //Rules 19-21when iTreg is in contact
 	double th1Concentration = TcellConcentration[TcellState::TH1];
-	double trConcentration = TcellConcentration[TcellState::TR1];
+	double trConcentration = TcellConcentration[TcellState::Tr];
 	double eDCConcentration = DentriticsConcentration[DendriticState::EFFECTOR]; //Rule 39 eDC count that is in contact with nT
 	double tDCConcentration = DentriticsConcentration[DendriticState::TOLEROGENIC]; //Rule 23 tDC count
 	double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];// Rule 18 damagedEpithelialCellConcentration
