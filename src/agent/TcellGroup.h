@@ -44,6 +44,7 @@ private:
   double  p_Th1move;
   double  p_allTpro;
   double  p_TotalTcap;
+  double  p_nTpro;
   double  p_nTcap;
   double  p_Th1cap;
   double  p_Th17cap;
