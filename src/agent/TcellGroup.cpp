@@ -41,7 +41,8 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_iTregmove", p_iTregmove);
   pModel->getValue("p_Th1move", p_Th1move);
   pModel->getValue("p_allTpro", p_allTpro); 
-  pModel->getValue("p_TotalTcap",p_TotalTcap);  
+  pModel->getValue("p_TotalTcap",p_TotalTcap);
+  pModel->getValue("p_nTpro",p_nTpro);	  
   pModel->getValue("p_nTcap",p_nTcap);
   pModel->getValue("p_Th1cap",p_Th1cap);
   pModel->getValue("p_Th17cap",p_Th17cap);
