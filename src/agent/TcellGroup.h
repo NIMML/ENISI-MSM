@@ -34,10 +34,8 @@ private:
   double  p_nTtoiTreg;
   double  p_nTtoTh17;
   double  p_nTtoTh1;
-  double  p_rule31a;
-  double  p_Th17toiTregs;
+  double  p_rule31a; 
   double  p_Th17toiTreg;
-  double  p_iTregtoTh17s;
   double  p_iTregtoTh17;
   double  p_Th17move;
   double  p_iTregmove;
@@ -52,13 +50,10 @@ private:
   double  p_Trcap;
   double  p_Th1cyto;	
   double  p_Th17cyto;
-  double  p_TroriTregcyto;	
-  //double p_rule56;/*Rule 56 parameter*/
-  double neardistane_border;/* For the rules that mention nearest distance from Border, earlier it was set as 2*/
-
-  double p_IL17;
-  double p_IFNg;
-  double p_IL10;
+  double  p_TroriTregcyto;	 
+  double  p_IL17;
+  double  p_IFNg;
+  double  p_IL10;
 };
 
 } // namespace ENISI
