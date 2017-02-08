@@ -253,7 +253,7 @@ for (; it != end; ++it)
         if (state == TcellState::iTREG)
           {
             	if (eDCConcentration > tDCConcentration
-                	&& p_iTregtoTh17s > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+                	&& p_iTregtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
               	{
                 	newState = TcellState::TH17; /*Rule 37*/
                 	pAgent->setState(newState);
@@ -367,7 +367,7 @@ for (; it != end; ++it)
 		 mpCompartment->cytokineValue("eIL17", pt) += 5;
 	      }
 	  if (eDCConcentration > ENISI::Threshold || damagedEpithelialCellConcentration > ENISI::Threshold	
-		|| damagedEpithelialCellConcentrationp_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		|| p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
 		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
