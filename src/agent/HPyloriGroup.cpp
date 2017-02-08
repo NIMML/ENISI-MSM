@@ -86,7 +86,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
       /* HPylori dies is nearby damaged epithelial cell, th1 or th17* *Rule 5,6,7*/
           if (damagedEpithelialCellConcentration > ENISI::Threshold
                || th1Concentration > ENISI::Threshold
-               || th17Concentration > ENISI::Threshold) 
+               || th17Concentration > ENISI::Threshold 
 	       && p_HPdeathduetoTcells > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
           {
               // newState = HPyloriState::DEAD;
