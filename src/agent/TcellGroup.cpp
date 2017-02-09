@@ -185,7 +185,7 @@ for (; it != end; ++it)
           {
             if (eDCConcentration  > ENISI::Threshold)
               {
-                if (dIFNg > p_IFNg || 
+                if ((dIFNg > p_IFNg) || 
 		    p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
                   {
                     newState = TcellState::TH1; /*Rule 39*/
@@ -224,7 +224,7 @@ for (; it != end; ++it)
           }//End of naive T cell loop
         if (state == TcellState::TH17)
           {
-        	if  (tDCConcentration > ENISI::Threshold
+        	if  ((tDCConcentration > ENISI::Threshold)
         			&& p_Th17toiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         	{
         		newState = TcellState::iTREG; /*Rule 36*/
@@ -241,7 +241,7 @@ for (; it != end; ++it)
         		continue;
         	}
         	if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5           
-                           && p_Th17move > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())/*Rule 32*/
+                           && (p_Th17move > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
                 {
                         std::vector<double> Location;
             		mpCompartment->getLocation(pAgent->getId(), Location);
@@ -304,14 +304,14 @@ for (; it != end; ++it)
       {      
         if (state == TcellState::NAIVE)
           {
-           if (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)
-	      	&& p_nTpro > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+           if ((p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration))
+	      	&& (p_nTpro > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
 		continue;
             }
-	   if (IL10 > p_rule31a * IFNg
+	   if ((IL10 > p_rule31a * IFNg)
               	&& (macrophageregConcentration > ENISI::Threshold)
                	&& (p_nTtoTr > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
@@ -340,7 +340,7 @@ for (; it != end; ++it)
 	     {
 		mpCompartment->cytokineValue("eIL10", pt) += 5;
 	     }
-	    if (p_iTregcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+	    if ((p_iTregcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * trConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
@@ -355,8 +355,8 @@ for (; it != end; ++it)
 	}
         if (state == TcellState::TH17)
           {               
-          if (tDCConcentration  > eDCConcentration || ((IL17 + IL6) < (TGFb + IL10))
-	      || itregConcentration > ENISI::Threshold
+          if ((tDCConcentration  > eDCConcentration) || ((IL17 + IL6) < (TGFb + IL10))
+	      || (itregConcentration > ENISI::Threshold)
                 && (p_Th17toiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::iTREG; 
@@ -366,9 +366,9 @@ for (; it != end; ++it)
 	      {
 		 mpCompartment->cytokineValue("eIL17", pt) += 5;
 	      }
-	  if (eDCConcentration > ENISI::Threshold || damagedEpithelialCellConcentration > ENISI::Threshold	
-		|| p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration))
+	  if ((eDCConcentration > ENISI::Threshold) || (damagedEpithelialCellConcentration > ENISI::Threshold)	
+		|| (p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -382,9 +382,9 @@ for (; it != end; ++it)
           }
         if (state == TcellState::TH1)
           {
-            if (eDCConcentration > ENISI::Threshold || damagedEpithelialCellConcentration > ENISI::Threshold
-		&& p_Th1cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration))
+            if ((eDCConcentration > ENISI::Threshold) || (damagedEpithelialCellConcentration > ENISI::Threshold)
+		&& (p_Th1cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -402,8 +402,8 @@ for (; it != end; ++it)
           }
         if (state == TcellState::Tr)
         {
-            if (p_Trcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
-		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration))
+            if ((p_Trcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
