@@ -186,11 +186,11 @@ for (; it != end; ++it)
             if (eDCConcentration  > ENISI::Threshold)
               {
                 if ((dIFNg > p_IFNg) || 
-		    p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
                   {
                     newState = TcellState::TH1; /*Rule 39*/
                     pAgent->setState(newState);
-                    //LocalFile::debug() << "I am here 11" << std::endl;
+                    LocalFile::debug() <<"nT changes to TH1" << std::endl;
                   }
                 else if (p_nTtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
                     || (dIL17 > p_IL17))
