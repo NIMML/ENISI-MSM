@@ -195,7 +195,7 @@ for (; it != end; ++it)
                 else if (p_nTtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
                     || (dIL17 > p_IL17))
                   {
-		    //LocalFile::debug() << ">>> eDC changed nT to Th17" << std::endl;
+		    LocalFile::debug() << "nT changes to Th17" << std::endl;
                     newState = TcellState::TH17;
                     pAgent->setState(newState);
                    // mpCompartment->cytokineValue("eIL17", pt) += dIL17;
@@ -209,7 +209,7 @@ for (; it != end; ++it)
                     LocalFile::debug() << ">>> eDC changed nT to Th1" << std::endl;
                   } */
               }// End of naive eDC loop 
-            if (tDCConcentration > ENISI::Threshold
+            else if (tDCConcentration > ENISI::Threshold
                 || (dIL10 > p_IL10) || p_nTtoiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
               {
                 newState = TcellState::iTREG; /*Rule 53*/
@@ -355,30 +355,30 @@ for (; it != end; ++it)
 	}
         if (state == TcellState::TH17)
           {               
-          if ((tDCConcentration  > eDCConcentration) || ((IL17 + IL6) < (TGFb + IL10))
-	      || (itregConcentration > ENISI::Threshold)
-                && (p_Th17toiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+          if ((tDCConcentration  > eDCConcentration) ||((IL17 + IL6) < (TGFb + IL10))
+	      	     || (itregConcentration > ENISI::Threshold)
+                     && (p_Th17toiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
               {
                 newState = TcellState::iTREG; 
                 pAgent->setState(newState);            
-              }
-	  if (p_Th17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+              }	        	  
+	  if ((eDCConcentration > ENISI::Threshold) ||(damagedEpithelialCellConcentration > ENISI::Threshold)	
+		    || (p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		    && (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + 					trConcentration)))
 	      {
-		 mpCompartment->cytokineValue("eIL17", pt) += 5;
-	      }
-	  if ((eDCConcentration > ENISI::Threshold) || (damagedEpithelialCellConcentration > ENISI::Threshold)	
-		|| (p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
-              {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
 		continue;
-              }
-	   if (p_Th17death > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) 
+              }	
+	  if (p_Th17death > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()) 
 	      {
                 mpCompartment->removeAgent(pAgent); 
                 continue;
               }
+	  if (p_Th17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	      {
+		mpCompartment->cytokineValue("eIL17", pt) += 5;
+	          }
           }
         if (state == TcellState::TH1)
           {
