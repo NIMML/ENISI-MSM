@@ -38,14 +38,16 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_Th17move", p_Th17move);
   pModel->getValue("p_iTregmove", p_iTregmove);
   pModel->getValue("p_Th1move", p_Th1move);
-  pModel->getValue("p_allTpro", p_allTpro); 
+  pModel->getValue("p_allTrep", p_allTrep); 
   pModel->getValue("p_TotalTcap",p_TotalTcap);
-  pModel->getValue("p_nTpro",p_nTpro);	  
-  pModel->getValue("p_nTcap",p_nTcap);
-  pModel->getValue("p_Th1cap",p_Th1cap);
-  pModel->getValue("p_Th17cap",p_Th17cap);
-  pModel->getValue("p_iTregcap",p_iTregcap);
-  pModel->getValue("p_Trcap",p_Trcap);	  
+  pModel->getValue("p_nTrep",p_nTrep);	   
+  pModel->getValue("p_TH1cap",p_TH1cap);
+  pModel->getValue("p_TH17cap",p_TH17cap);
+  pModel->getValue("p_iTREGcap",p_iTREGcap);
+  pModel->getValue("p_Th1rep",p_Th1rep);
+  pModel->getValue("p_iTregrep",p_iTregrep);
+  pModel->getValue("p_Th17rep",p_Th17rep);	  
+  pModel->getValue("p_Trrep",p_Trrep);
   pModel->getValue("p_Th1cyto",p_Th1cyto);	
   pModel->getValue("p_Th17cyto",p_Th17cyto);
   pModel->getValue("p_TroriTregcyto",p_TroriTregcyto);	
@@ -173,8 +175,8 @@ for (; it != end; ++it)
 	}*/
     if (mpCompartment->getType() == Compartment::gastric_lymph_node)
       {
-        if (p_allTpro > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() 
-	   && p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        if ((p_allTrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	   && (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration)))
           {
             mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -186,13 +188,15 @@ for (; it != end; ++it)
             if (eDCConcentration  > ENISI::Threshold)
               {
                 if ((dIFNg > p_IFNg) || 
-		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		   && (p_TH1cap * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()  > th1concentration))
                   {
                     newState = TcellState::TH1; /*Rule 39*/
                     pAgent->setState(newState);
                     LocalFile::debug() <<"nT changes to TH1" << std::endl;
                   }
-                else if (p_nTtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+                else if ((p_nTtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+			 && (p_TH17cap * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()  > th17concentration)
                     || (dIL17 > p_IL17))
                   {
 		    LocalFile::debug() << "nT changes to Th17" << std::endl;
@@ -210,7 +214,8 @@ for (; it != end; ++it)
                   } */
               }// End of naive eDC loop 
             else if (tDCConcentration > ENISI::Threshold
-                || (dIL10 > p_IL10) || p_nTtoiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+                || (dIL10 > p_IL10) || p_nTtoiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+		    && (p_iTREGcap * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()  > itregconcentration))
               {
                 newState = TcellState::iTREG; /*Rule 53*/
                 pAgent->setState(newState);
@@ -305,7 +310,7 @@ for (; it != end; ++it)
         if (state == TcellState::NAIVE)
           {
            if ((p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration))
-	      	&& (p_nTpro > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	      	&& (p_nTrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
             {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -340,8 +345,8 @@ for (; it != end; ++it)
 	     {
 		mpCompartment->cytokineValue("eIL10", pt) += 5;
 	     }
-	    if ((p_iTregcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration * trConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	    if ((p_iTregrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -363,8 +368,8 @@ for (; it != end; ++it)
                 pAgent->setState(newState);            
               }	        	  
 	  if ((eDCConcentration > ENISI::Threshold) ||(damagedEpithelialCellConcentration > ENISI::Threshold)	
-		    || (p_Th17cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-		    && (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + 					trConcentration)))
+		    || (p_Th17rep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		    && (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
 	      {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -378,12 +383,12 @@ for (; it != end; ++it)
 	  if (p_Th17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 	      {
 		mpCompartment->cytokineValue("eIL17", pt) += 5;
-	          }
+	      }
           }
         if (state == TcellState::TH1)
           {
             if ((eDCConcentration > ENISI::Threshold) || (damagedEpithelialCellConcentration > ENISI::Threshold)
-		&& (p_Th1cap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		&& (p_Th1rep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
@@ -402,7 +407,7 @@ for (; it != end; ++it)
           }
         if (state == TcellState::Tr)
         {
-            if ((p_Trcap > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+            if ((p_Trrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
