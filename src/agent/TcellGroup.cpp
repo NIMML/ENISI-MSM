@@ -346,7 +346,7 @@ for (; it != end; ++it)
 		mpCompartment->cytokineValue("eIL10", pt) += 5;
 	     }
 	    if ((p_iTregrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-		&& p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)
+		&& (p_TotalTcap > (naiveTConcentration + th17Concentration + th1Concentration + itregConcentration + trConcentration)))
               {
             	mpCompartment->getLocation(pAgent->getId(), Location);
 		mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
