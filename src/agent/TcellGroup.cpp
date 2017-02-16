@@ -115,9 +115,9 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double dIL17 = odeModel.getConcentration("dIL17");
 	double dIL10 = odeModel.getConcentration("dIL10");
 
-  /*LocalFile::debug() << "dIFNg = " << dIFNg << std::endl;
+  LocalFile::debug() << "dIFNg = " << dIFNg << std::endl;
   LocalFile::debug() << "dIL17 = " << dIL17 << std::endl;
-  LocalFile::debug() << "dIL10 = " << dIL10 << std::endl;*/
+  LocalFile::debug() << "dIL10 = " << dIL10 << std::endl;
 
 	double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
 	double naiveTConcentration = TcellConcentration[TcellState::NAIVE];
@@ -187,16 +187,16 @@ for (; it != end; ++it)
           {
             if (eDCConcentration  > ENISI::Threshold)
               {
-                if ((dIFNg > p_IFNg) || 
-		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-		   && (p_TH1cap * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()  > th1Concentration))
+                if (((dIFNg > p_IFNg) || 
+		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+		   && (p_TH1cap > th1Concentration))
                   {
                     newState = TcellState::TH1; /*Rule 39*/
                     pAgent->setState(newState);
                     LocalFile::debug() <<"nT changes to TH1" << std::endl;
                   }
                 else if ((p_nTtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-			 && (p_TH17cap * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()  > th17Concentration)
+			 && (p_TH17cap > th17Concentration)
                     || (dIL17 > p_IL17))
                   {
 		    LocalFile::debug() << "nT changes to Th17" << std::endl;
@@ -215,7 +215,7 @@ for (; it != end; ++it)
               }// End of naive eDC loop 
             else if ((tDCConcentration > ENISI::Threshold)
                 || (dIL10 > p_IL10) || (p_nTtoiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-		    && (p_iTREGcap * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()  > itregConcentration))
+		    && (p_iTREGcap > itregConcentration))
               {
                 newState = TcellState::iTREG; /*Rule 53*/
                 pAgent->setState(newState);
