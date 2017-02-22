@@ -22,7 +22,7 @@ public:
     EpithelialCell = 0x04,
     HPylori = 0x08,
     ImmuneCell = 0x10,
-    Macrophage = 0x40,
+    Macrophage = 0x20,
     Tcell = 0x40,
     DiffuserValues = 0x80
   };
