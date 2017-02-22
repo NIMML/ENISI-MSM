@@ -10,7 +10,7 @@ HPyloriGroup::HPyloriGroup(Compartment * pCompartment, const double & concentrat
 {
   size_t LocalCount = mpCompartment->localCount(concentrations);
   for (size_t i = 0; i < LocalCount; i++){
-      mpCompartment->addAgentToRandomLocation(new Agent(Agent::HPylori, HPyloriState::NAIVE));
+      mpCompartment->addAgentToRandomLocation(new Agent(Agent::HPylori, HPyloriState::LIVE));
     }
   const Properties * pModel = Properties::instance(Properties::model);
 	pModel->getValue("p_HPepitoLP", p_HPepitoLP);
