@@ -89,7 +89,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
   Concentration EpithelialCellConcentration;
   concentrations(Agent::EpithelialCell, EpithelialCells, EpithelialCellConcentration);
 
-  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::NAIVE];
+  double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::LIVE];
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
   double eDendriticsConcentration = DendriticsConcentration[DendriticState::EFFECTOR];
   double itregConcentration = TcellConcentration[TcellState::iTREG];
