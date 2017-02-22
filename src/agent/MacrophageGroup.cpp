@@ -88,7 +88,8 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   double macrophageregConcentration = MacrophageConcentration[MacrophageState::REGULATORY];
   double macrophageinfConcentration = MacrophageConcentration[MacrophageState::INFLAMMATORY];
   double resmacConcentration        = MacrophageConcentration[MacrophageState::RESIDENT];
-  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];	
+  double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
+  double th1Concentration = TcellConcentration[TcellState::TH1];
   double monosConcentration = MacrophageConcentration[MacrophageState::MONOCYTE] + MacrophageConcentration[MacrophageState::INFLAMMATORY] + MacrophageConcentration[MacrophageState::REGULATORY] + MacrophageConcentration[MacrophageState::RESIDENT]; 
 
   //LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
@@ -162,7 +163,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 				      {
 					  mpCompartment->removeAgent(Bacteria[Bacteria.size() - 1]);
 					  Bacteria.pop_back();				
-				      }        
+				      }
 			}//End of inflammatory macrophages
 				  /* inflammatory macrophages differentiate if ODE predicts inflammatory differentiation */
 				  /*else if (p_MinfDiff > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
