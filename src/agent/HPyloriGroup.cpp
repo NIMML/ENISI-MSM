@@ -54,7 +54,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
 
   Concentration HPyloriConcentration;
   concentrations(Agent::HPylori, HPylori, HPyloriConcentration);
-  double HPyloriConcentraion = HPyloriConcentration[HPyloriState::NAIVE];
+  double HPyloriConcentraion = HPyloriConcentration[HPyloriState::LIVE];
 
   /*identify states of Epithelial Cells counted */
   double damagedEpithelialCellConcentration = EpithelialCellConcentration[EpithelialCellState::DAMAGED];
