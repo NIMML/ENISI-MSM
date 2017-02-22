@@ -38,14 +38,14 @@ public:
 class MacrophageState
 {
 public:
-  enum State {MONOCYTE/*base state*/, REGULATORY, INFLAMMATORY, DEAD, KEEP_AT_END};
+  enum State {MONOCYTE/*base state*/, RESIDENT, REGULATORY, INFLAMMATORY, DEAD, KEEP_AT_END};
   static Agent::Type Type;
 };
 
 class HPyloriState
 {
 public:
-  enum State {NAIVE, DEAD, KEEP_AT_END};
+  enum State {LIVE, DEAD, KEEP_AT_END};
   static Agent::Type Type;
 };
 
