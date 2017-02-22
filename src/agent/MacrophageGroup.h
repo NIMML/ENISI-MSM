@@ -16,7 +16,7 @@ class MacrophageGroup: public GroupInterface
 public:
   MacrophageGroup(Compartment * pCompartment,
                   const double & concentrations,
-                  const double & regulatoryConcentration);
+                  const double & residentConcentration);
 
   virtual ~MacrophageGroup();
 
@@ -31,14 +31,15 @@ private:
   double p_MinfDiff;
   double p_MregDiff;
   double p_monorep;
-  double p_Mregdeath;
-  double p_Minfdeath;
+  double p_Monocap;
   double p_Monocytedeath;
-  double p_Mregcap;
+  double p_resmacrep;
+  double p_resmacCap;
+  double p_resmaccyto;
+  double p_resmacdeath;
   double p_Mregcyto;
   double p_Minfcyto;
-  double p_MinfCap;
-  double p_HPregenv;
+  double p_HPregenv;  
 };
 
 } // namespace ENISI
