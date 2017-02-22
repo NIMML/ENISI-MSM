@@ -92,7 +92,7 @@ void HPModel::initialize_lamina_propria()
 
   double concentration2;
 
-  if (!mpProperties->getValue("lamina_propria.macrophages.regulatory.concentration", concentration2)) concentration2 = 0;
+  if (!mpProperties->getValue("lamina_propria.macrophages.resident.concentration", concentration2)) concentration2 = 0;
   new MacrophageGroup(mp_lamina_propria, concentration, concentration2);
 
   mp_lamina_propria->addCytokine("eIL6");
@@ -120,7 +120,6 @@ void HPModel::initialize_gastric_lymph_node()
   if (!mpProperties->getValue("gastric_lymph_node.Tcell.naive.concentration", concentration)) concentration = 0;
    
   new TcellGroup(mp_gastric_lymph_node, concentration);
-  
   
   mp_gastric_lymph_node->addCytokine("eIL6");
   mp_gastric_lymph_node->addCytokine("eTGFb");
