@@ -95,7 +95,7 @@ std::string Agent::classname()
         break;
 
       case Macrophage:
-        return Names[6];
+        return Names[5];
         break;
 
       case Tcell:
