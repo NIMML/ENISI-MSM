@@ -60,6 +60,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > HPylori;
   mpCompartment->getAgents(pt, Agent::HPylori, HPylori);
 
+  std::vector< Agent * > Tcells;
+  mpCompartment->getAgents(pt, Agent::Tcell, Tcells);
+
   std::vector< Agent * > EpithelialCells;
 
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5)
@@ -81,6 +84,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 
   Concentration DentriticsConcentration;
   concentrations(Agent::Dentritics, Dentritics, DentriticsConcentration);
+
+  Concentration TcellConcentration;
+  concentrations(Agent::Tcell, Tcells, TcellConcentration);
 
   double liveHPyloriConcentration = HPyloriConcentration[HPyloriState::LIVE];
   double eDendriticsConcentration = DentriticsConcentration[DendriticState::EFFECTOR];
