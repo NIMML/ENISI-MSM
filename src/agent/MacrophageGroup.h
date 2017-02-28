@@ -39,7 +39,8 @@ private:
   double p_resmacdeath;
   double p_Mregcyto;
   double p_Minfcyto;
-  double p_HPregenv;  
+  double p_HPregenv; 
+  double p_trmackill;
 };
 
 } // namespace ENISI
