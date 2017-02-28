@@ -40,6 +40,7 @@ MacrophageGroup::MacrophageGroup(Compartment * pCompartment,
   pModel->getValue("p_Mregcyto", p_Mregcyto);
   pModel->getValue("p_Minfcyto", p_Minfcyto); 
   pModel->getValue("p_HPregenv", p_HPregenv);
+  pModel->getValue("p_trmackill", p_trmackill);
   }
 MacrophageGroup::~MacrophageGroup()
 {}
@@ -214,7 +215,7 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  //LocalFile::debug() << "*** Macrophage_Regulatory dies naturally" << std::endl;
 			  mpCompartment->removeAgent(pAgent);
 			  continue;
-		  }
+		  }		 
 	  } //End of Mreg conditions
 	  if (state == MacrophageState::INFLAMMATORY)
 	  {
@@ -260,12 +261,19 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			{
 				mpCompartment->getLocation(pAgent->getId(), Location);
 				mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
-			}	
+			}
+		  
 			if (p_resmacdeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 			{
 				mpCompartment->removeAgent(pAgent);
 				continue;
 			}
+		         if ((th1Concentration > ENISI::Threshold || IFNg > ENISI::Threshold)
+					&& (p_trmackill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+		  	{
+				mpCompartment->removeAgent(pAgent);
+				continue;
+		  	}		       
 	        }
   }//END of for
 }//END of act()
