@@ -435,7 +435,7 @@ for (; it != end; ++it)
 void TcellGroup::move()
 {
   // TODO CRITICAL Determine the maximum speed
-  double MaxSpeed = 4.0;
+  double MaxSpeed = 2.0;
 
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
