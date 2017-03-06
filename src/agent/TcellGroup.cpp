@@ -136,7 +136,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double IL17 = mpCompartment->cytokineValue("eIL17", pt);
 	double IL6  = mpCompartment->cytokineValue("eIL6", pt);
 	double IL12 = mpCompartment->cytokineValue("eIL12", pt);
-	double IL12 = mpCompartment->cytokineValue("eIL21", pt);
+	double IL21 = mpCompartment->cytokineValue("eIL21", pt);
 	// Rule 18 damagedEpithelialCellConcentration
 	/*LocalFile::debug() << "eDCConcentration			      		="<< eDCConcentration 					<< std::endl;
 	LocalFile::debug() << "tDCConcentration				 		="<< tDCConcentration 					<< std::endl;
