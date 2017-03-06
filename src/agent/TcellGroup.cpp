@@ -54,6 +54,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_IL17", p_IL17);
   pModel->getValue("p_IFNg", p_IFNg);
   pModel->getValue("p_IL10", p_IL10);
+  pModel->getValue("p_IL21", p_IL21);
 }
 
 void TcellGroup::act(const repast::Point<int> & pt)
@@ -135,7 +136,7 @@ void TcellGroup::act(const repast::Point<int> & pt)
 	double IL17 = mpCompartment->cytokineValue("eIL17", pt);
 	double IL6  = mpCompartment->cytokineValue("eIL6", pt);
 	double IL12 = mpCompartment->cytokineValue("eIL12", pt);
-	
+	double IL12 = mpCompartment->cytokineValue("eIL21", pt);
 	// Rule 18 damagedEpithelialCellConcentration
 	/*LocalFile::debug() << "eDCConcentration			      		="<< eDCConcentration 					<< std::endl;
 	LocalFile::debug() << "tDCConcentration				 		="<< tDCConcentration 					<< std::endl;
@@ -239,7 +240,7 @@ for (; it != end; ++it)
         		pAgent->setState(newState);
         		//LocalFile::debug() << "I am here 7" << std::endl;
         	}
-        	if (p_Th17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        	if ((IL21 > p_IL21) || p_Th17cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		{
 			mpCompartment->cytokineValue("eIL17", pt) += 7;
 		}
@@ -297,7 +298,7 @@ for (; it != end; ++it)
             		mpCompartment->moveTo(pAgent->getId(), Location);
             		continue;
           	}
-		if (p_Th1cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+		if ((IL21 > p_IL21) || p_Th1cyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		{
 			mpCompartment->cytokineValue("eIFNg", pt) += 5;
 		}
