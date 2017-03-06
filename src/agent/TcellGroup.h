@@ -56,6 +56,7 @@ private:
   double  p_IL17;
   double  p_IFNg;
   double  p_IL10;
+  double  p_IL21;
 };
 
 } // namespace ENISI
