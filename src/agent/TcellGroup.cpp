@@ -183,7 +183,6 @@ for (; it != end; ++it)
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
             continue;
           } // Proliferation of all the T cells inside GLN
-
         if(state == TcellState::NAIVE)
           {
             if (eDCConcentration  > ENISI::Threshold)
@@ -191,7 +190,7 @@ for (; it != end; ++it)
 		LocalFile::debug() << "TH1 cap" << p_TH1cap << std::endl;   
 		LocalFile::debug() << "Th1 concentration" << th1Concentration << std::endl;   
 				 
-                if (((dIFNg > p_IFNg) || 
+                if (((dIFNg > p_IFNg) || (IL12 > p_IL12) ||
 		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
 		   && (p_TH1cap > th1Concentration))
                   {
@@ -201,7 +200,7 @@ for (; it != end; ++it)
                   }
                 else if ((p_nTtoTh17 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 			 && (p_TH17cap > th17Concentration)
-                    || (dIL17 > p_IL17))
+                    || (dIL17 > p_IL17) || (IL6 > p_IL6) || (TGFb > p_TGFb))
                   {
 		    LocalFile::debug() << "nT changes to Th17" << std::endl;
                     newState = TcellState::TH17;
@@ -218,7 +217,7 @@ for (; it != end; ++it)
                   } */
               }// End of naive eDC loop 
             else if ((tDCConcentration > ENISI::Threshold)
-                || (dIL10 > p_IL10) || (p_nTtoiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+                || (TGFb > p_TGFb) || (p_nTtoiTreg > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 		    && (p_iTREGcap > itregConcentration))
               {
                 newState = TcellState::iTREG; /*Rule 53*/
