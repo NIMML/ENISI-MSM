@@ -257,14 +257,14 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 				mpCompartment->cytokineValue("eTGFb", pt) += 2;
 			}
 			if ((resmacConcentration > ENISI::Threshold)
-					&& p_resmacrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+					&& p_resmacrep / (1 + resmacConcentration) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
 			   		&& p_resmacCap > (resmacConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
 			{
 				mpCompartment->getLocation(pAgent->getId(), Location);
 				mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
 			}
 		  
-			if (p_resmacdeath/ (1 + resmacConcentration) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+			if (p_resmacdeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 			{
 				mpCompartment->removeAgent(pAgent);
 				continue;
