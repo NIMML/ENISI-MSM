@@ -184,7 +184,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
               pAgent->setState(newState);
           }
           if (damagedEpithelialCellConcentration > ENISI::Threshold
-              && p_iDCrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+              && p_iDCrep / (1 + dcConcentration)  > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               mpCompartment->getLocation(pAgent->getId(), Location);
               mpCompartment->addAgent(new Agent(Agent::Dentritics, pAgent->getState()), Location);
