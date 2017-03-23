@@ -147,7 +147,7 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
         }     
     }//End of lamina propria
 }//End of for
-// virtual
+}// virtual
 void BacteriaGroup::move(){
   // TODO CRITICAL Determine the maximum speed
   double MaxSpeed = 2.0;
