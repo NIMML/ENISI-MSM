@@ -104,13 +104,13 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           mpCompartment->moveTo(pAgent->getId(), Location);
           continue;
         }
-	if(p_BacteriaLumProl / (1 + tolerogenicBacteriaConcentraion)  > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	if((p_BacteriaLumProl / (1 + tolerogenicBacteriaConcentraion)) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 	{    	 
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
 	  continue;
         }    
-	if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	if (p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 	{
     	  mpCompartment->removeAgent(pAgent);
           continue;
@@ -148,21 +148,18 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
     }//End of lamina propria
 }//End of for
 // virtual
-void BacteriaGroup::move()
-{
+void BacteriaGroup::move(){
   // TODO CRITICAL Determine the maximum speed
   double MaxSpeed = 2.0;
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
   Compartment::LocalIterator endLocal = mpCompartment->localEnd();
 
-  for (; itLocal != endLocal; ++itLocal)
-        {
+  for (; itLocal != endLocal; ++itLocal){
       mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
 	}
 }
 
 // virtual
-void BacteriaGroup::write(const repast::Point<int> &)
-{
+void BacteriaGroup::write(const repast::Point<int> &){
 }
