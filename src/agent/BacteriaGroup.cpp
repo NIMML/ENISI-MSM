@@ -71,6 +71,8 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
   Concentration BacteriaConcentration;
   concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
   double tolerogenicBacteriaConcentraion = BacteriaConcentration[BacteriaState::TOLEROGENIC];
+  double infectiousBacteriaConcentraion = BacteriaConcentration[BacteriaState::INFECTIOUS];
+  double totalbact = tolerogenicBacteriaConcentraion +  infectiousBacteriaConcentraion;
 
   std::vector< Agent * >::iterator it = Bacteria.begin();
   std::vector< Agent * >::iterator end = Bacteria.end();
@@ -79,88 +81,88 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
     {
       Agent * pAgent = *it;
       BacteriaState::State state = (BacteriaState::State) pAgent->getState();
-
       if (state == BacteriaState::DEAD)
     	{
     	  	//LocalFile::debug() << "# Bacteria state is DEAD" << std::endl;
     		continue;
     	}
-
       BacteriaState::State newState = state;
 
       /*identify states of Epithelial Cells counted */
       double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
       /* move Bacteria across epithelial border if in contact with damaged Epithelial cell */
-
-      if (damagedEpithelialCellConcentration > p_rule1_damagedEpithelialCellConcentration * ENISI::Threshold
-          && mpCompartment->getType() == Compartment::lumen
-          && p_rule1 > Random){
-    	  // LocalFile::debug() << "# Bacteria can enter due to E cell damage" << std::endl ;
+      if (mpCompartment->getType() == Compartment::lumen)
+       {
+        if (damagedEpithelialCellConcentration > p_rule1_damagedEpithelialCellConcentration * ENISI::Threshold         
+          && p_rule1 > Random)
+        {    	 
           std::vector< double > Location;
-          mpCompartment->getLocation(pAgent->getId(), Location);
-          // LocalFile::debug() << "Move Bacteria: (" << Location[0] << ", " << Location[1] << ") -> (";
+          mpCompartment->getLocation(pAgent->getId(), Location);        
           Location[Borders::Y] +=
             Compartment::instance(Compartment::epithilium)->spaceDimensions().extents(Borders::Y) +
-            mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);
-          // LocalFile::debug() << Location[0] << ", " << Location[1] << ")" <<  std::endl;
+            mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);         
           mpCompartment->moveTo(pAgent->getId(), Location);
           continue;
         }
+	if(p_BacteriaLumProl / (1 + tolerogenicBacteriaConcentraion)  > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	{    	 
+    	  mpCompartment->getLocation(pAgent->getId(), Location);
+          mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
+	  continue;
+        }    
+	if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+	{
+    	  mpCompartment->removeAgent(pAgent);
+          continue;
+        } 
+      } //End of lumen
+      if (mpCompartment->getType() == Compartment::lamina_propria)
+      {
+	  newState = BacteriaState::INFECTIOUS;
+          pAgent->setState(newState);
       /* Bacteria dies is nearby damaged epithelial cell, th1 or th17 and is infectious*/
       if ((newState == BacteriaState::INFECTIOUS)
-          && (damagedEpithelialCellConcentration > ENISI::Threshold
-              || th1Concentration > ENISI::Threshold
-              || th17Concentration > ENISI::Threshold
+          && (damagedEpithelialCellConcentration
+              || th1Concentration
+              || th17Concentration
 	      || MinfConcentration > ENISI::Threshold)
-          && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  //LocalFile::debug() << "# Bacteria dies nearby damaged E cell" << std::endl ;
+          && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+        {   	  
           mpCompartment->removeAgent(pAgent);
           continue;
         }
       /* Bacteria become infectious when moved into Lamina Propria */
-      if (mpCompartment->getType() == Compartment::lamina_propria){
-    	  //LocalFile::debug() << "### Bacteria becomes infectious in LP" << std::endl;
-    	  newState = BacteriaState::INFECTIOUS;
-          pAgent->setState(newState);
-        }
-
-      if ((p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+      if (p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        {
     	  //LocalFile::debug() << "# Bacteria dies naturally" << std::endl;
           mpCompartment->removeAgent(pAgent);
           continue;
         }
-
-      if (mpCompartment->getType() == Compartment::lamina_propria
-          && (p_BacteriaLPProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+      if ((p_BacteriaLPProl / (1 + totalbact)) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+        {
     	  //LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
-        }
-
-      if (mpCompartment->getType() == Compartment::lumen &&
-          (p_BacteriaLumProl > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
-    	  //LocalFile::debug() << "# Bacteria proliferates in LM" << std::endl;
-    	  mpCompartment->getLocation(pAgent->getId(), Location);
-          mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
-        }
-      /* TODO: Bacteria are removed when macrophage uptake/differentiate */
-      pAgent->setState(newState);
-    }
-}
+	  continue;
+        }     
+    }//End of lamina propria
+}//End of for
 // virtual
-void BacteriaGroup::move(){
+void BacteriaGroup::move()
+{
   // TODO CRITICAL Determine the maximum speed
-  double MaxSpeed = 4.0;
-
+  double MaxSpeed = 2.0;
   // Find all local agents and move them
   Compartment::LocalIterator itLocal = mpCompartment->localBegin();
   Compartment::LocalIterator endLocal = mpCompartment->localEnd();
 
-  for (; itLocal != endLocal; ++itLocal){
+  for (; itLocal != endLocal; ++itLocal)
+        {
       mpCompartment->moveRandom((*itLocal)->getId(), MaxSpeed);
 	}
 }
 
 // virtual
-void BacteriaGroup::write(const repast::Point<int> &){
+void BacteriaGroup::write(const repast::Point<int> &)
+{
 }
