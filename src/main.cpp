@@ -4,6 +4,20 @@
 #include "model/HPyloriModel.h"
 #include "repast_hpc/RepastProcess.h"
 #include "grid/Properties.h"
+#include <time.h>
+
+#ifdef WIN32
+# ifndef _USE_MATH_DEFINES
+# define _USE_MATH_DEFINES 1
+# endif // _USE_MATH_DEFINES
+# ifndef WIN32_LEAN_AND_MEAN
+# define WIN32_LEAN_AND_MEAN
+# endif // WIN32_LEAN_AND_MEAN
+# include <windows.h>
+#else
+# include <unistd.h>
+# include <sys/syscall.h>
+#endif // WIN32
 
 // #define DEBUG_WAIT
 
@@ -59,7 +73,33 @@ int main(int argc, char** argv)
   while (debugwait) ;
 
   boost::uint32_t seed;
-  if (!RunProperties.getValue("seed", seed)) seed = 1234567;
+  if (!RunProperties.getValue("seed", seed))
+    {
+      boost::uint32_t ThreadId = 0;
+
+#ifdef WIN32
+      ThreadId = (boost::uint32_t)(GetCurrentThreadId() & 0xffffffffUL);
+#elif defined(SYS_thread_selfid)
+      ThreadId = (boost::uint32_t)(::syscall(SYS_thread_selfid) & 0xffffffffUL);
+#elif defined(SYS_gettid)
+      ThreadId = (boost::uint32_t)(::syscall(SYS_gettid) & 0xffffffffUL);
+#elif defined(SYS_getthrid)
+      ThreadId = (boost::uint32_t)(syscall(SYS_getthrid) & 0xffffffffUL);
+#endif
+
+      // Invert Byte order so that we do not have accidental cancellations since both time and thread id are incremented.
+      ThreadId = (ThreadId & 0x000000ffUL) << 24 | (ThreadId & 0x0000ff00UL) << 8 |
+        (ThreadId & 0x00ff0000UL) >> 8 | (ThreadId & 0xff000000UL) >> 24;
+
+      time_t Seconds;
+      time(&Seconds);
+
+      boost::uint32_t Time = (boost::uint32_t)(Seconds & 0xffffffffUL);
+
+      // We use XOR so that we do not favor set or unset bits.
+      seed = ThreadId ^ Time;
+    }
+  
   
   repast::Random::initialize(seed * repast::RepastProcess::instance()->rank());
   
