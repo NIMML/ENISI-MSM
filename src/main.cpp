@@ -58,6 +58,11 @@ int main(int argc, char** argv)
     }
   while (debugwait) ;
 
+  boost::uint32_t seed;
+  if (!RunProperties.getValue("seed", seed)) seed = 1234567;
+  
+  repast::Random::initialize(seed * repast::RepastProcess::instance()->rank());
+  
   ENISI::Properties ModelProperties(ENISI::Properties::model, config + "/model.props", argc, argv, &world);
 
   ENISI::HPModel model;
