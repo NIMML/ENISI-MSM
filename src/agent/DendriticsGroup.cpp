@@ -116,7 +116,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
             {
               std::vector< double > Location;
               mpCompartment->getLocation(pAgent->getId(), Location);
-              Location[Borders::Y] -= 1.01 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
+              Location[Borders::Y] -= 1.9 * mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::LOW);
               mpCompartment->moveTo(pAgent->getId(), Location);
               continue;
             }//movement of iDCs from LP to epithelium
@@ -141,7 +141,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           /*if more HPylori surrounds DC than bacteria and DC is in epithelium then becomes effector --
            *  0.5 is arbitrary *Rule 2*/
           if (mpCompartment->getType() == Compartment::epithilium
-              && tolerogenicBacteriaConcentration * p_iDCtoeDCE > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+              && tolerogenicBacteriaConcentration * p_iDCtoeDCE < liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
               newState = DendriticState::EFFECTOR;
 	      pAgent->setState(newState);
@@ -157,7 +157,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
            * 0.5 is arbitrary */
           if (mpCompartment->getType() == Compartment::epithilium
         		  //&& (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW)< 0.5)
-				  && (liveHPyloriConcentration * p_iDCtotDCE > tolerogenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+				  && (liveHPyloriConcentration * p_iDCtotDCE < tolerogenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
           {
               newState = DendriticState::TOLEROGENIC;
 	      pAgent->setState(newState);
@@ -171,7 +171,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
            *  1 is arbitrary, Rule 48 */
           if (mpCompartment->getType() == Compartment::lamina_propria
         		  //&& (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)< 1.5)
-				  && (tolerogenicBacteriaConcentration * p_iDCtoeDCLP > liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
+				  && (tolerogenicBacteriaConcentration * p_iDCtoeDCLP < liveHPyloriConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
           {
               newState = DendriticState::EFFECTOR;
               pAgent->setState(newState);            
@@ -179,7 +179,7 @@ void DendriticsGroup::act(const repast::Point<int> & pt)
           /*if sufficient Hpylori and bacteria surround DC and DC is in lamina propria then becomes effector --
            *  1 is arbitrary * Rule 17 and Rule 48*/
           if (mpCompartment->getType() == Compartment::lamina_propria
-              &&(liveHPyloriConcentration * p_iDCtotDCLP > tolerogenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
+              &&(liveHPyloriConcentration * p_iDCtotDCLP < tolerogenicBacteriaConcentration * repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())){
               newState = DendriticState::TOLEROGENIC;
               pAgent->setState(newState);
           }
