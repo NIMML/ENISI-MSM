@@ -4,6 +4,7 @@
 #include "grid/Properties.h"
 #include "agent/MacrophageODE1.h"
 #include "DataWriter/LocalFile.h"
+#include "repast_hpc/RepastProcess.h"
 
 using namespace ENISI;
 
