@@ -135,6 +135,14 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
 			  mpCompartment->getLocation(pAgent->getId(), Location);
 			  mpCompartment->addAgent(new Agent(Agent::Macrophage, pAgent->getState()), Location);
 		  }
+		  if (repast::RepastProcess::instance()->getScheduleRunner().currentTick() > 20)
+		  {
+			  // This for loop is printing information about the current tick. Prints only if > 20
+			  LocalFile::debug() << " TICK " << repast::RepastProcess::instance()->getScheduleRunner().currentTick() << std::endl;
+			  //repast::RepastProcess::instance()->getScheduleRunner().currentTick() 
+		  }
+		  
+		  
 		  if ((liveHPyloriConcentration > ENISI::Threshold || infectiousBacteriaConcentration > ENISI::Threshold)
 				  && (p_HPregenv > repast::Random::instance()-> createUniDoubleGenerator(0.0, 1.0).next()))
 		  {		  
