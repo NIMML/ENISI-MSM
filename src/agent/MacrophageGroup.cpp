@@ -98,7 +98,9 @@ void MacrophageGroup::act(const repast::Point<int> & pt)
   double resmacConcentration        = MacrophageConcentration[MacrophageState::RESIDENT];
   double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];
   double th1Concentration = TcellConcentration[TcellState::TH1];
-  double monosConcentration = MacrophageConcentration[MacrophageState::MONOCYTE] + MacrophageConcentration[MacrophageState::INFLAMMATORY] + MacrophageConcentration[MacrophageState::REGULATORY] + MacrophageConcentration[MacrophageState::RESIDENT]; 
+  double monosConcentration = MacrophageConcentration[MacrophageState::MONOCYTE] + 
+	  MacrophageConcentration[MacrophageState::INFLAMMATORY] + 
+	  MacrophageConcentration[MacrophageState::REGULATORY] + MacrophageConcentration[MacrophageState::RESIDENT]; 
 
   //LocalFile::debug() << "*** liveHPyloriConcentration	= " <<  liveHPyloriConcentration << std::endl;
 
