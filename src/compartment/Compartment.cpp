@@ -319,8 +319,14 @@ Compartment * Compartment::transform(std::vector< double > & location) const
     {
       // It is possible that we are still outside the boundaries and need another transformation
       // This recursive call will take care of this
+	  LocalFile::debug() << "Recursive transform attempt: " << pTarget->getName() << std::endl;
       pTarget = pTarget->transform(location);
     }
+
+  if (pTarget != NULL)
+  	{
+	  LocalFile::debug() << "Recursive transform result:  " << pTarget->getName() << std::endl;
+  	}
 
   return pTarget;
 }
@@ -344,11 +350,13 @@ Compartment * Compartment::transform(std::vector< int > & location) const
     {
       // It is possible that we are still outside the boundaries and need another transformation
       // This recursive call will take care of this
-      pTarget = pTarget->transform(Space);
+	  LocalFile::debug() << "Recursive transform attempt: " << pTarget->getName() << std::endl;
+	  pTarget = pTarget->transform(Space);
     }
 
   if (pTarget != NULL)
   	{
+	  LocalFile::debug() << "Recursive transform result:  " << pTarget->getName() << std::endl;
       location = pTarget->spaceToGrid(Space);
   	}
 
