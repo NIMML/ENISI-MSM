@@ -342,12 +342,15 @@ Compartment * Compartment::transform(std::vector< int > & location) const
 
   if (pTarget != NULL)
     {
-      location = pTarget->spaceToGrid(Space);
-
       // It is possible that we are still outside the boundaries and need another transformation
       // This recursive call will take care of this
-      pTarget = pTarget->transform(location);
+      pTarget = pTarget->transform(Space);
     }
+
+  if (pTarget != NULL)
+  	{
+      location = pTarget->spaceToGrid(Space);
+  	}
 
   return pTarget;
 }
