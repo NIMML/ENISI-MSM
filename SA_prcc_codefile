@@ -1,0 +1,32 @@
+#####NIMML######
+### Author: Meghna Verma
+### Date : August 10, 2017
+### Input: Enisi output -> Rows -> diff. design settings (Sample file -> LP_Mregs_means.csv)
+### Column : Parameter values; Last column: grand average of the output for each design settings.
+### Output: PRCC plot
+
+##Now normalize the data and run PCC
+
+data_LP_Mreg_main <- read.csv('/Users/meghnaverma/NIMML/ENISI/LP_Macrophage_State2/LP_Mregs_means.csv', header = TRUE)
+
+## Remove the mean and 1st column with indices of parameters and column 20 (that parameter is dummy)
+
+data_LP_Mreg <- data.frame(data_LP_Mreg_main[,-40]) 
+data_LP_Mreg <- data.frame(data_LP_Mreg[,-20])
+data_LP_Mreg <- data.frame(data_LP_Mreg[,-1])
+
+
+## normalize data in columns 
+scaled.dat <- scale(data_LP_Mreg)
+colMeans(scaled.dat)
+apply(scaled.dat, 2, sd)
+
+total_data <- data.frame(cbind(scaled.dat, data_LP_Mreg_main[,40]))
+#install.packages("sensitivity")
+library("sensitivity")
+## If want to use prcc method
+coeff_pcc <- pcc(total_data[,1:37], total_data[,38], nboot = 300, rank = TRUE, conf = 0.95)
+
+## If want to use src method
+#src_method <- src(total_data[,1:37], total_data[,38], rank = TRUE, nboot = 300, conf = 0.95) 
+plot(coeff_pcc)
