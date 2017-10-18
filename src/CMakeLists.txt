@@ -24,7 +24,7 @@ endforeach()
 # process in each *main.dir/ subdirectory
 add_library(ENISI OBJECT ${ALL_SRCS})
 
-set(COPASI_DEP_LIBS raptor sbml-static lapack blas sedml-static expat)
+set(COPASI_DEP_LIBS raptor sbml-static lapack blas sedml-static numl-static expat)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   set(COPASI_DEP_LIBS  "${COPASI_DEP_LIBS} -lf2c")

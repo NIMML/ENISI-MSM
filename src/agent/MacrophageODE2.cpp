@@ -39,11 +39,10 @@ MacrophageODE2::MacrophageODE2() : DEBUG(false)
 
   for (i = 0; i < iMax; ++i)
     {
-      CCompartment* pCompartment = model->getCompartments()[i];
-      assert(pCompartment != NULL);
+      CCompartment &Compartment = model->getCompartments()[i];
 
       if (DEBUG)
-        LocalFile::debug() << "\t" << pCompartment->getObjectName() << std::endl;
+        LocalFile::debug() << "\t" << Compartment.getObjectName() << std::endl;
     }
 
   // output number and names of all metabolites
@@ -57,15 +56,14 @@ MacrophageODE2::MacrophageODE2() : DEBUG(false)
 
   for (i = 0; i < iMax; ++i)
     {
-      CMetab* metab = model->getMetabolites()[i];
-      assert(metab != NULL);
+      CMetab & metab = model->getMetabolites()[i];
 
-      nameMetabs[metab->getObjectName()] = metab;
+      nameMetabs[metab.getObjectName()] = &metab;
 
       if (DEBUG)
-        LocalFile::debug() << "\t" << metab->getObjectName() << "\t"
-                  << metab->getInitialConcentration() << "\t"
-                  << metab->getInitialValue() << std::endl;
+        LocalFile::debug() << "\t" << metab.getObjectName() << "\t"
+                  << metab.getInitialConcentration() << "\t"
+                  << metab.getInitialValue() << std::endl;
     }
 
   // output number and names of all reactions
@@ -80,10 +78,9 @@ MacrophageODE2::MacrophageODE2() : DEBUG(false)
   for (i = 0; i < iMax; ++i)
     if (DEBUG)
       {
-        CReaction* pReaction = model->getReactions()[i];
-        assert(pReaction != NULL);
+        CReaction & Reaction = model->getReactions()[i];
 
-        LocalFile::debug() << "\t" << pReaction->getObjectName() << std::endl;
+        LocalFile::debug() << "\t" << Reaction.getObjectName() << std::endl;
       }
 
   setUpReport();
@@ -94,7 +91,7 @@ void MacrophageODE2::setInitialConcentration(std::string name, double value)
 {
   if (nameMetabs.find(name) != nameMetabs.end())
     {
-      CMetab* m = nameMetabs[name];
+      CMetab * m = nameMetabs[name];
       m->setInitialConcentration(value);
       m->refreshInitialValue();
     }
@@ -111,11 +108,11 @@ void MacrophageODE2::setUpReport()
   // create a new report definition object
   report = reports->createReportDefinition("Report", "Output for timecourse");
   // set the task type for the report definition to timecourse
-  report->setTaskType(CCopasiTask::timeCourse);
+  report->setTaskType(CTaskEnum::timeCourse);
   // we don't want a table
   report->setIsTable(false);
   // the entries in the output should be seperated by a ", "
-  report->setSeparator(CCopasiReportSeparator(", "));
+  report->setSeparator(", ");
 
   // we need a handle to the header and the body
   // the header will display the ids of the metabolites and "time" for
@@ -133,25 +130,24 @@ void MacrophageODE2::setUpReport()
 
   for (i = 0; i < iMax; ++i)
     {
-      CMetab* pMetab = model->getMetabolites()[i];
-      assert(pMetab != NULL);
+      CMetab & Metab = model->getMetabolites()[i];
 
       // we don't want output for FIXED metabolites right now
-      if (pMetab->getStatus() != CModelEntity::FIXED)
+      if (Metab.getStatus() != CModelEntity::FIXED)
         {
           // we want the concentration in the output
           // alternatively, we could use "Reference=Amount" to get the
           // particle number
 
           CCopasiObjectName referenceEqConcentration =
-            pMetab->getObject(CCopasiObjectName("Reference=Concentration"))->getCN();
+            Metab.getObject(CCopasiObjectName("Reference=Concentration"))->getCN();
 
           body->push_back(referenceEqConcentration);
           // after each entry, we need a seperator
           body->push_back(report->getSeparator().getCN());
 
           // add the corresponding id to the header
-          header->push_back(CCopasiStaticString(pMetab->getSBMLId()).getCN());
+          header->push_back(CCopasiStaticString(Metab.getSBMLId()).getCN());
           // and a seperator
           header->push_back(report->getSeparator().getCN());
         }
@@ -179,13 +175,13 @@ void MacrophageODE2::setUpTask()
   CCopasiVectorN< CCopasiTask > & TaskList = * dataModel->getTaskList();
 
   // get the trajectory task object
-  trajectoryTask = dynamic_cast<CTrajectoryTask*>(TaskList["Time-Course"]);
+  trajectoryTask = dynamic_cast< CTrajectoryTask * >(&TaskList["Time-Course"]);
 
   // if there isn't one
   if (trajectoryTask == NULL)
     {
       // create a new one
-      trajectoryTask = new CTrajectoryTask();
+      trajectoryTask = new CTrajectoryTask(NO_PARENT);
       // remove any existing trajectory task just to be sure since in
       // theory only the cast might have failed above
       TaskList.remove("Time-Course");
@@ -195,7 +191,7 @@ void MacrophageODE2::setUpTask()
     }
 
   // run a deterministic time course
-  trajectoryTask->setMethodType(CCopasiMethod::deterministic);
+  trajectoryTask->setMethodType(CTaskEnum::deterministic);
 
   // pass a pointer of the model to the problem
   trajectoryTask->getProblem()->setModel(dataModel->getModel());
@@ -263,8 +259,6 @@ void MacrophageODE2::runTimeCourse()
 
       // std::exit(1);
     }
-
-  model->updateNonSimulatedValues();
 }
 
 double MacrophageODE2::getConcentration(std::string name)
