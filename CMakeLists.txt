@@ -42,5 +42,11 @@ message(STATUS
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin )
 
+if (CMAKE_MAJOR_VERSION LESS 3 OR CMAKE_MINOR_VERSION LESS 1)
+  set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
+else()
+  set(CMAKE_CXX_STANDARD 11)
+endif()
+
 add_subdirectory(./src)
 
