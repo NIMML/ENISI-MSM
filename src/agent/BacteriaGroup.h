@@ -26,6 +26,7 @@ private:
   double p_BacteriaLumProl;
   double p_rule1;
   double p_rule1_damagedEpithelialCellConcentration;
+  double p_BacCap;
 
 };
 
