@@ -25,7 +25,8 @@ BacteriaGroup::BacteriaGroup(Compartment * pCompartment, const double & concentr
   pModel->getValue("p_BacteriaLumProl", p_BacteriaLumProl);
   pModel->getValue("p_rule1", p_rule1);
   pModel->getValue("p_rule1_damagedEpithelialCellConcentration", p_rule1_damagedEpithelialCellConcentration);
-}
+  pModel->getValue("p_BacCap", p_BacCap);
+ }
 
 void BacteriaGroup::act(const repast::Point<int> & pt)
 {
@@ -83,7 +84,6 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
       BacteriaState::State state = (BacteriaState::State) pAgent->getState();
       if (state == BacteriaState::DEAD)
     	{
-    	  	//LocalFile::debug() << "# Bacteria state is DEAD" << std::endl;
     		continue;
     	}
       BacteriaState::State newState = state;
@@ -101,19 +101,17 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           Location[Borders::Y] +=
             Compartment::instance(Compartment::epithilium)->spaceDimensions().extents(Borders::Y) +
             mpCompartment->spaceBorders()->distanceFromBorder(Location, Borders::Y, Borders::HIGH);         
-          mpCompartment->moveTo(pAgent->getId(), Location);
-          continue;
+            mpCompartment->moveTo(pAgent->getId(), Location);
+            continue;
         }
-	if((p_BacteriaLumProl / (1 + tolerogenicBacteriaConcentraion)) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	if((p_BacteriaLumProl / (1 + tolerogenicBacteriaConcentraion)) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() && p_BacCap > totalbact)
 	{    	 
     	  mpCompartment->getLocation(pAgent->getId(), Location);
-          mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
-	  continue;
+          mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);	 
         }    
 	if (p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
 	{
     	  mpCompartment->removeAgent(pAgent);
-          continue;
         } 
       } //End of lumen
       if (mpCompartment->getType() == Compartment::lamina_propria)
@@ -129,21 +127,16 @@ void BacteriaGroup::act(const repast::Point<int> & pt)
           && (p_BacteriaKill > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))
         {   	  
           mpCompartment->removeAgent(pAgent);
-          continue;
         }
       /* Bacteria become infectious when moved into Lamina Propria */
       if (p_BacteriaDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
         {
-    	  //LocalFile::debug() << "# Bacteria dies naturally" << std::endl;
           mpCompartment->removeAgent(pAgent);
-          continue;
         }
-      if ((p_BacteriaLPProl / (1 + totalbact)) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+      if ((p_BacteriaLPProl / (1 + totalbact)) > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next() &&  p_BacCap > totalbact)
         {
-    	  //LocalFile::debug() << "# Bacteria proliferates in LP" << std::endl;
     	  mpCompartment->getLocation(pAgent->getId(), Location);
           mpCompartment->addAgent(new Agent(Agent::Bacteria, pAgent->getState()), Location);
-	  continue;
         }     
     }//End of lamina propria
 }//End of for
