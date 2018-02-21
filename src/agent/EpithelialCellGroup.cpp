@@ -26,6 +26,7 @@ EpithelialCellGroup::EpithelialCellGroup(Compartment * pCompartment, const doubl
   pModel->getValue("p_epith1damage", p_epith1damage);
   pModel->getValue("p_randomdam", p_randomdam);
   pModel->getValue("p_epicyto", p_epicyto);
+  pModel->getValue("p_EpiCap", p_EpiCap);	  
 }
 
 void EpithelialCellGroup::act(const repast::Point<int> & pt)
@@ -38,7 +39,6 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   std::vector< Agent * > Tcells;
  
   double IL10 = 0.0;
-  //LocalFile::debug() << "distanceFromBorder	  =   " << mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH)  << std::endl;
   if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH) < 1.5)
     {
       mpCompartment->getAgents(pt, 0, 1, Agent::Bacteria, Bacteria);
@@ -49,10 +49,13 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
   	concentrations(Agent::Bacteria, Bacteria, BacteriaConcentration);
   	Concentration TcellsCellConcentration;
   	concentrations(Agent::Tcell, Tcells, TcellsCellConcentration);
+	Concentration EpiConcentration;
+  	concentrations(Agent::EpithelialCell, EpithelialCells, EpiConcentration);
 	
 	double infectiousBacteriaConcentration = BacteriaConcentration[BacteriaState::INFECTIOUS];	
 	double th17Concentration = TcellsCellConcentration[TcellState::TH17]; //Rule 10 when Th17 is in contact
 	double th1Concentration = TcellsCellConcentration[TcellState::TH1]; //RUle 9 when Th1 is in contact
+	double EpiHealthyConcentration = EpiConcentration[EpithelialCellState::HEALTHY];
 	
 	std::vector< Agent * >::iterator it = EpithelialCells.begin();
 	std::vector< Agent * >::iterator end = EpithelialCells.end();
@@ -66,49 +69,45 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
       if (state == EpithelialCellState::HEALTHY)
         {
           double Random = repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next();
-          //LocalFile::debug() << "Random = " << Random << std::endl;
-          //LocalFile::debug() << "Epi::infectiousBacteriaConcentration = " << infectiousBacteriaConcentration << std::endl;
-          //LocalFile::debug() << "Epi::th17Concentration	= " << th17Concentration << std::endl;
-          //LocalFile::debug() << "Epi::th1Concentration	= " << th1Concentration  << std::endl;
           if (infectiousBacteriaConcentration > ENISI::Threshold
               && (p_epiinfbactdamage > Random))
             {
-        	 // LocalFile::debug() << "@@@ E cell damaged due to infectious Bacteria" << std::endl;
               newState = EpithelialCellState::DAMAGED;
               pAgent->setState(newState);
             }
           if (th17Concentration > ENISI::Threshold
                    && (p_epith17damage > Random))
             {
-        	  //LocalFile::debug() << "@@@ E cell damaged due to T cells" << std::endl;
               newState = EpithelialCellState::DAMAGED; /*Rule 10*/
 	      pAgent->setState(newState);
-              //pAgent->setState(newState);
             }
 	   if (th1Concentration > ENISI::Threshold
                    && (p_epith1damage > Random))
             {
-        	  //LocalFile::debug() << "@@@ E cell damaged due to T cells" << std::endl;
-              newState = EpithelialCellState::DAMAGED; /*Rule 10*/
+              newState = EpithelialCellState::DAMAGED;
 	      pAgent->setState(newState);
-              //pAgent->setState(newState);
             }
+	   if (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()
+	      && p_EpiCap > EpiHealthyConcentration)
+            {
+              mpCompartment->getLocation(pAgent->getId(), Location);
+              mpCompartment->addAgent(new Agent(Agent::EpithelialCell, EpithelialCellState::HEALTHY), Location);
+            }
+	   if (p_epicyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+            {
+              int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
+              // TODO We should use the production from the ODE model.
+              mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 7;
+              mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 7;
+	    }
 	   if (p_randomdam > Random)
 	    {
 	      newState = EpithelialCellState::DAMAGED; //Random damage of epithelial cells
 	      pAgent->setState(newState);
-	    }
-	   if (p_EpiProliferation > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-            {
-    	  //LocalFile::debug() << "@ E cell proliferates naturally" << std::endl;
-              mpCompartment->getLocation(pAgent->getId(), Location); /*Rule 8*/
-              mpCompartment->addAgent(new Agent(Agent::EpithelialCell, EpithelialCellState::HEALTHY), Location);
-            }
+	    }	  
       	   if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
-    	  //LocalFile::debug() << "@ E cell dies naturally" << std::endl;
               mpCompartment->removeAgent(pAgent); /*Rule 11*/
-              continue;
             }
       }
       if (state == EpithelialCellState::DAMAGED)
@@ -116,18 +115,13 @@ void EpithelialCellGroup::act(const repast::Point<int> & pt)
            if (IL10 > ENISI::Threshold
                && p_epiIL10h > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
-    	     //LocalFile::debug() << "@ Damaged E cell transit to healthy state" << std::endl;
               newState = EpithelialCellState::HEALTHY; 
 	      pAgent->setState(newState); /* If IL10 is in contact with E at the Ep and Lm border, E-> Edamaged slowed donw by some factor*/
             }
-            if (p_epicyto > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
+	   if (p_EpiCellDeath > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
             {
-    	      //LocalFile::debug() << "@ E cell is damaged and generates Cytokines eIL6 and eIL12!!" << std::endl;
-              int yOffset = mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::HIGH);
-              // TODO We should use the production from the ODE model.
-              mpCompartment->cytokineValue("eIL6", pt, 0, yOffset) += 7;
-              mpCompartment->cytokineValue("eIL12", pt, 0, yOffset) += 7;
-            }
+              mpCompartment->removeAgent(pAgent); 
+            }  
        }
      }// end of for
 }// end of act()
