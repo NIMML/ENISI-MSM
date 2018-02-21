@@ -28,6 +28,7 @@ private:
   double p_epiinfbactdamage;
   double p_epicyto;
   double p_randomdam;
+  double p_EpiCap;
 };
 
 } // namespace ENISI
