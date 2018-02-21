@@ -88,8 +88,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
                || th1Concentration > ENISI::Threshold
                || th17Concentration > ENISI::Threshold 
 	       && p_HPdeathduetoTcells > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-          {
-              // newState = HPyloriState::DEAD;
+          {        
             mpCompartment->removeAgent(pAgent);
             continue;
           }
@@ -120,7 +119,7 @@ void HPyloriGroup::act(const repast::Point<int> & pt)
             mpCompartment->removeAgent(pAgent);
             continue;
           }	  
-       }// End of lamina propria /* H Pylori are removed when macrophage uptake/differentiate handled throu macrophages */
+       }// End of lamina propria 
     } //End of for
 } // End of act()
 // virtual
