@@ -146,7 +146,7 @@ for (; it != end; ++it)
     if (mpCompartment->getType() == Compartment::gastric_lymph_node)
       {
         if ((p_allTrep > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())
-	   && (p_TotalTcap > totalTcells)))
+	   && (p_TotalTcap > totalTcells))
           {
             mpCompartment->getLocation(pAgent->getId(), Location);
             mpCompartment->addAgent(new Agent(Agent::Tcell, pAgent->getState()), Location);
@@ -155,9 +155,7 @@ for (; it != end; ++it)
           {
             if (eDCConcentration  > ENISI::Threshold)
               {
-		LocalFile::debug() << "TH1 cap" << p_TH1cap << std::endl;   
-		LocalFile::debug() << "Th1 concentration" << th1Concentration << std::endl;   
-				 
+					 
                 if (((dIFNg > p_IFNg) || (IL12 > p_IL12) ||
 		    (p_nTtoTh1 > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next())))
                   {
@@ -201,7 +199,7 @@ for (; it != end; ++it)
         		continue;
         	}
         	if (mpCompartment->gridBorders()->distanceFromBorder(pt.coords(), Borders::Y, Borders::LOW) < 0.5           
-                           && (p_Th17move > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
+                           && (p_tcellmove > repast::Random::instance()->createUniDoubleGenerator(0.0, 1.0).next()))/*Rule 32*/
                 {
                         std::vector<double> Location;
             		mpCompartment->getLocation(pAgent->getId(), Location);
