@@ -45,7 +45,7 @@ TcellGroup::TcellGroup(Compartment * pCompartment, const double & NaiveTConcentr
   pModel->getValue("p_IFNg", p_IFNg);
   pModel->getValue("p_IL10", p_IL10);
   pModel->getValue("p_IL21", p_IL21);
-  pModel->getValue("p_IL12", p_IL21);
+  pModel->getValue("p_IL12", p_IL12);
   pModel->getValue("p_TGFb", p_TGFb);
   pModel->getValue("p_IL6", p_IL6);	  
 }
