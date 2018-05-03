@@ -5,7 +5,7 @@ Refer to INSTALL.mkd before attempting to build
 ```
   mkdir build
   cd build
-  cmake ../
+  cmake -DENISI_MSM_DEPENDENCY="path to ENISI-DEPENDENCIES/install .."
   make
   make test
   ../run.sh
