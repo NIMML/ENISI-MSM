@@ -2,6 +2,7 @@
 #include "COPASI.h"
 #include "grid/Properties.h"
 #include "DataWriter/LocalFile.h"
+#include "copasi/math/CMathContainer.h"
 
 using namespace ENISI;
 
@@ -256,6 +257,13 @@ bool TcellODE::runTimeCourse()
           LocalFile::debug() << CCopasiMessage::getAllMessageText(true) << "\n";
         }
     }
+
+  // The transient values of the model need to be updated
+  CMathContainer * pContainer = trajectoryTask->getMathContainer();
+
+  pContainer->updateSimulatedValues(false);
+  pContainer->updateTransientDataValues();
+  pContainer->pushAllTransientValues();
 
   return result;
 }

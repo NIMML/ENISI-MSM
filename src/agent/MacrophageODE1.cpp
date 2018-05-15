@@ -2,6 +2,7 @@
 #include "COPASI.h"
 #include "grid/Properties.h"
 #include "DataWriter/LocalFile.h"
+#include "copasi/math/CMathContainer.h"
 
 using namespace ENISI;
 
@@ -266,6 +267,13 @@ void MacrophageODE1::runTimeCourse()
 
       // std::exit(1);
     }
+  
+  // The transient values of the model need to be updated
+  CMathContainer * pContainer = trajectoryTask->getMathContainer();
+
+  pContainer->updateSimulatedValues(false);
+  pContainer->updateTransientDataValues();
+  pContainer->pushAllTransientValues();
 }
 
 double MacrophageODE1::getConcentration(std::string name)
