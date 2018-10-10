@@ -1,0 +1,31 @@
+
+# TWO STAGED GLOBAL SENSITIVITY ANALYSIS
+
+## Stage 1 
+
+- Parameters.xlsx -> Contains the max and min values of the input parameters and information about which parameters are fixed
+- Generate the Input parameter design matrix (P1) using - design_matrix_generation.m (Comment out the Stage 2 part of the code)
+- Run the simulation using the hybrid computer code.
+
+### Stage 1 Analysis 
+1. Run the simulations (152 x 20 replicates) for each input parameter setting obtained from P1.  
+2. Convert the data into .csv file format with 1st column as information about Time points, 2nd column Mean value and 3rd column Standard deviation from the outputs obtained from ENISI runs
+3. Run Stage1-PRCC.ipynb - Formats data in a format for PRCC analysis and calculates the PRCC coefficients
+4. Plot the PRCC graphs using Stage1-PRCC_barplots.R
+5. Create an excel sheet with information about the active and inactive inputs from PRCC - PRCC_activeinactiveinputs-added.xlsx
+
+## Stage 2
+- Generate the Input parameter design matrix (P2) using - design_matrix_generation.m (Comment out the Stage 1 part of the code) and information in PRCC_activeinactiveinputs-added.xlsx
+- Run the simulation using the hybrid computer code and combine all the outputs obtained.
+
+### Stage 2 Analysis 
+1. Run the simulations (115 x 20 replicates) for each input parameter setting obtained from P2. 
+2. Convert the data into .csv file format with 1st column as information about Time points, 2nd column Mean value and 3rd column Standard deviation from the outputs obtained from ENISI runs. 3. Combine the outputs obtained from P2 and P1 
+4. Create folders for each of the cell populations
+5. Run Stage2-inputfilegeneration.m and save the output as .mat file to be used to build a temporal metamodel
+6. Build a temporal metamodel using Stage2-BuildTempMM.R and save the output as .Rdata dataset
+7. Calculate the Sobol Indices using Stage2-SA-SobolIndex-temporal.R. The input to the code includes the .Rdata obtained from Step 6 and the Test Datasets. 
+
+
+
+ 
