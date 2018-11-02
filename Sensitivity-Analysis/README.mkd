@@ -21,10 +21,10 @@
 ### Stage 2 Analysis 
 1. Run the simulations (115 x 20 replicates) for each input parameter setting obtained from P2. 
 2. Convert the data into .csv file format with 1st column as information about Time points, 2nd column Mean value and 3rd column Standard deviation from the outputs obtained from ENISI runs. 3. Combine the outputs obtained from P2 and P1 
-4. Create folders for each of the cell populations
-5. Run Stage2-inputfilegeneration.m and save the output as .mat file to be used to build a temporal metamodel
-6. Build a temporal metamodel using Stage2-BuildTempMM.R and save the output as .Rdata dataset
-7. Calculate the Sobol Indices using Stage2-SA-SobolIndex-temporal.R. The input to the code includes the .Rdata obtained from Step 5 and the Test Datasets. 
+3. Create folders for each of the cell populations
+4. Run Stage2-inputfilegeneration.m and save the output as .mat file to be used to build a temporal metamodel
+5. Build a temporal metamodel using Stage2-BuildTempMM.R and save the output as .Rdata dataset
+6. Calculate the Sobol Indices using Stage2-SA-SobolIndex-temporal.R. The input to the code includes the .Rdata obtained from Step 5 and the Test Datasets. 
 
 
 
