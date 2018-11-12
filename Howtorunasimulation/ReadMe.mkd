@@ -1,0 +1,27 @@
+## Paper: High-Resolution Computational Modeling of Immune Responses in the Gut
+## Author: Meghna Verma
+#This text describes how to run jobs on a HPC cluster
+
+1. Create a folder FolderName to save the simulation results. This is very important to place all the results of every experiment and it's respective files in different folder
+2. Have the files 
+	i)config.props
+	ii)run.props
+	iii)job.sh
+	iv)CD4.cps
+	v) MredDiff.cps
+	vi)model.props
+3. model.props is the file wherein you change the parameters. 
+4. run.props is the file wherein you change the number of TICKS i.e stop.at = number of TICKS
+5. job.sh is the file where you chose
+	-output folder path where you want your results
+	-the queue that you choose for submission
+	- There's an option of giving your email address. 
+	-Change the CONFIG variable and provide path to your folder i.e /home/username/FolderName
+6. Run your job by typing -> sh job.sh
+7. You can check the status of your job by - qstat -u username
+8. You can delete the job by typing in qdel jobnumber
+9. Once the job is submitted, a job.sh.e.jobnumber and job.sh.o.jobnumber file will be created.
+10. The job.sh.e.jobnumber file will have the error messages if any or if the program gets terminated
+11. After the job is completed, you will have .log files, .tsv files for all the compartments.
+12. The .log file will contain debugging statements if there are any requested in the code.
+ 
