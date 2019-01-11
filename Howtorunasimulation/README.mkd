@@ -1,6 +1,6 @@
 ### Paper: High-Resolution Computational Modeling of Immune Responses in the Gut
 ## Author: Meghna Verma
-#This text describes how to run jobs locally and on a cluster
+# This text describes how to run jobs locally and on a cluster
 
 1. Create a folder FolderName to save the simulation results. This is very important to place all the results of every experiment and it's respective files in different folder
 2. Have the files 
