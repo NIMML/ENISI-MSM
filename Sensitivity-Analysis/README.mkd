@@ -24,7 +24,7 @@
 3. Create folders for each of the cell populations
 4. Run Stage2-inputfilegeneration.m and save the output as .mat file to be used to build a temporal metamodel
 5. Build a temporal metamodel using Stage2-BuildTempMM.R and save the output as .Rdata dataset
-6. Calculate the Sobol Indices using Stage2-SA-SobolIndex-temporal.R. The input to the code includes the .Rdata obtained from Step 5 and the Test Datasets. 
+6. Calculate the Sobol Indices using Stage2-SA-temporal6tps.R. The input to the code includes the .Rdata obtained from Step 5 and the Test Datasets. 
 
 
 
