@@ -11,7 +11,7 @@
 	v) MregDiff.cps
 	vi)model.props all in the folder where you want the output files to save.
 3. model.props is the parameter file wherein you change the parameters. 
-4. run.props and config.props are the file wherein you change the number of TICKS i.e stop.at = number of TICKS and the size of the grid. 
+4. run.props is the file wherein you change the number of TICKS i.e stop.at = number of TICKS and the size of the grid. 
 5. For running locally, use run.sh.
    To run on a cluster, use job.sh.
 	-output folder path where you want your results
