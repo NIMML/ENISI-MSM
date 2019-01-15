@@ -17,8 +17,6 @@ macrophages.concentration = 30
 Tcell.ODE = CD4.cps
 macrophages.ODE = MregDiff.cps
 
-cell.speed = 10 µm/min mesenchymal cells move slower (~<1 µm/min)
-
 # compartments
 lumen.space.x = space.x
 lumen.space.y = 2 nm
@@ -39,8 +37,6 @@ lamina_propria.space.y = 5 nm
 lamina_propria.border.y.low = epithilium
 lamina_propria.border.y.high = gastric_lymph_node
 
-# Yongguo used these values to make the model fit the data.
-# They don't have any inherent meaning otherwise
 lamina_propria.eIL6.initialValue = 10
 lamina_propria.eIL6.diffusion = 0.6
 lamina_propria.eIL6.degradation = 0.05
@@ -103,8 +99,7 @@ gastric_lymph_node.eIFNg.initialValue = 4
 gastric_lymph_node.eIFNg.diffusion = 0.6
 gastric_lymph_node.eIFNg.degradation = 0.02
 
-# Parameter rules
-#### From COPASI ####
+# Parameters
 p_epiinfbactdamage = 0.410064116
 p_epith1damage = 0.646556406
 p_epith17damage = 0.425385404
