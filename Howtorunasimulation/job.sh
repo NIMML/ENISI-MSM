@@ -30,7 +30,7 @@
 ## The option below declares the list of users to whom mail is sent
 ### Substitute your e-mail address for <your-email> below:
 
-#PBS -M meghna89@bi.vt.edu
+#PBS -M <your-email>
 
 # If benchmark was run directly, re-run it as an argument to qsub for
 # submission to shadowfax's job system
@@ -52,11 +52,11 @@ module load mvapich2/gcc/64/2.0b
 # THe following 2 variables need be adjusted
 NODES=4
 # CONFIG is the path of the folder where all the files required to run the model are placed. 
-CONFIG=/home/meghna89/ENISI_experiments/Nov-Stage2/allRuns/setting0/run0
+CONFIG=/home/meghna89/ENISI_experiments/allRuns/setting0/run0
 
 # Below here enter the commands to start your job
 
-mpirun -n ${NODES} "/home/meghna89/enisi_github/ENISI-MSM-cap_fixes_no/ENISI-MSM-control/bin/ENISI-MSM" \
+mpirun -n ${NODES} "/home/meghna89/enisi_github/ENISI/ENISI-MSM/bin/ENISI-MSM" \
        "config=${CONFIG}"
 
 exit;
