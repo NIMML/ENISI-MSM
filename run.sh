@@ -11,6 +11,8 @@ CONFIG=$1
 
 cd "$DIR"
 
-"$DIR"/deps/src/project_repast/ext/MPICH/bin/mpirun -n 4 -host localhost \
-   ${VALGRIND} "${DIR}"/bin/main config=${CONFIG}
+#"$DIR"/deps/src/project_repast/ext/MPICH/bin/mpirun -n 4 -host localhost \
+#  ${VALGRIND} "${DIR}"/bin/main config=${CONFIG}
 
+/home/meghna89/ENISI/ENISI-Dependencies/install/bin/mpirun -n 4 -host localhost \
+${VALGRIND} /home/meghna89/ENISI/ENISI-MSM/bin/ENISI-MSM config=${CONFIG}
