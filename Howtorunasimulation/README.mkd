@@ -1,3 +1,4 @@
+# This resource has been added on SciCrunch.org database with RRID: SCR_016918
 ## Paper: High-Resolution Computational Modeling of Immune Responses in the Gut
 ### Author: Meghna Verma
 #### This text describes how to run jobs locally and on a cluster
