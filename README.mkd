@@ -1,4 +1,4 @@
-# This resource has now been added on SciCrunch.org database with RRID: SCR_016918
+# SciCrunch.org database RRID: SCR_016918
 Refer to INSTALL.mkd before attempting to build. 
 
 # BUILDING ENISI MSM
