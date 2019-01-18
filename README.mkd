@@ -1,5 +1,12 @@
-# SciCrunch.org database RRID: SCR_016918
-Refer to INSTALL.mkd before attempting to build. 
+# SciCrunch.org database: ENteric Immunity SImulator (ENISI) Multi scale model, RRID:SCR_016918RRID: SCR_016918
+
+# BUILDING ENISI-Dependencies
+```
+  mkdir build
+  cd build
+  cmake ../
+  make
+```
 
 # BUILDING ENISI MSM
 
@@ -21,6 +28,5 @@ Refer to INSTALL.mkd before attempting to build.
   make benchmark
 
 # FILES AND FOLDERS
-deps/ - 3rd-party libraries go here
 src/  - location of ENISI MSM source code
 bin/  - compiled executables go here
