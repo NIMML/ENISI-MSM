@@ -1,4 +1,4 @@
-# SciCrunch.org database: ENteric Immunity SImulator (ENISI) Multi scale model (MSM), RRID:SCR_016918
+# ENteric Immunity SImulator (ENISI) Multi scale model (MSM), RRID:SCR_016918 (SciCrunch.org database)
 
 # BUILDING ENISI-Dependencies
 ```
