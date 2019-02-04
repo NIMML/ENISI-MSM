@@ -1,4 +1,4 @@
-space.x = 30 nm
+space.x = 30 microm
 
 # HPylori.concentration = 0.0
 # Bacteria.concentration = 0.0
@@ -19,21 +19,21 @@ macrophages.ODE = MregDiff.cps
 
 # compartments
 lumen.space.x = space.x
-lumen.space.y = 2 nm
+lumen.space.y = 2 microm
 lumen.border.y.low = REFLECT
 lumen.border.y.high = epithilium
 lumen.Bacteria.concentration = Bacteria.concentration
 lumen.HPylori.concentration = HPylori.concentration
 
 epithilium.space.x = space.x
-epithilium.space.y = 1.0 nm
+epithilium.space.y = 1.0 microm
 epithilium.border.y.low = lumen
 epithilium.border.y.high = lamina_propria
 epithilium.EpithelialCell.concentration = EpithelialCell.concentration
 epithilium.Dendritics.concentration = 20
 
 lamina_propria.space.x = space.x
-lamina_propria.space.y = 5 nm
+lamina_propria.space.y = 5 microm
 lamina_propria.border.y.low = epithilium
 lamina_propria.border.y.high = gastric_lymph_node
 
@@ -69,7 +69,7 @@ lamina_propria.macrophages.monocyte.concentration = macrophages.concentration
 lamina_propria.macrophages.resident.concentration = 20
 #gastric_lymph_node
 gastric_lymph_node.space.x = space.x
-gastric_lymph_node.space.y = 2 nm
+gastric_lymph_node.space.y = 2 microm
 gastric_lymph_node.border.y.low = lamina_propria
 gastric_lymph_node.border.y.high = REFLECT
 gastric_lymph_node.Dendritics.concentration = Dendritics.concentration
