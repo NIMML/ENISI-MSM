@@ -1,32 +1,85 @@
-# ENteric Immunity SImulator (ENISI) Multi scale model (MSM), RRID:SCR_016918 (SciCrunch.org database)
+## ENteric Immunity SImulator (ENISI) Multi scale model (MSM), RRID:SCR_016918 (SciCrunch.org database).
 
-# BUILDING ENISI-Dependencies
+### Paper: High-Resolution Computational Modeling of Immune Responses in the Gut (*Under review*)
+Authors (paper): Meghna Verma, Josep Bassaganya-Riera, Andrew Leber, Nuria Tubau-Juni, Stefan Hoops, Vida Abedi, Xi Chen, Raquel Hontecillas. 
+
+The text includes detailed instructions regarding - i) installing ENISI-MSM and it's dependencies, ii) running the program on a local sytem and on a server and iii) scripts used for the processing of the outputs generated from the code. Additionally, *README.mkd* in the **/ENISI-MSM/Howtorunasimulation** and **/ENISI-MSM/Sensitivity-Analysis** folders provide detailed instruction on running simulation and sensitivity analysis respectively. 
+
+## Installation 
 ```
+  mkdir ENISI
+  cd ENISI
+  git clone https://github.com/NIMML/ENISI-Dependencies 
+  git clone https://github.com/NIMML/ENISI-MSM
+```
+
+### Building ENISI-Dependencies
+```
+  cd "path-to-ENISI"/ENISI-Dependencies
   mkdir build
   cd build
   cmake ../
   make
 ```
 
-# BUILDING ENISI MSM
-
+### Building ENISI-MSM
 ```
+  cd ENISI/ENISI-MSM
   mkdir build
   cd build
-  cmake -DENISI_MSM_DEPENDENCY="path to ENISI-DEPENDENCIES/install .."
+  cmake -DENISI_MSM_DEPENDENCY="path-to-ENISI"/ENISI-DEPENDENCIES/install" ..
   make
-  make test
-  ../run.sh
 ```
 
-# TESTS
+### To run locally
 
-  make test
+1. Change the below paths in **run.sh** file (can be located in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder).
 
-# BENCHMARKING
+    - Path for *mpirun* in **run.sh** to be changed to your **"path-to-ENISI"/ENISI-Dependencies/install/bin/** directory.
+    - Path for *ENISI-MSM* executable to be changed to the location of your **~/ENISI/ENISI-MSM/bin/** directory
 
-  make benchmark
+2. Create a folder where the output files are to be saved (for e.g. *OutputFolder*) with the following file contents :
+    - **config.props, run.props, model.props, CD4.cps** and **MregDiff.cps** (All included in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation folder**). 
+    - Configurable parameter file - **model.props**.
+    - **run.props** and **config.props** are the configurable files where you can change 
+        - Number of TICKS (that is a measure of computational time, i.e stop.at = number of TICKS) 
+        - Size of the grid cell.
 
-# FILES AND FOLDERS
-src/  - location of ENISI MSM source code
-bin/  - compiled executables go here
+3.  Run the executable. 
+    ```
+    ../run.sh "path-to-OutputFolder"
+    ```
+### To run on a server 
+1. Install and build *ENISI-Dependencies* and *ENISI-MSM* on the server. 
+
+2. Create a folder to run the simulation and store the output files (for e.g. *OutputFolder*). The contents include:
+    * **config.props, run.props, model.props, CD4.cps** and **MregDiff.cps** and **job.sh** files (All included in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation folder**).
+    * Configurable parameter file - **model.props**.
+    * The **run.props** and **config.props** are the files where you can change - 
+        * Number of TICKS (that is a measure of computational time, i.e stop.at = number of TICKS) 
+        * Size of the grid cell.       
+    * The *path-to-OutputFolder* is provided in the **CONFIG** variable specified in the **job.sh** file. 
+    
+3. Run the executable. 
+    ```
+    sh job.sh
+    ```
+    
+### Scripts 
+
+The bash and python scripts are provided in the **"path-to-ENISI"/ENISI-MSM/Processing** folder. Each script has a **_comment section_** that decribes the *usage*, *purpose* and required *location* of the script. 
+
+The folder structure is as follows:
+```
+   ~/alloutputs/allRuns/setting0/run0
+```
+- The *alloutputs* folder contains the collections of all outputs.
+- The *allRuns* folder (inside the *alloutputs* folder) contains the *settings* folder. 
+- The *setting* folder corresponds to a different set of parameters.
+- The *run* folder corresponds to the replicates (for e.g. *10*) for individual parameter set. (The *run* folder is similar to the folder created in *Step 2* of running the jobs locally and on the server. The run folders include all the files provided in **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder)
+
+    1. *lp_code.py* (can be located in any folder; the "path-to-lp_code.py" is required by the *tsvcsv.sh*).
+    2. *tsvcsv.sh* (to be located in *~/alloutputs/*).
+    3. *average_and_SD.py* (to be located in *~/alloutputs/allRuns/setting0/*). 
+
+The scripts for *Sensitivity-Analysis* and the steps are detailed in **_"path-to-ENISI"/ENISI-MSM/Sensitivity-Analysis/_**. 
