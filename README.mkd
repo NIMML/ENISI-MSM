@@ -3,7 +3,7 @@
 ### Paper: High-Resolution Computational Modeling of Immune Responses in the Gut (*Under review*)
 Authors (paper): Meghna Verma, Josep Bassaganya-Riera, Andrew Leber, Nuria Tubau-Juni, Stefan Hoops, Vida Abedi, Xi Chen, Raquel Hontecillas. 
 
-The text includes detailed instructions regarding - i) installing ENISI-MSM and it's dependencies, ii) running the program on a local sytem and on a server and iii) scripts used for the processing of the outputs generated from the code. Additionally, *README.mkd* in the **/ENISI-MSM/Howtorunasimulation** and **/ENISI-MSM/Sensitivity-Analysis** folders provide detailed instruction on running simulation and sensitivity analysis respectively. 
+The text includes detailed instructions regarding - i) installing ENISI-MSM and it's dependencies, ii) running the program on a local sytem and on a server and iii) scripts used for the processing of the outputs generated from the code. Additionally, *README.mkd* in the **/ENISI-MSM/Howtorunasimulation** and **/ENISI-MSM/Sensitivity-Analysis** folders alos provide detailed instruction on running simulation and sensitivity analysis respectively. 
 
 ## Installation 
 ```
