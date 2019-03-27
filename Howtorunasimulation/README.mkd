@@ -6,24 +6,26 @@ Authors (paper): Meghna Verma, Josep Bassaganya-Riera, Andrew Leber, Nuria Tubau
 
 *Refer to **README.md** of this project*
 
-1. Create a folder FolderName to save the simulation results. This is very important to place all the results of every experiment and it's respective files in different folder
-2. The following files should be in the output directory -
+1. Create a *OutputFolder* directory to save the simulation results.
+2. The following files should be in the *OutputFolder* directory -
 	i)config.props
 	ii)run.props
 	iii)job.sh
 	iv)CD4.cps
 	v) MregDiff.cps
 	vi)model.props
-3. Configurable parameter file - model.props 
-4. The run.props file provides information regarding the number of TICKS *i.e* stop.at = (number of TICKS) and the size of the grid. 
-5. For running locally, use *_run.sh_*.
-   To run on a cluster, use *_job.sh_*.
-	-output folder path where you want your results
-	-Change the CONFIG variable and provide path to your folder i.e /home/username/FolderName
-6. Run your job by typing -> 
+3. Configurable parameter file - **model.props**. 
+4. The **run.props** file provides information regarding the number of TICKS *i.e* stop.at = (number of TICKS) and the size of the grid. 
+5. To run the program on a local system, use *_run.sh_* script -
+
   ```
-    sh run.sh "path-to-FolderName" or 
-    sh job.sh (specify the CONFIG variable).
+     sh run.sh "path-to-OutputFolder"
+   ```
+   
+   To run on a cluster, use the *_job.sh_* script
+	-Change the CONFIG variable and assign it to the *"path-to-OutputFolder"*.  
+  ``` 
+    sh job.sh 
   ```
-7. After the job is completed, .log files and .tsv files for all the compartments are generated.
-8. The .log file will contain debugging statements if there are any requested in the code.
+7. After the job is completed, .log files and .tsv files are generated.
+8. The .log file will contain debugging statements if any requested in the code.
