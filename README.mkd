@@ -24,16 +24,19 @@ The text includes detailed instructions regarding - i) installing ENISI-MSM and 
 
 ### Building ENISI-MSM
 ```
-  cd ENISI/ENISI-MSM
+  cd "path-to-ENISI"/ENISI-MSM
   mkdir build
   cd build
   cmake -DENISI_MSM_DEPENDENCY="path-to-ENISI"/ENISI-DEPENDENCIES/install" ..
   make
 ```
 
-### To run locally
+### Run the program 
 
-1. Change the below paths in **run.sh** file (can be located in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder).
+#### Running on the local system
+
+1. 
+the paths below in the **run.sh** file (can be located in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder).
 
     - Path for *mpirun* in **run.sh** to be changed to your **"path-to-ENISI"/ENISI-Dependencies/install/bin/** directory.
     - Path for *ENISI-MSM* executable to be changed to the location of your **~/ENISI/ENISI-MSM/bin/** directory
@@ -41,15 +44,15 @@ The text includes detailed instructions regarding - i) installing ENISI-MSM and 
 2. Create a folder where the output files are to be saved (for e.g. *OutputFolder*) with the following file contents :
     - **config.props, run.props, model.props, CD4.cps** and **MregDiff.cps** (All included in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation folder**). 
     - Configurable parameter file - **model.props**.
-    - **run.props** and **config.props** are the configurable files where you can change 
+    - **run.props** and **config.props** are the configurable files where you can change - 
         - Number of TICKS (that is a measure of computational time, i.e stop.at = number of TICKS) 
         - Size of the grid cell.
 
-3.  Run the executable. 
+3.  Run the executable - 
     ```
     ../run.sh "path-to-OutputFolder"
     ```
-### To run on a server 
+#### Running on server
 1. Install and build *ENISI-Dependencies* and *ENISI-MSM* on the server. 
 
 2. Create a folder to run the simulation and store the output files (for e.g. *OutputFolder*). The contents include:
@@ -76,7 +79,7 @@ The folder structure is as follows:
 - The *alloutputs* folder contains the collections of all outputs.
 - The *allRuns* folder (inside the *alloutputs* folder) contains the *settings* folder. 
 - The *setting* folder corresponds to a different set of parameters.
-- The *run* folder corresponds to the replicates (for e.g. *10*) for individual parameter set. (The *run* folder is similar to the folder created in *Step 2* of running the jobs locally and on the server. The run folders include all the files provided in **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder)
+- The *run* folder corresponds to the replicates (for e.g. *10*) for individual parameter set. (The *run* folder is similar to the folder created in *Step 2* of running the jobs locally and on the server. The run folders include all the files provided in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder)
 
     1. *lp_code.py* (can be located in any folder; the "path-to-lp_code.py" is required by the *tsvcsv.sh*).
     2. *tsvcsv.sh* (to be located in *~/alloutputs/*).
