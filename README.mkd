@@ -35,8 +35,7 @@ The text includes detailed instructions regarding - i) installing ENISI-MSM and 
 
 #### Running on the local system
 
-1. 
-the paths below in the **run.sh** file (can be located in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder).
+1. Change the paths below in the **run.sh** file (can be located in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation** folder).
 
     - Path for *mpirun* in **run.sh** to be changed to your **"path-to-ENISI"/ENISI-Dependencies/install/bin/** directory.
     - Path for *ENISI-MSM* executable to be changed to the location of your **~/ENISI/ENISI-MSM/bin/** directory
@@ -70,9 +69,21 @@ the paths below in the **run.sh** file (can be located in the **"path-to-ENISI"/
     
 ### Scripts 
 
-The bash and python scripts are provided in the **"path-to-ENISI"/ENISI-MSM/Processing** folder. Each script has a **_comment section_** that decribes the *usage*, *purpose* and required *location* of the script. 
+All the scripts and parameter sets are listed in **"path-to-ENISI"/ENISI-MSM/Processing** folder. 
 
-The folder structure is as follows:
+#### Parameter sets
+ * **"path-to-ENISI"/ENISI-MSM/Processing/ParameterSets** folder contains the parameter files (**_model.props_**) to be used when          running the program (refer to _'Run the program'_ section above) to reproduce the files used to plot the results in the paper (*currently under review*).
+ * The files are named as **model_*.props** where "*" represents the different condition.
+ * When running each simulation for the different condition, rename the file to *model.props*. 
+  
+#### Code for figures in the paper
+ * All the jupyter notebooks that create the figure in the paper are provided in the **"path-to-ENISI"/ENISI-MSM/Processing/Figures**. 
+ * The files are named as Fig*_Code.ipynb where "*" represents the figure number. 
+
+#### Other scripts
+The bash and python scripts are provided in the **"path-to-ENISI"/ENISI-MSM/Processing/Others** folder. Each script has a **_comment section_** that decribes the *usage*, *purpose* and required *location* of the script. 
+
+The folder structure for the below scrips are as follows:
 ```
    ~/alloutputs/allRuns/setting0/run0
 ```
