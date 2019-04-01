@@ -1,0 +1,180 @@
+space.x = 30
+
+# HPylori.concentration = 0.0
+# Bacteria.concentration = 0.0
+# EpithelialCell.concentration = 0.0
+# Dendritics.concentration = 0.0
+# Tcell.concentration = 0.0
+# macrophages.concentration = 0.0
+
+HPylori.concentration = 60
+Bacteria.concentration = 30.0
+EpithelialCell.concentration = 12.0
+Dendritics.concentration = 50
+Tcell.concentration = 40.0
+macrophages.concentration = 30
+
+Tcell.ODE = CD4.cps
+macrophages.ODE = MregDiff.cps
+
+# compartments
+lumen.space.x = space.x
+lumen.space.y = 2 
+lumen.border.y.low = REFLECT
+lumen.border.y.high = epithilium
+lumen.Bacteria.concentration = Bacteria.concentration
+lumen.HPylori.concentration = HPylori.concentration
+
+epithilium.space.x = space.x
+epithilium.space.y = 1.0 
+epithilium.border.y.low = lumen
+epithilium.border.y.high = lamina_propria
+epithilium.EpithelialCell.concentration = EpithelialCell.concentration
+epithilium.Dendritics.concentration = 20
+
+lamina_propria.space.x = space.x
+lamina_propria.space.y = 5 
+lamina_propria.border.y.low = epithilium
+lamina_propria.border.y.high = gastric_lymph_node
+
+lamina_propria.eIL6.initialValue = 10
+lamina_propria.eIL6.diffusion = 0.6
+lamina_propria.eIL6.degradation = 0.05
+
+lamina_propria.eTGFb.initialValue = 50
+lamina_propria.eTGFb.diffusion = 0.6
+lamina_propria.eTGFb.degradation = 0.02
+
+lamina_propria.eIL12.initialValue = 20
+lamina_propria.eIL12.diffusion = 0.6
+lamina_propria.eIL12.degradation = 0.02
+
+lamina_propria.eIL17.initialValue = 0.4
+lamina_propria.eIL17.diffusion = 0.6
+lamina_propria.eIL17.degradation = 0.02
+
+lamina_propria.eIL10.initialValue = 4
+lamina_propria.eIL10.diffusion = 0.6
+lamina_propria.eIL10.degradation = 0.02
+
+lamina_propria.eIFNg.initialValue = 4
+lamina_propria.eIFNg.diffusion = 0.6
+lamina_propria.eIFNg.degradation = 0.02
+
+lamina_propria.Dendritics.concentration = Dendritics.concentration
+lamina_propria.Tcell.naive.concentration = Tcell.concentration
+lamina_propria.Bacteria.concentration = 0
+lamina_propria.HPylori.concentration = 0
+lamina_propria.macrophages.monocyte.concentration = macrophages.concentration
+lamina_propria.macrophages.resident.concentration = 20
+#gastric_lymph_node
+gastric_lymph_node.space.x = space.x
+gastric_lymph_node.space.y = 2 
+gastric_lymph_node.border.y.low = lamina_propria
+gastric_lymph_node.border.y.high = REFLECT
+gastric_lymph_node.Dendritics.concentration = Dendritics.concentration
+gastric_lymph_node.Tcell.naive.concentration = Tcell.concentration
+
+gastric_lymph_node.eIL6.initialvalue = 50
+gastric_lymph_node.eIL6.diffusion = 0.6
+gastric_lymph_node.eIL6.degradation = 0.02
+
+gastric_lymph_node.eTGFb.initialValue = 50
+gastric_lymph_node.eTGFb.diffusion = 0.6
+gastric_lymph_node.eTGFb.degradation = 0.02
+
+gastric_lymph_node.eIL12.initialValue = 10
+gastric_lymph_node.eIL12.diffusion = 0.6
+gastric_lymph_node.eIL12.degradation = 0.02
+
+gastric_lymph_node.eIL17.initialValue = 5
+gastric_lymph_node.eIL17.diffusion = 0.6
+gastric_lymph_node.eIL17.degradation = 0.02
+
+gastric_lymph_node.eIL10.initialValue = 4
+gastric_lymph_node.eIL10.diffusion = 0.6
+gastric_lymph_node.eIL10.degradation = 0.02
+
+gastric_lymph_node.eIFNg.initialValue = 4
+gastric_lymph_node.eIFNg.diffusion = 0.6
+gastric_lymph_node.eIFNg.degradation = 0.02
+
+# Parameter rules
+
+p_epiinfbactdamage =  0.9 
+p_epith1damage =  0.8 
+p_epith17damage = 0.8 
+p_EpiProliferation = 0.3 
+p_EpiCellDeath = p_EpiProliferation
+p_epiIL10h = 0.2 
+p_epicyto = 0.9 
+p_TotalTcap = 30 
+p_nTrep = 0.022 
+p_naiveTcelldeath = 0.000025 
+p_allTrep = 0.2 
+p_randomdam = 0.05  
+p_iTregtoTh17 = 0.001 
+p_Th17toiTreg = 0.001 
+p_nTtoTh1 = 0.4 
+p_nTtoTr = 0.4 
+p_nTtoiTreg = 0.02 
+p_nTtoTh17 = 0.02 
+p_Th1death = 0.00001 
+p_Th17death = 0.03 
+p_iTregdeath = 0.001 
+p_Trdeath = 0.001 
+p_rule31a = 1.2 
+p_tcellmove = 0.4
+p_Th17cyto = 0.9 
+p_Th1cyto = 0.9 
+p_TroriTregcyto = 0.9 
+p_BacteriaKill = 0.5 
+p_BacteriaDeath = 0.4 
+p_BacteriaLPProl = 0.3 
+p_BacteriaLumProl = 0.3 
+p_rule1 = 0.45 
+p_rule1_damagedEpithelialCellConcentration = 0.01
+p_HPepitoLP = 0.125 
+p_HPyloricap = 30
+p_HPylorirep = 0.01 
+p_HPdeathduetoTcells = 0.0001
+p_HPyloriDeath = 0.0001 
+p_iDCtoeDCLP = 0.6 
+p_iDCtotDCLP = 0.3 
+p_iDCtoeDCE = 0.6 
+p_iDCtotDCE = 0.5 
+p_DCDeath = 0.0003
+p_iDCrep = 0.5 
+p_eDCcyto = 0.9 
+p_tDCcyto = 0.9 
+p_iDCmoveLPtoEpi = 0.6 
+p_iDCmoveEpitoLP = 0.6 
+p_DCLPtoGLN = 0.4 
+p_DCEpitoLP = 0.6 
+p_DCbasal = 10
+p_MinfDiff = 0.3
+p_Monocytedeath = 0.04  
+p_resmacdeath = 0.005 
+p_resmaccyto = 0.9 
+p_trmackill = 0.05  
+p_MregDiff = 0.3 
+p_resmacrep = 0.2 
+p_monorep = 0.04 
+p_Monocap = 35
+p_resmacCap = 35
+p_Mregcyto = 0.9 
+p_Minfcyto = 0.9 
+p_EpiCap = 20
+p_BacCap = 20
+
+p_HPregenv = 0.7 
+
+p_IFNg = 0.5
+p_IL10 = 0.2
+p_IL17 = 0.1
+p_IL21 = 0.3
+p_IL6 = 0.3
+p_TGFb = 0.1
+p_IL12 = 0.01
+
+
