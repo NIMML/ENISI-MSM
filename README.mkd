@@ -44,8 +44,9 @@ The text includes detailed instructions regarding - i) installing ENISI-MSM and 
     - **config.props, run.props, model.props, CD4.cps** and **MregDiff.cps** (All included in the **"path-to-ENISI"/ENISI-MSM/Howtorunasimulation folder**). 
     - Configurable parameter file - **model.props**.
     - **run.props** and **config.props** are the configurable files where you can change - 
-        - Number of TICKS (that is a measure of computational time, i.e stop.at = number of TICKS) 
-        - Size of the grid cell.
+        - Number of TICKS (that is a measure of computational time, i.e stop.at = number of TICKS) (**run.props**)
+        - Size of the grid cell (**run.props**)
+        - Path to output folder (**config.props**)
 
 3.  Run the executable - 
     ```
