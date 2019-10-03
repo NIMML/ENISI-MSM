@@ -1,7 +1,8 @@
 ## ENteric Immunity SImulator (ENISI) Multi scale model (MSM), RRID:SCR_016918 (SciCrunch.org database).
 
 This repository contanins all the relevant code and data for the following paper: 
-### Paper: High-Resolution Computational Modeling of Immune Responses in the Gut (published in Gigascience. 2019 Jun 1;8(6))
+### High-Resolution Computational Modeling of Immune Responses in the Gut 
+(published in Gigascience. 2019 Jun 1;8(6))
 Meghna Verma, Josep Bassaganya-Riera, Andrew Leber, Nuria Tubau-Juni, Stefan Hoops, Vida Abedi, Xi Chen, Raquel Hontecillas. 
 Paper: https://www.ncbi.nlm.nih.gov/pubmed/31185494
 
