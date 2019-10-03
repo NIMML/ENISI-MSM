@@ -1,7 +1,13 @@
 ## ENteric Immunity SImulator (ENISI) Multi scale model (MSM), RRID:SCR_016918 (SciCrunch.org database).
 
-### Paper: High-Resolution Computational Modeling of Immune Responses in the Gut (*Under review*)
-Authors (paper): Meghna Verma, Josep Bassaganya-Riera, Andrew Leber, Nuria Tubau-Juni, Stefan Hoops, Vida Abedi, Xi Chen, Raquel Hontecillas. 
+This repository contanins all the relevant code and data for the following paper: 
+### Paper: High-Resolution Computational Modeling of Immune Responses in the Gut 
+Meghna Verma, Josep Bassaganya-Riera, Andrew Leber, Nuria Tubau-Juni, Stefan Hoops, Vida Abedi, Xi Chen, Raquel Hontecillas. 
+Paper: https://www.ncbi.nlm.nih.gov/pubmed/31185494
+
+**Please cite our paper if you use the codes or learnt from our work**
+
+
 
 The text includes detailed instructions regarding - i) installing ENISI-MSM and it's dependencies, ii) running the program on a local system and on a server and iii) scripts used for the processing of the outputs generated from the code. Additionally, *README.mkd* in the **/ENISI-MSM/Howtorunasimulation** and **/ENISI-MSM/Sensitivity-Analysis** folders also provides detailed instructions on running simulation and sensitivity analysis respectively. 
 
